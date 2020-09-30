@@ -6,7 +6,7 @@ Our goal is to help the local art industry thrive during these times of difficul
 ### Ben Macnaughton
 Ben is a U2 software engineering student at McGill University...
 ### Aidan Williams  
-Aidan is ...
+Aidan is a U2 software engineering studen at McGill University. 
 ### Gregory Walfish
 Gregory is a U2 Software engineering student at McGill University. Born, raised and currently living in Montreal.
 ### Luke Barber
