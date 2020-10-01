@@ -10,7 +10,7 @@ public class Artist extends User {
 	private Set<Posting> postings;
 
 	public Artist() {
-		this.super();
+		//todo
 	}
 
 	@OneToMany(mappedBy = "artist")

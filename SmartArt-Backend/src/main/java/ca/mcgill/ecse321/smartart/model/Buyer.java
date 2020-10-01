@@ -14,7 +14,7 @@ public class Buyer extends User {
 	private Set<Purchase> purchases;
 
 	public Buyer() {
-		this.super();
+		//todo
 	}
 
 	@ManyToOne
