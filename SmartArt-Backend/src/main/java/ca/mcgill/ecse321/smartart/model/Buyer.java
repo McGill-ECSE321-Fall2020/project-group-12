@@ -13,8 +13,8 @@ public class Buyer extends User {
 	private Purchase cart;
 	private Set<Purchase> purchases;
 
-	public Buyer() {
-		//todo
+	public Buyer(String name, int phone, String email, String password) {
+		super(name,phone, email,password);
 	}
 
 	@ManyToOne
