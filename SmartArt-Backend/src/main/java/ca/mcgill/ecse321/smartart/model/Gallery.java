@@ -9,6 +9,10 @@ import ca.mcgill.ecse321.smartart.model.User;
 @Entity
 public class Gallery {
 	private Set<User> users;
+	
+	public Gallery() {
+		
+	}
 
 	@OneToMany(mappedBy = "gallery")
 	public Set<User> getUsers() {
