@@ -6,6 +6,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Artist extends User {
+
 	private Set<Posting> postings;
 
 	public Artist() {

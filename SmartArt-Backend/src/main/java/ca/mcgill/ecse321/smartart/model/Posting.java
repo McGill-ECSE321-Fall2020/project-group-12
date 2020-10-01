@@ -10,14 +10,24 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Posting {
-	// TODO implement this operation
+	
+	private Gallery gallery;
+	private int postingID;
+	private Artist artist;
+	private float price;
+	private float xDim;
+	private float yDim;
+	private float zDim;
+	private String title;
+	private ArtStatus artStatus;
+	private DeliveryType deliveryType;
+	
 	public Posting(String title, float price, int postingID) {
 		this.title = title;
 		this.price = price;
 		this.postingID = postingID;
 	}
 
-	private Gallery gallery;
 
 	@ManyToOne(optional = false)
 	public Gallery getGallery() {
@@ -28,8 +38,6 @@ public class Posting {
 		this.gallery = gallery;
 	}
 
-	private int postingID;
-
 	public void setPostingID(int value) {
 		this.postingID = value;
 	}
@@ -37,19 +45,6 @@ public class Posting {
 	public int getPostingID() {
 		return this.postingID;
 	}
-
-	private Purchase purchase;
-
-	@ManyToOne
-	public Purchase getPurchase() {
-		return this.purchase;
-	}
-
-	public void setPurchase(Purchase purchase) {
-		this.purchase = purchase;
-	}
-
-	private Artist artist;
 
 	@ManyToOne(optional = false)
 	public Artist getArtist() {
@@ -60,8 +55,6 @@ public class Posting {
 		this.artist = artist;
 	}
 
-	private String title;
-
 	public void setTitle(String value) {
 		this.title = value;
 	}
@@ -69,8 +62,6 @@ public class Posting {
 	public String getTitle() {
 		return this.title;
 	}
-
-	private float price;
 
 	public void setPrice(float value) {
 		this.price = value;
@@ -90,8 +81,6 @@ public class Posting {
 		return this.description;
 	}
 
-	private float xDim;
-
 	public void setXDim(float value) {
 		this.xDim = value;
 	}
@@ -99,8 +88,6 @@ public class Posting {
 	public float getXDim() {
 		return this.xDim;
 	}
-
-	private float yDim;
 
 	public void setYDim(float value) {
 		this.yDim = value;
@@ -110,8 +97,6 @@ public class Posting {
 		return this.yDim;
 	}
 
-	private float zDim;
-
 	public void setZDim(float value) {
 		this.zDim = value;
 	}
@@ -120,8 +105,6 @@ public class Posting {
 		return this.zDim;
 	}
 
-	private ArtStatus artStatus;
-
 	public void setArtStatus(ArtStatus value) {
 		this.artStatus = value;
 	}
@@ -129,8 +112,6 @@ public class Posting {
 	public ArtStatus getArtStatus() {
 		return this.artStatus;
 	}
-
-	private DeliveryType deliveryType;
 
 	public void setDeliveryType(DeliveryType value) {
 		this.deliveryType = value;

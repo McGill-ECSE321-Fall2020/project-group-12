@@ -9,7 +9,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Buyer extends User {
+
 	private Purchase cart;
+	private Set<Purchase> purchases;
 
 	public Buyer() {
 		this.super();
@@ -41,8 +43,6 @@ public class Buyer extends User {
 		// TODO implement this operation
 		throw new UnsupportedOperationException("not implemented");
 	}
-
-	private Set<Purchase> purchases;
 
 	@OneToMany(mappedBy = "buyer")
 	public Set<Purchase> getPurchases() {
