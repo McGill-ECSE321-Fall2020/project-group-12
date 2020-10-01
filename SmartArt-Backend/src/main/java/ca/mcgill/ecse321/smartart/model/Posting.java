@@ -1,7 +1,7 @@
 package ca.mcgill.ecse321.smartart.model;
 
-import DeliveryType;
-import ArtStatus;
+import ca.mcgill.ecse321.smartart.model.DeliveryType;
+import ca.mcgill.ecse321.smartart.model.ArtStatus;
 
 import javax.persistence.Entity;
 import ca.mcgill.ecse321.smartart.model.Gallery;
