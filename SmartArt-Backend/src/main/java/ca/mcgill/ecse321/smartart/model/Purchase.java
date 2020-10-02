@@ -29,6 +29,25 @@ public class Purchase {
 		this.postings = postings;
 	}
 
+	public boolean addPosting(Posting aPosting) {
+		if(this.postings.add(aPosting))
+			return true;
+		
+		return false;
+	}
+	
+	public boolean removePosting(Posting aPosting) {
+		if(this.postings.remove(aPosting))
+			return true;
+		return false;
+	}
+	
+	public boolean hasPostings() {
+		if(this.postings == null)
+			return false;
+		return true;
+	}
+	
 	@ManyToOne(optional = false)
 	public Buyer getBuyer() {
 		return this.buyer;

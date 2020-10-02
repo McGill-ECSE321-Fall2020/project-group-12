@@ -28,20 +28,26 @@ public class Buyer extends User {
 
 	// TODO implement this operation
 	public boolean addToCart(Posting p) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
+		if(this.cart.addPosting(p))
+			return true;
+		return false;
 	}
 
 	// TODO implement this operation
 	public boolean removeFromCart(Posting p) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
+		if(this.cart.removePosting(p))
+			return true;
+		return false;
 	}
 
 	// TODO implement this operation
 	public boolean makePurchase(Purchase cart) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
+		if(cart != null) {
+			this.purchases.add(cart);
+			this.setCart(null);
+			return true;
+		}
+		return false;
 	}
 
 	@OneToMany(mappedBy = "buyer")
