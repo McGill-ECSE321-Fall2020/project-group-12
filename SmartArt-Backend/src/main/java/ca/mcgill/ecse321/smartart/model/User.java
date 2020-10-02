@@ -1,17 +1,14 @@
 package ca.mcgill.ecse321.smartart.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import ca.mcgill.ecse321.smartart.model.Gallery;
 import javax.persistence.ManyToOne;
 
 @Entity
 public abstract class User {
 	
-	private String password;
-	private Gallery gallery;
-	private String name;
-	private int phone;
-	private String email;
 	
 	public User(String name, int phone, String email, String password) {
 		this.name = name;
@@ -20,6 +17,8 @@ public abstract class User {
 		this.password = password;
 	}
 
+	private String password;
+	
 	public void setPassword(String value) {
 		this.password = value;
 	}
@@ -28,6 +27,8 @@ public abstract class User {
 		return this.password;
 	}
 
+	private Gallery gallery;
+	
 	@ManyToOne(optional = false)
 	public Gallery getGallery() {
 		return this.gallery;
@@ -37,6 +38,8 @@ public abstract class User {
 		this.gallery = gallery;
 	}
 
+	private String name;
+	
 	public void setName(String value) {
 		this.name = value;
 	}
@@ -45,6 +48,8 @@ public abstract class User {
 		return this.name;
 	}
 
+	private int phone;
+	
 	public void setPhone(int value) {
 		this.phone = value;
 	}
@@ -53,10 +58,13 @@ public abstract class User {
 		return this.phone;
 	}
 
+	private String email;
+	
 	public void setEmail(String value) {
 		this.email = value;
 	}
 
+	@Id
 	public String getEmail() {
 		return this.email;
 	}

@@ -4,6 +4,7 @@ import javax.persistence.OneToMany;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
@@ -15,8 +16,7 @@ public class Purchase {
 	private Buyer buyer;
 	private float totalPrice;
 
-	public Purchase(float totalPrice, int purchaseID) {
-		this.totalPrice = totalPrice;
+	public Purchase(int purchaseID) {
 		this.purchaseID = purchaseID;
 	}
 	
@@ -69,6 +69,7 @@ public class Purchase {
 		this.purchaseID = value;
 	}
 
+	@Id
 	public int getPurchaseID() {
 		return this.purchaseID;
 	}

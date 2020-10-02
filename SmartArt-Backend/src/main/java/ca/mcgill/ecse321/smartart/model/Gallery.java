@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.smartart.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import ca.mcgill.ecse321.smartart.model.Posting;
 import java.util.Set;
 import javax.persistence.OneToMany;
@@ -14,8 +16,8 @@ public class Gallery {
 	private String city;
 	private float commision;
 	
-	public Gallery() {
-
+	public Gallery(String name) {
+		this.name = name;
 	}
 
 	@OneToMany(mappedBy = "gallery")
@@ -40,6 +42,7 @@ public class Gallery {
 		this.name = value;
 	}
 
+	@Id
 	public String getName() {
 		return this.name;
 	}

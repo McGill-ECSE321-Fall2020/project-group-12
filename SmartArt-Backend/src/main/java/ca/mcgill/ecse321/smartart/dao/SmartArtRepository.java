@@ -19,6 +19,82 @@ public class SmartArtRepository {
 	@Autowired
 	EntityManager entityManager;
 
+	@Transactional
+	public Gallery createGallery(String name) {
+		Gallery g = new Gallery(name);
+		entityManager.persist(g);
+		return g;
+	}
 
+	@Transactional
+	public Gallery getGallery(String name) {
+		Gallery g = entityManager.find(Gallery.class, name);
+		return g;
+	}
+	
+	@Transactional
+	public Administrator createAdministrator(String name, int phone, String email, String password) {
+		Administrator a = new Administrator(name, phone, password, password);
+		entityManager.persist(a);
+		return a;
+	}
+
+	@Transactional
+	public Administrator getAdministrator(String email) {
+		Administrator a = entityManager.find(Administrator.class, email);
+		return a;
+	}
+	
+	@Transactional
+	public Artist createArtist(String name, int phone, String email, String password) {
+		Artist a = new Artist(name, phone, password, password);
+		entityManager.persist(a);
+		return a;
+	}
+
+	@Transactional
+	public Artist getArtist(String email) {
+		Artist a = entityManager.find(Artist.class, email);
+		return a;
+	}
+	
+	@Transactional
+	public Buyer createBuyer(String name, int phone, String email, String password) {
+		Buyer b = new Buyer(name, phone, password, password);
+		entityManager.persist(b);
+		return b;
+	}
+
+	@Transactional
+	public Buyer getBuyer(String email) {
+		Buyer b = entityManager.find(Buyer.class, email);
+		return b;
+	}
+	
+	@Transactional
+	public Posting createPosting(String title, float price, int postingID) {
+		Posting p = new Posting(title, price, postingID);
+		entityManager.persist(p);
+		return p;
+	}
+	
+	@Transactional
+	public Posting getPosting(int postingID) {
+		Posting p = entityManager.find(Posting.class, postingID);
+		return p;
+	}
+	
+	@Transactional
+	public Purchase createPurchase(int purchaseID) {
+		Purchase p = new Purchase(purchaseID);
+		entityManager.persist(p);
+		return p;
+	}
+	
+	@Transactional
+	public Purchase getPurchase(int purchaseID) {
+		Purchase p = entityManager.find(Purchase.class, purchaseID);
+		return p;
+	}
 
 }
