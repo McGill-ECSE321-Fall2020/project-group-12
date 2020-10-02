@@ -97,4 +97,12 @@ public class SmartArtRepository {
 		return p;
 	}
 
+	@Transactional
+	public List<Posting> getPoatingsUnderPrice(int maxPrice) {
+		TypedQuery<Posting> q = entityManager.createQuery("select p from Posting p where p.price < :maxPrice",Posting.class);
+		q.setParameter("maxPrice", maxPrice);
+		List<Posting> resultList = q.getResultList();
+		return resultList;
+	}
+	
 }
