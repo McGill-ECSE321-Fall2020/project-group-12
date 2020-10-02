@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Purchase {
-	private Posting posting;
+	private Set<Posting> postings;
 	private int purchaseID;
 	private Buyer buyer;
 	private float totalPrice;
@@ -20,13 +20,13 @@ public class Purchase {
 		this.purchaseID = purchaseID;
 	}
 	
-	@ManyToOne(optional = false)
-	public Posting getPosting() {
-		return this.posting;
+	@OneToMany(mappedBy = "gallery")
+	public Set<Posting> getPostings() {
+		return this.postings;
 	}
 
-	public void setPosting(Posting posting) {
-		this.posting = posting;
+	public void setPostings(Set<Posting> postings) {
+		this.postings = postings;
 	}
 
 	@ManyToOne(optional = false)
