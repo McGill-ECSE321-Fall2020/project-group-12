@@ -1,5 +1,7 @@
 package ca.mcgill.ecse321.smartart.model;
 
+import javax.persistence.Id;
+
 import javax.persistence.ManyToOne;
 
 import javax.persistence.OneToOne;
@@ -9,11 +11,26 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Buyer extends User {
-
+	
+	@ManyToOne(optional = false)
+	private Gallery gallery;
+	@OneToOne
 	private Purchase cart;
+	@OneToMany(mappedBy = "buyer")
 	private Set<Purchase> purchases;
 
-	@ManyToOne
+	public Buyer() {
+		super();
+	}
+	
+	public Gallery getGallery() {
+		return this.gallery;
+	}
+
+	public void setGallery(Gallery gallery) {
+		this.gallery = gallery;
+	}
+
 	public Purchase getCart() {
 		return this.cart;
 	}
@@ -22,21 +39,18 @@ public class Buyer extends User {
 		this.cart = cart;
 	}
 
-	// TODO implement this operation
 	public boolean addToCart(Posting p) {
 		if (this.cart.addPosting(p))
 			return true;
 		return false;
 	}
 
-	// TODO implement this operation
 	public boolean removeFromCart(Posting p) {
 		if (this.cart.removePosting(p))
 			return true;
 		return false;
 	}
 
-	// TODO implement this operation
 	public boolean makePurchase(Purchase cart) {
 		if (cart != null) {
 			this.purchases.add(cart);
@@ -46,7 +60,6 @@ public class Buyer extends User {
 		return false;
 	}
 
-	@OneToMany(mappedBy = "buyer")
 	public Set<Purchase> getPurchases() {
 		return this.purchases;
 	}

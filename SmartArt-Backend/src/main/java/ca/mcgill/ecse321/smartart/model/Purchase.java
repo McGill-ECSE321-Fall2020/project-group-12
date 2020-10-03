@@ -6,14 +6,27 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Purchase {
+	
+	@Id
+	@Column(name = "purchaseID")
+	private int purchaseID;
+	
+	@ManyToOne(optional = false)
+	private Buyer buyer;
+	
+	@Column(name = "totalPrice")
+	private float totalPrice;
+	
+	@OneToMany
 	private Set<Posting> postings;
 
-	@OneToMany(mappedBy = "purchase")
+	
 	public Set<Posting> getPostings() {
 		return this.postings;
 	}
@@ -21,10 +34,6 @@ public class Purchase {
 	public void setPostings(Set<Posting> postingss) {
 		this.postings = postingss;
 	}
-
-	private int purchaseID;
-	private Buyer buyer;
-	private float totalPrice;
 
 	public boolean addPosting(Posting aPosting) {
 		if (this.postings.add(aPosting))
