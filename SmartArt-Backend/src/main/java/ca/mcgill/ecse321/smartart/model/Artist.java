@@ -9,10 +9,6 @@ public class Artist extends User {
 
 	private Set<Posting> postings;
 
-	public Artist(String name, int phone, String email, String password) {
-		super(name,phone, email,password);
-	}
-
 	@OneToMany(mappedBy = "artist")
 	public Set<Posting> getPostings() {
 		return this.postings;

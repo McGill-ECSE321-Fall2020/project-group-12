@@ -11,10 +11,6 @@ public class Administrator extends User {
 
 	private Gallery gallery;
 
-	public Administrator(String name, int phone, String email, String password) {
-		super(name,phone, email,password);
-	}
-
 	@ManyToOne
 	public Gallery getgallery() {
 		return this.gallery;

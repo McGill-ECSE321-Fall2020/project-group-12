@@ -13,10 +13,6 @@ public class Buyer extends User {
 	private Purchase cart;
 	private Set<Purchase> purchases;
 
-	public Buyer(String name, int phone, String email, String password) {
-		super(name,phone, email,password);
-	}
-
 	@ManyToOne
 	public Purchase getCart() {
 		return this.cart;
@@ -28,21 +24,21 @@ public class Buyer extends User {
 
 	// TODO implement this operation
 	public boolean addToCart(Posting p) {
-		if(this.cart.addPosting(p))
+		if (this.cart.addPosting(p))
 			return true;
 		return false;
 	}
 
 	// TODO implement this operation
 	public boolean removeFromCart(Posting p) {
-		if(this.cart.removePosting(p))
+		if (this.cart.removePosting(p))
 			return true;
 		return false;
 	}
 
 	// TODO implement this operation
 	public boolean makePurchase(Purchase cart) {
-		if(cart != null) {
+		if (cart != null) {
 			this.purchases.add(cart);
 			this.setCart(null);
 			return true;

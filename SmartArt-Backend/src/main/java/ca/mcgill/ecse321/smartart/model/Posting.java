@@ -12,8 +12,39 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Posting {
-	
+	private Purchase purchase;
+
+	@ManyToOne(optional = false)
+	public Purchase getPurchase() {
+		return this.purchase;
+	}
+
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
+	}
+
+	private ArtStatus artStatus;
+
+	public void setArtStatus(ArtStatus value) {
+		this.artStatus = value;
+	}
+
+	public ArtStatus getArtStatus() {
+		return this.artStatus;
+	}
+
+	private DeliveryType deliveryType;
+
+	public void setDeliveryType(DeliveryType value) {
+		this.deliveryType = value;
+	}
+
+	public DeliveryType getDeliveryType() {
+		return this.deliveryType;
+	}
+
 	private Gallery gallery;
+
 	private int postingID;
 	private Artist artist;
 	private float price;
@@ -21,30 +52,19 @@ public class Posting {
 	private float yDim;
 	private float zDim;
 	private String title;
-	private ArtStatus artStatus;
-	private DeliveryType deliveryType;
-	
-	public Posting(String title, float price, int postingID) {
-		this.title = title;
-		this.price = price;
-		this.postingID = postingID;
+
+	public void setGallery(Gallery value) {
+		this.gallery = value;
 	}
 
-
-	@ManyToOne(optional = false)
 	public Gallery getGallery() {
 		return this.gallery;
-	}
-
-	public void setGallery(Gallery gallery) {
-		this.gallery = gallery;
 	}
 
 	public void setPostingID(int value) {
 		this.postingID = value;
 	}
 
-	@Id
 	public int getPostingID() {
 		return this.postingID;
 	}
@@ -106,21 +126,5 @@ public class Posting {
 
 	public float getZDim() {
 		return this.zDim;
-	}
-
-	public void setArtStatus(ArtStatus value) {
-		this.artStatus = value;
-	}
-
-	public ArtStatus getArtStatus() {
-		return this.artStatus;
-	}
-
-	public void setDeliveryType(DeliveryType value) {
-		this.deliveryType = value;
-	}
-
-	public DeliveryType getDeliveryType() {
-		return this.deliveryType;
 	}
 }

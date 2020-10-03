@@ -12,13 +12,10 @@ import ca.mcgill.ecse321.smartart.model.User;
 public class Gallery {
 	private Set<User> users;
 	private Set<Posting> postings;
+
 	private String name;
 	private String city;
 	private float commision;
-	
-	public Gallery(String name) {
-		this.name = name;
-	}
 
 	@OneToMany(mappedBy = "gallery")
 	public Set<User> getUsers() {
@@ -29,20 +26,18 @@ public class Gallery {
 		this.users = users;
 	}
 
-	@OneToMany(mappedBy = "gallery")
-	public Set<Posting> getPostings() {
-		return this.postings;
+	public void setPostings(Set<Posting> value) {
+		this.postings = value;
 	}
 
-	public void setPostings(Set<Posting> postings) {
-		this.postings = postings;
+	public Set<Posting> getPostings() {
+		return this.postings;
 	}
 
 	public void setName(String value) {
 		this.name = value;
 	}
 
-	@Id
 	public String getName() {
 		return this.name;
 	}

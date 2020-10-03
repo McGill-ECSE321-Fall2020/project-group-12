@@ -21,7 +21,8 @@ public class SmartArtRepository {
 
 	@Transactional
 	public Gallery createGallery(String name) {
-		Gallery g = new Gallery(name);
+		Gallery g = new Gallery();
+		g.setName(name);
 		entityManager.persist(g);
 		return g;
 	}
@@ -34,7 +35,11 @@ public class SmartArtRepository {
 	
 	@Transactional
 	public Administrator createAdministrator(String name, int phone, String email, String password) {
-		Administrator a = new Administrator(name, phone, password, password);
+		Administrator a = new Administrator();
+		a.setName(name);
+		a.setPhone(phone);
+		a.setEmail(email);
+		a.setPassword(password);
 		entityManager.persist(a);
 		return a;
 	}
@@ -47,7 +52,11 @@ public class SmartArtRepository {
 	
 	@Transactional
 	public Artist createArtist(String name, int phone, String email, String password) {
-		Artist a = new Artist(name, phone, password, password);
+		Artist a = new Artist();
+		a.setName(name);
+		a.setPhone(phone);
+		a.setEmail(email);
+		a.setPassword(password);
 		entityManager.persist(a);
 		return a;
 	}
@@ -60,7 +69,11 @@ public class SmartArtRepository {
 	
 	@Transactional
 	public Buyer createBuyer(String name, int phone, String email, String password) {
-		Buyer b = new Buyer(name, phone, password, password);
+		Buyer b = new Buyer();
+		b.setName(name);
+		b.setPhone(phone);
+		b.setEmail(email);
+		b.setPassword(password);
 		entityManager.persist(b);
 		return b;
 	}
@@ -73,7 +86,10 @@ public class SmartArtRepository {
 	
 	@Transactional
 	public Posting createPosting(String title, float price, int postingID) {
-		Posting p = new Posting(title, price, postingID);
+		Posting p = new Posting();
+		p.setTitle(title);
+		p.setPrice(price);
+		p.setPostingID(postingID);
 		entityManager.persist(p);
 		return p;
 	}
@@ -86,7 +102,8 @@ public class SmartArtRepository {
 	
 	@Transactional
 	public Purchase createPurchase(int purchaseID) {
-		Purchase p = new Purchase(purchaseID);
+		Purchase p = new Purchase();
+		p.setPurchaseID(purchaseID);
 		entityManager.persist(p);
 		return p;
 	}

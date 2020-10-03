@@ -12,42 +12,39 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Purchase {
 	private Set<Posting> postings;
-	private int purchaseID;
-	private Buyer buyer;
-	private float totalPrice;
 
-	public Purchase(int purchaseID) {
-		this.purchaseID = purchaseID;
-	}
-	
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany(mappedBy = "purchase")
 	public Set<Posting> getPostings() {
 		return this.postings;
 	}
 
-	public void setPostings(Set<Posting> postings) {
-		this.postings = postings;
+	public void setPostings(Set<Posting> postingss) {
+		this.postings = postingss;
 	}
 
+	private int purchaseID;
+	private Buyer buyer;
+	private float totalPrice;
+
 	public boolean addPosting(Posting aPosting) {
-		if(this.postings.add(aPosting))
+		if (this.postings.add(aPosting))
 			return true;
-		
+
 		return false;
 	}
-	
+
 	public boolean removePosting(Posting aPosting) {
-		if(this.postings.remove(aPosting))
+		if (this.postings.remove(aPosting))
 			return true;
 		return false;
 	}
-	
+
 	public boolean hasPostings() {
-		if(this.postings == null)
+		if (this.postings == null)
 			return false;
 		return true;
 	}
-	
+
 	@ManyToOne(optional = false)
 	public Buyer getBuyer() {
 		return this.buyer;
@@ -69,7 +66,6 @@ public class Purchase {
 		this.purchaseID = value;
 	}
 
-	@Id
 	public int getPurchaseID() {
 		return this.purchaseID;
 	}

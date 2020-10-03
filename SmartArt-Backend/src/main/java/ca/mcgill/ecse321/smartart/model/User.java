@@ -8,17 +8,9 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public abstract class User {
-	
-	
-	public User(String name, int phone, String email, String password) {
-		this.name = name;
-		this.phone = phone;
-		this.email = email;
-		this.password = password;
-	}
 
 	private String password;
-	
+
 	public void setPassword(String value) {
 		this.password = value;
 	}
@@ -28,7 +20,7 @@ public abstract class User {
 	}
 
 	private Gallery gallery;
-	
+
 	@ManyToOne(optional = false)
 	public Gallery getGallery() {
 		return this.gallery;
@@ -39,7 +31,7 @@ public abstract class User {
 	}
 
 	private String name;
-	
+
 	public void setName(String value) {
 		this.name = value;
 	}
@@ -49,7 +41,7 @@ public abstract class User {
 	}
 
 	private int phone;
-	
+
 	public void setPhone(int value) {
 		this.phone = value;
 	}
@@ -59,12 +51,11 @@ public abstract class User {
 	}
 
 	private String email;
-	
+
 	public void setEmail(String value) {
 		this.email = value;
 	}
 
-	@Id
 	public String getEmail() {
 		return this.email;
 	}
