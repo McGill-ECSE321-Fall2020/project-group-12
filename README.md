@@ -25,6 +25,7 @@ Minh is ...
 | Luke Barber     |               |                 |
 | Minh Quan Hoang  |               |                 |
 
+Deliverable 1 [Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report)
 ## Deliverable 2 Contributions
 | Team Member      | Member Role   | Hours Commited  |
 | -----------------| ------------- | --------------- |
