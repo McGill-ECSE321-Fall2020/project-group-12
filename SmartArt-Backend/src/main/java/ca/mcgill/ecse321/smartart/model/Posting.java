@@ -1,8 +1,12 @@
 package ca.mcgill.ecse321.smartart.model;
 
+import javax.persistence.ManyToMany;
+import java.util.Set;
+
 import ca.mcgill.ecse321.smartart.model.DeliveryType;
 import ca.mcgill.ecse321.smartart.model.ArtStatus;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -12,19 +16,31 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Posting {
-	private Purchase purchase;
 
+	@Id
+	@Column(name = "postingID")
+	private int postingID;
 	@ManyToOne(optional = false)
-	public Purchase getPurchase() {
-		return this.purchase;
-	}
-
-	public void setPurchase(Purchase purchase) {
-		this.purchase = purchase;
-	}
-
+	private Artist artist;
+	@ManyToOne(optional = false)
+	private Gallery gallery;
+	@Column(name = "price")
+	private float price;
+	@Column(name = "xDim")
+	private float xDim;
+	@Column(name = "yDim")
+	private float yDim;
+	@Column(name = "zDim")
+	private float zDim;
+	@Column(name = "title")
+	private String title;
+	@Column(name = "description")
+	private String description;
+	@Column(name = "artStatus")
 	private ArtStatus artStatus;
-
+	@Column(name = "deliveryType")
+	private DeliveryType deliveryType;
+	
 	public void setArtStatus(ArtStatus value) {
 		this.artStatus = value;
 	}
@@ -33,32 +49,12 @@ public class Posting {
 		return this.artStatus;
 	}
 
-	private DeliveryType deliveryType;
-
 	public void setDeliveryType(DeliveryType value) {
 		this.deliveryType = value;
 	}
 
 	public DeliveryType getDeliveryType() {
 		return this.deliveryType;
-	}
-
-	private Gallery gallery;
-
-	private int postingID;
-	private Artist artist;
-	private float price;
-	private float xDim;
-	private float yDim;
-	private float zDim;
-	private String title;
-
-	public void setGallery(Gallery value) {
-		this.gallery = value;
-	}
-
-	public Gallery getGallery() {
-		return this.gallery;
 	}
 
 	public void setPostingID(int value) {
@@ -69,7 +65,6 @@ public class Posting {
 		return this.postingID;
 	}
 
-	@ManyToOne(optional = false)
 	public Artist getArtist() {
 		return this.artist;
 	}
@@ -93,8 +88,6 @@ public class Posting {
 	public float getPrice() {
 		return this.price;
 	}
-
-	private String description;
 
 	public void setDescription(String value) {
 		this.description = value;
