@@ -23,7 +23,7 @@ public class Gallery {
 	private Set<Posting> postings;
 	
 	@Id
-	private String galleryID;
+	private int galleryID;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "city")
@@ -38,6 +38,10 @@ public class Gallery {
 	public void setBuyers(Set<Buyer> buyers) {
 		this.buyers = buyers;
 	}
+	
+	public void addBuyer(Buyer buyer) {
+		this.buyers.add(buyer);
+	}
 
 	public Set<Administrator> getAdministrators() {
 		return this.administrators;
@@ -46,6 +50,10 @@ public class Gallery {
 	public void setAdministrators(Set<Administrator> administrators) {
 		this.administrators = administrators;
 	}
+	
+	public void addAdministrator(Administrator administrator) {
+		this.administrators.add(administrator);
+	}
 
 	public Set<Artist> getArtists() {
 		return this.artists;
@@ -53,6 +61,10 @@ public class Gallery {
 
 	public void setArtists(Set<Artist> artists) {
 		this.artists = artists;
+	}
+	
+	public void addArtist(Artist artist) {
+		this.artists.add(artist);
 	}
 
 	public Set<Posting> getPostings() {
@@ -63,11 +75,11 @@ public class Gallery {
 		this.postings = postings;
 	}
 
-	public void setGalleryID(String value) {
+	public void setGalleryID(int value) {
 		this.galleryID = value;
 	}
 
-	public String getGalleryID() {
+	public int getGalleryID() {
 		return this.galleryID;
 	}
 

@@ -36,7 +36,7 @@ public class Artist extends User {
 		return this.gallery;
 	}
 
-	public void setGallery1(Gallery gallery) {
+	public void setGallery(Gallery gallery) {
 		this.gallery = gallery;
 	}
 
