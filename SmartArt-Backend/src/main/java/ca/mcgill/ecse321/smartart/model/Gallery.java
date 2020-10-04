@@ -23,8 +23,6 @@ public class Gallery {
 	private Set<Posting> postings;
 	
 	@Id
-	private int galleryID;
-	@Column(name = "name")
 	private String name;
 	@Column(name = "city")
 	private String city;
@@ -75,13 +73,6 @@ public class Gallery {
 		this.postings = postings;
 	}
 
-	public void setGalleryID(int value) {
-		this.galleryID = value;
-	}
-
-	public int getGalleryID() {
-		return this.galleryID;
-	}
 
 	public void setName(String value) {
 		this.name = value;

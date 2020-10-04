@@ -20,9 +20,8 @@ public class SmartArtRepository {
 	EntityManager entityManager;
 
 	@Transactional
-	public Gallery createGallery(int galleryID, String name, String city, double commission) {
+	public Gallery createGallery(String name, String city, double commission) {
 		Gallery g = new Gallery();
-		g.setGalleryID(galleryID);
 		g.setName(name);
 		g.setCity(city);
 		g.setCommission(commission);

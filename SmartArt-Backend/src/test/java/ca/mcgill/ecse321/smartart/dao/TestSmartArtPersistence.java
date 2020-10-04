@@ -50,16 +50,14 @@ public class TestSmartArtPersistence {
 
 	@Test
 	public void testPersistAndLoadGallery() {
-		int id = 1;
 		String name = "gal";
 		String city = "mtl";
 		double commission = 0.05;
 		
-		Gallery g = smartartRepository.createGallery(id, name, city, commission);
+		Gallery g = smartartRepository.createGallery(name, city, commission);
 		g = null;
 		g = smartartRepository.getGallery(1);
 		assertNotNull(g);
-		assertEquals(id, g.getGalleryID());
 		assertEquals(name, g.getName());
 	}
 	
@@ -91,15 +89,15 @@ public class TestSmartArtPersistence {
 	public void testPersistAndLoadArtist() {
 		String email = "mike@mail.com";
 		String name = "mike";
-		int galleryID = 1;
+		String galName = "gal";
 		
 		Artist artist = new Artist();
 		Gallery gallery = new Gallery();
 
 		artist.setEmail(email);
 		artist.setName(name);
+		gallery.setName(galName);
 		
-		gallery.setGalleryID(galleryID);
 		artist.setGallery(gallery);
 		
 		Set<Artist> artists = new HashSet<Artist>();
@@ -113,7 +111,7 @@ public class TestSmartArtPersistence {
 		gallery = null;
 
 		artist = artistRepository.findArtistByEmail(email);
-		gallery = galleryRepository.findGalleryByGalleryID(galleryID);
+		gallery = galleryRepository.findGalleryByName(galName);
 		assertNotNull(artist);
 		assertNotNull(gallery);
 		assertEquals(email, artist.getEmail());
