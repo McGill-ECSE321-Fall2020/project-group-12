@@ -30,8 +30,8 @@ public class SmartArtRepository {
 	}
 
 	@Transactional
-	public Gallery getGallery(int galleryID) {
-		Gallery g = entityManager.find(Gallery.class, galleryID);
+	public Gallery getGallery(String name) {
+		Gallery g = entityManager.find(Gallery.class, name);
 		return g;
 	}
 	

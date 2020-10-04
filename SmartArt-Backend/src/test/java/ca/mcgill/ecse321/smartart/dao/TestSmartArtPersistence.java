@@ -56,34 +56,12 @@ public class TestSmartArtPersistence {
 		
 		Gallery g = smartartRepository.createGallery(name, city, commission);
 		g = null;
-		g = smartartRepository.getGallery(1);
+		g = smartartRepository.getGallery(name);
 		assertNotNull(g);
 		assertEquals(name, g.getName());
 	}
 	
-	/*
-	@Test
-	public void testPersistAndLoadGallery() {
-		int galleryID = 1;
-		String name = "gal";
-		String city = "mtl";
-		double commission = 0.05;
-		
-		Gallery gallery = new Gallery();
-		
-		gallery.setGalleryID(galleryID);
-		gallery.setName(name);
-		gallery.setCity(city);
-		gallery.setCommission(commission);
-		galleryRepository.save(gallery);
 
-		gallery = null;
-
-		gallery = galleryRepository.findGalleryByGalleryID(galleryID);
-		assertNotNull(gallery);
-		assertEquals(galleryID, gallery.getGalleryID());
-	}
-	*/
 	
 	@Test
 	public void testPersistAndLoadArtist() {
