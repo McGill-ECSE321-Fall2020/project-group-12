@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.Column;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,20 +49,21 @@ public class TestSmartArtPersistence {
 		smartartRepository.deleteAll();
 	}
 
-	@Test
-	public void testPersistAndLoadGallery() {
+	@BeforeEach
+	public void createGallery() {
 		String name = "gal";
 		String city = "mtl";
 		double commission = 0.05;
-		
 		Gallery g = smartartRepository.createGallery(name, city, commission);
-		g = null;
-		g = smartartRepository.getGallery(name);
-		assertNotNull(g);
-		assertEquals(name, g.getName());
 	}
 	
-
+	@Test
+	public void testPersistAndLoadGallery() {
+		
+		Gallery g = smartartRepository.getGallery("gal");
+		assertNotNull(g);
+		assertEquals("gal", g.getName());
+	}
 	
 	@Test
 	public void testPersistAndLoadArtist() {
@@ -70,11 +72,10 @@ public class TestSmartArtPersistence {
 		String galName = "gal";
 		
 		Artist artist = new Artist();
-		Gallery gallery = new Gallery();
+		Gallery gallery = smartartRepository.getGallery(galName);
 
 		artist.setEmail(email);
 		artist.setName(name);
-		gallery.setName(galName);
 		
 		artist.setGallery(gallery);
 		
@@ -97,35 +98,63 @@ public class TestSmartArtPersistence {
 	
 	@Test
 	public void testPersistAndLoadBuyer() {
-		String email = "todd@mail.com";
-		String name = "todd";
+		String email = "bob@mail.com";
+		String name = "bob";
+		String galName = "gal";
 		
 		Buyer buyer = new Buyer();
-		
+		Gallery gallery = smartartRepository.getGallery(galName);
+
 		buyer.setEmail(email);
 		buyer.setName(name);
+		
+		buyer.setGallery(gallery);
+		
+		Set<Buyer> buyers = new HashSet<Buyer>();
+		buyers.add(buyer);
+		gallery.setBuyers(buyers);
+		
 		buyerRepository.save(buyer);
+		galleryRepository.save(gallery);
 
 		buyer = null;
+		gallery = null;
 
 		buyer = buyerRepository.findBuyerByEmail(email);
+		gallery = galleryRepository.findGalleryByName(galName);
 		assertNotNull(buyer);
+		assertNotNull(gallery);
 		assertEquals(email, buyer.getEmail());
 	}
 
 	@Test
 	public void testPersistAndLoadAdministrator() {
-		String email = "test@mail.com";
-		// First example for object save/load
+		String email = "bob@mail.com";
+		String name = "bob";
+		String galName = "gal";
+		
 		Administrator administrator = new Administrator();
-		// First example for attribute save/load
+		Gallery gallery = smartartRepository.getGallery(galName);
+
 		administrator.setEmail(email);
+		administrator.setName(name);
+		
+		administrator.setGallery(gallery);
+		
+		Set<Administrator> administrators = new HashSet<Administrator>();
+		administrators.add(administrator);
+		gallery.setAdministrators(administrators);
+		
 		administratorRepository.save(administrator);
+		galleryRepository.save(gallery);
 
 		administrator = null;
+		gallery = null;
 
 		administrator = administratorRepository.findAdministratorByEmail(email);
+		gallery = galleryRepository.findGalleryByName(galName);
 		assertNotNull(administrator);
+		assertNotNull(gallery);
 		assertEquals(email, administrator.getEmail());
 	}
 
