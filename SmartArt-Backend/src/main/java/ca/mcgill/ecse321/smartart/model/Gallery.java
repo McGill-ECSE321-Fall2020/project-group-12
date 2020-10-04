@@ -13,13 +13,13 @@ import ca.mcgill.ecse321.smartart.model.User;
 @Entity
 public class Gallery {
 	
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany
 	private Set<Buyer> buyers;
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany
 	private Set<Administrator> administrators;
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany
 	private Set<Artist> artists;
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany
 	private Set<Posting> postings;
 	
 	@Id
