@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.smartart.model;
 
+
 import javax.persistence.ManyToMany;
 import java.util.Set;
 

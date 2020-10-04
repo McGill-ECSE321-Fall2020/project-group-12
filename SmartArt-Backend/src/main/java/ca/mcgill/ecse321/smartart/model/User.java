@@ -19,6 +19,7 @@ public abstract class User {
 	private String password;
 	@Column(name = "phone")
 	private int phone;
+	
 	public void setPassword(String value) {
 		this.password = value;
 	}

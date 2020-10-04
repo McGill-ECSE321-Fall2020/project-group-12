@@ -54,7 +54,6 @@ public class Purchase {
 		return true;
 	}
 
-	@ManyToOne(optional = false)
 	public Buyer getBuyer() {
 		return this.buyer;
 	}
