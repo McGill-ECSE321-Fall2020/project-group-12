@@ -28,8 +28,8 @@ public class Gallery {
 	private String name;
 	@Column(name = "city")
 	private String city;
-	@Column(name = "commision")
-	private float commision;
+	@Column(name = "commission")
+	private double commission;
 	
 	public Set<Buyer> getBuyers() {
 		return this.buyers;
@@ -99,11 +99,11 @@ public class Gallery {
 		return this.city;
 	}
 
-	public void setCommision(float value) {
-		this.commision = value;
+	public void setCommission(double value) {
+		this.commission = value;
 	}
 
-	public float getCommision() {
-		return this.commision;
+	public double getCommission() {
+		return this.commission;
 	}
 }

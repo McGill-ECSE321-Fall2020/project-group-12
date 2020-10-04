@@ -20,16 +20,19 @@ public class SmartArtRepository {
 	EntityManager entityManager;
 
 	@Transactional
-	public Gallery createGallery(String name) {
+	public Gallery createGallery(int galleryID, String name, String city, double commission) {
 		Gallery g = new Gallery();
+		g.setGalleryID(galleryID);
 		g.setName(name);
+		g.setCity(city);
+		g.setCommission(commission);
 		entityManager.persist(g);
 		return g;
 	}
 
 	@Transactional
-	public Gallery getGallery(String name) {
-		Gallery g = entityManager.find(Gallery.class, name);
+	public Gallery getGallery(int galleryID) {
+		Gallery g = entityManager.find(Gallery.class, galleryID);
 		return g;
 	}
 	
@@ -112,6 +115,11 @@ public class SmartArtRepository {
 	public Purchase getPurchase(int purchaseID) {
 		Purchase p = entityManager.find(Purchase.class, purchaseID);
 		return p;
+	}
+	
+	@Transactional
+	public void deleteAll() {
+		entityManager.clear();
 	}
 
 	@Transactional

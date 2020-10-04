@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +34,8 @@ public class TestSmartArtPersistence {
 	private PostingRepository postingRepository;
 	@Autowired
 	private PurchaseRepository purchaseRepository;
-	
+	@Autowired
+	private SmartArtRepository smartartRepository;
 
 	@AfterEach
 	public void clearDatabase() {
@@ -42,15 +45,38 @@ public class TestSmartArtPersistence {
 		galleryRepository.deleteAll();
 		postingRepository.deleteAll();
 		purchaseRepository.deleteAll();
+		smartartRepository.deleteAll();
 	}
 
 	@Test
 	public void testPersistAndLoadGallery() {
+		int id = 1;
+		String name = "gal";
+		String city = "mtl";
+		double commission = 0.05;
+		
+		Gallery g = smartartRepository.createGallery(id, name, city, commission);
+		g = null;
+		g = smartartRepository.getGallery(1);
+		assertNotNull(g);
+		assertEquals(id, g.getGalleryID());
+		assertEquals(name, g.getName());
+	}
+	
+	/*
+	@Test
+	public void testPersistAndLoadGallery() {
 		int galleryID = 1;
+		String name = "gal";
+		String city = "mtl";
+		double commission = 0.05;
 		
 		Gallery gallery = new Gallery();
 		
 		gallery.setGalleryID(galleryID);
+		gallery.setName(name);
+		gallery.setCity(city);
+		gallery.setCommission(commission);
 		galleryRepository.save(gallery);
 
 		gallery = null;
@@ -59,6 +85,7 @@ public class TestSmartArtPersistence {
 		assertNotNull(gallery);
 		assertEquals(galleryID, gallery.getGalleryID());
 	}
+	*/
 	
 	@Test
 	public void testPersistAndLoadArtist() {
