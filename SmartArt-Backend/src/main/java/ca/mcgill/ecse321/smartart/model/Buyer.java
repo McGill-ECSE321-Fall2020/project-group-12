@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.OneToOne;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.OneToMany;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 public class Buyer extends User {
 	
 	@ManyToOne(optional = false)
+	@Column(name = "galleryID")
 	private Gallery gallery;
 	@OneToOne
 	private Purchase cart;
