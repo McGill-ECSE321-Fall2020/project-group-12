@@ -39,8 +39,6 @@ public class Posting {
 	private String description;
 	@Column(name = "artStatus")
 	private ArtStatus artStatus;
-	@Column(name = "deliveryType")
-	private DeliveryType deliveryType;
 	
 	public void setArtStatus(ArtStatus value) {
 		this.artStatus = value;
@@ -48,14 +46,6 @@ public class Posting {
 
 	public ArtStatus getArtStatus() {
 		return this.artStatus;
-	}
-
-	public void setDeliveryType(DeliveryType value) {
-		this.deliveryType = value;
-	}
-
-	public DeliveryType getDeliveryType() {
-		return this.deliveryType;
 	}
 
 	public void setPostingID(int value) {

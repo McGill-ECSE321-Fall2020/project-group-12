@@ -184,6 +184,7 @@ public class TestSmartArtPersistence {
 		String email = "amy@mail.com";
 		String name = "amy";
 		String galName = "Guginhiem";
+		ArtStatus artStatus = ArtStatus.Available;
 		
 		Gallery g = galleryRepository.findGalleryByName(galName);
 		
@@ -195,6 +196,7 @@ public class TestSmartArtPersistence {
 		p.setPostingID(id);
 		p.setTitle(title);
 		p.setPrice(price);
+		p.setArtStatus(artStatus);
 		
 		g.addArtist(a);
 		
@@ -213,6 +215,7 @@ public class TestSmartArtPersistence {
 		assertNotNull(p);
 		assertEquals(name, p.getArtist().getName());
 		assertEquals(price, p.getPrice());
+		assertEquals(artStatus, p.getArtStatus());
 	}
 	
 	@Test
@@ -221,6 +224,7 @@ public class TestSmartArtPersistence {
 		String email = "meg@mail.com";
 		String name = "meg";
 		String galName = "Guginhiem";
+		DeliveryType deliveryType = DeliveryType.PickUp;
 		
 		Gallery g = galleryRepository.findGalleryByName(galName);
 		
@@ -232,6 +236,7 @@ public class TestSmartArtPersistence {
 		Purchase p = new Purchase();
 		p.setPurchaseID(id);
 		p.setTotalPrice(0);
+		p.setDeliveryType(deliveryType);
 		
 		b.addPurchase(p);
 		
@@ -245,6 +250,7 @@ public class TestSmartArtPersistence {
 		assertNotNull(p);
 		assertEquals(name, p.getBuyer().getName());
 		assertEquals(id, p.getPurchaseID());
+		assertEquals(deliveryType, p.getDeliveryType());
 	}
 
 }

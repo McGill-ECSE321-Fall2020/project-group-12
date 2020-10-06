@@ -27,6 +27,9 @@ public class Purchase {
 	
 	@OneToMany
 	private Set<Posting> postings;
+	
+	@Column(name = "deliveryType")
+	private DeliveryType deliveryType;
 
 	
 	public Set<Posting> getPostings() {
@@ -75,5 +78,13 @@ public class Purchase {
 
 	public int getPurchaseID() {
 		return this.purchaseID;
+	}
+	
+	public void setDeliveryType(DeliveryType deliveryType) {
+		this.deliveryType = deliveryType;
+	}
+	
+	public DeliveryType getDeliveryType() {
+		return this.deliveryType;
 	}
 }
