@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.smartart.model;
 
 
 import javax.persistence.ManyToMany;
+
+import java.util.Date;
 import java.util.Set;
 
 import ca.mcgill.ecse321.smartart.model.DeliveryType;
@@ -39,6 +41,8 @@ public class Posting {
 	private String description;
 	@Column(name = "artStatus")
 	private ArtStatus artStatus;
+	@Column(name = "date")
+	private Date date;
 	
 	public void setArtStatus(ArtStatus value) {
 		this.artStatus = value;
@@ -118,5 +122,13 @@ public class Posting {
 	
 	public Gallery getGallery() {
 		return this.gallery;
+	}
+	
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	public Date getDate() {
+		return this.date;
 	}
 }
