@@ -6,7 +6,7 @@ Our goal is to help the local art industry thrive during these times of difficul
 ### Ben Macnaughton
 Ben is a U2 software engineering student at McGill University. Ben was born in Vancouver, and moved to Montreal for his studies.
 ### Aidan Williams  
-Aidan is a U2 software engineering student at McGill University. 
+Aidan is a U2 software engineering student at McGill University. He was born in Toronto, but has lived in the United States nearly his entire life. His studies brought him back to Canada to major in Software Engineering.
 ### Gregory Walfish
 Gregory is a U2 Software engineering student at McGill University. Born, raised and currently living in Montreal.
 ### Luke Barber
