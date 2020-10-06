@@ -1,5 +1,5 @@
 # Smart Art
-Smart Art is a web and android based application desgined for art galleries to promote and sell the works of local artists.
+Smart Art is a web and android based application designed for art galleries to promote and sell the works of local artists.
 Our goal is to help the local art industry thrive during these times of difficulty by connecting them to potential clients within their community and beyond.
 
 ## Our team
