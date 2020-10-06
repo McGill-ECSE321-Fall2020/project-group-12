@@ -23,7 +23,7 @@ public class Purchase {
 	private Buyer buyer;
 	
 	@Column(name = "totalPrice")
-	private float totalPrice;
+	private double totalPrice;
 	
 	@OneToMany
 	private Set<Posting> postings;
@@ -61,11 +61,11 @@ public class Purchase {
 		this.buyer = buyer;
 	}
 
-	public void setTotalPrice(float value) {
+	public void setTotalPrice(double value) {
 		this.totalPrice = value;
 	}
 
-	public float getTotalPrice() {
+	public double getTotalPrice() {
 		return this.totalPrice;
 	}
 

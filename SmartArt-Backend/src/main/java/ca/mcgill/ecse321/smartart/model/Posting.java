@@ -26,13 +26,13 @@ public class Posting {
 	@ManyToOne(optional = false)
 	private Gallery gallery;
 	@Column(name = "price")
-	private float price;
+	private double price;
 	@Column(name = "xDim")
-	private float xDim;
+	private double xDim;
 	@Column(name = "yDim")
-	private float yDim;
+	private double yDim;
 	@Column(name = "zDim")
-	private float zDim;
+	private double zDim;
 	@Column(name = "title")
 	private String title;
 	@Column(name = "description")
@@ -82,11 +82,11 @@ public class Posting {
 		return this.title;
 	}
 
-	public void setPrice(float value) {
+	public void setPrice(double value) {
 		this.price = value;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 
@@ -98,27 +98,27 @@ public class Posting {
 		return this.description;
 	}
 
-	public void setXDim(float value) {
+	public void setXDim(double value) {
 		this.xDim = value;
 	}
 
-	public float getXDim() {
+	public double getXDim() {
 		return this.xDim;
 	}
 
-	public void setYDim(float value) {
+	public void setYDim(double value) {
 		this.yDim = value;
 	}
 
-	public float getYDim() {
+	public double getYDim() {
 		return this.yDim;
 	}
 
-	public void setZDim(float value) {
+	public void setZDim(double value) {
 		this.zDim = value;
 	}
 
-	public float getZDim() {
+	public double getZDim() {
 		return this.zDim;
 	}
 

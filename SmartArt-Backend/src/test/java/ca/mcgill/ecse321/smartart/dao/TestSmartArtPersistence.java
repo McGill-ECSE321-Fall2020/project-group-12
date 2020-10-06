@@ -180,7 +180,7 @@ public class TestSmartArtPersistence {
 	public void testPersistAndLoadPosting() {
 		int id = 7464;
 		String title = "Nu couche";
-		float price = 100000000;
+		double price = 100000000;
 		String email = "amy@mail.com";
 		String name = "amy";
 		String galName = "Guginhiem";
