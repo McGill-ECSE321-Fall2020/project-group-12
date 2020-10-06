@@ -6,7 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
@@ -17,7 +21,7 @@ public class Buyer extends User {
 	private Gallery gallery;
 	@OneToOne
 	private Purchase cart;
-	@OneToMany(mappedBy = "buyer")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "buyer", cascade = CascadeType.ALL)
 	private Set<Purchase> purchases;
 
 	public Buyer() {
@@ -38,16 +42,17 @@ public class Buyer extends User {
 
 	public void setCart(Purchase cart) {
 		this.cart = cart;
+		this.addPurchase(cart);
+		cart.setBuyer(this);
 	}
 
-	public boolean addToCart(Posting p) {
-		if (this.cart.addPosting(p))
-			return true;
-		return false;
+	public void addToCart(Posting posting) {
+		this.cart.addPosting(posting);
+		this.cart.setTotalPrice(this.cart.getTotalPrice() + posting.getPrice());
 	}
 
-	public boolean removeFromCart(Posting p) {
-		if (this.cart.removePosting(p))
+	public boolean removeFromCart(Posting posting) {
+		if (this.cart.removePosting(posting))
 			return true;
 		return false;
 	}
@@ -67,6 +72,12 @@ public class Buyer extends User {
 
 	public void setPurchases(Set<Purchase> purchases) {
 		this.purchases = purchases;
+	}
+	
+	public void addPurchase(Purchase purchase) {
+		if(this.purchases == null) this.purchases = new HashSet<Purchase>();
+		this.purchases.add(purchase);
+		purchase.setBuyer(this);
 	}
 
 }

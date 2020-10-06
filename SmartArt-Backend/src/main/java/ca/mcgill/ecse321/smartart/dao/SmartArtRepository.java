@@ -36,12 +36,13 @@ public class SmartArtRepository {
 	}
 	
 	@Transactional
-	public Administrator createAdministrator(String name, int phone, String email, String password) {
+	public Administrator createAdministrator(String name, int phone, String email, String password, Gallery gallery) {
 		Administrator a = new Administrator();
 		a.setName(name);
 		a.setPhone(phone);
 		a.setEmail(email);
 		a.setPassword(password);
+		a.setGallery(gallery);
 		entityManager.persist(a);
 		return a;
 	}
@@ -53,12 +54,13 @@ public class SmartArtRepository {
 	}
 	
 	@Transactional
-	public Artist createArtist(String name, int phone, String email, String password) {
+	public Artist createArtist(String name, int phone, String email, String password, Gallery gallery) {
 		Artist a = new Artist();
 		a.setName(name);
 		a.setPhone(phone);
 		a.setEmail(email);
 		a.setPassword(password);
+		a.setGallery(gallery);
 		entityManager.persist(a);
 		return a;
 	}
@@ -70,12 +72,13 @@ public class SmartArtRepository {
 	}
 	
 	@Transactional
-	public Buyer createBuyer(String name, int phone, String email, String password) {
+	public Buyer createBuyer(String name, int phone, String email, String password, Gallery gallery) {
 		Buyer b = new Buyer();
 		b.setName(name);
 		b.setPhone(phone);
 		b.setEmail(email);
 		b.setPassword(password);
+		b.setGallery(gallery);
 		entityManager.persist(b);
 		return b;
 	}
@@ -87,11 +90,13 @@ public class SmartArtRepository {
 	}
 	
 	@Transactional
-	public Posting createPosting(String title, float price, int postingID) {
+	public Posting createPosting(String title, float price, int postingID, Artist artist, Gallery gallery) {
 		Posting p = new Posting();
 		p.setTitle(title);
 		p.setPrice(price);
 		p.setPostingID(postingID);
+		p.setArtist(artist);
+		p.setGallery(gallery);
 		entityManager.persist(p);
 		return p;
 	}
@@ -103,9 +108,10 @@ public class SmartArtRepository {
 	}
 	
 	@Transactional
-	public Purchase createPurchase(int purchaseID) {
+	public Purchase createPurchase(int purchaseID, Buyer buyer) {
 		Purchase p = new Purchase();
 		p.setPurchaseID(purchaseID);
+		p.setBuyer(buyer);
 		entityManager.persist(p);
 		return p;
 	}

@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.smartart.model;
 
 import javax.persistence.OneToMany;
+
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -31,20 +33,17 @@ public class Purchase {
 		return this.postings;
 	}
 
-	public void setPostings(Set<Posting> postingss) {
-		this.postings = postingss;
+	public void setPostings(Set<Posting> postings) {
+		this.postings = postings;
 	}
 
-	public boolean addPosting(Posting aPosting) {
-		if (this.postings.add(aPosting))
-			return true;
-
-		return false;
+	public void addPosting(Posting posting) {
+		if(this.postings == null) this.postings = new HashSet<Posting>();
+		this.postings.add(posting);
 	}
 
-	public boolean removePosting(Posting aPosting) {
-		if (this.postings.remove(aPosting))
-			return true;
+	public boolean removePosting(Posting posting) {
+		if (this.postings.remove(posting))return true;
 		return false;
 	}
 

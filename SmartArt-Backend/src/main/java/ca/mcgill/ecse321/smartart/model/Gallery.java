@@ -5,8 +5,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 
 import ca.mcgill.ecse321.smartart.model.Posting;
+
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import ca.mcgill.ecse321.smartart.model.User;
@@ -14,16 +18,17 @@ import ca.mcgill.ecse321.smartart.model.User;
 @Entity
 public class Gallery {
 	
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
 	private Set<Buyer> buyers;
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
 	private Set<Administrator> administrators;
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
 	private Set<Artist> artists;
-	@OneToMany(mappedBy = "gallery")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
 	private Set<Posting> postings;
 	
 	@Id
+	@Column(name = "name")
 	private String name;
 	@Column(name = "city")
 	private String city;
@@ -39,7 +44,9 @@ public class Gallery {
 	}
 	
 	public void addBuyer(Buyer buyer) {
+		if(this.buyers == null) this.buyers = new HashSet<Buyer>();
 		this.buyers.add(buyer);
+		buyer.setGallery(this);
 	}
 
 	public Set<Administrator> getAdministrators() {
@@ -51,7 +58,9 @@ public class Gallery {
 	}
 	
 	public void addAdministrator(Administrator administrator) {
+		if(this.administrators == null) this.administrators = new HashSet<Administrator>();
 		this.administrators.add(administrator);
+		administrator.setGallery(this);
 	}
 
 	public Set<Artist> getArtists() {
@@ -63,7 +72,9 @@ public class Gallery {
 	}
 	
 	public void addArtist(Artist artist) {
+		if(this.artists == null) this.artists = new HashSet<Artist>();
 		this.artists.add(artist);
+		artist.setGallery(this);
 	}
 
 	public Set<Posting> getPostings() {
@@ -97,5 +108,11 @@ public class Gallery {
 
 	public double getCommission() {
 		return this.commission;
+	}
+
+	public void addPosting(Posting posting) {
+		if(this.postings == null) this.postings = new HashSet<Posting>();
+		this.postings.add(posting);
+		posting.setGallery(this);
 	}
 }

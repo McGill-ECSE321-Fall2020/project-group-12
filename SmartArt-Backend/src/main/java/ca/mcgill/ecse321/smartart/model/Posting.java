@@ -121,4 +121,12 @@ public class Posting {
 	public float getZDim() {
 		return this.zDim;
 	}
+
+	public void setGallery(Gallery gallery) {
+		this.gallery = gallery;
+	}
+	
+	public Gallery getGallery() {
+		return this.gallery;
+	}
 }
