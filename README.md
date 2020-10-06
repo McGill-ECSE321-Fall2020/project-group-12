@@ -10,7 +10,7 @@ Aidan is a U2 software engineering student at McGill University.
 ### Gregory Walfish
 Gregory is a U2 Software engineering student at McGill University. Born, raised and currently living in Montreal.
 ### Luke Barber
-Luke is ...
+Luke is a U2 Software engineering student at McGill University. Born in Germany, and in Montreal for university.
 ### Minh Quan Hoang
 Minh is a U3 Software Engineering student at McGill University.
 
