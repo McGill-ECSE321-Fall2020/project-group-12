@@ -12,18 +12,18 @@ Gregory is a U2 Software engineering student at McGill University. Born, raised 
 ### Luke Barber
 Luke is a U2 Software engineering student at McGill University. Born in Germany, and in Montreal for university.
 ### Minh Quan Hoang
-Minh is a U3 Software Engineering student at McGill University.
+Minh is a U3 Software Engineering student at McGill University. Born in Montreal and still alive in Montreal.
 
 
 
 ## Deliverable 1 Contributions
-| Team Member      | Member Role   | Hours Commited  |
-| -----------------| ------------- | --------------- |
-| Ben Macnaughton  |               |        24       |
-| Aidan Williams   |               |        20       |
-| Gregory Walfish  |               |        16       |
-| Luke Barber      |               |        12       |
-| Minh Quan Hoang  |               |        10       |
+| Team Member      | Member Role          | Hours Commited  |
+| -----------------| -------------------- | --------------- |
+| Ben Macnaughton  | Persistence Testing  |        24       |
+| Aidan Williams   | Backend Design       |        20       |
+| Gregory Walfish  | Project Manager      |        16       |
+| Luke Barber      | System Documentation |        12       |
+| Minh Quan Hoang  | Code Documentation   |        10       |
 
 Deliverable 1 [Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report)
 ## Deliverable 2 Contributions
