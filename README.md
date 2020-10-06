@@ -12,7 +12,7 @@ Gregory is a U2 Software engineering student at McGill University. Born, raised 
 ### Luke Barber
 Luke is ...
 ### Minh Quan Hoang
-Minh is ...
+Minh is a U3 Software Engineering student at McGill University.
 
 
 
