@@ -23,7 +23,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Aidan Williams   | Backend Design       |        20       |
 | Gregory Walfish  | Project Manager      |        16       |
 | Luke Barber      | System Documentation |        12       |
-| Minh Quan Hoang  | Code Documentation   |        10       |
+| Minh Quan Hoang  | Code Documentation   |        12       |
 
 Deliverable 1 [Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report)
 ## Deliverable 2 Contributions
