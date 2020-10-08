@@ -5,6 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * 
+ * @author Group 12
+ * Main class that runs our Smart Art application.
+ */
 @RestController
 @SpringBootApplication
 public class SmartArtApplication {

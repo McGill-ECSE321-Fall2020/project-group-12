@@ -16,11 +16,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.smartart.model.*;
 
-
+/**
+ * 
+ * @author Group 12
+ * Class used to test Smart Art persistence.
+ */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestSmartArtPersistence {
 
+	/**
+	 * Repositories to use for database purposes.
+	 */
 	@Autowired
 	private ArtistRepository artistRepository;
 	@Autowired
@@ -34,6 +41,9 @@ public class TestSmartArtPersistence {
 	@Autowired
 	private PurchaseRepository purchaseRepository;
 
+	/**
+	 * Creates a gallery with a name, city and commission value.
+	 */
 	@BeforeEach
 	public void createGallery() {
 		String galName = "Guginhiem";
@@ -48,6 +58,9 @@ public class TestSmartArtPersistence {
 		galleryRepository.save(gallery);
 	}
 	
+	/**
+	 * Clears all the repositories in the database.
+	 */
 	@AfterEach
 	public void clearDatabase() {
 		administratorRepository.deleteAll();
@@ -58,7 +71,11 @@ public class TestSmartArtPersistence {
 		purchaseRepository.deleteAll();
 	}
 
-	
+	/**
+	 * Tests the save function for the repositories 
+	 * and the findGalleryByName function to see if it 
+	 * can persist and load information properly.
+	 */
 	@Test
 	public void testPersistAndLoadGallery() {
 		String galName = "Guginhiem";
@@ -88,6 +105,11 @@ public class TestSmartArtPersistence {
 		assertEquals(name, ((Artist) gallery.getArtists().toArray()[0]).getName());
 	}
 	
+	/**
+	 * Tests to see if the repositories can store the information given with 
+	 * the save function and tests if findArtistByEmail can load
+	 * information from the repositories.
+	 */
 	@Test
 	public void testPersistAndLoadArtist() {
 		String email = "mike@mail.com";
@@ -117,6 +139,11 @@ public class TestSmartArtPersistence {
 		assertEquals(g.getName(), a.getGallery().getName());
 	}
 	
+	/**
+	 * Tests the save function for the repositories 
+	 * and the findBuyerByEmail function to see if it 
+	 * can persist and load information properly.
+	 */
 	@Test
 	public void testPersistAndLoadBuyer() {
 		String email = "bob@mail.com";
@@ -146,7 +173,12 @@ public class TestSmartArtPersistence {
 		assertEquals(email, b.getEmail());
 		assertEquals(g.getName(), b.getGallery().getName());
 	}
-
+	
+	/**
+	 * Tests the save function for the repositories 
+	 * and the findAdministratorByEmail function to see if it 
+	 * can persist and load information properly.
+	 */
 	@Test
 	public void testPersistAndLoadAdministrator() {
 		String email = "pam@mail.com";
@@ -176,6 +208,11 @@ public class TestSmartArtPersistence {
 		assertEquals(g.getName(), a.getGallery().getName());
 	}
 	
+	/**
+	 * Tests the save function for the repositories 
+	 * and the findPostingByPostingID function to see if it 
+	 * can persist and load information properly.
+	 */
 	@Test
 	public void testPersistAndLoadPosting() {
 		int id = 7464;
@@ -218,6 +255,11 @@ public class TestSmartArtPersistence {
 		assertEquals(artStatus, p.getArtStatus());
 	}
 	
+	/**
+	 * Tests the save function for the repositories 
+	 * and the findPurchaseByPurchaseID function to see if it 
+	 * can persist and load information properly.
+	 */
 	@Test
 	public void testPersistAndLoadPurchase() {
 		int id = 9874;
