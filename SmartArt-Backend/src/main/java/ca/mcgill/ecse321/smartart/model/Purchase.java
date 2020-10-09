@@ -12,6 +12,12 @@ import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 
+/**
+ * 
+ * @author Group 12
+ * This class represents a purchase that can be made for an art piece
+ * through a Posting in a Gallery. 
+ */
 @Entity
 public class Purchase {
 	
@@ -31,59 +37,111 @@ public class Purchase {
 	@Column(name = "deliveryType")
 	private DeliveryType deliveryType;
 
-	
+	/**
+	 * Gets the set of Postings of this Purchase.
+	 * @return
+	 */
 	public Set<Posting> getPostings() {
 		return this.postings;
 	}
 
+	/**
+	 * Sets a new set of Postings for this Purchase.
+	 * @param postings: the new set of Postings.
+	 */
 	public void setPostings(Set<Posting> postings) {
 		this.postings = postings;
 	}
 
+	/**
+	 * Adds a Posting to the set of Postings of this Purchase.
+	 * @param posting: the Posting to be added.
+	 */
 	public void addPosting(Posting posting) {
 		if(this.postings == null) this.postings = new HashSet<Posting>();
 		this.postings.add(posting);
 	}
 
+	/**
+	 * Removes a Posting from the set of Postings of this Purchase.
+	 * @param posting: the Posting to be removed.
+	 * @return
+	 */
 	public boolean removePosting(Posting posting) {
 		if (this.postings.remove(posting))return true;
 		return false;
 	}
 
+	/**
+	 * Checks if the Purchase has Postings.
+	 * @return trueif there are Postings, false if not.
+	 */
 	public boolean hasPostings() {
 		if (this.postings == null)
 			return false;
 		return true;
 	}
 
+	/**
+	 * Gets the Buyer of this Purchase.
+	 * @return the Buyer of this Purchase.
+	 */
 	public Buyer getBuyer() {
 		return this.buyer;
 	}
 
+	/**
+	 * Sets the Buyer of this Purchase.
+	 * @param buyer: the Buyer of this Purchase.
+	 */
 	public void setBuyer(Buyer buyer) {
 		this.buyer = buyer;
 	}
 
+	/**
+	 * Sets the total price of this Purchase.
+	 * @param value: the total price of this Purchase.
+	 */
 	public void setTotalPrice(double value) {
 		this.totalPrice = value;
 	}
 
+	/**
+	 * Gets the total price of this Purchase.
+	 * @return the total price of this Purchase.
+	 */
 	public double getTotalPrice() {
 		return this.totalPrice;
 	}
 
+	/**
+	 * Sets the purchase ID for this Purchase.
+	 * @param value: the purchase ID for this Purchase.
+	 */
 	public void setPurchaseID(int value) {
 		this.purchaseID = value;
 	}
 
+	/**
+	 * Gets the purchase ID of this Purchase.
+	 * @return the purchase ID of this Purchase.
+	 */
 	public int getPurchaseID() {
 		return this.purchaseID;
 	}
 	
+	/**
+	 * Sets the delivery type of this Purchase.
+	 * @param deliveryType: the delivery type of this Purchase.
+	 */
 	public void setDeliveryType(DeliveryType deliveryType) {
 		this.deliveryType = deliveryType;
 	}
 	
+	/**
+	 * Gets the delivery type of this Purchase.
+	 * @return the delivery type of this Purchase.
+	 */
 	public DeliveryType getDeliveryType() {
 		return this.deliveryType;
 	}
