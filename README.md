@@ -22,7 +22,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Ben Macnaughton  | Persistence Testing  |        24       |
 | Aidan Williams   | Backend Design       |        20       |
 | Gregory Walfish  | Project Manager      |        18       |
-| Luke Barber      | System Documentation |        12       |
+| Luke Barber      | System Documentation |        15       |
 | Minh Quan Hoang  | Code Documentation   |        12       |
 
 Deliverable 1 [Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report)
