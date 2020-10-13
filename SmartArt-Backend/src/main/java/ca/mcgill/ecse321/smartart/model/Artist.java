@@ -78,7 +78,6 @@ public class Artist extends User {
 	 */
 	public void setGallery(Gallery gallery) {
 		this.gallery = gallery;
-		gallery.addArtist(this);
 	}
 
 }

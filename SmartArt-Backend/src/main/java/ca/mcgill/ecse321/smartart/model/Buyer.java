@@ -52,7 +52,6 @@ public class Buyer extends User {
 	 */
 	public void setGallery(Gallery gallery) {
 		this.gallery = gallery;
-		gallery.addBuyer(this);
 	}
 	
 	/**

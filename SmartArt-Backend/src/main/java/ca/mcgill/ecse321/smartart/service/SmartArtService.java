@@ -14,7 +14,7 @@ import ca.mcgill.ecse321.smartart.model.*;
 
 @Service
 public class SmartArtService {
-
+/*
 	@Autowired
 	private ArtistRepository artistRepository;
 	@Autowired
@@ -145,5 +145,5 @@ public class SmartArtService {
 		}
 		return resultList;
 	}
-
+*/
 }
