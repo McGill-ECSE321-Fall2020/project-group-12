@@ -14,7 +14,7 @@ import ca.mcgill.ecse321.smartart.model.*;
 
 @Service
 public class SmartArtService {
-/*
+
 	@Autowired
 	private ArtistRepository artistRepository;
 	@Autowired
@@ -34,7 +34,7 @@ public class SmartArtService {
 		administrator.setEmail(email);
 		administrator.setName(name);
 		administrator.setPassword(password);
-		administrator.setGallery(gallery);
+		gallery.addAdministrator(administrator);
 		administratorRepository.save(administrator);
 		return administrator;
 	}
@@ -56,7 +56,7 @@ public class SmartArtService {
 		artist.setEmail(email);
 		artist.setName(name);
 		artist.setPassword(password);
-		artist.setGallery(gallery);
+		gallery.addArtist(artist);
 		artistRepository.save(artist);
 		return artist;
 	}
@@ -78,7 +78,7 @@ public class SmartArtService {
 		buyer.setEmail(email);
 		buyer.setName(name);
 		buyer.setPassword(password);
-		buyer.setGallery(gallery);
+		gallery.addBuyer(buyer);
 		buyerRepository.save(buyer);
 		return buyer;
 	}
@@ -114,9 +114,8 @@ public class SmartArtService {
 	public Posting createPosting(int postingID, Artist artist, double price, double x, double y, double z, Date date, String description) {
 		Posting posting = new Posting();
 		posting.setPostingID(postingID);
-		posting.setArtist(artist);
-		posting.setGallery(artist.getGallery());
-		posting.setPrice(price);
+		artist.addPosting(posting);
+		artist.getGallery().addPosting(posting);
 		posting.setArtStatus(ArtStatus.Available);
 		posting.setXDim(x);
 		posting.setYDim(y);
@@ -145,5 +144,5 @@ public class SmartArtService {
 		}
 		return resultList;
 	}
-*/
+
 }
