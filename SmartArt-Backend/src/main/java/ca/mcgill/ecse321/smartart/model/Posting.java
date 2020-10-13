@@ -96,6 +96,7 @@ public class Posting {
 	 */
 	public void setArtist(Artist artist) {
 		this.artist = artist;
+		artist.addPosting(this);
 	}
 
 	/**

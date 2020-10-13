@@ -40,5 +40,6 @@ public class Administrator extends User {
 	 */
 	public void setGallery(Gallery gallery) {
 		this.gallery = gallery;
+		gallery.addAdministrator(this);
 	}
 }
