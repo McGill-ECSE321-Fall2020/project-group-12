@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class SmartArtService {
 		administrator.setPassword(password);
 		gallery.addAdministrator(administrator);
 		administratorRepository.save(administrator);
+		galleryRepository.save(gallery);
 		return administrator;
 	}
 	
@@ -58,6 +60,7 @@ public class SmartArtService {
 		artist.setPassword(password);
 		gallery.addArtist(artist);
 		artistRepository.save(artist);
+		galleryRepository.save(gallery);
 		return artist;
 	}
 	
@@ -80,6 +83,7 @@ public class SmartArtService {
 		buyer.setPassword(password);
 		gallery.addBuyer(buyer);
 		buyerRepository.save(buyer);
+		galleryRepository.save(gallery);
 		return buyer;
 	}
 	
@@ -123,6 +127,8 @@ public class SmartArtService {
 		posting.setDate(date);
 		posting.setDescription(description);
 		postingRepository.save(posting);
+		artistRepository.save(artist);
+		galleryRepository.save(artist.getGallery());
 		return posting;
 	}
 	
@@ -136,6 +142,45 @@ public class SmartArtService {
 	public List<Posting> getAllPostings(){
 		return toList(postingRepository.findAll());
 	}
+	
+	@Transactional
+	public Purchase createPurchase(int purchaseID, Buyer buyer) {
+		Purchase purchase = new Purchase();
+		purchase.setPurchaseID(purchaseID);
+		buyer.addPurchase(purchase);
+		purchaseRepository.save(purchase);
+		buyerRepository.save(buyer);
+		return purchase;
+	}
+	
+	@Transactional
+	public void addToCart(Buyer buyer, Posting posting) {
+		Purchase cart = buyer.getCart();
+		if(cart == null) {
+			int id = generatePurchaseID();
+			cart = createPurchase(id, buyer);
+			buyer.setCart(cart);
+		}
+		cart.addPosting(posting);
+		posting.setArtStatus(ArtStatus.OnHold);
+		cart.setTotalPrice(cart.getTotalPrice() + posting.getPrice());
+	}
+	
+	@Transactional
+	public void removeFromCart(Buyer buyer, Posting posting) {
+		//TODO
+	}
+	
+	@Transactional
+	public void removePosting(Posting posting) {
+		//TODO
+	}
+	
+	@Transactional
+	public boolean makePurchase(Purchase purchase) {
+		//TODO
+		return false;
+	}
 
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
@@ -143,6 +188,24 @@ public class SmartArtService {
 			resultList.add(t);
 		}
 		return resultList;
+	}
+	
+	private int generatePurchaseID() {
+		Random r = new Random();
+		int id = r.nextInt();
+		while(purchaseRepository.findPurchaseByPurchaseID(id) != null) {
+			id = r.nextInt();
+		}
+		return id;
+	}
+	
+	private int generatePostingID() {
+		Random r = new Random();
+		int id = r.nextInt();
+		while(postingRepository.findPostingByPostingID(id) != null) {
+			id = r.nextInt();
+		}
+		return id;
 	}
 
 }
