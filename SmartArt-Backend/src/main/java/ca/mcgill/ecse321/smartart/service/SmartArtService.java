@@ -147,6 +147,7 @@ public class SmartArtService {
 	public Purchase createPurchase(int purchaseID, Buyer buyer) {
 		Purchase purchase = new Purchase();
 		purchase.setPurchaseID(purchaseID);
+		purchase.setTotalPrice(0);
 		buyer.addPurchase(purchase);
 		purchaseRepository.save(purchase);
 		buyerRepository.save(buyer);
