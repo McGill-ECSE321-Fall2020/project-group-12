@@ -31,6 +31,27 @@ public class SmartArtService {
 
 	@Transactional
 	public Administrator createAdministrator(String email, String name, String password, Gallery gallery) {
+		// Input validation
+	    String error = "";
+	    if (email == null || email.trim().length() == 0) {
+	        error = error + "Administrator email cannot be empty. ";
+	    }
+	    if (name == null || name.trim().length() == 0) {
+	        error = error + "Administrator name cannot be empty. ";
+	    }
+	    if (password == null || password.trim().length() == 0) {
+	        error = error + "Administrator password cannot be empty. ";
+	    }
+	    if (gallery == null) {
+	        error = error + "Administrator gallery cannot be empty. ";
+	    }
+	    
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
+	    
+	    
 		Administrator administrator = new Administrator();
 		administrator.setEmail(email);
 		administrator.setName(name);
@@ -43,6 +64,10 @@ public class SmartArtService {
 	
 	@Transactional
 	public Administrator getAdministrator(String email) {
+		if (email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Administrator email cannot be empty.");
+		}
+		
 		Administrator administrator = administratorRepository.findAdministratorByEmail(email);
 		return administrator;
 	}
@@ -54,6 +79,27 @@ public class SmartArtService {
 	
 	@Transactional
 	public Artist createArtist(String email, String name, String password, Gallery gallery) {
+		// Input validation
+	    String error = "";
+	    if (email == null || email.trim().length() == 0) {
+	        error = error + "Artist email cannot be empty. ";
+	    }
+	    if (name == null || name.trim().length() == 0) {
+	        error = error + "Artist name cannot be empty. ";
+	    }
+	    if (password == null || password.trim().length() == 0) {
+	        error = error + "Artist password cannot be empty. ";
+	    }
+	    if (gallery == null) {
+	        error = error + "Artist gallery cannot be empty. ";
+	    }
+	    
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
+		
+	    
 		Artist artist = new Artist();
 		artist.setEmail(email);
 		artist.setName(name);
@@ -66,6 +112,10 @@ public class SmartArtService {
 	
 	@Transactional
 	public Artist getArtist(String email) {
+		if (email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Artist email cannot be empty.");
+		}
+		
 		Artist artist = artistRepository.findArtistByEmail(email);
 		return artist;
 	}
@@ -77,6 +127,27 @@ public class SmartArtService {
 	
 	@Transactional
 	public Buyer createBuyer(String email, String name, String password, Gallery gallery) {
+		// Input validation
+	    String error = "";
+	    if (email == null || email.trim().length() == 0) {
+	        error = error + "Buyer email cannot be empty. ";
+	    }
+	    if (name == null || name.trim().length() == 0) {
+	        error = error + "Buyer name cannot be empty. ";
+	    }
+	    if (password == null || password.trim().length() == 0) {
+	        error = error + "Buyer password cannot be empty. ";
+	    }
+	    if (gallery == null) {
+	        error = error + "Buyer gallery cannot be empty. ";
+	    }
+	    
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
+	    
+	    
 		Buyer buyer = new Buyer();
 		buyer.setEmail(email);
 		buyer.setName(name);
@@ -89,6 +160,10 @@ public class SmartArtService {
 	
 	@Transactional
 	public Buyer getBuyer(String email) {
+		if (email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Buyer email cannot be empty.");
+		}
+		
 		Buyer buyer = buyerRepository.findBuyerByEmail(email);
 		return buyer;
 	}
@@ -100,6 +175,24 @@ public class SmartArtService {
 	
 	@Transactional
 	public Gallery createGallery(String name, String city, double commission) {
+		// Input validation
+	    String error = "";
+	    if (name == null || name.trim().length() == 0) {
+	        error = error + "Gallery name cannot be empty. ";
+	    }
+	    if (city == null || city.trim().length() == 0) {
+	        error = error + "Gallery city cannot be empty. ";
+	    }
+	    if (commission < 0) {
+	        error = error + "Gallery commission cannot be less than 0. ";
+	    }
+	    
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
+	    
+	    
 		Gallery gallery = new Gallery();
 		gallery.setName(name);
 		gallery.setCity(city);
@@ -110,6 +203,9 @@ public class SmartArtService {
 	
 	@Transactional
 	public Gallery getGallery(String name) {
+		if (name == null || name.trim().length() == 0) {
+			throw new IllegalArgumentException("Gallery name cannot be empty.");
+		}
 		Gallery gallery = galleryRepository.findGalleryByName(name);
 		return gallery;
 	}
@@ -121,6 +217,36 @@ public class SmartArtService {
 	
 	@Transactional
 	public Posting createPosting(int postingID, Artist artist, double price, double x, double y, double z, String title, String description, Date date) {
+		// Input validation
+	    String error = "";
+	    if (artist == null) {
+	        error = error + "Posting artist cannot be empty. ";
+	    }
+	    if (title == null || title.trim().length() == 0) {
+	        error = error + "Posting title cannot be empty. ";
+	    }
+	    if (description == null || description.trim().length() == 0) {
+	        error = error + "Posting description cannot be empty. ";
+	    }
+	    if (price <= 0) {
+	        error = error + "Posting price must be above 0. ";
+	    }
+	    if (x <= 0) {
+	        error = error + "Posting xDim must be above 0. ";
+	    }
+	    if (y <= 0) {
+	        error = error + "Posting yDim must be above 0. ";
+	    }
+	    if (z <= 0) {
+	        error = error + "Posting zDim must be above 0. ";
+	    }
+	    
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
+		
+		
 		Posting posting = new Posting();
 		posting.setPostingID(postingID);
 		artist.addPosting(posting);
@@ -151,6 +277,18 @@ public class SmartArtService {
 	
 	@Transactional
 	public Purchase createPurchase(int purchaseID, Buyer buyer) {
+		// Input validation
+	    String error = "";
+	    if (buyer == null) {
+	        error = error + "Purchase buyer cannot be empty. ";
+	    }
+	    
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
+	    
+	   
 		Purchase purchase = new Purchase();
 		purchase.setPurchaseID(purchaseID);
 		purchase.setTotalPrice(0);
@@ -177,6 +315,18 @@ public class SmartArtService {
 	
 	@Transactional
 	public void addToCart(Buyer buyer, Posting posting) {
+		// Input validation
+	    String error = "";
+	    if (buyer == null) {
+	        error = error + "addToCart buyer cannot be empty. ";
+	    }
+	    if (posting == null) {
+	        error = error + "addToCart posting cannot be empty. ";
+	    }
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
 		Purchase cart = buyer.getCart();
 		if(cart == null) {
 			int id = generatePurchaseID();
