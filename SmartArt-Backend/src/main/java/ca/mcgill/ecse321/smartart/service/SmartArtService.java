@@ -115,7 +115,12 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Posting createPosting(int postingID, Artist artist, double price, double x, double y, double z, Date date, String description) {
+	public List<Gallery> getAllGalleries(){
+		return toList(galleryRepository.findAll());
+	}
+	
+	@Transactional
+	public Posting createPosting(int postingID, Artist artist, double price, double x, double y, double z, String title, String description, Date date) {
 		Posting posting = new Posting();
 		posting.setPostingID(postingID);
 		artist.addPosting(posting);
@@ -124,8 +129,9 @@ public class SmartArtService {
 		posting.setXDim(x);
 		posting.setYDim(y);
 		posting.setZDim(z);
-		posting.setDate(date);
+		posting.setTitle(title);
 		posting.setDescription(description);
+		posting.setDate(date);
 		postingRepository.save(posting);
 		artistRepository.save(artist);
 		galleryRepository.save(artist.getGallery());
@@ -153,6 +159,21 @@ public class SmartArtService {
 		buyerRepository.save(buyer);
 		return purchase;
 	}
+	
+	@Transactional
+	public Purchase getPurchase(int purchaseID) {
+		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
+		return purchase;
+	}
+	
+	@Transactional
+	public List<Purchase> getAllPurchases(){
+		return toList(purchaseRepository.findAll());
+	}
+	
+	///////////////////////
+	////Action Methods/////
+	///////////////////////
 	
 	@Transactional
 	public void addToCart(Buyer buyer, Posting posting) {
@@ -183,6 +204,11 @@ public class SmartArtService {
 		return false;
 	}
 
+	
+	///////////////////////////////
+	///Private helper methods//////
+	///////////////////////////////
+	
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {

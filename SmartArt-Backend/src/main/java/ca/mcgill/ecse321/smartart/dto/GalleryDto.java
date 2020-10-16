@@ -20,6 +20,10 @@ public class GalleryDto {
 		this(name, "mtl", 0.1, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 	}
 	
+	public GalleryDto(String name, String city, double commission) {
+		this(name, city, commission, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+	}
+	
 	public GalleryDto(String name, String city, double commission, List<ArtistDto> artists, List<AdministratorDto> administrators, List<BuyerDto> buyers, List<PostingDto> postings) {
 		this.name = name;
 		this.city = city;

@@ -19,6 +19,10 @@ public class ArtistDto {
 		this(email, "user", "abc123", 1234, Collections.emptyList(), gallery);
 	}
 	
+	public ArtistDto(String email, String name, String password, int phone, GalleryDto gallery) {
+		this(email, name, password, phone, Collections.emptyList(), gallery);
+	}
+	
 	public ArtistDto(String email, String name, String password, int phone, List<PostingDto> postings, GalleryDto gallery) {
 		this.email = email;
 		this.name = name;

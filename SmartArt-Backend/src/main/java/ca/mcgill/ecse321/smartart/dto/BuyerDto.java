@@ -20,6 +20,10 @@ public class BuyerDto {
 		this(email, "user", "abc123", 1234, Collections.emptyList(), gallery);
 	}
 	
+	public BuyerDto(String email, String name, String password, int phone, GalleryDto gallery) {
+		this(email, name, password, phone, Collections.emptyList(), gallery);
+	}
+	
 	public BuyerDto(String email, String name, String password, int phone, List<PurchaseDto> purchases, GalleryDto gallery) {
 		this.email = email;
 		this.name = name;
