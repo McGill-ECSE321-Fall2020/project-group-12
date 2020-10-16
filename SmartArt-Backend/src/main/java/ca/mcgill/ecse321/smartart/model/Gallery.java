@@ -134,6 +134,7 @@ public class Gallery {
 	public void setPostings(Set<Posting> postings) {
 		this.postings = postings;
 	}
+	
 
 	/**
 	 * Sets the name of this Gallery
