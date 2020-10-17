@@ -43,6 +43,7 @@ public class TestSmartArtService {
 	
 	private static final String GALLERY_KEY = "TestGallery";
 	private static final String NONEXISTING_GALLERY = "NotAGallery";
+	/*
 	private static final String ARTIST_KEY = "TestArtist";
 	private static final String NONEXISTING_ARTIST = "NotAnArtist";
 	private static final String ADMINISTRATOR_KEY = "TestAdministrator";
@@ -53,7 +54,7 @@ public class TestSmartArtService {
 	private static final String NONEXISTING_POSTING = "NotAPosting";
 	private static final String PURCHASE_KEY = "TestPurchase";
 	private static final String NONEXISTING_PURCHASE = "NotAPurchase";
-	
+	*/
 	
 	@BeforeEach
 	public void setMockOutput() {
@@ -110,6 +111,38 @@ public class TestSmartArtService {
 		assertNull(gallery);
 		// check error
 		assertEquals("Gallery name cannot be empty.", error);
+	}
+	
+	@Test
+	public void testCreateGalleryEmpty() {
+		String name = "";
+		String error = null;
+		Gallery gallery = null;
+		try {
+			gallery = service.createGallery(name, "Montreal", 0.05);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(gallery);
+		// check error
+		assertEquals("Gallery name cannot be empty.", error);
+	}
+
+	
+	@Test
+	public void testCreatePersonSpaces() {
+		String city = " ";
+		String error = null;
+		Gallery gallery = null;
+		try {
+			gallery = service.createGallery("Gallery", city, 0.05);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(gallery);
+		// check error
+		assertEquals("Gallery city cannot be empty.", error);
 	}
 	
 }
