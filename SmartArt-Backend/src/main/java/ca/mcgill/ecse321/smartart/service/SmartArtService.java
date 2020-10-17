@@ -340,18 +340,38 @@ public class SmartArtService {
 	
 	@Transactional
 	public void removeFromCart(Buyer buyer, Posting posting) {
-		//TODO
+		Purchase cart = buyer.getCart();
+		if(cart == null || posting == null) {
+			throw new NullPointerException("Cannot remove item: Cart or Posting null");
+		}
+		else {
+			cart.removePosting(posting);
+			posting.setArtStatus(ArtStatus.Available);
+			cart.setTotalPrice(cart.getTotalPrice() - posting.getPrice());
+		}
 	}
 	
 	@Transactional
-	public void removePosting(Posting posting) {
-		//TODO
+	public void removePosting(Posting posting) throws NullPointerException{
+		Artist artist = posting.getArtist();
+		artist.removePosting(posting);
+		artist.getGallery().getPostings().remove(posting);
+		
 	}
 	
 	@Transactional
 	public boolean makePurchase(Purchase purchase) {
-		//TODO
-		return false;
+		if(purchase == null) return false;
+		
+		Buyer buyer = purchase.getBuyer();
+		buyer.addPurchase(purchase);
+		
+		for(Posting p: purchase.getPostings()) {
+			p.setArtStatus(ArtStatus.Purchased);
+		}
+		
+		buyer.setCart(null);
+		return true;
 	}
 
 	

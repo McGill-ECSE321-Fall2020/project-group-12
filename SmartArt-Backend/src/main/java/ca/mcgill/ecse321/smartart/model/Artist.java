@@ -63,7 +63,17 @@ public class Artist extends User {
 		this.postings.add(posting);
 		posting.setArtist(this);
 	}
-	
+	/**
+	 * Removes a Posting from the Artist.
+	 * @param posting: the Posting to be removed.
+	 * @return posting: the Posting that was removed.
+	 */
+	public Posting removePosting(Posting posting) {
+		if(this.postings == null) return null;
+		this.postings.remove(posting);
+		posting.setArtist(null);
+		return posting;
+	}
 	/**
 	 * Gets the gallery that presents the Artist's Postings.
 	 * @return the gallery that presents the Artist's Postings.
@@ -72,6 +82,7 @@ public class Artist extends User {
 		return this.gallery;
 	}
 
+	
 	/**
 	 * Sets the gallery that presents the Artist's Postings.
 	 * @param gallery: the Gallery that will present the Artist's Postings.
