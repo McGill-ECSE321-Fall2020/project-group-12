@@ -327,6 +327,7 @@ public class SmartArtService {
 	    if (error.length() > 0) {
 	        throw new IllegalArgumentException(error);
 	    }
+	    
 		Purchase cart = buyer.getCart();
 		if(cart == null) {
 			int id = generatePurchaseID();
@@ -340,15 +341,28 @@ public class SmartArtService {
 	
 	@Transactional
 	public void removeFromCart(Buyer buyer, Posting posting) {
-		Purchase cart = buyer.getCart();
-		if(cart == null || posting == null) {
-			throw new NullPointerException("Cannot remove item: Cart or Posting null");
-		}
-		else {
-			cart.removePosting(posting);
+		// Input validation
+	    String error = "";
+	    if (buyer == null) {
+	        error = error + "removeFromCart buyer cannot be empty. ";
+	    }
+	    Purchase cart = buyer.getCart();
+	    if (cart == null) {
+	        error = error + "removeFromCart cart cannot be null. ";
+	    }
+	    if (posting == null) {
+	        error = error + "removeFromCart posting cannot be empty. ";
+	    }
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
+		
+		if(cart.removePosting(posting)) {
 			posting.setArtStatus(ArtStatus.Available);
 			cart.setTotalPrice(cart.getTotalPrice() - posting.getPrice());
-		}
+		}	
+
 	}
 	
 	@Transactional
@@ -356,20 +370,21 @@ public class SmartArtService {
 		Artist artist = posting.getArtist();
 		artist.removePosting(posting);
 		artist.getGallery().getPostings().remove(posting);
+		posting = null;
 		
 	}
 	
 	@Transactional
-	public boolean makePurchase(Purchase purchase) {
-		if(purchase == null) return false;
+	public boolean makePurchase(Purchase purchase, DeliveryType deliveryType) {
+		if(purchase == null || purchase.getTotalPrice() <= 0) return false;
 		
 		Buyer buyer = purchase.getBuyer();
-		buyer.addPurchase(purchase);
 		
 		for(Posting p: purchase.getPostings()) {
 			p.setArtStatus(ArtStatus.Purchased);
 		}
 		
+		purchase.setDeliveryType(deliveryType);
 		buyer.setCart(null);
 		return true;
 	}

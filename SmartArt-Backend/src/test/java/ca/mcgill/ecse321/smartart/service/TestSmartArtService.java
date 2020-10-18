@@ -130,7 +130,7 @@ public class TestSmartArtService {
 
 	
 	@Test
-	public void testCreatePersonSpaces() {
+	public void testCreateGallerySpaces() {
 		String city = " ";
 		String error = null;
 		Gallery gallery = null;
@@ -144,5 +144,25 @@ public class TestSmartArtService {
 		// check error
 		assertEquals("Gallery city cannot be empty.", error);
 	}
+	
+	@Test
+	public void testCreateArtist() {
+		assertEquals(0, service.getAllArtists().size());
+
+		String email = "bob@mail.com";
+		String name = "bob";
+		String password = "123";
+		Gallery gallery = new Gallery();
+		Artist artist = null;
+		try {
+			artist = service.createArtist(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		assertNotNull(artist);
+		assertEquals(name, artist.getName());
+	}
+	
 	
 }
