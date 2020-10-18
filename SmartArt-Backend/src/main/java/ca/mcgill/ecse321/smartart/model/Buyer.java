@@ -131,5 +131,9 @@ public class Buyer extends User {
 		this.purchases.add(purchase);
 		purchase.setBuyer(this);
 	}
+	
+	public void removePurchase(Purchase purchase) {
+		this.purchases.remove(purchase);
+	}
 
 }
