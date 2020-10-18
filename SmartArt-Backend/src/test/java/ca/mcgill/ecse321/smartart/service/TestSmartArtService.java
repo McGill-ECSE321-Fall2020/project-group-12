@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
@@ -52,10 +53,10 @@ public class TestSmartArtService {
 	private static final String NONEXISTING_ADMINISTRATOR = "NotAnAdministrator";
 	private static final String BUYER_KEY = "TestBuyer";
 	private static final String NONEXISTING_BUYER = "NotABuyer";
-	private static final String POSTING_KEY = "TestPosting";
-	private static final String NONEXISTING_POSTING = "NotAPosting";
-	private static final String PURCHASE_KEY = "TestPurchase";
-	private static final String NONEXISTING_PURCHASE = "NotAPurchase";
+	private static final int POSTING_KEY = 100;
+	private static final int NONEXISTING_POSTING = -1;
+	private static final int PURCHASE_KEY = 200;
+	private static final int NONEXISTING_PURCHASE = -1;
 	
 	@BeforeEach
 	public void setMockOutput() {
@@ -82,6 +83,33 @@ public class TestSmartArtService {
 				Administrator administrator = new Administrator();
 				administrator.setEmail(ADMINISTRATOR_KEY);
 				return administrator;
+			} else {
+				return null;
+			}
+		});
+		lenient().when(buyerDao.findBuyerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(BUYER_KEY)) {
+				Buyer buyer = new Buyer();
+				buyer.setEmail(BUYER_KEY);
+				return buyer;
+			} else {
+				return null;
+			}
+		});
+		lenient().when(postingDao.findPostingByPostingID(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(POSTING_KEY)) {
+				Posting posting = new Posting();
+				posting.setPostingID(POSTING_KEY);
+				return posting;
+			} else {
+				return null;
+			}
+		});
+		lenient().when(purchaseDao.findPurchaseByPurchaseID(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(PURCHASE_KEY)) {
+				Purchase purchase = new Purchase();
+				purchase.setPurchaseID(PURCHASE_KEY);
+				return purchase;
 			} else {
 				return null;
 			}
@@ -260,7 +288,7 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetExistingArtist() {
-		assertEquals(ARTIST_KEY, service.getArtist(ARTIST_KEY).getName());
+		assertEquals(ARTIST_KEY, service.getArtist(ARTIST_KEY).getEmail());
 	}
 	
 	@Test
@@ -348,6 +376,16 @@ public class TestSmartArtService {
 		assertEquals("Administrator email cannot be empty.", error);
 	}
 	
+	@Test
+	public void testGetExistingAdministrator() {
+		assertEquals(ADMINISTRATOR_KEY, service.getAdministrator(ADMINISTRATOR_KEY).getEmail());
+	}
+	
+	@Test
+	public void testGetNonExistingAdministrator() {
+		assertNull(service.getArtist(NONEXISTING_ADMINISTRATOR));
+	}
+	
 	
 	////////////////////////////
 	//////Buyer tests///////////
@@ -427,6 +465,16 @@ public class TestSmartArtService {
 		assertNull(buyer);
 		// check error
 		assertEquals("Buyer email cannot be empty.", error);
+	}
+	
+	@Test
+	public void testGetExistingBuyer() {
+		assertEquals(BUYER_KEY, service.getBuyer(BUYER_KEY).getEmail());
+	}
+	
+	@Test
+	public void testGetNonExistingBuyer() {
+		assertNull(service.getBuyer(NONEXISTING_BUYER));
 	}
 	
 	
@@ -511,6 +559,16 @@ public class TestSmartArtService {
 		assertEquals(error, "Posting price must be above 0.");
 	}
 	
+	@Test
+	public void testGetExistingPosting() {
+		assertEquals(POSTING_KEY, service.getPosting(POSTING_KEY).getPostingID());
+	}
+	
+	@Test
+	public void testGetNonExistingPosting() {
+		assertNull(service.getPosting(NONEXISTING_POSTING));
+	}
+	
 	////////////////////////////
 	//////Purchase tests////////
 	////////////////////////////
@@ -548,6 +606,16 @@ public class TestSmartArtService {
 		}
 		assertNull(purchase);
 		assertEquals(error, "Purchase buyer cannot be empty.");
+	}
+	
+	@Test
+	public void testGetExistingPurchase() {
+		assertEquals(PURCHASE_KEY, service.getPurchase(PURCHASE_KEY).getPurchaseID());
+	}
+	
+	@Test
+	public void testGetNonExistingPurchase() {
+		assertNull(service.getPosting(NONEXISTING_PURCHASE));
 	}
 	
 	////////////////////////////
