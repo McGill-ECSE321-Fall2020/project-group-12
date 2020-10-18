@@ -46,7 +46,6 @@ public class TestSmartArtService {
 	
 	private static final String GALLERY_KEY = "TestGallery";
 	private static final String NONEXISTING_GALLERY = "NotAGallery";
-	/*
 	private static final String ARTIST_KEY = "TestArtist";
 	private static final String NONEXISTING_ARTIST = "NotAnArtist";
 	private static final String ADMINISTRATOR_KEY = "TestAdministrator";
@@ -57,7 +56,6 @@ public class TestSmartArtService {
 	private static final String NONEXISTING_POSTING = "NotAPosting";
 	private static final String PURCHASE_KEY = "TestPurchase";
 	private static final String NONEXISTING_PURCHASE = "NotAPurchase";
-	*/
 	
 	@BeforeEach
 	public void setMockOutput() {
@@ -66,6 +64,24 @@ public class TestSmartArtService {
 				Gallery gallery = new Gallery();
 				gallery.setName(GALLERY_KEY);
 				return gallery;
+			} else {
+				return null;
+			}
+		});
+		lenient().when(artistDao.findArtistByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(ARTIST_KEY)) {
+				Artist artist = new Artist();
+				artist.setEmail(ARTIST_KEY);
+				return artist;
+			} else {
+				return null;
+			}
+		});
+		lenient().when(administratorDao.findAdministratorByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+			if (invocation.getArgument(0).equals(ADMINISTRATOR_KEY)) {
+				Administrator administrator = new Administrator();
+				administrator.setEmail(ADMINISTRATOR_KEY);
+				return administrator;
 			} else {
 				return null;
 			}
@@ -152,6 +168,16 @@ public class TestSmartArtService {
 		assertEquals("Gallery city cannot be empty.", error);
 	}
 	
+	@Test
+	public void testGetExistingGallery() {
+		assertEquals(GALLERY_KEY, service.getGallery(GALLERY_KEY).getName());
+	}
+	
+	@Test
+	public void testGetNonExistingGallery() {
+		assertNull(service.getGallery(NONEXISTING_GALLERY));
+	}
+	
 	////////////////////////////
 	//////Artists tests/////////
 	////////////////////////////
@@ -230,6 +256,16 @@ public class TestSmartArtService {
 		assertNull(artist);
 		// check error
 		assertEquals("Artist email cannot be empty.", error);
+	}
+	
+	@Test
+	public void testGetExistingArtist() {
+		assertEquals(ARTIST_KEY, service.getArtist(ARTIST_KEY).getName());
+	}
+	
+	@Test
+	public void testGetNonExistingArtist() {
+		assertNull(service.getArtist(NONEXISTING_ARTIST));
 	}
 	
 	////////////////////////////

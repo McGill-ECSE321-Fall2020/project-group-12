@@ -389,6 +389,16 @@ public class SmartArtService {
 		buyer.setCart(null);
 		return true;
 	}
+	
+	@Transactional
+	public void clearDatabase() {
+		administratorRepository.deleteAll();
+		artistRepository.deleteAll();
+		buyerRepository.deleteAll();
+		galleryRepository.deleteAll();
+		postingRepository.deleteAll();
+		purchaseRepository.deleteAll();
+	}
 
 	
 	///////////////////////////////
