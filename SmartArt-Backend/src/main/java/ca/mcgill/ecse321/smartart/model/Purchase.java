@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 
+import java.time.LocalDateTime;
 /**
  * 
  * @author Group 12
@@ -37,6 +38,16 @@ public class Purchase {
 	@Column(name = "deliveryType")
 	private DeliveryType deliveryType;
 
+	@Column(name = "timeOfPurchase")
+	private LocalDateTime timeOfPurchase;
+	
+	public void setTime(LocalDateTime t) {
+		this.timeOfPurchase = t;
+	}
+	
+	public LocalDateTime getTime() {
+		return this.timeOfPurchase;
+	}
 	/**
 	 * Gets the set of Postings of this Purchase.
 	 * @return
@@ -60,6 +71,7 @@ public class Purchase {
 	public void addPosting(Posting posting) {
 		if(this.postings == null) this.postings = new HashSet<Posting>();
 		this.postings.add(posting);
+		this.totalPrice += posting.getPrice();
 	}
 
 	/**
@@ -68,7 +80,10 @@ public class Purchase {
 	 * @return
 	 */
 	public boolean removePosting(Posting posting) {
-		if (this.postings.remove(posting))return true;
+		if (this.postings.remove(posting)) {
+			this.totalPrice -= posting.getPrice();
+			return true;
+		}
 		return false;
 	}
 
