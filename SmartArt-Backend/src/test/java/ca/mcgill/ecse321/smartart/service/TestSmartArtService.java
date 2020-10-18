@@ -18,6 +18,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
+
+import java.sql.Date;
+
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.dao.*;
 
@@ -78,6 +81,10 @@ public class TestSmartArtService {
 		lenient().when(postingDao.save(any(Posting.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(purchaseDao.save(any(Purchase.class))).thenAnswer(returnParameterAsAnswer);
 	}
+	
+	////////////////////////////
+	//////Gallery tests/////////
+	////////////////////////////
 	
 	@Test
 	public void testCreateGallery() {
@@ -145,6 +152,10 @@ public class TestSmartArtService {
 		assertEquals("Gallery city cannot be empty.", error);
 	}
 	
+	////////////////////////////
+	//////Artists tests/////////
+	////////////////////////////
+	
 	@Test
 	public void testCreateArtist() {
 		assertEquals(0, service.getAllArtists().size());
@@ -164,5 +175,347 @@ public class TestSmartArtService {
 		assertEquals(name, artist.getName());
 	}
 	
+	@Test
+	public void testCreateArtistNull() {
+		String email = "bob@mail.com";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = null;
+		Artist artist = null;
+		try {
+			artist = service.createArtist(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(artist);
+		// check error
+		assertEquals("Artist gallery cannot be empty.", error);
+	}
+	
+	@Test
+	public void testCreateArtistEmpty() {
+		String email = "";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = new Gallery();
+		Artist artist = null;
+		try {
+			artist = service.createArtist(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(artist);
+		// check error
+		assertEquals("Artist email cannot be empty.", error);
+	}
+	
+	@Test
+	public void testCreateArtistSpaces() {
+		String email = "  ";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = new Gallery();
+		Artist artist = null;
+		try {
+			artist = service.createArtist(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(artist);
+		// check error
+		assertEquals("Artist email cannot be empty.", error);
+	}
+	
+	////////////////////////////
+	//////Administrator tests///
+	////////////////////////////
+	
+	@Test
+	public void testCreateAdministrator() {
+		assertEquals(0, service.getAllArtists().size());
+
+		String email = "bob@mail.com";
+		String name = "bob";
+		String password = "123";
+		Gallery gallery = new Gallery();
+		Administrator administrator = null;
+		try {
+			administrator = service.createAdministrator(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		assertNotNull(administrator);
+		assertEquals(name, administrator.getName());
+	}
+	
+	@Test
+	public void testCreateAdministratortNull() {
+		String email = "bob@mail.com";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = null;
+		Administrator administrator = null;
+		try {
+			administrator = service.createAdministrator(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(administrator);
+		// check error
+		assertEquals("Administrator gallery cannot be empty.", error);
+	}
+	
+	@Test
+	public void testCreateAdministratorEmpty() {
+		String email = "";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = new Gallery();
+		Administrator administrator = null;
+		try {
+			administrator = service.createAdministrator(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(administrator);
+		// check error
+		assertEquals("Administrator email cannot be empty.", error);
+	}
+	
+	@Test
+	public void testCreateAdministratorSpaces() {
+		String email = "  ";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = new Gallery();
+		Administrator administrator = null;
+		try {
+			administrator = service.createAdministrator(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(administrator);
+		// check error
+		assertEquals("Administrator email cannot be empty.", error);
+	}
+	
+	
+	////////////////////////////
+	//////Buyer tests///////////
+	////////////////////////////
+	
+	@Test
+	public void testCreateBuyer() {
+		assertEquals(0, service.getAllBuyers().size());
+
+		String email = "bob@mail.com";
+		String name = "bob";
+		String password = "123";
+		Gallery gallery = new Gallery();
+		Buyer buyer = null;
+		try {
+			buyer = service.createBuyer(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		assertNotNull(buyer);
+		assertEquals(name, buyer.getName());
+	}
+	
+	@Test
+	public void testCreateBuyerNull() {
+		String email = "bob@mail.com";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = null;
+		Buyer buyer = null;
+		try {
+			buyer = service.createBuyer(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(buyer);
+		// check error
+		assertEquals("Buyer gallery cannot be empty.", error);
+	}
+	
+	@Test
+	public void testCreateBuyerEmpty() {
+		String email = "";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = new Gallery();
+		Buyer buyer = null;
+		try {
+			buyer = service.createBuyer(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(buyer);
+		// check error
+		assertEquals("Buyer email cannot be empty.", error);
+	}
+	
+	@Test
+	public void testCreateBuyerSpaces() {
+		String email = "  ";
+		String name = "bob";
+		String password = "123";
+		String error = null;
+		Gallery gallery = new Gallery();
+		Buyer buyer = null;
+		try {
+			buyer = service.createBuyer(email, name, password, gallery);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(buyer);
+		// check error
+		assertEquals("Buyer email cannot be empty.", error);
+	}
+	
+	
+	////////////////////////////
+	//////Posting tests/////////
+	////////////////////////////
+	
+	@Test
+	public void testCreatePosting() {
+		assertEquals(0, service.getAllPostings().size());
+		
+		int postingID = 984532;
+		Gallery gallery = new Gallery();
+		Artist artist = new Artist();
+		gallery.addArtist(artist);
+		double price = 100;
+		double x = 1;
+		double y = 1;
+		double z = 1;
+		String title  = "Moon";
+		String description = "This is a moon";
+		Date date = new Date(0);
+		Posting posting = null;
+		
+		try {
+			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		assertNotNull(posting);
+		assertEquals(price, posting.getPrice());
+	}
+	
+	@Test
+	public void testCreatePostingNull() {
+		
+		int postingID = 984532;
+		Artist artist = null;
+		double price = 100;
+		double x = 1;
+		double y = 1;
+		double z = 1;
+		String title  = "Moon";
+		String description = "This is a moon";
+		Date date = new Date(0);
+		Posting posting = null;
+		String error = null;
+		
+		try {
+			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(posting);
+		assertEquals(error, "Posting artist cannot be empty.");
+	}
+	
+	@Test
+	public void testCreatePostingPriceLessThanZero() {
+		
+		int postingID = 984532;
+		Gallery gallery = new Gallery();
+		Artist artist = new Artist();
+		gallery.addArtist(artist);
+		double price = -100;
+		double x = 1;
+		double y = 1;
+		double z = 1;
+		String title  = "Moon";
+		String description = "This is a moon";
+		Date date = new Date(0);
+		Posting posting = null;
+		String error = null;
+		
+		try {
+			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(posting);
+		assertEquals(error, "Posting price must be above 0.");
+	}
+	
+	////////////////////////////
+	//////Purchase tests////////
+	////////////////////////////
+	
+	@Test
+	public void testCreatePurchase() {
+		assertEquals(0, service.getAllPurchases().size());
+		
+		int purchaseID = 982423;
+		Buyer buyer = new Buyer();
+		Purchase purchase = null;
+		
+		try {
+			purchase = service.createPurchase(purchaseID, buyer);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		assertNotNull(purchase);
+		assertEquals(purchaseID, purchase.getPurchaseID());
+	}
+	
+	@Test
+	public void testCreatePurchaseNull() {
+		
+		int purchaseID = 984532;
+		Buyer buyer = null;
+		Purchase purchase = null;
+		String error = null;
+		
+		try {
+			purchase = service.createPurchase(purchaseID, buyer);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNull(purchase);
+		assertEquals(error, "Purchase buyer cannot be empty.");
+	}
+	
+	////////////////////////////
+	//////Action tests////////
+	////////////////////////////
 	
 }

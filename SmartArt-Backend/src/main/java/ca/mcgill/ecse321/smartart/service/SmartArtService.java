@@ -252,6 +252,7 @@ public class SmartArtService {
 		artist.addPosting(posting);
 		artist.getGallery().addPosting(posting);
 		posting.setArtStatus(ArtStatus.Available);
+		posting.setPrice(price);
 		posting.setXDim(x);
 		posting.setYDim(y);
 		posting.setZDim(z);
