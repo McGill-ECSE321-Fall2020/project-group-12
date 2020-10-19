@@ -80,8 +80,6 @@ public class TestSmartArtPersistence {
 	@Test
 	public void testPersistAndLoadGallery() {
 		String galName = "Guginhiem";
-		String city = "bilbao";
-		double commission = 0.2;
 		String name = "ella";
 		String email = "ella@mail.com";
 		

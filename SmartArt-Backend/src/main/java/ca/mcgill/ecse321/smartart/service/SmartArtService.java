@@ -253,6 +253,7 @@ public class SmartArtService {
 		artist.addPosting(posting);
 		artist.getGallery().addPosting(posting);
 		posting.setArtStatus(ArtStatus.Available);
+		posting.setPrice(price);
 		posting.setXDim(x);
 		posting.setYDim(y);
 		posting.setZDim(z);
@@ -394,6 +395,16 @@ public class SmartArtService {
 		purchaseRepository.save(purchase);
 		
 		return calcFinalPrice(purchase);
+	}
+	
+	@Transactional
+	public void clearDatabase() {
+		administratorRepository.deleteAll();
+		artistRepository.deleteAll();
+		buyerRepository.deleteAll();
+		galleryRepository.deleteAll();
+		postingRepository.deleteAll();
+		purchaseRepository.deleteAll();
 	}
 
 	@Transactional
