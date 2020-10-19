@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.smartart.service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -376,8 +377,9 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public boolean makePurchase(Purchase purchase, DeliveryType deliveryType) {
-		if(purchase == null || purchase.getTotalPrice() <= 0) return false;
+	public Double makePurchase(Purchase purchase, DeliveryType deliveryType) {
+		if(purchase == null || purchase.getTotalPrice() <= 0) 
+			throw new IllegalArgumentException("Must have a purchase order to make purchase");
 		
 		Buyer buyer = purchase.getBuyer();
 		
@@ -386,8 +388,13 @@ public class SmartArtService {
 		}
 		
 		purchase.setDeliveryType(deliveryType);
+		buyer.addPurchase(purchase);
 		buyer.setCart(null);
-		return true;
+		
+		buyerRepository.save(buyer);
+		purchaseRepository.save(purchase);
+		
+		return calcFinalPrice(purchase);
 	}
 	
 	@Transactional
@@ -400,7 +407,24 @@ public class SmartArtService {
 		purchaseRepository.deleteAll();
 	}
 
-	
+	@Transactional
+	public boolean cancelPurchase(Purchase purchase) {
+		if(purchase == null) 
+			throw new IllegalArgumentException("Must have a purchase to cancel purchase");
+		
+		LocalDateTime now = LocalDateTime.now();
+		Buyer buyer = purchase.getBuyer();
+		
+		if(now.minusMinutes(10).isAfter(purchase.getTime())) return false;
+		
+		for(Posting p : purchase.getPostings())
+			p.setArtStatus(ArtStatus.Available);
+		
+		buyer.removePurchase(purchase);
+		buyerRepository.save(buyer);
+		purchaseRepository.delete(purchase);
+		return true;
+	}
 	///////////////////////////////
 	///Private helper methods//////
 	///////////////////////////////
@@ -431,4 +455,8 @@ public class SmartArtService {
 		return id;
 	}
 
+	private Double calcFinalPrice(Purchase purchase) {
+		Gallery gallery = purchase.getBuyer().getGallery();
+		return purchase.getTotalPrice() * (1 + gallery.getCommission());
+	}
 }

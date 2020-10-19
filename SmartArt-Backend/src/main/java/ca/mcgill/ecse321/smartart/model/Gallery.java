@@ -68,6 +68,15 @@ public class Gallery {
 	}
 
 	/**
+	 * Removes a Buyer from the Gallery.
+	 * @param buyer: the Buyer to be removed
+	 */
+	public void removeBuyer(Buyer buyer) {
+		this.buyers.remove(buyer);
+		buyer.setGallery(null);
+	}
+	
+	/**
 	 * Gets the set of Administrators of this Gallery.
 	 * @return the set of Administrators of this Gallery.
 	 */
@@ -93,6 +102,14 @@ public class Gallery {
 		administrator.setGallery(this);
 	}
 
+	/**
+	 * Removes an Administrator from the set of Administrators of this Gallery
+	 * @param administrator: the Administrator to be removed.
+	 */
+	public void removeAdministrator(Administrator administrator) {
+		this.administrators.remove(administrator);
+		administrator.setGallery(null);
+	}
 	/**
 	 * Gets the set of Artists of this Gallery.
 	 * @return the set of Artists of this Gallery.
@@ -120,6 +137,14 @@ public class Gallery {
 	}
 
 	/**
+	 * Removes an Artist from this set of Artists.
+	 * @param artist: the Artist to be removed.
+	 */
+	public void removeArtist(Artist artist) {
+		this.artists.remove(artist);
+		artist.setGallery(null);
+	}
+	/**
 	 * Gets the set of Postings of this Gallery.
 	 * @return the set of Postings of this Gallery.
 	 */
@@ -135,7 +160,23 @@ public class Gallery {
 		this.postings = postings;
 	}
 	
-
+	/**
+	 * Adds a Posting to the set of Postings of this Gallery.
+	 * @param posting: the Posting to be added.
+	 */
+	public void addPosting(Posting posting) {
+		if(this.postings == null) this.postings = new HashSet<Posting>();
+		this.postings.add(posting);
+		posting.setGallery(this);
+	}
+	/**
+	 * Removes a Posting from the set of postings.
+	 * @param posting: the Posting to be removed.
+	 */
+	public void removePosting(Posting posting) {
+		this.postings.remove(posting);
+		posting.setGallery(null);
+	}
 	/**
 	 * Sets the name of this Gallery
 	 * @param value: the new name of this Gallery.
@@ -184,13 +225,4 @@ public class Gallery {
 		return this.commission;
 	}
 
-	/**
-	 * Adds a Posting to the set of Postings of this Gallery.
-	 * @param posting: the Posting to be added.
-	 */
-	public void addPosting(Posting posting) {
-		if(this.postings == null) this.postings = new HashSet<Posting>();
-		this.postings.add(posting);
-		posting.setGallery(this);
-	}
 }
