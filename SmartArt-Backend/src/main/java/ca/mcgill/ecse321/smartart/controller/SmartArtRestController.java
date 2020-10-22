@@ -83,19 +83,19 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/administrators", "/administrators/"})
-	public List<AdministratorDto> getAllAdministrators(){
-		return service.getAllAdministrators().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+	public List<Administrator> getAllAdministrators(){
+		return service.getAllAdministrators();
 	}
 	@GetMapping(value = { "/administrators/{email}", "/administrators/{email}/" })
-	public AdministratorDto getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return convertToDto(service.getAdministrator(email));
+	public Administrator getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return service.getAdministrator(email);
 	}
 	
 	@PostMapping(value = { "/administrator/{email}/{name}/{password}", "/administrator/{email}/{name}/{password}/" })
-	public AdministratorDto createAdministrator(@PathVariable("email") String email, @PathVariable("name") String name, @PathVariable("password")String password) throws IllegalArgumentException {
+	public Administrator createAdministrator(@PathVariable("email") String email, @PathVariable("name") String name, @PathVariable("password")String password) throws IllegalArgumentException {
 		Gallery gallery = service.getAllGalleries().get(0);
 		Administrator administrator = service.createAdministrator(email, name, password, gallery);
-		return convertToDto(administrator);
+		return administrator;
 	}
 	
 	//////////////////////////////
@@ -103,20 +103,20 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/buyers", "/buyers/"})
-	public List<BuyerDto> getAllBuyers(){
-		return service.getAllBuyers().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+	public List<Buyer> getAllBuyers(){
+		return service.getAllBuyers();
 	}
 	
 	@GetMapping(value = { "/buyers/{email}", "/buyers/{email}/" })
-	public BuyerDto getBuyerByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return convertToDto(service.getBuyer(email));
+	public Buyer getBuyerByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return service.getBuyer(email);
 	}
 	
 	@PostMapping(value = { "/buyer/{email}/{name}/{password}", "/buyer/{email}/{name}/{password}/" })
-	public BuyerDto createBuyer(@PathVariable("email") String email, @PathVariable("name") String name, @PathVariable("password")String password) throws IllegalArgumentException {
+	public Buyer createBuyer(@PathVariable("email") String email, @PathVariable("name") String name, @PathVariable("password")String password) throws IllegalArgumentException {
 		Gallery gallery = service.getAllGalleries().get(0);
 		Buyer buyer = service.createBuyer(email, name, password, gallery);
-		return convertToDto(buyer);
+		return buyer;
 	}
 	
 	//////////////////////////////
@@ -124,19 +124,19 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/postings", "/postings/" })
-	public List<PostingDto> getAllPostings(){
-		return service.getAllPostings().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	public List<Posting> getAllPostings(){
+		return service.getAllPostings();
 	}
 	
 	@GetMapping(value = { "/postings/{postingID}}", "/postings/{postingID}/" })
-	public PostingDto getPostingByPostingID(@PathVariable("postingID") int postingID)  throws IllegalArgumentException{
-		return convertToDto(service.getPosting(postingID));
+	public Posting getPostingByPostingID(@PathVariable("postingID") int postingID)  throws IllegalArgumentException{
+		return service.getPosting(postingID);
 	}
 	
 	@PostMapping(value = {"/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}", "/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}/" })
-	public PostingDto createPosting(@PathVariable("id") int postingID, @PathVariable("artist") Artist artist, @PathVariable("price") double price, @PathVariable("x") double xDim, @PathVariable("y")double yDim, @PathVariable("z") double zDim, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy.MM.dd") Date date) {
+	public Posting createPosting(@PathVariable("id") int postingID, @PathVariable("artist") Artist artist, @PathVariable("price") double price, @PathVariable("x") double xDim, @PathVariable("y")double yDim, @PathVariable("z") double zDim, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy.MM.dd") Date date) {
 		Posting posting = service.createPosting(postingID, artist, price, xDim, yDim, zDim, title, description, date);
-		return convertToDto(posting);
+		return posting;
 	}
 	
 	//////////////////////////////
@@ -144,20 +144,20 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/purchases", "/puchases/" })
-	public List<PurchaseDto> getAllPurchases(){
-		return service.getAllPurchases().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	public List<Purchase> getAllPurchases(){
+		return service.getAllPurchases();
 	}
 	
 	@GetMapping(value = { "/purchases/{purchaseID}}", "/purchases/{purchaseID}/" })
-	public PurchaseDto getPurchaseByPurchaseID(@PathVariable("purchaseID") int purchaseID)  throws IllegalArgumentException{
-		return convertToDto(service.getPurchase(purchaseID));
+	public Purchase getPurchaseByPurchaseID(@PathVariable("purchaseID") int purchaseID)  throws IllegalArgumentException{
+		return service.getPurchase(purchaseID);
 	}
 	
 
 	@PostMapping(value = {"/purchase/{id}/{buyer}", "/purchase/{id}/{buyer}/" })
-	public PurchaseDto createPurchase(@PathVariable("id") int purchaseID, @PathVariable("buyer") Buyer buyer) {
+	public Purchase createPurchase(@PathVariable("id") int purchaseID, @PathVariable("buyer") Buyer buyer) {
 		Purchase purchase = service.createPurchase(purchaseID, buyer);
-		return convertToDto(purchase);
+		return purchase;
 	}
 	
 	//////////////////////////////
