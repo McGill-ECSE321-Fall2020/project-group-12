@@ -146,6 +146,7 @@ public class SmartArtRestController {
 		return convertToDto(service.getPurchase(purchaseID));
 	}
 	
+
 	@PostMapping(value = {"/purchase/{id}/{buyer}", "/purchase/{id}/{buyer}/" })
 	public PurchaseDto createPurchase(@PathVariable("id") int purchaseID, @PathVariable("buyer") Buyer buyer) {
 		Purchase purchase = service.createPurchase(purchaseID, buyer);

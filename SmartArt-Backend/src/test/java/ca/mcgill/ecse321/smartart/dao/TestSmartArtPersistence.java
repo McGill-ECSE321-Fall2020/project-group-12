@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.smartart.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -264,6 +265,7 @@ public class TestSmartArtPersistence {
 		String email = "meg@mail.com";
 		String name = "meg";
 		String galName = "Guginhiem";
+		LocalDateTime now = LocalDateTime.now();
 		DeliveryType deliveryType = DeliveryType.PickUp;
 		
 		Gallery g = galleryRepository.findGalleryByName(galName);
@@ -277,6 +279,7 @@ public class TestSmartArtPersistence {
 		p.setPurchaseID(id);
 		p.setTotalPrice(0);
 		p.setDeliveryType(deliveryType);
+		p.setTime(now);
 		
 		b.addPurchase(p);
 		
