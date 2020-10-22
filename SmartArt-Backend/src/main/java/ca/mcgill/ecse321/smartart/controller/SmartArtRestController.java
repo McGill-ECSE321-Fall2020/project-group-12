@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -126,7 +127,7 @@ public class SmartArtRestController {
 	}
 	
 	@PostMapping(value = {"/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}", "/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}/" })
-	public PostingDto createPosting(@PathVariable("id") int postingID, @PathVariable("artist") Artist artist, @PathVariable("price") double price, @PathVariable("x") double xDim, @PathVariable("y")double yDim, @PathVariable("z") double zDim, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("date") Date date) {
+	public PostingDto createPosting(@PathVariable("id") int postingID, @PathVariable("artist") Artist artist, @PathVariable("price") double price, @PathVariable("x") double xDim, @PathVariable("y")double yDim, @PathVariable("z") double zDim, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy.MM.dd") Date date) {
 		Posting posting = service.createPosting(postingID, artist, price, xDim, yDim, zDim, title, description, date);
 		return convertToDto(posting);
 	}
