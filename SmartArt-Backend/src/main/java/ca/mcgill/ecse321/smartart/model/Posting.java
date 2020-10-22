@@ -3,7 +3,7 @@ package ca.mcgill.ecse321.smartart.model;
 
 import javax.persistence.ManyToMany;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Set;
 
 import ca.mcgill.ecse321.smartart.model.DeliveryType;

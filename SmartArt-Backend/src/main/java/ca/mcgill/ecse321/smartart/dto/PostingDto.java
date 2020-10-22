@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.smartart.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class PostingDto {
 
