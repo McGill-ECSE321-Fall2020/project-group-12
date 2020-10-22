@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,19 +36,25 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/galleries", "/galleries/"})
-	public List<GalleryDto> getAllGalleries(){
-		return service.getAllGalleries().stream().map(g -> convertToDto(g)).collect(Collectors.toList());
+	public List<Gallery> getAllGalleries(){
+		return service.getAllGalleries();
 	}
 	
 	@GetMapping(value = { "/galleries/{name}", "/galleries/{name}/" })
-	public GalleryDto getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
-		return convertToDto(service.getGallery(name));
+	public Gallery getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
+		return service.getGallery(name);
 	}
 	
 	@PostMapping(value = { "/gallery/{name}/{city}/{commission}", "/gallery/{name}/{city}/{commission}/" })
-	public GalleryDto createGallery(@PathVariable("name") String name, @PathVariable("city") String city, @PathVariable("commission") double commission) {
+	public Gallery createGallery(@PathVariable("name") String name, @PathVariable("city") String city, @PathVariable("commission") double commission) {
 		Gallery gallery = service.createGallery(name, city, commission);
-		return convertToDto(gallery);
+		return gallery;
+	}
+	
+	@PostMapping(value = { "/gallery/create", "/gallery/create/" })
+	public Gallery createGallery(@RequestBody Gallery data) {
+		Gallery gallery = service.createGallery(data);
+		return gallery;
 	}
 	
 	//////////////////////////////
@@ -55,20 +62,20 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/artists", "/artists/"})
-	public List<ArtistDto> getAllArtists(){
-		return service.getAllArtists().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
+	public List<Artist> getAllArtists(){
+		return service.getAllArtists();
 	}
 	
 	@GetMapping(value = { "/artists/{email}", "/artists/{email}/" })
-	public ArtistDto getArtistByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return convertToDto(service.getArtist(email));
+	public Artist getArtistByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return service.getArtist(email);
 	}
 	
 	@PostMapping(value = { "/artist/{email}/{name}/{password}", "/artist/{email}/{name}/{password}/" })
-	public ArtistDto createArtist(@PathVariable("email") String email, @PathVariable("name") String name, @PathVariable("password")String password) throws IllegalArgumentException {
+	public Artist createArtist(@PathVariable("email") String email, @PathVariable("name") String name, @PathVariable("password")String password) throws IllegalArgumentException {
 		Gallery gallery = service.getAllGalleries().get(0);
 		Artist artist = service.createArtist(email, name, password, gallery);
-		return convertToDto(artist);
+		return artist;
 	}
 	
 	//////////////////////////////

@@ -193,12 +193,17 @@ public class SmartArtService {
 	        throw new IllegalArgumentException(error);
 	    }
 	    
-	    
 		Gallery gallery = new Gallery();
 		gallery.setName(name);
 		gallery.setCity(city);
 		gallery.setCommission(commission);
 		galleryRepository.save(gallery);
+		return gallery;
+	}
+	
+	@Transactional
+	public Gallery createGallery(Gallery data) {
+		Gallery gallery = createGallery(data.getName(), data.getCity(), data.getCommission());
 		return gallery;
 	}
 	
