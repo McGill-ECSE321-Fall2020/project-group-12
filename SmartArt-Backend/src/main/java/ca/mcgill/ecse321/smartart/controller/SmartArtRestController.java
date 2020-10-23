@@ -133,10 +133,26 @@ public class SmartArtRestController {
 		return service.getPosting(postingID);
 	}
 	
-	@PostMapping(value = {"/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}", "/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}/" })
-	public Posting createPosting(@PathVariable("id") int postingID, @PathVariable("artist") Artist artist, @PathVariable("price") double price, @PathVariable("x") double xDim, @PathVariable("y")double yDim, @PathVariable("z") double zDim, @PathVariable("title") String title, @PathVariable("description") String description, @PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy.MM.dd") Date date) {
+	@PostMapping(value = {"/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}", 
+			"/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}/" })
+	public Posting createPosting(@PathVariable("id") int postingID, 
+			@PathVariable("artist") Artist artist,
+			@PathVariable("price") double price, 
+			@PathVariable("x") double xDim, 
+			@PathVariable("y")double yDim, 
+			@PathVariable("z") double zDim, 
+			@PathVariable("title") String title, 
+			@PathVariable("description") String description, 
+			@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy.MM.dd") Date date) {
+		
 		Posting posting = service.createPosting(postingID, artist, price, xDim, yDim, zDim, title, description, date);
 		return posting;
+	}
+	
+	@PostMapping(value = {"/posting/delete", "/posting/delete/"})
+	public Posting deletePosting(@RequestBody Posting posting) {
+		Posting deletedPost = service.deletePosting(posting);
+		return deletedPost;
 	}
 	
 	//////////////////////////////
@@ -163,6 +179,34 @@ public class SmartArtRestController {
 	//////////////////////////////
 	/////Action methods///////////
 	//////////////////////////////
+	
+	@PostMapping(value = {"/purchase/make/{deliveryType}", "/purchase/make/{deliveryType}/"})
+	public Purchase makePurchase(@RequestBody Purchase data, @PathVariable("deliveryType") DeliveryType deliveryType) {
+		Purchase purchase = service.makePurchase(data, deliveryType);
+		return purchase;
+	}
+	
+	@PostMapping(value = {"/purchase/cancel", "/purchase/cancel/"})
+	public boolean cancelPurchase(@RequestBody Purchase data) {
+		boolean canceled = cancelPurchase(data);
+		return canceled;
+	}
+	
+	@PostMapping(value = {"/purchase/cart/add/{buyerID}/{postingID}", "/purchase/cart/add/{buyerID}/{postingID}/"})
+	public Purchase addToCart(@PathVariable("buyerID") String email, @PathVariable("postingID") int postingID) {
+		Buyer buyer = service.getBuyer(email);
+		Posting posting = service.getPosting(postingID);
+		Purchase cart = service.addToCart(buyer, posting);
+		return cart;
+	}
+	
+	@PostMapping(value = {"/purchase/cart/remove/{buyerID}/{postingID}", "/purchase/cart/remove/{buyerID}/{postingID}/"})
+	public Purchase removeFromCart(@PathVariable("buyerID") String email, @PathVariable("postingID") int postingID) {
+		Buyer buyer = service.getBuyer(email);
+		Posting posting = service.getPosting(postingID);
+		Purchase cart = service.removeFromCart(buyer, posting);
+		return cart;
+	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	////////Private methods to convert model instances into corresponding Data Transfer Objects////////

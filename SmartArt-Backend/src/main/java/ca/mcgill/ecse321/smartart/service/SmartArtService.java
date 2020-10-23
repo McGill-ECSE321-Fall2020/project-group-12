@@ -272,6 +272,24 @@ public class SmartArtService {
 	}
 	
 	@Transactional
+	public Posting deletePosting(Posting posting) {
+		
+		if(posting == null) throw new NullPointerException("Cannot remove null posting, perhaps it has already been deleted");
+		
+		if(posting.getArtStatus() == ArtStatus.Purchased) throw new IllegalArgumentException("Cannot delete a posting that has been purchased");
+		
+		Gallery gallery = posting.getGallery();
+		Artist artist = posting.getArtist();
+		artist.removePosting(posting);
+		gallery.removePosting(posting);
+		
+		postingRepository.delete(posting);
+		artistRepository.save(artist);
+		galleryRepository.save(gallery);
+		
+		return posting;
+	}
+	@Transactional
 	public Posting getPosting(int postingID) {
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		return posting;
@@ -321,7 +339,7 @@ public class SmartArtService {
 	///////////////////////
 	
 	@Transactional
-	public void addToCart(Buyer buyer, Posting posting) {
+	public Purchase addToCart(Buyer buyer, Posting posting) {
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
@@ -329,6 +347,9 @@ public class SmartArtService {
 	    }
 	    if (posting == null) {
 	        error = error + "addToCart posting cannot be empty. ";
+	    }
+	    if (posting.getArtStatus() != ArtStatus.Available) {
+	    	error = error + "addToCart posting cannot be On Hold or Purchased. ";
 	    }
 	    error = error.trim();
 	    if (error.length() > 0) {
@@ -344,10 +365,11 @@ public class SmartArtService {
 		cart.addPosting(posting);
 		posting.setArtStatus(ArtStatus.OnHold);
 		cart.setTotalPrice(cart.getTotalPrice() + posting.getPrice());
+		return cart;
 	}
 	
 	@Transactional
-	public void removeFromCart(Buyer buyer, Posting posting) {
+	public Purchase removeFromCart(Buyer buyer, Posting posting) {
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
@@ -370,19 +392,11 @@ public class SmartArtService {
 			cart.setTotalPrice(cart.getTotalPrice() - posting.getPrice());
 		}	
 
+		return cart;
 	}
 	
 	@Transactional
-	public void removePosting(Posting posting) throws NullPointerException{
-		Artist artist = posting.getArtist();
-		artist.removePosting(posting);
-		artist.getGallery().getPostings().remove(posting);
-		posting = null;
-		
-	}
-	
-	@Transactional
-	public Double makePurchase(Purchase purchase, DeliveryType deliveryType) {
+	public Purchase makePurchase(Purchase purchase, DeliveryType deliveryType) {
 		if(purchase == null || purchase.getTotalPrice() <= 0) 
 			throw new IllegalArgumentException("Must have a purchase order to make purchase");
 		
@@ -393,13 +407,14 @@ public class SmartArtService {
 		}
 		
 		purchase.setDeliveryType(deliveryType);
+		purchase.setTotalPrice(calcFinalPrice(purchase));
 		buyer.addPurchase(purchase);
 		buyer.setCart(null);
 		
 		buyerRepository.save(buyer);
 		purchaseRepository.save(purchase);
 		
-		return calcFinalPrice(purchase);
+		return purchase;
 	}
 	
 	@Transactional
@@ -460,8 +475,8 @@ public class SmartArtService {
 		return id;
 	}
 
-	private Double calcFinalPrice(Purchase purchase) {
+	private int calcFinalPrice(Purchase purchase) {
 		Gallery gallery = purchase.getBuyer().getGallery();
-		return purchase.getTotalPrice() * (1 + gallery.getCommission());
+		return (int)(purchase.getTotalPrice() * (1 + gallery.getCommission()));
 	}
 }
