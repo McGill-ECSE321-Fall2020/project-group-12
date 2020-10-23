@@ -41,17 +41,11 @@ public class SmartArtRestController {
 	}
 	
 	@GetMapping(value = { "/galleries/{name}", "/galleries/{name}/" })
-	public Gallery getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
-		return service.getGallery(name);
+	public GalleryDto getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
+		return convertToDto(service.getGallery(name));
 	}
 	
-	@PostMapping(value = { "/gallery/{name}/{city}/{commission}", "/gallery/{name}/{city}/{commission}/" })
-	public Gallery createGallery(@PathVariable("name") String name, @PathVariable("city") String city, @PathVariable("commission") double commission) {
-		Gallery gallery = service.createGallery(name, city, commission);
-		return gallery;
-	}
-	
-	@PostMapping(value = { "/gallery", "/gallery/" })
+	@PostMapping(value = { "/gallery/create", "/gallery/create/" })
 	public GalleryDto createGallery(@RequestBody GalleryDto data) {
 		Gallery gallery = service.createGallery(data);
 		return convertToDto(gallery);
@@ -67,18 +61,11 @@ public class SmartArtRestController {
 	}
 	
 	@GetMapping(value = { "/artists/{email}", "/artists/{email}/" })
-	public Artist getArtistByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return service.getArtist(email);
+	public ArtistDto getArtistByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return convertToDto(service.getArtist(email));
 	}
 	
-	@PostMapping(value = { "/artist/{email}/{name}/{password}", "/artist/{email}/{name}/{password}/" })
-	public Artist createArtist(@PathVariable("email") String email, @PathVariable("name") String name, @PathVariable("password")String password) throws IllegalArgumentException {
-		Gallery gallery = service.getAllGalleries().get(0);
-		Artist artist = service.createArtist(email, name, password, gallery);
-		return artist;
-	}
-	
-	@PostMapping(value = { "/artist", "/artist/" })
+	@PostMapping(value = { "/artist/create", "/artist/create/" })
 	public ArtistDto createArtist(@RequestBody ArtistDto data) throws IllegalArgumentException {
 		Artist artist = service.createArtist(data);
 		return convertToDto(artist);
@@ -93,8 +80,8 @@ public class SmartArtRestController {
 		return service.getAllAdministrators();
 	}
 	@GetMapping(value = { "/administrators/{email}", "/administrators/{email}/" })
-	public Administrator getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return service.getAdministrator(email);
+	public AdministratorDto getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return convertToDto(service.getAdministrator(email));
 	}
 	
 	@PostMapping(value = { "/administrator/{email}/{name}/{password}", "/administrator/{email}/{name}/{password}/" })
@@ -102,6 +89,12 @@ public class SmartArtRestController {
 		Gallery gallery = service.getAllGalleries().get(0);
 		Administrator administrator = service.createAdministrator(email, name, password, gallery);
 		return administrator;
+	}
+	
+	@PostMapping(value = { "/adminstrator/create", "/adminstrator/create/"})
+	public AdministratorDto createAdministrator(@RequestBody AdministratorDto data) throws IllegalArgumentException{
+		Administrator administrator = service.createAdministrator(data);
+		return convertToDto(administrator);
 	}
 	
 	//////////////////////////////
@@ -182,28 +175,33 @@ public class SmartArtRestController {
 		return purchase;
 	}
 	
+	@PostMapping(value = {"/purchase/create", "/purchase/create/" })
+	public PurchaseDto createPurchase(@RequestBody PurchaseDto data) {
+		Purchase purchase = service.createPurchase(data);
+		return convertToDto(purchase);
+	}
 	//////////////////////////////
 	/////Action methods///////////
 	//////////////////////////////
 	
 	@PostMapping(value = {"/purchase/make/{deliveryType}", "/purchase/make/{deliveryType}/"})
-	public Purchase makePurchase(@RequestBody Purchase data, @PathVariable("deliveryType") DeliveryType deliveryType) {
+	public PurchaseDto makePurchase(@RequestBody PurchaseDto data, @PathVariable("deliveryType") DeliveryType deliveryType) {
 		Purchase purchase = service.makePurchase(data, deliveryType);
-		return purchase;
+		return convertToDto(purchase);
 	}
 	
 	@PostMapping(value = {"/purchase/cancel", "/purchase/cancel/"})
-	public boolean cancelPurchase(@RequestBody Purchase data) {
+	public boolean cancelPurchase(@RequestBody PurchaseDto data) {
 		boolean canceled = cancelPurchase(data);
 		return canceled;
 	}
 	
 	@PostMapping(value = {"/purchase/cart/add/{buyerID}/{postingID}", "/purchase/cart/add/{buyerID}/{postingID}/"})
-	public Purchase addToCart(@PathVariable("buyerID") String email, @PathVariable("postingID") int postingID) {
+	public PurchaseDto addToCart(@PathVariable("buyerID") String email, @PathVariable("postingID") int postingID) {
 		Buyer buyer = service.getBuyer(email);
 		Posting posting = service.getPosting(postingID);
 		Purchase cart = service.addToCart(buyer, posting);
-		return cart;
+		return convertToDto(cart);
 	}
 	
 	@PostMapping(value = {"/purchase/cart/remove/{buyerID}/{postingID}", "/purchase/cart/remove/{buyerID}/{postingID}/"})
