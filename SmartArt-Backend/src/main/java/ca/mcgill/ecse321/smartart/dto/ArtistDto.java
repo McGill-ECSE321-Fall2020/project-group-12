@@ -9,26 +9,21 @@ public class ArtistDto {
 	private String name;
 	private String password;
 	private int phone;
-	private List<PostingDto> postings;
 	private GalleryDto gallery;
 	
 	public ArtistDto() {
 	}
 	
 	public ArtistDto(String email, GalleryDto gallery) {
-		this(email, "user", "abc123", 1234, Collections.emptyList(), gallery);
+		this(email, "user", "abc123", 1234, gallery);
 	}
+	
 	
 	public ArtistDto(String email, String name, String password, int phone, GalleryDto gallery) {
-		this(email, name, password, phone, Collections.emptyList(), gallery);
-	}
-	
-	public ArtistDto(String email, String name, String password, int phone, List<PostingDto> postings, GalleryDto gallery) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.phone = phone;
-		this.postings = postings;
 		this.gallery = gallery;
 	}
 	
@@ -64,13 +59,6 @@ public class ArtistDto {
 		this.phone = phone;
 	}
 	
-	public List<PostingDto> getPostings(){
-		return this.postings;
-	}
-	
-	public void setPostings(List<PostingDto> postings) {
-		this.postings = postings;
-	}
 	
 	public GalleryDto getGallery() {
 		return this.gallery;

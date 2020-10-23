@@ -51,10 +51,10 @@ public class SmartArtRestController {
 		return gallery;
 	}
 	
-	@PostMapping(value = { "/gallery/create", "/gallery/create/" })
-	public Gallery createGallery(@RequestBody Gallery data) {
+	@PostMapping(value = { "/gallery", "/gallery/" })
+	public GalleryDto createGallery(@RequestBody GalleryDto data) {
 		Gallery gallery = service.createGallery(data);
-		return gallery;
+		return convertToDto(gallery);
 	}
 	
 	//////////////////////////////
@@ -76,6 +76,12 @@ public class SmartArtRestController {
 		Gallery gallery = service.getAllGalleries().get(0);
 		Artist artist = service.createArtist(email, name, password, gallery);
 		return artist;
+	}
+	
+	@PostMapping(value = { "/artist", "/artist/" })
+	public ArtistDto createArtist(@RequestBody ArtistDto data) throws IllegalArgumentException {
+		Artist artist = service.createArtist(data);
+		return convertToDto(artist);
 	}
 	
 	//////////////////////////////

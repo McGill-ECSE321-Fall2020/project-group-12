@@ -13,13 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.smartart.dao.*;
-import ca.mcgill.ecse321.smartart.dto.AdministratorDto;
-import ca.mcgill.ecse321.smartart.dto.ArtStatusDto;
-import ca.mcgill.ecse321.smartart.dto.ArtistDto;
-import ca.mcgill.ecse321.smartart.dto.BuyerDto;
-import ca.mcgill.ecse321.smartart.dto.GalleryDto;
-import ca.mcgill.ecse321.smartart.dto.PostingDto;
-import ca.mcgill.ecse321.smartart.dto.PurchaseDto;
+import ca.mcgill.ecse321.smartart.dto.*;
 import ca.mcgill.ecse321.smartart.model.*;
 
 @Service
@@ -121,6 +115,12 @@ public class SmartArtService {
 	}
 	
 	@Transactional
+	public Artist createArtist(ArtistDto data) {
+		Artist artist = createArtist(data.getEmail(), data.getName(), data.getPassword(), convertToModel(data.getGallery()));
+		return artist;
+	}
+	
+	@Transactional
 	public Artist getArtist(String email) {
 		if (email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Artist email cannot be empty.");
@@ -211,7 +211,7 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Gallery createGallery(Gallery data) {
+	public Gallery createGallery(GalleryDto data) {
 		Gallery gallery = createGallery(data.getName(), data.getCity(), data.getCommission());
 		return gallery;
 	}
@@ -529,10 +529,6 @@ public class SmartArtService {
 			
 			buyer = new Buyer();
 			
-			for (PurchaseDto p : data.getPurchases()) {
-				buyer.addPurchase(convertToModel(p));
-			}
-			
 			buyer.setCart(cart);
 			buyer.setEmail(email);
 			buyer.setGallery(gallery);
@@ -600,22 +596,6 @@ public class SmartArtService {
 		
 	}
 	
-	private Gallery convertToModel(GalleryDto data) {
-		String name = data.getName();
-		Gallery gallery = galleryRepository.findGalleryByName(name);
-		if (gallery ==  null) {
-			String city = data.getCity();
-			double commission = data.getCommission();
-			gallery = new Gallery();
-			gallery.setName(name);
-			gallery.setCity(city);
-			gallery.setCommission(commission);
-		}
-		
-		return gallery;
-			
-		
-	}
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
@@ -645,5 +625,20 @@ public class SmartArtService {
 	private int calcFinalPrice(Purchase purchase) {
 		Gallery gallery = purchase.getBuyer().getGallery();
 		return (int)(purchase.getTotalPrice() * (1 + gallery.getCommission()));
+	}
+	
+	private Gallery convertToModel(GalleryDto data) {
+        String name = data.getName();
+        Gallery gallery = galleryRepository.findGalleryByName(name);
+        if (gallery ==  null) {
+            String city = data.getCity();
+            double commission = data.getCommission();
+            gallery = new Gallery();
+            gallery.setName(name);
+            gallery.setCity(city);
+            gallery.setCommission(commission);
+        }
+
+        return gallery;
 	}
 }
