@@ -67,8 +67,8 @@ public class SmartArtService {
 	
 	@Transactional
 	public Administrator createAdministrator(AdministratorDto data) {
-		Administrator administrator = createAdministrator(data.getEmail(), data.getName(), data.getPassword(), convertToModel(data.getGallery()));
-		return administrator;
+		Administrator admin = createAdministrator(data.getEmail(), data.getName(), data.getPassword(), convertToModel(data.getGallery()));
+		return admin;
 	}
 	
 	@Transactional
@@ -350,6 +350,11 @@ public class SmartArtService {
 	}
 	
 	@Transactional
+	public Purchase createPurchase(PurchaseDto data) {
+		Purchase purchase = createPurchase(data.getPurchaseID(), convertToModel(data.getBuyer()));
+		return purchase;
+	}
+	@Transactional
 	public Purchase getPurchase(int purchaseID) {
 		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
 		return purchase;
@@ -440,7 +445,8 @@ public class SmartArtService {
 	////////////////////
 	
 	@Transactional
-	public Purchase makePurchase(Purchase purchase, DeliveryType deliveryType) {
+	public Purchase makePurchase(PurchaseDto data, DeliveryType deliveryType) {
+		Purchase purchase = convertToModel(data);
 		if(purchase == null || purchase.getTotalPrice() <= 0) 
 			throw new IllegalArgumentException("Must have a purchase order to make purchase");
 		
@@ -463,7 +469,9 @@ public class SmartArtService {
 	
 
 	@Transactional
-	public boolean cancelPurchase(Purchase purchase) {
+	public boolean cancelPurchase(PurchaseDto data) {
+		Purchase purchase = convertToModel(data);
+		
 		if(purchase == null) 
 			throw new IllegalArgumentException("Must have a purchase to cancel purchase");
 		
@@ -492,6 +500,8 @@ public class SmartArtService {
 		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
 		
 		if (purchase == null) {
+			
+			purchase = new Purchase();
 			
 			Buyer buyer = convertToModel(data.getBuyer());
 			DeliveryType delivery = data.getDeliveryType();
