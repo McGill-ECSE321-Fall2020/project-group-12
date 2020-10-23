@@ -384,7 +384,11 @@ public class SmartArtService {
 	///////////////
 	
 	@Transactional
-	public Purchase addToCart(Buyer buyer, Posting posting) {
+	public Purchase addToCart(BuyerDto buyerData, PostingDto postingData) {
+		
+		Buyer buyer = convertToModel(buyerData);
+		Posting posting = convertToModel(postingData);
+		
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
@@ -414,7 +418,10 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Purchase removeFromCart(Buyer buyer, Posting posting) {
+	public Purchase removeFromCart(BuyerDto buyerData, PostingDto postingData) {
+		Buyer buyer = convertToModel(buyerData);
+		Posting posting = convertToModel(postingData);
+		
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {

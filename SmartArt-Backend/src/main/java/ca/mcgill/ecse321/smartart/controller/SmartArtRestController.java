@@ -178,20 +178,16 @@ public class SmartArtRestController {
 		return canceled;
 	}
 	
-	@PostMapping(value = {"/purchase/cart/add/{buyerID}/{postingID}", "/purchase/cart/add/{buyerID}/{postingID}/"})
-	public PurchaseDto addToCart(@PathVariable("buyerID") String email, @PathVariable("postingID") int postingID) {
-		Buyer buyer = service.getBuyer(email);
-		Posting posting = service.getPosting(postingID);
-		Purchase cart = service.addToCart(buyer, posting);
+	@PostMapping(value = {"/purchase/cart/add", "/purchase/cart/add/"})
+	public PurchaseDto addToCart(@RequestBody BuyerDto buyerData, @RequestBody PostingDto postingData) {
+		Purchase cart = service.addToCart(buyerData, postingData);
 		return convertToDto(cart);
 	}
 	
-	@PostMapping(value = {"/purchase/cart/remove/{buyerID}/{postingID}", "/purchase/cart/remove/{buyerID}/{postingID}/"})
-	public Purchase removeFromCart(@PathVariable("buyerID") String email, @PathVariable("postingID") int postingID) {
-		Buyer buyer = service.getBuyer(email);
-		Posting posting = service.getPosting(postingID);
-		Purchase cart = service.removeFromCart(buyer, posting);
-		return cart;
+	@PostMapping(value = {"/purchase/cart/remove", "/purchase/cart/remove/"})
+	public PurchaseDto removeFromCart(@RequestBody BuyerDto buyerData, @RequestBody PostingDto postingData) {
+		Purchase cart = service.removeFromCart(buyerData, postingData);
+		return convertToDto(cart);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////
