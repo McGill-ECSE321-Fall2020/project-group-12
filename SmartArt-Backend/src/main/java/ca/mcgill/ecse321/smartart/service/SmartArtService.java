@@ -65,6 +65,11 @@ public class SmartArtService {
 		return administrator;
 	}
 	
+	@Transactional
+	public Administrator createAdministrator(AdministratorDto data) {
+		Administrator administrator = createAdministrator(data.getEmail(), data.getName(), data.getPassword(), convertToModel(data.getGallery()));
+		return administrator;
+	}
 	
 	@Transactional
 	public Administrator getAdministrator(String email) {
@@ -165,6 +170,12 @@ public class SmartArtService {
 		gallery.addBuyer(buyer);
 		buyerRepository.save(buyer);
 		galleryRepository.save(gallery);
+		return buyer;
+	}
+	
+	@Transactional
+	public Buyer createBuyer(BuyerDto data) {
+		Buyer buyer = createBuyer(data.getEmail(), data.getName(), data.getPassword(), convertToModel(data.getGallery()));
 		return buyer;
 	}
 	
@@ -277,6 +288,12 @@ public class SmartArtService {
 		postingRepository.save(posting);
 		artistRepository.save(artist);
 		galleryRepository.save(artist.getGallery());
+		return posting;
+	}
+	
+	@Transactional
+	public Posting createPosting(PostingDto data) {
+		Posting posting = createPosting(data.getPostingID(), convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate());
 		return posting;
 	}
 	
