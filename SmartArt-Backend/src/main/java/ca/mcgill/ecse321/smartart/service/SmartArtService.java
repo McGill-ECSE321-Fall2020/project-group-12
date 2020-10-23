@@ -174,6 +174,12 @@ public class SmartArtService {
 	}
 	
 	@Transactional
+	public Buyer createBuyer(BuyerDto data) {
+		Buyer buyer = createBuyer(data.getEmail(), data.getName(), data.getPassword(), convertToModel(data.getGallery()));
+		return buyer;
+	}
+	
+	@Transactional
 	public Buyer getBuyer(String email) {
 		if (email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Buyer email cannot be empty.");
@@ -282,6 +288,12 @@ public class SmartArtService {
 		postingRepository.save(posting);
 		artistRepository.save(artist);
 		galleryRepository.save(artist.getGallery());
+		return posting;
+	}
+	
+	@Transactional
+	public Posting createPosting(PostingDto data) {
+		Posting posting = createPosting(data.getPostingID(), convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate());
 		return posting;
 	}
 	
