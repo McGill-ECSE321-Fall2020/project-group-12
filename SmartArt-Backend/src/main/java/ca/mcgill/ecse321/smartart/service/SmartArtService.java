@@ -529,10 +529,6 @@ public class SmartArtService {
 			
 			buyer = new Buyer();
 			
-			for (PurchaseDto p : data.getPurchases()) {
-				buyer.addPurchase(convertToModel(p));
-			}
-			
 			buyer.setCart(cart);
 			buyer.setEmail(email);
 			buyer.setGallery(gallery);
@@ -600,22 +596,6 @@ public class SmartArtService {
 		
 	}
 	
-	private Gallery convertToModel(GalleryDto data) {
-		String name = data.getName();
-		Gallery gallery = galleryRepository.findGalleryByName(name);
-		if (gallery ==  null) {
-			String city = data.getCity();
-			double commission = data.getCommission();
-			gallery = new Gallery();
-			gallery.setName(name);
-			gallery.setCity(city);
-			gallery.setCommission(commission);
-		}
-		
-		return gallery;
-			
-		
-	}
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
