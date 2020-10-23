@@ -36,8 +36,8 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/galleries", "/galleries/"})
-	public List<Gallery> getAllGalleries(){
-		return service.getAllGalleries();
+	public List<GalleryDto> getAllGalleries(){
+		return service.getAllGalleries().stream().map(g -> convertToDto(g)).collect(Collectors.toList());
 	}
 	
 	@GetMapping(value = { "/galleries/{name}", "/galleries/{name}/" })
@@ -56,8 +56,8 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/artists", "/artists/"})
-	public List<Artist> getAllArtists(){
-		return service.getAllArtists();
+	public List<ArtistDto> getAllArtists(){
+		return service.getAllArtists().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
 	}
 	
 	@GetMapping(value = { "/artists/{email}", "/artists/{email}/" })
@@ -76,8 +76,8 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/administrators", "/administrators/"})
-	public List<Administrator> getAllAdministrators(){
-		return service.getAllAdministrators();
+	public List<AdministratorDto> getAllAdministrators(){
+		return service.getAllAdministrators().stream().map(a -> convertToDto(a)).collect(Collectors.toList());
 	}
 	@GetMapping(value = { "/administrators/{email}", "/administrators/{email}/" })
 	public AdministratorDto getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
@@ -95,13 +95,13 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/buyers", "/buyers/"})
-	public List<Buyer> getAllBuyers(){
-		return service.getAllBuyers();
+	public List<BuyerDto> getAllBuyers(){
+		return service.getAllBuyers().stream().map(b -> convertToDto(b)).collect(Collectors.toList());
 	}
 	
 	@GetMapping(value = { "/buyers/{email}", "/buyers/{email}/" })
-	public Buyer getBuyerByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return service.getBuyer(email);
+	public BuyerDto getBuyerByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return convertToDto(service.getBuyer(email));
 	}
 	
 	@PostMapping(value = { "/buyer/create", "/buyer/create/" })
@@ -115,13 +115,13 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/postings", "/postings/" })
-	public List<Posting> getAllPostings(){
-		return service.getAllPostings();
+	public List<PostingDto> getAllPostings(){
+		return service.getAllPostings().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 	
 	@GetMapping(value = { "/postings/{postingID}}", "/postings/{postingID}/" })
-	public Posting getPostingByPostingID(@PathVariable("postingID") int postingID)  throws IllegalArgumentException{
-		return service.getPosting(postingID);
+	public PostingDto getPostingByPostingID(@PathVariable("postingID") int postingID)  throws IllegalArgumentException{
+		return convertToDto(service.getPosting(postingID));
 	}
 	
 	@PostMapping(value = {"/posting/create", "/posting/create/" })
@@ -141,20 +141,13 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/purchases", "/puchases/" })
-	public List<Purchase> getAllPurchases(){
-		return service.getAllPurchases();
+	public List<PurchaseDto> getAllPurchases(){
+		return service.getAllPurchases().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 	
 	@GetMapping(value = { "/purchases/{purchaseID}}", "/purchases/{purchaseID}/" })
-	public Purchase getPurchaseByPurchaseID(@PathVariable("purchaseID") int purchaseID)  throws IllegalArgumentException{
-		return service.getPurchase(purchaseID);
-	}
-	
-
-	@PostMapping(value = {"/purchase/{id}/{buyer}", "/purchase/{id}/{buyer}/" })
-	public Purchase createPurchase(@PathVariable("id") int purchaseID, @PathVariable("buyer") Buyer buyer) {
-		Purchase purchase = service.createPurchase(purchaseID, buyer);
-		return purchase;
+	public PurchaseDto getPurchaseByPurchaseID(@PathVariable("purchaseID") int purchaseID)  throws IllegalArgumentException{
+		return convertToDto(service.getPurchase(purchaseID));
 	}
 	
 	@PostMapping(value = {"/purchase/create", "/purchase/create/" })
