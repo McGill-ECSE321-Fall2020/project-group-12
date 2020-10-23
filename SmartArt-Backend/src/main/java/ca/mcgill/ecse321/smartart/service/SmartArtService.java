@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.smartart.dao.*;
+import ca.mcgill.ecse321.smartart.dto.*;
 import ca.mcgill.ecse321.smartart.model.*;
 
 @Service
@@ -112,6 +113,12 @@ public class SmartArtService {
 	}
 	
 	@Transactional
+	public Artist createArtist(ArtistDto data) {
+		Artist artist = createArtist(data.getEmail(), data.getName(), data.getPassword(), convertToModel(data.getGallery()));
+		return artist;
+	}
+	
+	@Transactional
 	public Artist getArtist(String email) {
 		if (email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Artist email cannot be empty.");
@@ -202,7 +209,7 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Gallery createGallery(Gallery data) {
+	public Gallery createGallery(GalleryDto data) {
 		Gallery gallery = createGallery(data.getName(), data.getCity(), data.getCommission());
 		return gallery;
 	}
@@ -463,5 +470,20 @@ public class SmartArtService {
 	private Double calcFinalPrice(Purchase purchase) {
 		Gallery gallery = purchase.getBuyer().getGallery();
 		return purchase.getTotalPrice() * (1 + gallery.getCommission());
+	}
+	
+	private Gallery convertToModel(GalleryDto data) {
+        String name = data.getName();
+        Gallery gallery = galleryRepository.findGalleryByName(name);
+        if (gallery ==  null) {
+            String city = data.getCity();
+            double commission = data.getCommission();
+            gallery = new Gallery();
+            gallery.setName(name);
+            gallery.setCity(city);
+            gallery.setCommission(commission);
+        }
+
+        return gallery;
 	}
 }

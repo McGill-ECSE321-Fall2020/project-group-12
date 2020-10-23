@@ -9,7 +9,6 @@ public class BuyerDto {
 	private String name;
 	private String password;
 	private int phone;
-	private List<PurchaseDto> purchases;
 	private GalleryDto gallery;
 	private PurchaseDto cart;
 	
@@ -29,7 +28,6 @@ public class BuyerDto {
 		this.name = name;
 		this.password = password;
 		this.phone = phone;
-		this.purchases = purchases;
 		this.gallery = gallery;
 	}
 	
@@ -63,14 +61,6 @@ public class BuyerDto {
 	
 	public void setPhone(int phone) {
 		this.phone = phone;
-	}
-	
-	public List<PurchaseDto> getPurchases(){
-		return this.purchases;
-	}
-	
-	public void setPurchases(List<PurchaseDto> purchases) {
-		this.purchases = purchases;
 	}
 	
 	public GalleryDto getGallery() {
