@@ -490,7 +490,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Artist artist = new Artist();
 		gallery.addArtist(artist);
-		double price = 100;
+		int price = 100;
 		double x = 1;
 		double y = 1;
 		double z = 1;
@@ -514,7 +514,7 @@ public class TestSmartArtService {
 		
 		int postingID = 984532;
 		Artist artist = null;
-		double price = 100;
+		int price = 100;
 		double x = 1;
 		double y = 1;
 		double z = 1;
@@ -540,7 +540,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Artist artist = new Artist();
 		gallery.addArtist(artist);
-		double price = -100;
+		int price = -100;
 		double x = 1;
 		double y = 1;
 		double z = 1;

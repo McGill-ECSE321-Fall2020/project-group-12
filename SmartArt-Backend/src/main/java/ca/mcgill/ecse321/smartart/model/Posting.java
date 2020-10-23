@@ -34,7 +34,7 @@ public class Posting {
 	@ManyToOne(optional = false)
 	private Gallery gallery;
 	@Column(name = "price")
-	private double price;
+	private int price;
 	@Column(name = "xDim")
 	private double xDim;
 	@Column(name = "yDim")
@@ -118,7 +118,7 @@ public class Posting {
 	 * Sets the price of the Posting.
 	 * @param value: the new price of the Posting.
 	 */
-	public void setPrice(double value) {
+	public void setPrice(int value) {
 		this.price = value;
 	}
 
@@ -126,7 +126,7 @@ public class Posting {
 	 * Gets the price of the Posting.
 	 * @return the price of the Posting.
 	 */
-	public double getPrice() {
+	public int getPrice() {
 		return this.price;
 	}
 

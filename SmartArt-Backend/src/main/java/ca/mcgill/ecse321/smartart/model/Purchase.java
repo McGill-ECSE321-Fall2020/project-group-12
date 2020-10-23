@@ -30,7 +30,7 @@ public class Purchase {
 	private Buyer buyer;
 	
 	@Column(name = "totalPrice")
-	private double totalPrice;
+	private int totalPrice;
 	
 	@OneToMany
 	private Set<Posting> postings;
@@ -117,7 +117,7 @@ public class Purchase {
 	 * Sets the total price of this Purchase.
 	 * @param value: the total price of this Purchase.
 	 */
-	public void setTotalPrice(double value) {
+	public void setTotalPrice(int value) {
 		this.totalPrice = value;
 	}
 
@@ -125,7 +125,7 @@ public class Purchase {
 	 * Gets the total price of this Purchase.
 	 * @return the total price of this Purchase.
 	 */
-	public double getTotalPrice() {
+	public int getTotalPrice() {
 		return this.totalPrice;
 	}
 

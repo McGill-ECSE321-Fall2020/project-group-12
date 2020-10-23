@@ -158,7 +158,7 @@ public class SmartArtRepository {
 	 * @return the Posting created.
 	 */
 	@Transactional
-	public Posting createPosting(String title, float price, int postingID, Artist artist, Gallery gallery) {
+	public Posting createPosting(String title, int price, int postingID, Artist artist, Gallery gallery) {
 		Posting p = new Posting();
 		p.setTitle(title);
 		p.setPrice(price);
