@@ -131,9 +131,9 @@ public class SmartArtRestController {
 	}
 	
 	@PostMapping(value = {"/posting/delete", "/posting/delete/"})
-	public Posting deletePosting(@RequestBody Posting posting) {
+	public PostingDto deletePosting(@RequestBody PostingDto posting) {
 		Posting deletedPost = service.deletePosting(posting);
-		return deletedPost;
+		return convertToDto(deletedPost);
 	}
 	
 	//////////////////////////////
