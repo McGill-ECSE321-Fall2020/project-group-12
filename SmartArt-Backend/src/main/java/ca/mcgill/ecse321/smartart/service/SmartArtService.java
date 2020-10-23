@@ -298,7 +298,9 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Posting deletePosting(Posting posting) {
+	public Posting deletePosting(PostingDto data) {
+		
+		Posting posting = convertToModel(data);
 		
 		if(posting == null) throw new NullPointerException("Cannot remove null posting, perhaps it has already been deleted");
 		
@@ -414,6 +416,8 @@ public class SmartArtService {
 		cart.addPosting(posting);
 		posting.setArtStatus(ArtStatus.OnHold);
 		cart.setTotalPrice(cart.getTotalPrice() + posting.getPrice());
+		purchaseRepository.save(cart);
+		postingRepository.save(posting);
 		return cart;
 	}
 	
@@ -443,7 +447,8 @@ public class SmartArtService {
 			posting.setArtStatus(ArtStatus.Available);
 			cart.setTotalPrice(cart.getTotalPrice() - posting.getPrice());
 		}	
-
+		purchaseRepository.save(cart);
+		postingRepository.save(posting);
 		return cart;
 	}
 	
