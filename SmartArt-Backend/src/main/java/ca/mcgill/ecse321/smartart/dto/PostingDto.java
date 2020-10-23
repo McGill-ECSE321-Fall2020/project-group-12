@@ -2,28 +2,30 @@ package ca.mcgill.ecse321.smartart.dto;
 
 import java.sql.Date;
 
+import ca.mcgill.ecse321.smartart.model.ArtStatus;
+
 public class PostingDto {
 
 	private int postingID;
 	private ArtistDto artist;
 	private GalleryDto gallery;
-	private double price;
+	private int price;
 	private double xDim;
 	private double yDim;
 	private double zDim;
 	private String title;
 	private String description;
-	private ArtStatusDto artStatus;
+	private ArtStatus artStatus;
 	private Date date;
 	
 	public PostingDto(){
 	}
 	
 	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery) {
-		this(postingID, artist, gallery, 10000, 5, 5, 5, "Dog", "This is a dog", ArtStatusDto.Available, new Date(0));
+		this(postingID, artist, gallery, 10000, 5, 5, 5, "Dog", "This is a dog", ArtStatus.Available, new Date(0));
 	}
 	
-	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, double price, double xDim, double yDim, double zDim, String title, String description, ArtStatusDto artStatus, Date date) {
+	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, ArtStatus artStatus, Date date) {
 		this.postingID = postingID;
 		this.artist = artist;
 		this.gallery = gallery;
@@ -39,11 +41,11 @@ public class PostingDto {
 	
 	
 	
-	public void setArtStatus(ArtStatusDto value) {
+	public void setArtStatus(ArtStatus value) {
 		this.artStatus = value;
 	}
 
-	public ArtStatusDto getArtStatus() {
+	public ArtStatus getArtStatus() {
 		return this.artStatus;
 	}
 
@@ -71,11 +73,11 @@ public class PostingDto {
 		return this.title;
 	}
 
-	public void setPrice(double value) {
+	public void setPrice(int value) {
 		this.price = value;
 	}
 
-	public double getPrice() {
+	public int getPrice() {
 		return this.price;
 	}
 

@@ -137,7 +137,7 @@ public class SmartArtRestController {
 			"/posting/{id}/{artist}/{price}/{x}/{y}/{z}/{title}/{description}/{date}/" })
 	public Posting createPosting(@PathVariable("id") int postingID, 
 			@PathVariable("artist") Artist artist,
-			@PathVariable("price") double price, 
+			@PathVariable("price") int price, 
 			@PathVariable("x") double xDim, 
 			@PathVariable("y")double yDim, 
 			@PathVariable("z") double zDim, 
@@ -265,7 +265,7 @@ public class SmartArtRestController {
 		if (p == null) {
 			throw new IllegalArgumentException("There is no such Posting.");
 		}
-		PostingDto postingDto = new PostingDto(p.getPostingID(), convertToDto(p.getArtist()), convertToDto(p.getGallery()), p.getPrice(), p.getXDim(), p.getYDim(), p.getZDim(), p.getTitle(), p.getDescription(), convertToDto(p.getArtStatus()), p.getDate());
+		PostingDto postingDto = new PostingDto(p.getPostingID(), convertToDto(p.getArtist()), convertToDto(p.getGallery()), p.getPrice(), p.getXDim(), p.getYDim(), p.getZDim(), p.getTitle(), p.getDescription(), p.getArtStatus(), p.getDate());
 		return postingDto;
 	}
 	

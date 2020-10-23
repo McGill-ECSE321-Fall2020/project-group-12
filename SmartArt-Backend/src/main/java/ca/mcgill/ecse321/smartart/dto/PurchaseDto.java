@@ -1,29 +1,33 @@
 package ca.mcgill.ecse321.smartart.dto;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+
+import ca.mcgill.ecse321.smartart.model.DeliveryType;
 
 public class PurchaseDto {
 
 	private int purchaseID;
 	private BuyerDto buyer;
-	private double totalPrice;
+	private int totalPrice;
 	private List<PostingDto> postings;
-	private DeliveryTypeDto deliveryType;
-
+	private DeliveryType deliveryType;
+	private LocalDateTime time;
 	public PurchaseDto() {
 	}
 	
 	public PurchaseDto(int purchaseID, BuyerDto buyer) {
-		this(purchaseID, buyer, 0, Collections.emptyList(), null);
+		this(purchaseID, buyer, 0, Collections.emptyList(), null, null);
 	}
 	
-	public PurchaseDto(int purchaseID, BuyerDto buyer, double totalPrice, List<PostingDto> postings, DeliveryTypeDto deliveryType) {
+	public PurchaseDto(int purchaseID, BuyerDto buyer, int totalPrice, List<PostingDto> postings, DeliveryType deliveryType, LocalDateTime time) {
 		this.purchaseID = purchaseID;
 		this.buyer = buyer;
 		this.totalPrice = totalPrice;
 		this.postings = postings;
 		this.deliveryType = deliveryType;
+		this.time = time;
 	}
 	
 	public List<PostingDto> getPostings() {
@@ -42,11 +46,11 @@ public class PurchaseDto {
 		this.buyer = buyer;
 	}
 
-	public void setTotalPrice(double value) {
+	public void setTotalPrice(int value) {
 		this.totalPrice = value;
 	}
 
-	public double getTotalPrice() {
+	public int getTotalPrice() {
 		return this.totalPrice;
 	}
 
@@ -58,12 +62,19 @@ public class PurchaseDto {
 		return this.purchaseID;
 	}
 
-	public void setDeliveryType(DeliveryTypeDto deliveryType) {
+	public void setDeliveryType(DeliveryType deliveryType) {
 		this.deliveryType = deliveryType;
 	}
 	
-	public DeliveryTypeDto getDeliveryType() {
+	public DeliveryType getDeliveryType() {
 		return this.deliveryType;
 	}
 	
+	public void setTime(LocalDateTime time) {
+		this.time = time;
+	}
+	
+	public LocalDateTime getTime() {
+		return this.time;
+	}
 }
