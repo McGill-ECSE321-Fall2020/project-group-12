@@ -7,11 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.smartart.dao.*;
+import ca.mcgill.ecse321.smartart.dto.AdministratorDto;
+import ca.mcgill.ecse321.smartart.dto.ArtStatusDto;
+import ca.mcgill.ecse321.smartart.dto.ArtistDto;
+import ca.mcgill.ecse321.smartart.dto.BuyerDto;
+import ca.mcgill.ecse321.smartart.dto.GalleryDto;
+import ca.mcgill.ecse321.smartart.dto.PostingDto;
+import ca.mcgill.ecse321.smartart.dto.PurchaseDto;
 import ca.mcgill.ecse321.smartart.model.*;
 
 @Service
@@ -62,6 +70,7 @@ public class SmartArtService {
 		galleryRepository.save(gallery);
 		return administrator;
 	}
+	
 	
 	@Transactional
 	public Administrator getAdministrator(String email) {
@@ -222,7 +231,7 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Posting createPosting(int postingID, Artist artist, double price, double x, double y, double z, String title, String description, Date date) {
+	public Posting createPosting(int postingID, Artist artist, int price, double x, double y, double z, String title, String description, Date date) {
 		// Input validation
 	    String error = "";
 	    if (artist == null) {
@@ -271,6 +280,24 @@ public class SmartArtService {
 		return posting;
 	}
 	
+	@Transactional
+	public Posting deletePosting(Posting posting) {
+		
+		if(posting == null) throw new NullPointerException("Cannot remove null posting, perhaps it has already been deleted");
+		
+		if(posting.getArtStatus() == ArtStatus.Purchased) throw new IllegalArgumentException("Cannot delete a posting that has been purchased");
+		
+		Gallery gallery = posting.getGallery();
+		Artist artist = posting.getArtist();
+		artist.removePosting(posting);
+		gallery.removePosting(posting);
+		
+		postingRepository.delete(posting);
+		artistRepository.save(artist);
+		galleryRepository.save(gallery);
+		
+		return posting;
+	}
 	@Transactional
 	public Posting getPosting(int postingID) {
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
@@ -321,7 +348,21 @@ public class SmartArtService {
 	///////////////////////
 	
 	@Transactional
-	public void addToCart(Buyer buyer, Posting posting) {
+	public void clearDatabase() {
+		administratorRepository.deleteAll();
+		artistRepository.deleteAll();
+		buyerRepository.deleteAll();
+		galleryRepository.deleteAll();
+		postingRepository.deleteAll();
+		purchaseRepository.deleteAll();
+	}
+	
+	////////////////
+	//Cart Methods//
+	///////////////
+	
+	@Transactional
+	public Purchase addToCart(Buyer buyer, Posting posting) {
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
@@ -329,6 +370,9 @@ public class SmartArtService {
 	    }
 	    if (posting == null) {
 	        error = error + "addToCart posting cannot be empty. ";
+	    }
+	    if (posting.getArtStatus() != ArtStatus.Available) {
+	    	error = error + "addToCart posting cannot be On Hold or Purchased. ";
 	    }
 	    error = error.trim();
 	    if (error.length() > 0) {
@@ -344,10 +388,11 @@ public class SmartArtService {
 		cart.addPosting(posting);
 		posting.setArtStatus(ArtStatus.OnHold);
 		cart.setTotalPrice(cart.getTotalPrice() + posting.getPrice());
+		return cart;
 	}
 	
 	@Transactional
-	public void removeFromCart(Buyer buyer, Posting posting) {
+	public Purchase removeFromCart(Buyer buyer, Posting posting) {
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
@@ -370,19 +415,15 @@ public class SmartArtService {
 			cart.setTotalPrice(cart.getTotalPrice() - posting.getPrice());
 		}	
 
+		return cart;
 	}
 	
-	@Transactional
-	public void removePosting(Posting posting) throws NullPointerException{
-		Artist artist = posting.getArtist();
-		artist.removePosting(posting);
-		artist.getGallery().getPostings().remove(posting);
-		posting = null;
-		
-	}
+	////////////////////
+	//Purchase Methods//
+	////////////////////
 	
 	@Transactional
-	public Double makePurchase(Purchase purchase, DeliveryType deliveryType) {
+	public Purchase makePurchase(Purchase purchase, DeliveryType deliveryType) {
 		if(purchase == null || purchase.getTotalPrice() <= 0) 
 			throw new IllegalArgumentException("Must have a purchase order to make purchase");
 		
@@ -393,24 +434,16 @@ public class SmartArtService {
 		}
 		
 		purchase.setDeliveryType(deliveryType);
+		purchase.setTotalPrice(calcFinalPrice(purchase));
 		buyer.addPurchase(purchase);
 		buyer.setCart(null);
 		
 		buyerRepository.save(buyer);
 		purchaseRepository.save(purchase);
 		
-		return calcFinalPrice(purchase);
+		return purchase;
 	}
 	
-	@Transactional
-	public void clearDatabase() {
-		administratorRepository.deleteAll();
-		artistRepository.deleteAll();
-		buyerRepository.deleteAll();
-		galleryRepository.deleteAll();
-		postingRepository.deleteAll();
-		purchaseRepository.deleteAll();
-	}
 
 	@Transactional
 	public boolean cancelPurchase(Purchase purchase) {
@@ -430,10 +463,159 @@ public class SmartArtService {
 		purchaseRepository.delete(purchase);
 		return true;
 	}
+	
+	
 	///////////////////////////////
 	///Private helper methods//////
 	///////////////////////////////
 	
+	private Purchase convertToModel(PurchaseDto data) {
+		
+		int purchaseID = data.getPurchaseID();
+		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
+		
+		if (purchase == null) {
+			
+			Buyer buyer = convertToModel(data.getBuyer());
+			DeliveryType delivery = data.getDeliveryType();
+			int totalPrice = data.getTotalPrice();
+			LocalDateTime time = data.getTime();
+			for(PostingDto p : data.getPostings()) {
+				purchase.addPosting(convertToModel(p));
+			}
+			purchase.setBuyer(buyer);
+			purchase.setDeliveryType(delivery);
+			purchase.setPurchaseID(purchaseID);
+			purchase.setTotalPrice(totalPrice);
+			purchase.setTime(time);
+		}
+		
+		return purchase;
+	}
+	
+	private Administrator convertToModel(AdministratorDto data) {
+		String email = data.getEmail();
+		Administrator admin = administratorRepository.findAdministratorByEmail(email);
+		
+		if (admin == null) {
+			String name = data.getName();
+			String password = data.getPassword();
+			int phone = data.getPhone();
+			Gallery gallery = convertToModel(data.getGallery());
+			
+			admin = new Administrator();
+			
+			admin.setEmail(email);
+			admin.setGallery(gallery);
+			admin.setName(name);
+			admin.setPassword(password);
+			admin.setPhone(phone);
+		}
+		
+		return admin;
+	}
+	
+	private Buyer convertToModel(BuyerDto data) {
+		
+		String email = data.getEmail();
+		Buyer buyer = buyerRepository.findBuyerByEmail(email);
+		
+		if (buyer == null) {
+			String name = data.getName();
+			String password = data.getPassword();
+			int phone = data.getPhone();
+			Purchase cart = convertToModel(data.getCart());
+			Gallery gallery = convertToModel(data.getGallery());
+			
+			buyer = new Buyer();
+			
+			for (PurchaseDto p : data.getPurchases()) {
+				buyer.addPurchase(convertToModel(p));
+			}
+			
+			buyer.setCart(cart);
+			buyer.setEmail(email);
+			buyer.setGallery(gallery);
+			buyer.setName(name);
+			buyer.setPassword(password);
+			buyer.setPhone(phone);
+		}
+		
+		return buyer;
+	}
+	private Posting convertToModel(PostingDto data) {
+		
+		int postingID = data.getPostingID();
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
+		
+		if (posting == null) {
+			
+			Artist artist = convertToModel(data.getArtist());
+			int price = data.getPrice();
+			String title = data.getTitle();
+			String description = data.getDescription();
+			double xDim = data.getXDim();
+			double yDim = data.getYDim();
+			double zDim = data.getZDim();
+			Date date = data.getDate();
+			Gallery gallery = convertToModel(data.getGallery());
+			ArtStatus status = data.getArtStatus();
+			
+			posting.setArtist(artist);
+			posting.setPrice(price);
+			posting.setTitle(title);
+			posting.setDescription(description);
+			posting.setXDim(xDim);
+			posting.setYDim(yDim);
+			posting.setZDim(zDim);
+			posting.setDate(date);
+			posting.setGallery(gallery);
+			posting.setArtStatus(status);
+		}
+		
+		return posting;
+	}
+	
+
+	private Artist convertToModel(ArtistDto data) {
+		String email = data.getEmail();
+		
+		Artist artist = artistRepository.findArtistByEmail(email);
+		if (artist == null) {
+			String name = data.getName();
+			String password = data.getPassword();
+			int phone = data.getPhone();
+			Gallery gallery = convertToModel(data.getGallery());
+			
+			artist = new Artist();
+			artist.setEmail(email);
+			artist.setGallery(gallery);
+			artist.setName(name);
+			artist.setPassword(password);
+			artist.setPhone(phone);
+		}
+		
+		return artist;
+		
+		
+	}
+	
+	private Gallery convertToModel(GalleryDto data) {
+		String name = data.getName();
+		Gallery gallery = galleryRepository.findGalleryByName(name);
+		if (gallery ==  null) {
+			String city = data.getCity();
+			double commission = data.getCommission();
+			gallery = new Gallery();
+			gallery.setName(name);
+			gallery.setCity(city);
+			gallery.setCommission(commission);
+		}
+		
+		return gallery;
+			
+		
+	}
 	private <T> List<T> toList(Iterable<T> iterable){
 		List<T> resultList = new ArrayList<T>();
 		for (T t : iterable) {
@@ -460,8 +642,8 @@ public class SmartArtService {
 		return id;
 	}
 
-	private Double calcFinalPrice(Purchase purchase) {
+	private int calcFinalPrice(Purchase purchase) {
 		Gallery gallery = purchase.getBuyer().getGallery();
-		return purchase.getTotalPrice() * (1 + gallery.getCommission());
+		return (int)(purchase.getTotalPrice() * (1 + gallery.getCommission()));
 	}
 }
