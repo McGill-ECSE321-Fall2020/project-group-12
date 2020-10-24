@@ -344,6 +344,7 @@ public class SmartArtService {
 	   
 		Purchase purchase = new Purchase();
 		purchase.setPurchaseID(purchaseID);
+		purchase.setBuyer(buyer);
 		purchase.setTotalPrice(0);
 		buyer.addPurchase(purchase);
 		purchaseRepository.save(purchase);
@@ -584,6 +585,8 @@ public class SmartArtService {
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		
 		if (posting == null) {
+			
+			posting = new Posting();
 			
 			Artist artist = convertToModel(data.getArtist());
 			int price = data.getPrice();
