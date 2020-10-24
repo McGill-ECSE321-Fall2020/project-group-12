@@ -272,11 +272,8 @@ public class SmartArtService {
 	        throw new IllegalArgumentException(error);
 	    }
 		
-		
 		Posting posting = new Posting();
 		posting.setPostingID(postingID);
-		artist.addPosting(posting);
-		artist.getGallery().addPosting(posting);
 		posting.setArtStatus(ArtStatus.Available);
 		posting.setPrice(price);
 		posting.setXDim(x);
@@ -285,6 +282,10 @@ public class SmartArtService {
 		posting.setTitle(title);
 		posting.setDescription(description);
 		posting.setDate(date);
+		
+		artist.addPosting(posting);
+		artist.getGallery().addPosting(posting);
+		
 		postingRepository.save(posting);
 		artistRepository.save(artist);
 		galleryRepository.save(artist.getGallery());
@@ -374,13 +375,13 @@ public class SmartArtService {
 	
 	@Transactional
 	public void clearDatabase() {
+		purchaseRepository.deleteAll();
+		postingRepository.deleteAll();
 		administratorRepository.deleteAll();
 		artistRepository.deleteAll();
 		buyerRepository.deleteAll();
 		galleryRepository.deleteAll();
-		postingRepository.deleteAll();
-		purchaseRepository.deleteAll();
-	}
+	}	
 	
 	////////////////
 	//Cart Methods//
@@ -617,8 +618,8 @@ public class SmartArtService {
 
 	private Artist convertToModel(ArtistDto data) {
 		String email = data.getEmail();
-		
 		Artist artist = artistRepository.findArtistByEmail(email);
+		
 		if (artist == null) {
 			String name = data.getName();
 			String password = data.getPassword();

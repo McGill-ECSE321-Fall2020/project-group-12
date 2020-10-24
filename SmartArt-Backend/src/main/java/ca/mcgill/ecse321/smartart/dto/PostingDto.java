@@ -25,6 +25,10 @@ public class PostingDto {
 		this(postingID, artist, gallery, 10000, 5, 5, 5, "Dog", "This is a dog", ArtStatus.Available, new Date(0));
 	}
 	
+	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, Date date) {
+		this(postingID, artist, gallery, price, xDim, yDim, zDim, title, description, ArtStatus.Available, date);
+	}
+	
 	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, ArtStatus artStatus, Date date) {
 		this.postingID = postingID;
 		this.artist = artist;
