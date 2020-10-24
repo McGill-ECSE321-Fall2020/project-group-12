@@ -14,6 +14,10 @@ public class ArtistDto {
 	public ArtistDto() {
 	}
 	
+	public ArtistDto(String email) {
+		this(email, "user", "abc123", 1234, new GalleryDto() );
+	}
+	
 	public ArtistDto(String email, GalleryDto gallery) {
 		this(email, "user", "abc123", 1234, gallery);
 	}

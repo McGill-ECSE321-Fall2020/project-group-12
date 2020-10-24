@@ -84,7 +84,7 @@ public class SmartArtRestController {
 		return convertToDto(service.getAdministrator(email));
 	}
 	
-	@PostMapping(value = { "/adminstrator/create", "/adminstrator/create/"})
+	@PostMapping(value = { "/administrator/create", "/administrator/create/"})
 	public AdministratorDto createAdministrator(@RequestBody AdministratorDto data) throws IllegalArgumentException{
 		Administrator administrator = service.createAdministrator(data);
 		return convertToDto(administrator);
