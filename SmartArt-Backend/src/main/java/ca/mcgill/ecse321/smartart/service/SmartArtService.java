@@ -598,7 +598,7 @@ public class SmartArtService {
 			Date date = data.getDate();
 			Gallery gallery = convertToModel(data.getGallery());
 			ArtStatus status = data.getArtStatus();
-			
+			posting = new Posting();
 			posting.setArtist(artist);
 			posting.setPrice(price);
 			posting.setTitle(title);
