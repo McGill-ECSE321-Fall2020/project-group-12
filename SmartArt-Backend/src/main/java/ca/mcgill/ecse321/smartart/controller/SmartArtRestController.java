@@ -171,15 +171,15 @@ public class SmartArtRestController {
 		return canceled;
 	}
 	
-	@PostMapping(value = {"/purchase/cart/add", "/purchase/cart/add/"})
-	public PurchaseDto addToCart(@RequestBody BuyerDto buyerData, @RequestBody PostingDto postingData) {
-		Purchase cart = service.addToCart(buyerData, postingData);
+	@PostMapping(value = {"/purchase/cart/add/{postingID}", "/purchase/cart/add/{postingID}/"})
+	public PurchaseDto addToCart(@RequestBody BuyerDto buyerData, @PathVariable(name = "postingID") int postingID) {
+		Purchase cart = service.addToCart(buyerData, postingID);
 		return convertToDto(cart);
 	}
 	
-	@PostMapping(value = {"/purchase/cart/remove", "/purchase/cart/remove/"})
-	public PurchaseDto removeFromCart(@RequestBody BuyerDto buyerData, @RequestBody PostingDto postingData) {
-		Purchase cart = service.removeFromCart(buyerData, postingData);
+	@PostMapping(value = {"/purchase/cart/remove/{postingID}", "/purchase/cart/remove/{postingID}/"})
+	public PurchaseDto removeFromCart(@RequestBody BuyerDto buyerData, @PathVariable (name = "postingID") int postingID) {
+		Purchase cart = service.removeFromCart(buyerData, postingID);
 		return convertToDto(cart);
 	}
 	
