@@ -206,6 +206,11 @@ public class TestSmartArtService {
 		assertNull(service.getGallery(NONEXISTING_GALLERY));
 	}
 	
+	@Test
+	public void testGetAllGalleries() {
+		
+	}
+	
 	////////////////////////////
 	//////Artists tests/////////
 	////////////////////////////
@@ -294,6 +299,11 @@ public class TestSmartArtService {
 	@Test
 	public void testGetNonExistingArtist() {
 		assertNull(service.getArtist(NONEXISTING_ARTIST));
+	}
+	
+	@Test
+	public void testGetAllArtists() {
+		
 	}
 	
 	////////////////////////////
@@ -386,6 +396,10 @@ public class TestSmartArtService {
 		assertNull(service.getArtist(NONEXISTING_ADMINISTRATOR));
 	}
 	
+	@Test
+	public void testGetAllAdministrators() {
+		
+	}
 	
 	////////////////////////////
 	//////Buyer tests///////////
@@ -477,7 +491,10 @@ public class TestSmartArtService {
 		assertNull(service.getBuyer(NONEXISTING_BUYER));
 	}
 	
-	
+	@Test
+	public void testGetAllBuyers() {
+		
+	}
 	////////////////////////////
 	//////Posting tests/////////
 	////////////////////////////
@@ -569,6 +586,21 @@ public class TestSmartArtService {
 		assertNull(service.getPosting(NONEXISTING_POSTING));
 	}
 	
+	@Test
+	public void testDeleteExistingPosting() {
+		
+	}
+	
+	@Test
+	public void testDeleteNonExistingPosting() {
+		
+	}
+	
+	@Test
+	public void testGetAllPostings() {
+		
+	}
+	
 	////////////////////////////
 	//////Purchase tests////////
 	////////////////////////////
@@ -618,8 +650,249 @@ public class TestSmartArtService {
 		assertNull(service.getPosting(NONEXISTING_PURCHASE));
 	}
 	
+	@Test
+	public void testGetAllPurchases() {
+		
+	}
+	
 	////////////////////////////
-	//////Action tests////////
+	///Purchase method tests////
 	////////////////////////////
 	
+	@Test
+	public void testMakePurchaseExistingPurchase() {
+		
+	}
+	
+	@Test
+	public void testMakePurchaseNullPurchase() {
+		
+	}
+	
+	@Test
+	public void testMakePurchaseNonExistingPurchase() {
+		
+	}
+	
+	@Test
+	public void testMakePurchaseValidDeliveryType() {
+		
+	}
+	
+	@Test
+	public void testMakePurchaseInvalidDeliveryTyper() {
+		
+	}
+	
+	@Test
+	public void testMakePurchaseNullDeliveryType() {
+		
+	}
+	
+	@Test
+	public void testCancelPurchaseExistingPurchase() {
+		
+	}
+	
+	@Test
+	public void testCancelPurchaseNonExistingPurchase() {
+		
+	}
+	
+	@Test
+	public void testCancelPurchaseNullPurchase() {
+		
+	}
+	
+	////////////////////////////
+	////////Action tests////////
+	////////////////////////////
+	
+	@Test
+	public void testClearDatabase() {
+		
+	}
+	
+	////////////////////////////
+	/////////Cart tests/////////
+	////////////////////////////
+	
+	@Test
+	public void testAddToCartExistingBuyer() {
+		
+	}
+	
+	@Test
+	public void testAddToCartNullBuyer() {
+		
+	}
+	
+	@Test
+	public void testAddToCartNonExistingBuyer() {
+		
+	}
+	
+	@Test
+	public void testAddToCartExistingPosting() {
+		
+	}
+	
+	@Test
+	public void testAddToCartNullPosting() {
+		
+	}
+	
+	@Test
+	public void testAddToCartNonExistingPosting() {
+		
+	}
+	
+	@Test
+	public void testRemoveFromCartExistingBuyer() {
+		
+	}
+	
+	@Test
+	public void testRemoveFromCartNullBuyer() {
+		
+	}
+	
+	@Test
+	public void testRemoveFromCartNonExistingBuyer() {
+		
+	}
+	
+	@Test
+	public void testRemoveFromCartExistingPosting() {
+		
+	}
+	
+	@Test
+	public void testRemoveFromCartNullPosting() {
+		
+	}
+	
+	@Test
+	public void testRemoveFromCartNonExistingPosting() {
+		
+	}
+	
+	////////////////////////////
+	////Private helper tests////
+	////////////////////////////
+	
+	@Test
+	public void testConvertToModelExistingPurchaseDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNonExistingPurchaseDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNullPurchaseDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelExistingAdministratorDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNonExistingAdministratorDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNullAdministratorDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelExistingBuyerDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNonExistingBuyerDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNullBuyerDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelExistingPostingDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNonExistingPostingDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNullPostingDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelExistingArtistDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNonExistingArtistDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNullArtistDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelExistingGalleryDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNonExistingGalleryDto() {
+		
+	}
+	
+	@Test
+	public void testConvertToModelNullGalleryDto() {
+		
+	}
+	
+	@Test
+	public void testGeneratePurchaseIDNoDuplicates() {
+		
+	}
+	
+	@Test
+	public void testGeneratePostingIDNoDuplicates() {
+		
+	}
+	
+	@Test
+	public void testCalculateFinalPriceExistingPurchase() {
+		
+	}
+	
+	@Test
+	public void testCalculateFinalPriceNonExistingPurchase() {
+		
+	}
+	
+	@Test
+	public void testCalculateFinalPriceNullPurchase() {
+		
+	}
 }
