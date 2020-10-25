@@ -634,7 +634,21 @@ public class SmartArtService {
 		
 		return artist;
 		
-		
+	}
+	
+	private Gallery convertToModel(GalleryDto data) {
+        String name = data.getName();
+        Gallery gallery = galleryRepository.findGalleryByName(name);
+        if (gallery ==  null) {
+            String city = data.getCity();
+            double commission = data.getCommission();
+            gallery = new Gallery();
+            gallery.setName(name);
+            gallery.setCity(city);
+            gallery.setCommission(commission);
+        }
+
+        return gallery;
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){
@@ -668,18 +682,4 @@ public class SmartArtService {
 		return (int)(purchase.getTotalPrice() * (1 + gallery.getCommission()));
 	}
 	
-	private Gallery convertToModel(GalleryDto data) {
-        String name = data.getName();
-        Gallery gallery = galleryRepository.findGalleryByName(name);
-        if (gallery ==  null) {
-            String city = data.getCity();
-            double commission = data.getCommission();
-            gallery = new Gallery();
-            gallery.setName(name);
-            gallery.setCity(city);
-            gallery.setCommission(commission);
-        }
-
-        return gallery;
-	}
 }
