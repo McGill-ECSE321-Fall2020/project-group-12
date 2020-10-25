@@ -65,10 +65,10 @@ public class TestSmartArtPersistence {
 	 */
 	@AfterEach
 	public void clearDatabase() {
+		galleryRepository.deleteAll();
 		administratorRepository.deleteAll();
 		artistRepository.deleteAll();
 		buyerRepository.deleteAll();
-		galleryRepository.deleteAll();
 		postingRepository.deleteAll();
 		purchaseRepository.deleteAll();
 	}

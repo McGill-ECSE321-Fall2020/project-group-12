@@ -375,12 +375,12 @@ public class SmartArtService {
 	
 	@Transactional
 	public void clearDatabase() {
-		purchaseRepository.deleteAll();
-		postingRepository.deleteAll();
-		administratorRepository.deleteAll();
+		galleryRepository.deleteAll();
 		artistRepository.deleteAll();
 		buyerRepository.deleteAll();
-		galleryRepository.deleteAll();
+		administratorRepository.deleteAll();
+		purchaseRepository.deleteAll();
+		postingRepository.deleteAll();
 	}	
 	
 	////////////////
