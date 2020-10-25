@@ -1,19 +1,15 @@
 package ca.mcgill.ecse321.smartart.model;
 
 
-import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 
-import ca.mcgill.ecse321.smartart.model.Posting;
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
-import ca.mcgill.ecse321.smartart.model.User;
 
 /**
  * 
