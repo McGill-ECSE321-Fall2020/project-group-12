@@ -10,7 +10,6 @@ public class BuyerDto {
 	private String password;
 	private int phone;
 	private GalleryDto gallery;
-	private PurchaseDto cart;
 	
 	public BuyerDto() {
 	}
@@ -71,12 +70,5 @@ public class BuyerDto {
 		this.gallery = gallery;
 	}
 	
-	public PurchaseDto getCart() {
-		return this.cart;
-	}
-	
-	public void setCart(PurchaseDto cart) {
-		this.cart = cart;
-	}
 	
 }

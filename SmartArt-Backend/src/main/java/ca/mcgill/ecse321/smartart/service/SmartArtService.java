@@ -388,10 +388,10 @@ public class SmartArtService {
 	///////////////
 	
 	@Transactional
-	public Purchase addToCart(BuyerDto buyerData, PostingDto postingData) {
+	public Purchase addToCart(BuyerDto buyerData, int postingID) {
 		
 		Buyer buyer = convertToModel(buyerData);
-		Posting posting = convertToModel(postingData);
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		
 		// Input validation
 	    String error = "";
@@ -417,16 +417,16 @@ public class SmartArtService {
 		}
 		cart.addPosting(posting);
 		posting.setArtStatus(ArtStatus.OnHold);
-		cart.setTotalPrice(cart.getTotalPrice() + posting.getPrice());
 		purchaseRepository.save(cart);
 		postingRepository.save(posting);
+		buyerRepository.save(buyer);
 		return cart;
 	}
 	
 	@Transactional
-	public Purchase removeFromCart(BuyerDto buyerData, PostingDto postingData) {
+	public Purchase removeFromCart(BuyerDto buyerData, int postingID) {
 		Buyer buyer = convertToModel(buyerData);
-		Posting posting = convertToModel(postingData);
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		
 		// Input validation
 	    String error = "";
@@ -565,12 +565,10 @@ public class SmartArtService {
 			String name = data.getName();
 			String password = data.getPassword();
 			int phone = data.getPhone();
-			Purchase cart = convertToModel(data.getCart());
 			Gallery gallery = convertToModel(data.getGallery());
 			
 			buyer = new Buyer();
 			
-			buyer.setCart(cart);
 			buyer.setEmail(email);
 			buyer.setGallery(gallery);
 			buyer.setName(name);
