@@ -375,12 +375,12 @@ public class SmartArtService {
 	
 	@Transactional
 	public void clearDatabase() {
-		purchaseRepository.deleteAll();
-		postingRepository.deleteAll();
-		administratorRepository.deleteAll();
+		galleryRepository.deleteAll();
 		artistRepository.deleteAll();
 		buyerRepository.deleteAll();
-		galleryRepository.deleteAll();
+		administratorRepository.deleteAll();
+		purchaseRepository.deleteAll();
+		postingRepository.deleteAll();
 	}	
 	
 	////////////////
@@ -388,10 +388,10 @@ public class SmartArtService {
 	///////////////
 	
 	@Transactional
-	public Purchase addToCart(BuyerDto buyerData, PostingDto postingData) {
+	public Purchase addToCart(BuyerDto buyerData, int postingID) {
 		
 		Buyer buyer = convertToModel(buyerData);
-		Posting posting = convertToModel(postingData);
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		
 		// Input validation
 	    String error = "";
