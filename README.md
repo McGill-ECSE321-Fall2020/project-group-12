@@ -35,7 +35,7 @@ Deliverable 1 [Report](https://github.com/McGill-ECSE321-Fall2020/project-group-
 | Luke Barber     |               |                 |
 | Minh Quan Hoang  |               |                 |
 
-Deliverable 2 [Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Deliverable-2-(Backend,-Testing)
+[Deliverable 2 Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report2)
 
 ## Deliverable 3 Contributions
 | Team Member      | Member Role   | Hours Commited  |
