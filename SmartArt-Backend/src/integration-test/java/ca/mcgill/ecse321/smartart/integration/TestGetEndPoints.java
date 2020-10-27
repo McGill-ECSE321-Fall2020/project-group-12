@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import ca.mcgill.ecse321.smartart.dao.*;
+import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.service.SmartArtService;
 
 @ActiveProfiles("test")
@@ -60,7 +61,8 @@ public class TestGetEndPoints {
 	
 	@BeforeEach
 	public void setUpTests() {
-		service.createGallery("Gallery", "Montreal", 0.05);
+		Gallery gallery = service.createGallery("Gallery", "Montreal", 0.05);
+		Artist artist = service.createArtist("ben@mail.com", "Ben", "abc123", gallery);
 	}
 	
 	@Test
