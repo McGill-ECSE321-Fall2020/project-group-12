@@ -410,9 +410,7 @@ public class SmartArtService {
 	///////////////
 	
 	@Transactional
-	public Purchase addToCart(Buyer buyer, int postingID) {
-		
-		Posting posting = postingRepository.findPostingByPostingID(postingID);
+	public Purchase addToCart(Buyer buyer, Posting posting) {
 		
 		// Input validation
 	    String error = "";
@@ -446,7 +444,8 @@ public class SmartArtService {
 	
 	@Transactional
 	public Purchase addToCart(BuyerDto data, int postingID) {
-		Purchase purchase = addToCart(convertToModel(data), postingID);
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
+		Purchase purchase = addToCart(convertToModel(data), posting);
 		return purchase;
 	}
 	

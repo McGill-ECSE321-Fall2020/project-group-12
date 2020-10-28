@@ -729,14 +729,14 @@ public class TestSmartArtService {
 		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
 		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
-		Purchase purchase = new Purchase();
-		String error = null;
-		try {
-			purchase = service.addToCart(buyer, posting.getPostingID());
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-		assertEquals(service.getCart(buyer.getEmail()).getPurchaseID(), purchase.getPurchaseID() );
+		Purchase purchase = service.addToCart(buyer, posting);
+		//String error = null;
+		//try {
+		//	purchase = service.addToCart(buyer, posting);
+		//} catch (IllegalArgumentException e) {
+		//	error = e.getMessage();
+		//}
+		assertEquals(buyer.getCart().getPurchaseID(), purchase.getPurchaseID() );
 		
 	}
 	
