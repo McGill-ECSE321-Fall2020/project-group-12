@@ -8,26 +8,24 @@ public class ArtistDto {
 	private String email;
 	private String name;
 	private String password;
-	private int phone;
 	private GalleryDto gallery;
 	
 	public ArtistDto() {
 	}
 	
 	public ArtistDto(String email) {
-		this(email, "user", "abc123", 1234, new GalleryDto() );
+		this(email, "user", "abc123", new GalleryDto() );
 	}
 	
 	public ArtistDto(String email, GalleryDto gallery) {
-		this(email, "user", "abc123", 1234, gallery);
+		this(email, "user", "abc123", gallery);
 	}
 	
 	
-	public ArtistDto(String email, String name, String password, int phone, GalleryDto gallery) {
+	public ArtistDto(String email, String name, String password, GalleryDto gallery) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		this.phone = phone;
 		this.gallery = gallery;
 	}
 	
@@ -54,15 +52,6 @@ public class ArtistDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public int getPhone() {
-		return this.phone;
-	}
-	
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
-	
 	
 	public GalleryDto getGallery() {
 		return this.gallery;

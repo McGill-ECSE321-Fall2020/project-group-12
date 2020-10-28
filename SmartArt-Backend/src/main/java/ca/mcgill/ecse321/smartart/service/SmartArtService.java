@@ -541,7 +541,6 @@ public class SmartArtService {
 		if (admin == null) {
 			String name = data.getName();
 			String password = data.getPassword();
-			int phone = data.getPhone();
 			Gallery gallery = convertToModel(data.getGallery());
 			
 			admin = new Administrator();
@@ -550,7 +549,6 @@ public class SmartArtService {
 			admin.setGallery(gallery);
 			admin.setName(name);
 			admin.setPassword(password);
-			admin.setPhone(phone);
 		}
 		
 		return admin;
@@ -564,7 +562,6 @@ public class SmartArtService {
 		if (buyer == null) {
 			String name = data.getName();
 			String password = data.getPassword();
-			int phone = data.getPhone();
 			Gallery gallery = convertToModel(data.getGallery());
 			
 			buyer = new Buyer();
@@ -573,7 +570,6 @@ public class SmartArtService {
 			buyer.setGallery(gallery);
 			buyer.setName(name);
 			buyer.setPassword(password);
-			buyer.setPhone(phone);
 		}
 		
 		return buyer;
@@ -621,7 +617,6 @@ public class SmartArtService {
 		if (artist == null) {
 			String name = data.getName();
 			String password = data.getPassword();
-			int phone = data.getPhone();
 			Gallery gallery = convertToModel(data.getGallery());
 			
 			artist = new Artist();
@@ -629,7 +624,6 @@ public class SmartArtService {
 			artist.setGallery(gallery);
 			artist.setName(name);
 			artist.setPassword(password);
-			artist.setPhone(phone);
 		}
 		
 		return artist;

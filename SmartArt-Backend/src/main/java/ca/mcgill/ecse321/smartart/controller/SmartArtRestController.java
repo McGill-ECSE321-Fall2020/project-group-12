@@ -199,7 +199,7 @@ public class SmartArtRestController {
 		if (a == null) {
 			throw new IllegalArgumentException("There is no such Artist.");
 		}
-		ArtistDto artistDto = new ArtistDto(a.getEmail(), a.getName(), a.getPassword(), a.getPhone(), convertToDto(a.getGallery()));
+		ArtistDto artistDto = new ArtistDto(a.getEmail(), a.getName(), a.getPassword(), convertToDto(a.getGallery()));
 		return artistDto;
 	}
 	
@@ -207,7 +207,7 @@ public class SmartArtRestController {
 		if (a == null) {
 			throw new IllegalArgumentException("There is no such Administrator.");
 		}
-		AdministratorDto administratorDto = new AdministratorDto(a.getEmail(), a.getName(), a.getPassword(), a.getPhone(), convertToDto(a.getGallery()));
+		AdministratorDto administratorDto = new AdministratorDto(a.getEmail(), a.getName(), a.getPassword(), convertToDto(a.getGallery()));
 		return administratorDto;
 	}
 	
@@ -215,7 +215,7 @@ public class SmartArtRestController {
 		if (b == null) {
 			throw new IllegalArgumentException("There is no such Buyer.");
 		}
-		BuyerDto buyerDto = new BuyerDto(b.getEmail(), b.getName(), b.getPassword(), b.getPhone(), convertToDto(b.getGallery()));
+		BuyerDto buyerDto = new BuyerDto(b.getEmail(), b.getName(), b.getPassword(), convertToDto(b.getGallery()));
 		return buyerDto;
 	}
 	

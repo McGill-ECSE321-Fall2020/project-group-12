@@ -67,11 +67,31 @@ public class TestGetEndPoints {
 	
 	@Test
 	public void getGalleries() {
+		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/galleries", HttpMethod.GET, null, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
 	    String result = response.getBody().toString();
 	    assertTrue(result.contains("[{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}]"));
+	}
+	
+	@Test
+	public void getGalleryByID() {
+		//create response entity
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/galleries/Gallery", HttpMethod.GET, null, String.class);
+		// Check Status
+	    assertEquals(HttpStatus.OK, response.getStatusCode());
+	    String result = response.getBody().toString();
+	    assertTrue(result.contains("{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}"));
+	}
+	
+	@Test
+	public void getArtists() {
+		//create response entity
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artists", HttpMethod.GET, null, String.class);
+		// Check Status
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		String result = response.getBody().toString();
 	}
 	
 }
