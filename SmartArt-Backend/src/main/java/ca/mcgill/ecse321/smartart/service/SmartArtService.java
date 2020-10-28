@@ -410,9 +410,8 @@ public class SmartArtService {
 	///////////////
 	
 	@Transactional
-	public Purchase addToCart(BuyerDto buyerData, int postingID) {
+	public Purchase addToCart(Buyer buyer, int postingID) {
 		
-		Buyer buyer = convertToModel(buyerData);
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		
 		// Input validation
@@ -443,6 +442,12 @@ public class SmartArtService {
 		postingRepository.save(posting);
 		buyerRepository.save(buyer);
 		return cart;
+	}
+	
+	@Transactional
+	public Purchase addToCart(BuyerDto data, int postingID) {
+		Purchase purchase = addToCart(convertToModel(data), postingID);
+		return purchase;
 	}
 	
 	@Transactional

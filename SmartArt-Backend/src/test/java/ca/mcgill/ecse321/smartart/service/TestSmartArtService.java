@@ -24,6 +24,7 @@ import java.sql.Date;
 
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.dao.*;
+import ca.mcgill.ecse321.smartart.dto.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -722,13 +723,34 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testAddToCartExistingBuyer() {
-		Buyer buyer = service.getBuyer(BUYER_KEY);
-		Purchase purchase = service.getPurchase(PURCHASE_KEY);
-		Posting posting = service.getPosting(POSTING_KEY);
-		Purchase cart = service.getBuyer(buyer.getEmail()).getCart();
-		cart.addPosting(posting);
 		
-		assertEquals(service.getCart(buyer.getEmail()).getPostings(), posting);
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Purchase purchase = new Purchase();
+		String error = null;
+		try {
+			purchase = service.addToCart(buyer, posting.getPostingID());
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(service.getCart(buyer.getEmail()).getPurchaseID(), purchase.getPurchaseID() );
+		
+	}
+	
+	
+	
+	private void makeGalleryBuyerPurchasePosting() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(001, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		
+		
+		
 		
 	}
 	
