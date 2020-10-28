@@ -303,10 +303,7 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Posting deletePosting(PostingDto data) {
-		
-		Posting posting = postingRepository.findPostingByPostingID(data.getPostingID());
-		
+	public Posting deletePosting(Posting posting) {
 		if(posting == null) throw new NullPointerException("Cannot remove null posting, perhaps it has already been deleted");
 		
 		if(posting.getArtStatus() == ArtStatus.Purchased) throw new IllegalArgumentException("Cannot delete a posting that has been purchased");
@@ -322,6 +319,15 @@ public class SmartArtService {
 		
 		return posting;
 	}
+	
+	@Transactional
+	public Posting deletePosting(PostingDto data) throws Exception {
+		Posting posting = postingRepository.findPostingByPostingID(data.getPostingID());
+		
+		return deletePosting(posting);
+		
+	}
+	
 	@Transactional
 	public Posting getPosting(int postingID) {
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
@@ -366,7 +372,7 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Purchase createPurchase(PurchaseDto data) {
+	public Purchase createPurchase(PurchaseDto data) throws IllegalArgumentException {
 		Purchase purchase = createPurchase(data.getPurchaseID(), convertToModel(data.getBuyer()));
 		return purchase;
 	}
@@ -417,12 +423,7 @@ public class SmartArtService {
 	///////////////
 	
 	@Transactional
-	public Purchase addToCart(BuyerDto buyerData, int postingID) {
-		
-		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
-		
-		Posting posting = postingRepository.findPostingByPostingID(postingID);
-		
+	public Purchase addToCart(Buyer buyer, Posting posting) {
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
@@ -454,11 +455,15 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Purchase removeFromCart(BuyerDto buyerData, int postingID) {
+	public Purchase addToCart(BuyerDto buyerData, int postingID) throws IllegalArgumentException {
 		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
-		
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		
+		return addToCart(buyer, posting);
+	}
+	
+	@Transactional
+	public Purchase removeFromCart(Buyer buyer, Posting posting) {
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
@@ -484,15 +489,20 @@ public class SmartArtService {
 		postingRepository.save(posting);
 		return cart;
 	}
+	@Transactional
+	public Purchase removeFromCart(BuyerDto buyerData, int postingID) throws IllegalArgumentException {
+		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
+		
+		return removeFromCart(buyer, posting);
+	}
 	
 	////////////////////
 	//Purchase Methods//
 	////////////////////
 	
 	@Transactional
-	public Purchase makePurchase(PurchaseDto data, DeliveryType deliveryType) {
-		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(data.getPurchaseID());
-		
+	public Purchase makePurchase(Purchase purchase, DeliveryType deliveryType) {
 		if(purchase == null || purchase.getTotalPrice() <= 0) 
 			throw new IllegalArgumentException("Must have a purchase order to make purchase");
 		
@@ -516,11 +526,15 @@ public class SmartArtService {
 		return purchase;
 	}
 	
-
 	@Transactional
-	public boolean cancelPurchase(PurchaseDto data) {
-		Purchase purchase = convertToModel(data);
+	public Purchase makePurchase(PurchaseDto data, DeliveryType deliveryType) throws IllegalArgumentException {
+		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(data.getPurchaseID());
 		
+		return makePurchase(purchase, deliveryType);
+	}
+	
+	@Transactional
+	public boolean cancelPurchase(Purchase purchase) {
 		if(purchase == null) 
 			throw new IllegalArgumentException("Must have a purchase to cancel purchase");
 		
@@ -536,6 +550,13 @@ public class SmartArtService {
 		buyerRepository.save(buyer);
 		purchaseRepository.delete(purchase);
 		return true;
+	}
+	
+	@Transactional
+	public boolean cancelPurchase(PurchaseDto data) throws IllegalArgumentException {
+		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(data.getPurchaseID());
+		
+		return cancelPurchase(purchase);
 	}
 	
 	
