@@ -722,7 +722,7 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testAddToCartExistingBuyer() {
-		
+	
 	}
 	
 	@Test

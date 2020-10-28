@@ -156,9 +156,7 @@ public class SmartArtRestController {
 		try {
 			service.deletePosting(posting);
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		} catch (NullPointerException n) {
+		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
