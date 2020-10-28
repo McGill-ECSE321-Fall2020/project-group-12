@@ -305,7 +305,7 @@ public class SmartArtService {
 	@Transactional
 	public Posting deletePosting(PostingDto data) {
 		
-		Posting posting = convertToModel(data);
+		Posting posting = postingRepository.findPostingByPostingID(data.getPostingID());
 		
 		if(posting == null) throw new NullPointerException("Cannot remove null posting, perhaps it has already been deleted");
 		
@@ -331,6 +331,8 @@ public class SmartArtService {
 	@Transactional
 	public List<Posting> getPostingsByArtist(String email) {
 		Artist artist = artistRepository.findArtistByEmail(email);
+		if(artist == null)
+			return null;
 		return toList(artist.getPostings());
 	}
 	
@@ -377,12 +379,17 @@ public class SmartArtService {
 	@Transactional
 	public List<Purchase> getPurchasesByBuyer(String email){
 		Buyer buyer = buyerRepository.findBuyerByEmail(email);
+		if(buyer == null)
+			throw new IllegalArgumentException("No buyer with email " + email);
 		return toList(buyer.getPurchases());
 	}
 	
 	@Transactional
 	public Purchase getCart(String email) {
 		Buyer buyer = buyerRepository.findBuyerByEmail(email);
+		
+		if(buyer == null) throw new IllegalArgumentException("No buyer with email " + email);
+		
 		return buyer.getCart();
 	}
 	
@@ -451,7 +458,8 @@ public class SmartArtService {
 	
 	@Transactional
 	public Purchase removeFromCart(BuyerDto buyerData, int postingID) {
-		Buyer buyer = convertToModel(buyerData);
+		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
+		
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
 		
 		// Input validation
@@ -486,10 +494,14 @@ public class SmartArtService {
 	
 	@Transactional
 	public Purchase makePurchase(PurchaseDto data, DeliveryType deliveryType) {
-		Purchase purchase = convertToModel(data);
+		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(data.getPurchaseID());
+		
 		if(purchase == null || purchase.getTotalPrice() <= 0) 
 			throw new IllegalArgumentException("Must have a purchase order to make purchase");
 		
+		if(deliveryType != DeliveryType.PickUp && deliveryType != DeliveryType.Shipped)
+			throw new IllegalArgumentException("Delivery Type not valid");
+			
 		Buyer buyer = purchase.getBuyer();
 		
 		for(Posting p: purchase.getPostings()) {
