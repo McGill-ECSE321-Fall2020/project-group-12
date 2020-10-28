@@ -23,8 +23,6 @@ public abstract class User {
 	private String name;
 	@Column(name = "password")
 	private String password;
-	@Column(name = "phone")
-	private int phone;
 	
 	/**
 	 * Sets the User's password.
@@ -56,22 +54,6 @@ public abstract class User {
 	 */
 	public String getName() {
 		return this.name;
-	}
-
-	/**
-	 * Sets the phone number of the User.
-	 * @param value: the phone number of the User.
-	 */
-	public void setPhone(int value) {
-		this.phone = value;
-	}
-
-	/**
-	 * Gets the phone number of the User.
-	 * @return the phone number of the User.
-	 */
-	public int getPhone() {
-		return this.phone;
 	}
 
 	/**

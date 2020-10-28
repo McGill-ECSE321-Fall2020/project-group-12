@@ -62,10 +62,9 @@ public class SmartArtRepository {
 	 * @return the created Administrator.
 	 */
 	@Transactional
-	public Administrator createAdministrator(String name, int phone, String email, String password, Gallery gallery) {
+	public Administrator createAdministrator(String name, String email, String password, Gallery gallery) {
 		Administrator a = new Administrator();
 		a.setName(name);
-		a.setPhone(phone);
 		a.setEmail(email);
 		a.setPassword(password);
 		a.setGallery(gallery);
@@ -94,10 +93,9 @@ public class SmartArtRepository {
 	 * @return the created Artist.
 	 */
 	@Transactional
-	public Artist createArtist(String name, int phone, String email, String password, Gallery gallery) {
+	public Artist createArtist(String name, String email, String password, Gallery gallery) {
 		Artist a = new Artist();
 		a.setName(name);
-		a.setPhone(phone);
 		a.setEmail(email);
 		a.setPassword(password);
 		a.setGallery(gallery);
@@ -126,10 +124,9 @@ public class SmartArtRepository {
 	 * @return the created Buyer.
 	 */
 	@Transactional
-	public Buyer createBuyer(String name, int phone, String email, String password, Gallery gallery) {
+	public Buyer createBuyer(String name, String email, String password, Gallery gallery) {
 		Buyer b = new Buyer();
 		b.setName(name);
-		b.setPhone(phone);
 		b.setEmail(email);
 		b.setPassword(password);
 		b.setGallery(gallery);

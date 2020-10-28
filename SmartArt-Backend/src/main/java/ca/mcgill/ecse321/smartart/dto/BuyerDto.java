@@ -8,25 +8,23 @@ public class BuyerDto {
 	private String email;
 	private String name;
 	private String password;
-	private int phone;
 	private GalleryDto gallery;
 	
 	public BuyerDto() {
 	}
 	
 	public BuyerDto(String email, GalleryDto gallery) {
-		this(email, "user", "abc123", 1234, Collections.emptyList(), gallery);
+		this(email, "user", "abc123", Collections.emptyList(), gallery);
 	}
 	
-	public BuyerDto(String email, String name, String password, int phone, GalleryDto gallery) {
-		this(email, name, password, phone, Collections.emptyList(), gallery);
+	public BuyerDto(String email, String name, String password, GalleryDto gallery) {
+		this(email, name, password, Collections.emptyList(), gallery);
 	}
 	
-	public BuyerDto(String email, String name, String password, int phone, List<PurchaseDto> purchases, GalleryDto gallery) {
+	public BuyerDto(String email, String name, String password, List<PurchaseDto> purchases, GalleryDto gallery) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		this.phone = phone;
 		this.gallery = gallery;
 	}
 	
@@ -52,14 +50,6 @@ public class BuyerDto {
 	
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public int getPhone() {
-		return this.phone;
-	}
-	
-	public void setPhone(int phone) {
-		this.phone = phone;
 	}
 	
 	public GalleryDto getGallery() {

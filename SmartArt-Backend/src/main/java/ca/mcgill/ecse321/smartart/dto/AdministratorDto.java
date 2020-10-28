@@ -8,21 +8,19 @@ public class AdministratorDto {
 	private String email;
 	private String name;
 	private String password;
-	private int phone;
 	private GalleryDto gallery;
 	
 	public AdministratorDto() {
 	}
 	
 	public AdministratorDto(String email, GalleryDto gallery) {
-		this(email, "user", "abc123", 1234, gallery);
+		this(email, "user", "abc123", gallery);
 	}
 	
-	public AdministratorDto(String email, String name, String password, int phone, GalleryDto gallery) {
+	public AdministratorDto(String email, String name, String password, GalleryDto gallery) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		this.phone = phone;
 		this.gallery = gallery;
 	}
 	
@@ -48,14 +46,6 @@ public class AdministratorDto {
 	
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public int getPhone() {
-		return this.phone;
-	}
-	
-	public void setPhone(int phone) {
-		this.phone = phone;
 	}
 	
 	public GalleryDto getGallery() {

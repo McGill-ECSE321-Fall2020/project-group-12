@@ -114,7 +114,6 @@ public class TestSmartArtPersistence {
 	public void testPersistAndLoadArtist() {
 		String email = "mike@mail.com";
 		String name = "mike";
-		int phone = 555758455;
 		String pw = "abc123";
 		String galName = "Guginhiem";
 		
@@ -122,7 +121,6 @@ public class TestSmartArtPersistence {
 		a.setName(name);
 		a.setEmail(email);
 		a.setPassword(pw);
-		a.setPhone(phone);
 		
 		Gallery g = galleryRepository.findGalleryByName(galName);
 		g.addArtist(a);
@@ -148,7 +146,6 @@ public class TestSmartArtPersistence {
 	public void testPersistAndLoadBuyer() {
 		String email = "bob@mail.com";
 		String name = "bob";
-		int phone = 555758455;
 		String pw = "abc123";
 		String galName = "Guginhiem";
 		
@@ -156,7 +153,6 @@ public class TestSmartArtPersistence {
 		b.setName(name);
 		b.setEmail(email);
 		b.setPassword(pw);
-		b.setPhone(phone);
 		
 		Gallery g = galleryRepository.findGalleryByName(galName);
 		g.addBuyer(b);
@@ -183,7 +179,6 @@ public class TestSmartArtPersistence {
 	public void testPersistAndLoadAdministrator() {
 		String email = "pam@mail.com";
 		String name = "pam";
-		int phone = 555758455;
 		String pw = "abc123";
 		String galName = "Guginhiem";
 		
@@ -191,7 +186,6 @@ public class TestSmartArtPersistence {
 		a.setName(name);
 		a.setEmail(email);
 		a.setPassword(pw);
-		a.setPhone(phone);
 		
 		Gallery g = galleryRepository.findGalleryByName(galName);
 		g.addAdministrator(a);
