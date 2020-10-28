@@ -722,6 +722,13 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testAddToCartExistingBuyer() {
+		Buyer buyer = service.getBuyer(BUYER_KEY);
+		Purchase purchase = service.getPurchase(PURCHASE_KEY);
+		Posting posting = service.getPosting(POSTING_KEY);
+		Purchase cart = service.getBuyer(buyer.getEmail()).getCart();
+		cart.addPosting(posting);
+		
+		assertEquals(service.getCart(buyer.getEmail()).getPostings(), posting);
 		
 	}
 	
