@@ -119,9 +119,14 @@ public class SmartArtRestController {
 		return service.getAllPostings().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 	
-	@GetMapping(value = { "/postings/{postingID}}", "/postings/{postingID}/" })
+	@GetMapping(value = { "/postings/{postingID}", "/postings/{postingID}/" })
 	public PostingDto getPostingByPostingID(@PathVariable("postingID") int postingID)  throws IllegalArgumentException{
 		return convertToDto(service.getPosting(postingID));
+	}
+	
+	@GetMapping(value = { "/postings/artist/{email}", "/postings/artist/{email}/" })
+	public List<PostingDto> getPostingsByArtist(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return service.getPostingsByArtist(email).stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 	
 	@PostMapping(value = {"/posting/create", "/posting/create/" })
@@ -145,9 +150,19 @@ public class SmartArtRestController {
 		return service.getAllPurchases().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 	
-	@GetMapping(value = { "/purchases/{purchaseID}}", "/purchases/{purchaseID}/" })
+	@GetMapping(value = { "/purchases/{purchaseID}", "/purchases/{purchaseID}/" })
 	public PurchaseDto getPurchaseByPurchaseID(@PathVariable("purchaseID") int purchaseID)  throws IllegalArgumentException{
 		return convertToDto(service.getPurchase(purchaseID));
+	}
+	
+	@GetMapping(value = { "/purchases/buyer/{email}", "/purchases/buyer/{email}/" })
+	public List<PurchaseDto> getPurchasesByBuyer(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return service.getPurchasesByBuyer(email).stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	}
+	
+	@GetMapping(value = { "/purchases/cart/{email}", "/purchases/cart/{email}/" })
+	public PurchaseDto getCart(@PathVariable("email") String email)  throws IllegalArgumentException{
+		return convertToDto(service.getCart(email));
 	}
 	
 	@PostMapping(value = {"/purchase/create", "/purchase/create/" })

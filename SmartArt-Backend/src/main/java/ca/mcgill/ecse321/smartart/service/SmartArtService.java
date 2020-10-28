@@ -325,6 +325,12 @@ public class SmartArtService {
 	}
 	
 	@Transactional
+	public List<Posting> getPostingsByArtist(String email) {
+		Artist artist = artistRepository.findArtistByEmail(email);
+		return toList(artist.getPostings());
+	}
+	
+	@Transactional
 	public List<Posting> getAllPostings(){
 		return toList(postingRepository.findAll());
 	}
@@ -362,6 +368,18 @@ public class SmartArtService {
 	public Purchase getPurchase(int purchaseID) {
 		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
 		return purchase;
+	}
+	
+	@Transactional
+	public List<Purchase> getPurchasesByBuyer(String email){
+		Buyer buyer = buyerRepository.findBuyerByEmail(email);
+		return toList(buyer.getPurchases());
+	}
+	
+	@Transactional
+	public Purchase getCart(String email) {
+		Buyer buyer = buyerRepository.findBuyerByEmail(email);
+		return buyer.getCart();
 	}
 	
 	@Transactional
