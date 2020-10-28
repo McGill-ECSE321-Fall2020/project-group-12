@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -115,30 +118,49 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/postings", "/postings/" })
-	public List<PostingDto> getAllPostings(){
-		return service.getAllPostings().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	public ResponseEntity<?> getAllPostings(){
+		List<PostingDto> postings = service.getAllPostings().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+		return new ResponseEntity<>(postings, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = { "/postings/{postingID}", "/postings/{postingID}/" })
-	public PostingDto getPostingByPostingID(@PathVariable("postingID") int postingID)  throws IllegalArgumentException{
-		return convertToDto(service.getPosting(postingID));
+	public ResponseEntity<?> getPostingByPostingID(@PathVariable("postingID") int postingID) {
+		PostingDto posting = convertToDto(service.getPosting(postingID));
+		if(posting != null)
+			return new ResponseEntity<>(posting, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping(value = { "/postings/artist/{email}", "/postings/artist/{email}/" })
-	public List<PostingDto> getPostingsByArtist(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return service.getPostingsByArtist(email).stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	public ResponseEntity<?> getPostingsByArtist(@PathVariable("email") String email) {
+		List<PostingDto> postings = service.getPostingsByArtist(email).stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+		if(postings != null)
+			return new ResponseEntity<>(postings, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping(value = {"/posting/create", "/posting/create/" })
-	public PostingDto createPosting(@RequestBody PostingDto data) {
-		Posting posting = service.createPosting(data);
-		return convertToDto(posting);
+	public ResponseEntity<?> createPosting(@RequestBody PostingDto data) {
+		try {
+			Posting posting = service.createPosting(data);
+			PostingDto postingData = convertToDto(posting);
+			return new ResponseEntity<>(postingData, HttpStatus.CREATED);
+			
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
-	@PostMapping(value = {"/posting/delete", "/posting/delete/"})
-	public PostingDto deletePosting(@RequestBody PostingDto posting) {
-		Posting deletedPost = service.deletePosting(posting);
-		return convertToDto(deletedPost);
+	@DeleteMapping(value = {"/posting/delete", "/posting/delete/"})
+	public ResponseEntity<?> deletePosting(@RequestBody PostingDto posting) {
+		try {
+			service.deletePosting(posting);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (NullPointerException n) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	//////////////////////////////
@@ -146,56 +168,96 @@ public class SmartArtRestController {
 	//////////////////////////////
 	
 	@GetMapping(value = {"/purchases", "/puchases/" })
-	public List<PurchaseDto> getAllPurchases(){
-		return service.getAllPurchases().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	public ResponseEntity<?> getAllPurchases(){
+		List<PurchaseDto> purchases = service.getAllPurchases().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+		return new ResponseEntity<>(purchases, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = { "/purchases/{purchaseID}", "/purchases/{purchaseID}/" })
-	public PurchaseDto getPurchaseByPurchaseID(@PathVariable("purchaseID") int purchaseID)  throws IllegalArgumentException{
-		return convertToDto(service.getPurchase(purchaseID));
+	public ResponseEntity<?> getPurchaseByPurchaseID(@PathVariable("purchaseID") int purchaseID) {
+		Purchase purchase = service.getPurchase(purchaseID);
+		if (purchase != null) {
+			return new ResponseEntity<>(convertToDto(purchase), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping(value = { "/purchases/buyer/{email}", "/purchases/buyer/{email}/" })
-	public List<PurchaseDto> getPurchasesByBuyer(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return service.getPurchasesByBuyer(email).stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	public ResponseEntity<?> getPurchasesByBuyer(@PathVariable("email") String email) {
+		try {
+			List<PurchaseDto> purchases = service.getPurchasesByBuyer(email).stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+			return new ResponseEntity<>(purchases, HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@GetMapping(value = { "/purchases/cart/{email}", "/purchases/cart/{email}/" })
-	public PurchaseDto getCart(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return convertToDto(service.getCart(email));
+	public ResponseEntity<?> getCart(@PathVariable("email") String email) {
+		Purchase cart = service.getCart(email);
+		try {
+			if(cart != null)
+				return new ResponseEntity<>(convertToDto(cart), HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping(value = {"/purchase/create", "/purchase/create/" })
-	public PurchaseDto createPurchase(@RequestBody PurchaseDto data) {
-		Purchase purchase = service.createPurchase(data);
-		return convertToDto(purchase);
+	public ResponseEntity<?> createPurchase(@RequestBody PurchaseDto data) {
+		try {
+			Purchase purchase = service.createPurchase(data);
+			return new ResponseEntity<>(convertToDto(purchase), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
+	
 	//////////////////////////////
 	/////Action methods///////////
 	//////////////////////////////
 	
 	@PostMapping(value = {"/purchase/make/{deliveryType}", "/purchase/make/{deliveryType}/"})
-	public PurchaseDto makePurchase(@RequestBody PurchaseDto data, @PathVariable("deliveryType") DeliveryType deliveryType) {
-		Purchase purchase = service.makePurchase(data, deliveryType);
-		return convertToDto(purchase);
+	public ResponseEntity<?> makePurchase(@RequestBody PurchaseDto data, @PathVariable("deliveryType") DeliveryType deliveryType) {
+		try {
+			Purchase purchase = service.makePurchase(data, deliveryType);
+			return new ResponseEntity<>(convertToDto(purchase), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
-	@PostMapping(value = {"/purchase/cancel", "/purchase/cancel/"})
-	public boolean cancelPurchase(@RequestBody PurchaseDto data) {
-		boolean canceled = cancelPurchase(data);
-		return canceled;
+	@DeleteMapping(value = {"/purchase/cancel", "/purchase/cancel/"})
+	public ResponseEntity<?> cancelPurchase(@RequestBody PurchaseDto data) {
+		try {
+			boolean canceled = service.cancelPurchase(data);
+			if(canceled)
+				return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping(value = {"/purchase/cart/add/{postingID}", "/purchase/cart/add/{postingID}/"})
-	public PurchaseDto addToCart(@RequestBody BuyerDto buyerData, @PathVariable(name = "postingID") int postingID) {
-		Purchase cart = service.addToCart(buyerData, postingID);
-		return convertToDto(cart);
+	public ResponseEntity<?> addToCart(@RequestBody BuyerDto buyerData, @PathVariable(name = "postingID") int postingID) {
+		try {
+			Purchase cart = service.addToCart(buyerData, postingID);
+			return new ResponseEntity<>(convertToDto(cart), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
 	}
 	
-	@PostMapping(value = {"/purchase/cart/remove/{postingID}", "/purchase/cart/remove/{postingID}/"})
-	public PurchaseDto removeFromCart(@RequestBody BuyerDto buyerData, @PathVariable (name = "postingID") int postingID) {
-		Purchase cart = service.removeFromCart(buyerData, postingID);
-		return convertToDto(cart);
+	@DeleteMapping(value = {"/purchase/cart/remove/{postingID}", "/purchase/cart/remove/{postingID}/"})
+	public ResponseEntity<?> removeFromCart(@RequestBody BuyerDto buyerData, @PathVariable (name = "postingID") int postingID) {
+		try {
+			Purchase cart = service.removeFromCart(buyerData, postingID);
+			return new ResponseEntity<>(convertToDto(cart), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////
