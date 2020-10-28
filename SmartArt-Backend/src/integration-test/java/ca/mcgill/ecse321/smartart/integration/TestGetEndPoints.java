@@ -63,6 +63,10 @@ public class TestGetEndPoints {
 	public void setUpTests() {
 		Gallery gallery = service.createGallery("Gallery", "Montreal", 0.05);
 		Artist artist = service.createArtist("ben@mail.com", "Ben", "abc123", gallery);
+		service.createAdministrator("greg@mail.com", "Greg", "abc123", gallery);
+		Buyer buyer = service.createBuyer("aidan@mail.com", "Aidan", "abc123", gallery);
+		service.createPosting(124344, artist, 123, 1, 1, 1, "Art", "This is Art", new Date(0));
+		service.createPurchase(21122, buyer);
 	}
 	
 	@Test
@@ -92,6 +96,17 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
+		assertTrue(result.contains("[{\"email\":\"ben@mail.com\",\"name\":\"Ben\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}]"));
+	}
+	
+	@Test
+	public void getArtistByEmail() {
+		//create response entity
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artists/ben@mail.com", HttpMethod.GET, null, String.class);
+		// Check Status
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		String result = response.getBody().toString();
+		assertTrue(result.contains("{\"email\":\"ben@mail.com\",\"name\":\"Ben\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}"));
 	}
 	
 }
