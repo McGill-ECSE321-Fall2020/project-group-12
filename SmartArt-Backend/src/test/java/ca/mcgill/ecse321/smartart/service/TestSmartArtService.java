@@ -514,10 +514,11 @@ public class TestSmartArtService {
 		String title  = "Moon";
 		String description = "This is a moon";
 		Date date = new Date(0);
+		String url = "fakeimage";
 		Posting posting = null;
 		
 		try {
-			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date);
+			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -538,11 +539,12 @@ public class TestSmartArtService {
 		String title  = "Moon";
 		String description = "This is a moon";
 		Date date = new Date(0);
+		String url = "fakeimage";
 		Posting posting = null;
 		String error = null;
 		
 		try {
-			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date);
+			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -564,11 +566,12 @@ public class TestSmartArtService {
 		String title  = "Moon";
 		String description = "This is a moon";
 		Date date = new Date(0);
+		String url = "fakeimage";
 		Posting posting = null;
 		String error = null;
 		
 		try {
-			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date);
+			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

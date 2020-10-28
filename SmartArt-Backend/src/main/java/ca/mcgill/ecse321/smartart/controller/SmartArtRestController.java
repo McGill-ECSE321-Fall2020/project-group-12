@@ -238,7 +238,7 @@ public class SmartArtRestController {
 		if (p == null) {
 			throw new IllegalArgumentException("There is no such Posting.");
 		}
-		PostingDto postingDto = new PostingDto(p.getPostingID(), convertToDto(p.getArtist()), convertToDto(p.getGallery()), p.getPrice(), p.getXDim(), p.getYDim(), p.getZDim(), p.getTitle(), p.getDescription(), p.getArtStatus(), p.getDate());
+		PostingDto postingDto = new PostingDto(p.getPostingID(), convertToDto(p.getArtist()), convertToDto(p.getGallery()), p.getPrice(), p.getXDim(), p.getYDim(), p.getZDim(), p.getTitle(), p.getDescription(), p.getArtStatus(), p.getDate(), p.getImage());
 		return postingDto;
 	}
 	

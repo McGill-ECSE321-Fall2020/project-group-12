@@ -78,6 +78,9 @@ public class SmartArtService {
 		}
 		
 		Administrator administrator = administratorRepository.findAdministratorByEmail(email);
+		if (administrator == null) {
+			throw new IllegalArgumentException("Administrator does not exist.");
+		}
 		return administrator;
 	}
 	
@@ -242,7 +245,7 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Posting createPosting(int postingID, Artist artist, int price, double x, double y, double z, String title, String description, Date date) {
+	public Posting createPosting(int postingID, Artist artist, int price, double x, double y, double z, String title, String description, Date date, String image) {
 		// Input validation
 	    String error = "";
 	    if (artist == null) {
@@ -282,6 +285,7 @@ public class SmartArtService {
 		posting.setTitle(title);
 		posting.setDescription(description);
 		posting.setDate(date);
+		posting.setImage(image);
 		
 		artist.addPosting(posting);
 		artist.getGallery().addPosting(posting);
@@ -294,7 +298,7 @@ public class SmartArtService {
 	
 	@Transactional
 	public Posting createPosting(PostingDto data) {
-		Posting posting = createPosting(data.getPostingID(), convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate());
+		Posting posting = createPosting(data.getPostingID(), convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate(), data.getImage());
 		return posting;
 	}
 	

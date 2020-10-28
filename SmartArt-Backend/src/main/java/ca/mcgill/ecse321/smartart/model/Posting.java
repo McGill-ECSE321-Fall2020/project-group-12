@@ -49,6 +49,8 @@ public class Posting {
 	private ArtStatus artStatus;
 	@Column(name = "date")
 	private Date date;
+	@Column(name = "image")
+	private String image;
 	
 	/**
 	 * Sets the ArtStatus of the Posting.
@@ -224,5 +226,21 @@ public class Posting {
 	 */
 	public Date getDate() {
 		return this.date;
+	}
+	
+	/**
+	 * Sets the image URL of the Posting.
+	 * @param image: the new image URL of the Posting.
+	 */
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	/**
+	 * Gets the image URL of the Posting.
+	 * @return the image URL of the Posting.
+	 */
+	public String getImage() {
+		return this.image;
 	}
 }

@@ -61,7 +61,7 @@ public class TestGetEndPoints {
 		Artist artist = service.createArtist("ben@mail.com", "Ben", "abc123", gallery);
 		service.createAdministrator("greg@mail.com", "Greg", "abc123", gallery);
 		Buyer buyer = service.createBuyer("aidan@mail.com", "Aidan", "abc123", gallery);
-		service.createPosting(124344, artist, 123, 1, 1, 1, "Art", "This is Art", new Date(0));
+		service.createPosting(124344, artist, 123, 1, 1, 1, "Art", "This is Art", new Date(0), "fakeimage");
 		Purchase purchase = service.createPurchase(21122, buyer);
 		buyer.setCart(purchase);
 		buyerRepository.save(buyer);
