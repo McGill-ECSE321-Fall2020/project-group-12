@@ -16,20 +16,21 @@ public class PostingDto {
 	private String title;
 	private String description;
 	private ArtStatus artStatus;
+	private String image;
 	private Date date;
 	
 	public PostingDto(){
 	}
 	
 	public PostingDto(int postingID, ArtistDto artist) {
-		this(postingID, artist, artist.getGallery(), 10000, 5, 5, 5, "Dog", "This is a dog", ArtStatus.Available, new Date(0));
+		this(postingID, artist, artist.getGallery(), 10000, 5, 5, 5, "Dog", "This is a dog", ArtStatus.Available, new Date(0), null);
 	}
 	
-	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, Date date) {
-		this(postingID, artist, gallery, price, xDim, yDim, zDim, title, description, ArtStatus.Available, date);
+	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, Date date, String image) {
+		this(postingID, artist, gallery, price, xDim, yDim, zDim, title, description, ArtStatus.Available, date, image);
 	}
 	
-	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, ArtStatus artStatus, Date date) {
+	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, ArtStatus artStatus, Date date, String image) {
 		this.postingID = postingID;
 		this.artist = artist;
 		this.gallery = gallery;
@@ -41,6 +42,7 @@ public class PostingDto {
 		this.description = description;
 		this.artStatus = artStatus;
 		this.date = date;
+		this.image = image;
 	}
 	
 	
@@ -131,6 +133,14 @@ public class PostingDto {
 	
 	public Date getDate() {
 		return this.date;
+	}
+	
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getImage() {
+		return this.image;
 	}
 	
 }
