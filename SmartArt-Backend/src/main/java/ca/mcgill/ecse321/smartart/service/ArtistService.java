@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.smartart.dao.ArtistRepository;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dto.ArtistDto;
-import ca.mcgill.ecse321.smartart.dto.GalleryDto;
 import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 

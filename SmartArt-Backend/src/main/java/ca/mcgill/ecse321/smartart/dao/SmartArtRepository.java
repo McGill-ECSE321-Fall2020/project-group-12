@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.smartart.dao;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 
 import javax.persistence.EntityManager;
