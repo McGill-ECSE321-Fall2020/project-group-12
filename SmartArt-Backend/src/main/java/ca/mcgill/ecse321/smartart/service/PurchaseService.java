@@ -190,7 +190,9 @@ public class PurchaseService {
 	    String error = "";
 	    if (buyer == null) {
 	        error = error + "removeFromCart buyer cannot be empty. ";
+	        throw new IllegalArgumentException(error);
 	    }
+	    
 	    Purchase cart = buyer.getCart();
 	    if (cart == null) {
 	        error = error + "removeFromCart cart cannot be null. ";
