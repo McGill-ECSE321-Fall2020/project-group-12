@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.dao.*;
 
@@ -220,16 +221,13 @@ public class TestSmartArtService {
 	public void testGetAllGalleries() {
 	  String[] names = {"name1", "name2", "name3"};
       String[] cities = {"city1", "city2", "city3"};
-      ArrayList<Gallery> galleryList = new ArrayList<Gallery>();
+      List<Gallery> galleryList = new ArrayList<Gallery>();
       for (int i = 0; i < names.length; i++) {
           galleryList.add(galleryService.createGallery(names[i], cities[i], 0));
       }
-      ArrayList<Gallery> savedGalleries = (ArrayList<Gallery>) galleryService.getAllGalleries();
-      System.out.println(galleryList);
-      System.out.println(savedGalleries);
       assertFalse(galleryList.isEmpty());
-      assertFalse(savedGalleries.isEmpty());
-      assertTrue(galleryList.equals(savedGalleries));
+      assertFalse(galleryService.getAllGalleries().isEmpty());
+      assertTrue(galleryList.equals(galleryService.getAllGalleries()));
 	}
 	
 	////////////////////////////
@@ -328,13 +326,13 @@ public class TestSmartArtService {
       String[] cities = {"city1", "city2", "city3"};
       String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
       String[] pwds = {"pwd1", "pwd2", "pwd3"};
-      ArrayList<Artist> artistList = new ArrayList<Artist>();
+      List<Artist> artistList = new ArrayList<Artist>();
       for (int i = 0; i < names.length; i++) {
           artistList.add(artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
       }
-      ArrayList<Artist> savedArtists = (ArrayList<Artist>) artistService.getAllArtists();
-      //assertFalse(savedArtists.size()==0);
-      assertTrue(artistList.equals(savedArtists));
+      assertFalse(artistList.isEmpty());
+      assertFalse(artistService.getAllArtists().isEmpty());
+      assertTrue(artistList.equals(artistService.getAllArtists()));
 	}
 	
 	////////////////////////////
@@ -433,13 +431,13 @@ public class TestSmartArtService {
       String[] cities = {"city1", "city2", "city3"};
       String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
       String[] pwds = {"pwd1", "pwd2", "pwd3"};
-      ArrayList<Administrator> administratorList = new ArrayList<Administrator>();
+      List<Administrator> administratorList = new ArrayList<Administrator>();
       for (int i = 0; i < names.length; i++) {
           administratorList.add(adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
       }
-      ArrayList<Administrator> savedAdministrator = (ArrayList<Administrator>) adminService.getAllAdministrators();
-      //assertFalse(savedAdministrator.size()==0);
-      assertTrue(administratorList.equals(savedAdministrator));
+      assertFalse(administratorList.isEmpty());
+      assertFalse(adminService.getAllAdministrators().isEmpty());
+      assertTrue(administratorList.equals(adminService.getAllAdministrators()));
 	}
 	
 	////////////////////////////
