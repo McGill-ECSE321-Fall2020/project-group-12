@@ -1,3 +1,8 @@
 language: java
 script:
 - ./gradlew build
+deploy:
+  provider: heroku
+  api_key: 9e5826fa-9d43-425e-82af-cf484a7a023c
+  app:
+    master: smartart-backend-000
