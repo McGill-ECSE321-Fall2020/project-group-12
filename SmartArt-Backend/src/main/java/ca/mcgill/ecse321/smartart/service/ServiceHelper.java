@@ -204,14 +204,6 @@ public class ServiceHelper {
 		return resultList;
 	}
 
-	int generatePurchaseID() {
-		Random r = new Random();
-		int id = r.nextInt();
-		while(purchaseRepository.findPurchaseByPurchaseID(id) != null) {
-			id = r.nextInt();
-		}
-		return id;
-	}
 
 	int generatePostingID() {
 		Random r = new Random();
