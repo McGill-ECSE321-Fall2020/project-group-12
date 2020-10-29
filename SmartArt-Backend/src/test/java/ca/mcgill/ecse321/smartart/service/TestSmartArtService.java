@@ -225,7 +225,10 @@ public class TestSmartArtService {
           galleryList.add(galleryService.createGallery(names[i], cities[i], 0));
       }
       ArrayList<Gallery> savedGalleries = (ArrayList<Gallery>) galleryService.getAllGalleries();
-      //assertFalse(savedGalleries.size()==0);
+      assertFalse(savedGalleries.isEmpty());
+      assertFalse(galleryList.isEmpty());
+      System.out.println(galleryList);
+      System.out.println(savedGalleries);
       assertTrue(galleryList.equals(savedGalleries));
 	}
 	
