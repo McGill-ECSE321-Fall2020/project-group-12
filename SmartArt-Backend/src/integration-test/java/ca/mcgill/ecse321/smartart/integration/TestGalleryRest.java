@@ -59,13 +59,14 @@ public class TestGalleryRest {
 	
 	@Test
 	public void createDuplicateGallery() {
-		
+		//create original
 		Gallery gallery = new Gallery();
 		gallery.setName("TestGallery");
 		gallery.setCity("Montreal");
 		gallery.setCommission(0.01);
 		galleryRepository.save(gallery);
 		
+		//create duplicate
 		GalleryDto duplicate = new GalleryDto();
 		duplicate.setName("TestGallery");
 		duplicate.setCity("Montreal");

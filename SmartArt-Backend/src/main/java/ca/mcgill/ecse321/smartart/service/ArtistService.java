@@ -38,6 +38,9 @@ public class ArtistService {
 	    if (gallery == null) {
 	        error = error + "Artist gallery cannot be empty. ";
 	    }
+	    if (artistRepository.findArtistByEmail(email) != null) {
+	    	error = error + "An Artist with this email already exists";
+	    }
 	    
 	    error = error.trim();
 	    if (error.length() > 0) {
