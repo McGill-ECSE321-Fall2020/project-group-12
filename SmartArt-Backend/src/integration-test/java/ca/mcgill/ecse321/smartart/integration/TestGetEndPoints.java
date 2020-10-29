@@ -17,7 +17,12 @@ import org.springframework.test.context.ActiveProfiles;
 
 import ca.mcgill.ecse321.smartart.dao.*;
 import ca.mcgill.ecse321.smartart.model.*;
-import ca.mcgill.ecse321.smartart.service.SmartArtService;
+import ca.mcgill.ecse321.smartart.service.AdministratorService;
+import ca.mcgill.ecse321.smartart.service.ArtistService;
+import ca.mcgill.ecse321.smartart.service.BuyerService;
+import ca.mcgill.ecse321.smartart.service.GalleryService;
+import ca.mcgill.ecse321.smartart.service.PostingService;
+import ca.mcgill.ecse321.smartart.service.PurchaseService;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -43,7 +48,17 @@ public class TestGetEndPoints {
 	private PurchaseRepository purchaseRepository;
 	
 	@Autowired
-	private SmartArtService service;
+	private AdministratorService adminService;
+	@Autowired
+	private ArtistService artistService;
+	@Autowired
+	private BuyerService buyerService;
+	@Autowired
+	private GalleryService galleryService;
+	@Autowired
+	private PostingService postingService;
+	@Autowired
+	private PurchaseService purchaseService;
 	
 	@AfterEach
 	public void clearDatabase() {
@@ -57,12 +72,12 @@ public class TestGetEndPoints {
 	
 	@BeforeEach
 	public void setUpTests() {
-		Gallery gallery = service.createGallery("Gallery", "Montreal", 0.05);
-		Artist artist = service.createArtist("ben@mail.com", "Ben", "abc123", gallery);
-		service.createAdministrator("greg@mail.com", "Greg", "abc123", gallery);
-		Buyer buyer = service.createBuyer("aidan@mail.com", "Aidan", "abc123", gallery);
-		service.createPosting(124344, artist, 123, 1, 1, 1, "Art", "This is Art", new Date(0), "fakeimage");
-		Purchase purchase = service.createPurchase(21122, buyer);
+		Gallery gallery = galleryService.createGallery("Gallery", "Montreal", 0.05);
+		Artist artist = artistService.createArtist("ben@mail.com", "Ben", "abc123", gallery);
+		adminService.createAdministrator("greg@mail.com", "Greg", "abc123", gallery);
+		Buyer buyer = buyerService.createBuyer("aidan@mail.com", "Aidan", "abc123", gallery);
+		postingService.createPosting(124344, artist, 123, 1, 1, 1, "Art", "This is Art", new Date(0), "fakeimage");
+		Purchase purchase = purchaseService.createPurchase(21122, buyer);
 		buyer.setCart(purchase);
 		buyerRepository.save(buyer);
 	}
