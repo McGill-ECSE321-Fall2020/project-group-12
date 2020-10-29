@@ -1,8 +1,5 @@
 package ca.mcgill.ecse321.smartart.dto;
 
-import java.util.Collections;
-import java.util.List;
-
 public class ArtistDto {
 	
 	private String email;
