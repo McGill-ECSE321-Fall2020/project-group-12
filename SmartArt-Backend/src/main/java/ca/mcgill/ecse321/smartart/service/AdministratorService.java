@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.smartart.dao.AdministratorRepository;
@@ -12,6 +13,7 @@ import ca.mcgill.ecse321.smartart.dto.AdministratorDto;
 import ca.mcgill.ecse321.smartart.model.Administrator;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 
+@Service
 public class AdministratorService {
 	@Autowired
 	private AdministratorRepository administratorRepository;

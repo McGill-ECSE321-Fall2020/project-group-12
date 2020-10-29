@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ca.mcgill.ecse321.smartart.dao.AdministratorRepository;
 import ca.mcgill.ecse321.smartart.dao.ArtistRepository;
@@ -31,6 +32,7 @@ import ca.mcgill.ecse321.smartart.model.Gallery;
 import ca.mcgill.ecse321.smartart.model.Posting;
 import ca.mcgill.ecse321.smartart.model.Purchase;
 
+@Service
 public class ServiceHelper {
 	
 	@Autowired
