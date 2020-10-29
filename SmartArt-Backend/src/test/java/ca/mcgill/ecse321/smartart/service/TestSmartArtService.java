@@ -9,7 +9,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,7 +21,7 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
-
+import java.util.ArrayList;
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.dao.*;
 
@@ -216,7 +218,21 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllGalleries() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      ArrayList<Gallery> galleryList = new ArrayList<Gallery>();
+      ArrayList<Gallery> savedGalleries = new ArrayList<Gallery>();
+      for (int i = 0; i < names.length; i++) {
+          galleryList.add(galleryService.createGallery(names[i], cities[i], 0));
+      }
+      try {
+          savedGalleries = (ArrayList<Gallery>) galleryService.getAllGalleries();
+      } catch (IllegalArgumentException e) {
+          // Check that no error occurred
+          fail();
+      }
+      assertFalse(savedGalleries.size()==0);
+      assertTrue(galleryList.equals(savedGalleries));
 	}
 	
 	////////////////////////////
@@ -311,7 +327,23 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllArtists() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
+      String[] pwds = {"pwd1", "pwd2", "pwd3"};
+      ArrayList<Artist> artistList = new ArrayList<Artist>();
+      ArrayList<Artist> savedArtists = new ArrayList<Artist>();
+      for (int i = 0; i < names.length; i++) {
+          artistList.add(artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
+      }
+      try {
+          savedArtists = (ArrayList<Artist>) artistService.getAllArtists();
+      } catch (IllegalArgumentException e) {
+          // Check that no error occurred
+          fail();
+      }
+      assertFalse(savedArtists.size()==0);
+      assertTrue(artistList.equals(savedArtists));
 	}
 	
 	////////////////////////////
@@ -406,7 +438,23 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllAdministrators() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
+      String[] pwds = {"pwd1", "pwd2", "pwd3"};
+      ArrayList<Administrator> administratorList = new ArrayList<Administrator>();
+      ArrayList<Administrator> savedAdministrator = new ArrayList<Administrator>();
+      for (int i = 0; i < names.length; i++) {
+          administratorList.add(adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
+      }
+      try {
+          savedAdministrator = (ArrayList<Administrator>) adminService.getAllAdministrators();
+      } catch (IllegalArgumentException e) {
+          // Check that no error occurred
+          fail();
+      }
+      assertFalse(savedAdministrator.size()==0);
+      assertTrue(administratorList.equals(savedAdministrator));
 	}
 	
 	////////////////////////////
