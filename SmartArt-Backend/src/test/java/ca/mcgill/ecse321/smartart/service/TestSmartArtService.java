@@ -674,12 +674,39 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testMakePurchaseExistingPurchase() {
+		assertEquals(0, purchaseService.getAllPurchases().size());
+		
+		int purchaseID = 982423;
+		Buyer buyer = new Buyer();
+		Purchase purchase = null;
+		
+		try {
+			purchase = makePurchase(purchase, deliveryType);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		assertNotNull(purchase);
+		assertEquals(purchaseID, purchase.getPurchaseID());
 		
 	}
 	
 	@Test
 	public void testMakePurchaseNullPurchase() {
+		assertEquals(0, purchaseService.getAllPurchases().size());
 		
+		int purchaseID = 982423;
+		Buyer buyer = new Buyer();
+		Purchase purchase = null;
+		
+		try {
+			purchase = makePurchase(purchase, deliveryType);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		assertNotNull(purchase);
+		assertEquals(purchaseID, purchase.getPurchaseID());
 	}
 	
 	@Test
