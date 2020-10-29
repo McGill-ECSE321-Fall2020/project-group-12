@@ -38,6 +38,9 @@ public class BuyerService {
 	    if (gallery == null) {
 	        error = error + "Buyer gallery cannot be empty. ";
 	    }
+	    if (buyerRepository.findBuyerByEmail(email) != null) {
+	    	error = error + "A Buyer with this email already exists";
+	    }
 	    
 	    error = error.trim();
 	    if (error.length() > 0) {
