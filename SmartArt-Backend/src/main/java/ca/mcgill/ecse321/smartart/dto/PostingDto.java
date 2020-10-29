@@ -22,12 +22,12 @@ public class PostingDto {
 	public PostingDto(){
 	}
 	
-	public PostingDto(int postingID, ArtistDto artist) {
-		this(postingID, artist, artist.getGallery(), 10000, 5, 5, 5, "Dog", "This is a dog", ArtStatus.Available, new Date(0), null);
+	public PostingDto(ArtistDto artist) {
+		this(0000, artist, artist.getGallery(), 10000, 5, 5, 5, "Dog", "This is a dog", ArtStatus.Available, new Date(0), null);
 	}
 	
-	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, Date date, String image) {
-		this(postingID, artist, gallery, price, xDim, yDim, zDim, title, description, ArtStatus.Available, date, image);
+	public PostingDto(ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, Date date, String image) {
+		this(0000, artist, gallery, price, xDim, yDim, zDim, title, description, ArtStatus.Available, date, image);
 	}
 	
 	public PostingDto(int postingID, ArtistDto artist, GalleryDto gallery, int price, double xDim, double yDim, double zDim, String title, String description, ArtStatus artStatus, Date date, String image) {

@@ -204,16 +204,6 @@ public class ServiceHelper {
 		return resultList;
 	}
 
-
-	int generatePostingID() {
-		Random r = new Random();
-		int id = r.nextInt();
-		while(postingRepository.findPostingByPostingID(id) != null) {
-			id = r.nextInt();
-		}
-		return id;
-	}
-
 	int calcFinalPrice(Purchase purchase) {
 		Gallery gallery = purchase.getBuyer().getGallery();
 		return (int)(purchase.getTotalPrice() * (1 + gallery.getCommission()));
