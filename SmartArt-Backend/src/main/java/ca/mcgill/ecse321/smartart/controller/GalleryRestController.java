@@ -45,7 +45,7 @@ public class GalleryRestController {
 		try {
 			Gallery gallery = galleryService.createGallery(data);
 			return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.CREATED);
-		} catch (IllegalArgumentException e) {
+		} catch(IllegalArgumentException e) {
 			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}

@@ -15,8 +15,6 @@ import ca.mcgill.ecse321.smartart.model.Gallery;
 public class GalleryService {
 	@Autowired
 	private GalleryRepository galleryRepository;
-	@Autowired
-	private ServiceHelper helper;
 	
 	@Transactional
 	public Gallery createGallery(String name, String city, double commission) {
