@@ -43,7 +43,17 @@ public class TestSmartArtService {
 	private PurchaseRepository purchaseDao;
 	
 	@InjectMocks
-	private SmartArtService service;
+	private AdministratorService adminService;
+	@InjectMocks
+	private ArtistService artistService;
+	@InjectMocks
+	private BuyerService buyerService;
+	@InjectMocks
+	private GalleryService galleryService;
+	@InjectMocks
+	private PostingService postingService;
+	@InjectMocks
+	private PurchaseService purchaseService;
 	
 	private static final String GALLERY_KEY = "TestGallery";
 	private static final String NONEXISTING_GALLERY = "NotAGallery";
@@ -132,14 +142,14 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testCreateGallery() {
-		assertEquals(0, service.getAllGalleries().size());
+		assertEquals(0,galleryService.getAllGalleries().size());
 
 		String name = "Gugenhiem";
 		String city = "Bilbao";
 		double commission = 0.1;
 		Gallery gallery = null;
 		try {
-			gallery = service.createGallery(name, city, commission);
+			gallery = galleryService.createGallery(name, city, commission);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -154,7 +164,7 @@ public class TestSmartArtService {
 		String error = null;
 		Gallery gallery = null;
 		try {
-			gallery = service.createGallery(name, "Montreal", 0.05);
+			gallery = galleryService.createGallery(name, "Montreal", 0.05);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -170,7 +180,7 @@ public class TestSmartArtService {
 		String error = null;
 		Gallery gallery = null;
 		try {
-			gallery = service.createGallery(name, "Montreal", 0.05);
+			gallery = galleryService.createGallery(name, "Montreal", 0.05);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -186,7 +196,7 @@ public class TestSmartArtService {
 		String error = null;
 		Gallery gallery = null;
 		try {
-			gallery = service.createGallery("Gallery", city, 0.05);
+			gallery = galleryService.createGallery("Gallery", city, 0.05);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -198,12 +208,12 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetExistingGallery() {
-		assertEquals(GALLERY_KEY, service.getGallery(GALLERY_KEY).getName());
+		assertEquals(GALLERY_KEY, galleryService.getGallery(GALLERY_KEY).getName());
 	}
 	
 	@Test
 	public void testGetNonExistingGallery() {
-		assertNull(service.getGallery(NONEXISTING_GALLERY));
+		assertNull(galleryService.getGallery(NONEXISTING_GALLERY));
 	}
 	
 	@Test
@@ -217,7 +227,7 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testCreateArtist() {
-		assertEquals(0, service.getAllArtists().size());
+		assertEquals(0, artistService.getAllArtists().size());
 
 		String email = "bob@mail.com";
 		String name = "bob";
@@ -225,7 +235,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Artist artist = null;
 		try {
-			artist = service.createArtist(email, name, password, gallery);
+			artist = artistService.createArtist(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -243,7 +253,7 @@ public class TestSmartArtService {
 		Gallery gallery = null;
 		Artist artist = null;
 		try {
-			artist = service.createArtist(email, name, password, gallery);
+			artist = artistService.createArtist(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -262,7 +272,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Artist artist = null;
 		try {
-			artist = service.createArtist(email, name, password, gallery);
+			artist = artistService.createArtist(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -281,7 +291,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Artist artist = null;
 		try {
-			artist = service.createArtist(email, name, password, gallery);
+			artist = artistService.createArtist(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -293,12 +303,12 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetExistingArtist() {
-		assertEquals(ARTIST_KEY, service.getArtist(ARTIST_KEY).getEmail());
+		assertEquals(ARTIST_KEY, artistService.getArtist(ARTIST_KEY).getEmail());
 	}
 	
 	@Test
 	public void testGetNonExistingArtist() {
-		assertNull(service.getArtist(NONEXISTING_ARTIST));
+		assertNull(artistService.getArtist(NONEXISTING_ARTIST));
 	}
 	
 	@Test
@@ -312,7 +322,7 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testCreateAdministrator() {
-		assertEquals(0, service.getAllArtists().size());
+		assertEquals(0, artistService.getAllArtists().size());
 
 		String email = "bob@mail.com";
 		String name = "bob";
@@ -320,7 +330,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Administrator administrator = null;
 		try {
-			administrator = service.createAdministrator(email, name, password, gallery);
+			administrator = adminService.createAdministrator(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -338,7 +348,7 @@ public class TestSmartArtService {
 		Gallery gallery = null;
 		Administrator administrator = null;
 		try {
-			administrator = service.createAdministrator(email, name, password, gallery);
+			administrator = adminService.createAdministrator(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -357,7 +367,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Administrator administrator = null;
 		try {
-			administrator = service.createAdministrator(email, name, password, gallery);
+			administrator = adminService.createAdministrator(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -376,7 +386,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Administrator administrator = null;
 		try {
-			administrator = service.createAdministrator(email, name, password, gallery);
+			administrator = adminService.createAdministrator(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -388,12 +398,12 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetExistingAdministrator() {
-		assertEquals(ADMINISTRATOR_KEY, service.getAdministrator(ADMINISTRATOR_KEY).getEmail());
+		assertEquals(ADMINISTRATOR_KEY, adminService.getAdministrator(ADMINISTRATOR_KEY).getEmail());
 	}
 	
 	@Test
 	public void testGetNonExistingAdministrator() {
-		assertNull(service.getArtist(NONEXISTING_ADMINISTRATOR));
+		assertNull(artistService.getArtist(NONEXISTING_ADMINISTRATOR));
 	}
 	
 	@Test
@@ -407,7 +417,7 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testCreateBuyer() {
-		assertEquals(0, service.getAllBuyers().size());
+		assertEquals(0, buyerService.getAllBuyers().size());
 
 		String email = "bob@mail.com";
 		String name = "bob";
@@ -415,7 +425,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Buyer buyer = null;
 		try {
-			buyer = service.createBuyer(email, name, password, gallery);
+			buyer = buyerService.createBuyer(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -433,7 +443,7 @@ public class TestSmartArtService {
 		Gallery gallery = null;
 		Buyer buyer = null;
 		try {
-			buyer = service.createBuyer(email, name, password, gallery);
+			buyer = buyerService.createBuyer(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -452,7 +462,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Buyer buyer = null;
 		try {
-			buyer = service.createBuyer(email, name, password, gallery);
+			buyer = buyerService.createBuyer(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -471,7 +481,7 @@ public class TestSmartArtService {
 		Gallery gallery = new Gallery();
 		Buyer buyer = null;
 		try {
-			buyer = service.createBuyer(email, name, password, gallery);
+			buyer = buyerService.createBuyer(email, name, password, gallery);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -483,12 +493,12 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetExistingBuyer() {
-		assertEquals(BUYER_KEY, service.getBuyer(BUYER_KEY).getEmail());
+		assertEquals(BUYER_KEY, buyerService.getBuyer(BUYER_KEY).getEmail());
 	}
 	
 	@Test
 	public void testGetNonExistingBuyer() {
-		assertNull(service.getBuyer(NONEXISTING_BUYER));
+		assertNull(buyerService.getBuyer(NONEXISTING_BUYER));
 	}
 	
 	@Test
@@ -501,7 +511,7 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testCreatePosting() {
-		assertEquals(0, service.getAllPostings().size());
+		assertEquals(0, postingService.getAllPostings().size());
 		
 		int postingID = 984532;
 		Gallery gallery = new Gallery();
@@ -518,7 +528,7 @@ public class TestSmartArtService {
 		Posting posting = null;
 		
 		try {
-			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
+			posting = postingService.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -544,7 +554,7 @@ public class TestSmartArtService {
 		String error = null;
 		
 		try {
-			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
+			posting = postingService.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -571,7 +581,7 @@ public class TestSmartArtService {
 		String error = null;
 		
 		try {
-			posting = service.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
+			posting = postingService.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -581,12 +591,12 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetExistingPosting() {
-		assertEquals(POSTING_KEY, service.getPosting(POSTING_KEY).getPostingID());
+		assertEquals(POSTING_KEY, postingService.getPosting(POSTING_KEY).getPostingID());
 	}
 	
 	@Test
 	public void testGetNonExistingPosting() {
-		assertNull(service.getPosting(NONEXISTING_POSTING));
+		assertNull(postingService.getPosting(NONEXISTING_POSTING));
 	}
 	
 	@Test
@@ -610,14 +620,14 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testCreatePurchase() {
-		assertEquals(0, service.getAllPurchases().size());
+		assertEquals(0, purchaseService.getAllPurchases().size());
 		
 		int purchaseID = 982423;
 		Buyer buyer = new Buyer();
 		Purchase purchase = null;
 		
 		try {
-			purchase = service.createPurchase(purchaseID, buyer);
+			purchase = purchaseService.createPurchase(purchaseID, buyer);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -635,7 +645,7 @@ public class TestSmartArtService {
 		String error = null;
 		
 		try {
-			purchase = service.createPurchase(purchaseID, buyer);
+			purchase = purchaseService.createPurchase(purchaseID, buyer);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -645,12 +655,12 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetExistingPurchase() {
-		assertEquals(PURCHASE_KEY, service.getPurchase(PURCHASE_KEY).getPurchaseID());
+		assertEquals(PURCHASE_KEY, purchaseService.getPurchase(PURCHASE_KEY).getPurchaseID());
 	}
 	
 	@Test
 	public void testGetNonExistingPurchase() {
-		assertNull(service.getPosting(NONEXISTING_PURCHASE));
+		assertNull(postingService.getPosting(NONEXISTING_PURCHASE));
 	}
 	
 	@Test
