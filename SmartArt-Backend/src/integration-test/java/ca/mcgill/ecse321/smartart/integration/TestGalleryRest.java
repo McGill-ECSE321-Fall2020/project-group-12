@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -15,16 +14,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dto.GalleryDto;
 import ca.mcgill.ecse321.smartart.model.Gallery;
-import ca.mcgill.ecse321.smartart.service.GalleryService;
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestGalleryRest {
 	
@@ -38,8 +34,6 @@ public class TestGalleryRest {
 	
 	@Autowired
 	private GalleryRepository galleryRepository;
-	
-	private GalleryService galleryService;
 	
 	@AfterEach
 	public void clearDatabase() {
@@ -57,7 +51,7 @@ public class TestGalleryRest {
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/gallery/create", HttpMethod.POST, entity, String.class);
 		// Check Status
-	    assertEquals(HttpStatus.OK, response.getStatusCode());
+	    assertEquals(HttpStatus.CREATED, response.getStatusCode());
 	    String result = response.getBody().toString();
 	    //check that gallery was returned
 	    assertTrue(result.contains("\"name\":\"TestGallery\""));
@@ -81,10 +75,26 @@ public class TestGalleryRest {
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/gallery/create", HttpMethod.POST, entity, String.class);
 		// Check Status
-	    assertEquals(HttpStatus.METHOD_NOT_ALLOWED, response.getStatusCode());
+	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	    String result = response.getBody().toString();
-	    //check that gallery was returned
-	    assertEquals(result, "");
+	    //check error message
+	    assertTrue(result.contains("A Gallery by this name already exists"));
+	}
+	
+	@Test
+	public void createEmptyGallery() {
+		
+		GalleryDto gallery = new GalleryDto();
+		
+		HttpEntity<GalleryDto> entity = new HttpEntity<GalleryDto>(gallery, headers);
+		//create response entity
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/gallery/create", HttpMethod.POST, entity, String.class);
+		// Check Status
+	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	    String result = response.getBody().toString();
+	    //check error messages
+	    assertTrue(result.contains("Gallery name cannot be empty"));
+	    assertTrue(result.contains("Gallery city cannot be empty"));
 	}
 
 }

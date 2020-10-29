@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +36,12 @@ public class GalleryRestController {
 	}
 	
 	@PostMapping(value = { "/gallery/create", "/gallery/create/" })
-	public GalleryDto createGallery(@RequestBody GalleryDto data) {
-		Gallery gallery = galleryService.createGallery(data);
-		return controllerHelper.convertToDto(gallery);
+	public ResponseEntity<?> createGallery(@RequestBody GalleryDto data) {
+		try {
+			Gallery gallery = galleryService.createGallery(data);
+			return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.CREATED);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 }
