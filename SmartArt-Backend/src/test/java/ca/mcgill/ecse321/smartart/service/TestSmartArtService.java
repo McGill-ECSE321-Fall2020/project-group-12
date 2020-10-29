@@ -526,7 +526,7 @@ public class TestSmartArtService {
 		Posting posting = null;
 		
 		try {
-			posting = postingService.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
+			posting = postingService.createPosting(124344, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -552,7 +552,7 @@ public class TestSmartArtService {
 		String error = null;
 		
 		try {
-			posting = postingService.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
+			posting = postingService.createPosting(124344, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -579,7 +579,7 @@ public class TestSmartArtService {
 		String error = null;
 		
 		try {
-			posting = postingService.createPosting(postingID, artist, price, x, y, z, title, description, date, url);
+			posting = postingService.createPosting(124344, artist, price, x, y, z, title, description, date, url);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -734,7 +734,7 @@ public class TestSmartArtService {
 		Buyer buyer = buyerService.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
-		Posting posting = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		Purchase purchase = purchaseService.addToCart(buyer, posting);
 		assertEquals(buyer.getCart().getPurchaseID(), purchase.getPurchaseID() );
 	
@@ -746,7 +746,7 @@ public class TestSmartArtService {
 		Buyer buyer = null;
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
-		Posting posting = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		String error = null;
 		Purchase purchase = new Purchase();
 		try {
@@ -764,7 +764,7 @@ public class TestSmartArtService {
 		Buyer buyer = buyerService.getBuyer(NONEXISTING_BUYER);
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
-		Posting posting = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		String error = null;
 		Purchase purchase = new Purchase();
 		try {
@@ -834,7 +834,7 @@ public class TestSmartArtService {
 		Buyer buyer = buyerService.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
-		Posting posting = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		String error = null;
 		
 		Purchase purchase = purchaseService.addToCart(buyer, posting);
@@ -849,7 +849,7 @@ public class TestSmartArtService {
 		Buyer buyer = null;
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
-		Posting posting = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		String error = null;
 		Purchase purchase = new Purchase();
 		try {
@@ -867,7 +867,7 @@ public class TestSmartArtService {
 		Buyer buyer = buyerService.getBuyer(NONEXISTING_BUYER);
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
-		Posting posting = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		String error = null;
 		Purchase purchase = new Purchase();
 		try {
@@ -885,7 +885,7 @@ public class TestSmartArtService {
 		Buyer buyer = buyerService.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
-		Posting posting = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		String error = null;
 		Purchase purchase = purchaseService.addToCart(buyer, posting);
 		purchase = purchaseService.removeFromCart(buyer, posting);
@@ -901,7 +901,7 @@ public class TestSmartArtService {
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
 		Posting posting = null;
-		Posting postingTwo = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting postingTwo = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		String error = null;
 		Purchase purchase = purchaseService.addToCart(buyer, postingTwo);
 		try {
@@ -921,7 +921,7 @@ public class TestSmartArtService {
 		Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
 		Date date = new Date(0);
 		Posting posting = postingService.getPosting(NONEXISTING_POSTING);
-		Posting postingTwo = postingService.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		Posting postingTwo = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		
 		String error = null;
 		Purchase purchase = purchaseService.addToCart(buyer, postingTwo);
