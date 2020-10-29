@@ -89,7 +89,10 @@ public class TestGetEndPoints {
 		// Check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
 	    String result = response.getBody().toString();
-	    assertTrue(result.contains("[{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}]"));
+	    //check that gallery is correctly returned
+	    assertTrue(result.contains("\"name\":\"Gallery\""));
+	    //check attribute
+	    assertTrue(result.contains("\"city\":\"Montreal\""));
 	}
 	
 	@Test
@@ -99,7 +102,10 @@ public class TestGetEndPoints {
 		// Check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
 	    String result = response.getBody().toString();
-	    assertTrue(result.contains("{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}"));
+	    //check that gallery is correctly returned
+	    assertTrue(result.contains("\"name\":\"Gallery\""));
+	    //check attribute
+	    assertTrue(result.contains("\"city\":\"Montreal\""));
 	}
 	
 	@Test
@@ -109,7 +115,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("[{\"email\":\"ben@mail.com\",\"name\":\"Ben\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}]"));
+		//check that artist is returned correctly
+		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
+		//check gallery association
+		assertTrue(result.contains("\"name\":\"Gallery\""));	
 	}
 	
 	@Test
@@ -119,7 +128,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("{\"email\":\"ben@mail.com\",\"name\":\"Ben\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}"));
+		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
+		//check gallery association
+		assertTrue(result.contains("\"name\":\"Gallery\""));
+
 	}
 	
 	@Test
@@ -129,7 +141,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("[{\"email\":\"greg@mail.com\",\"name\":\"Greg\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}]"));
+		//check that administrator is returned correctly
+		assertTrue(result.contains("\"email\":\"greg@mail.com\""));
+		//check gallery association
+		assertTrue(result.contains("\"name\":\"Gallery\""));
 	}
 	
 	@Test
@@ -139,7 +154,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("{\"email\":\"greg@mail.com\",\"name\":\"Greg\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}"));
+		//check that administrator is returned correctly
+		assertTrue(result.contains("\"email\":\"greg@mail.com\""));
+		//check gallery association
+		assertTrue(result.contains("\"name\":\"Gallery\""));
 	}
 	@Test
 	public void getBuyers() {
@@ -148,7 +166,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("[{\"email\":\"aidan@mail.com\",\"name\":\"Aidan\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}]"));
+		//check that buyer is returned correctly
+		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
+		//check gallery association
+		assertTrue(result.contains("\"name\":\"Gallery\""));
 	}
 	
 	@Test
@@ -158,7 +179,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("{\"email\":\"aidan@mail.com\",\"name\":\"Aidan\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}}"));
+		//check that buyer is returned correctly
+		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
+		//check gallery association
+		assertTrue(result.contains("\"name\":\"Gallery\""));
 	}
 	
 	@Test
@@ -168,7 +192,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("[{\"postingID\":124344,\"artist\":{\"email\":\"ben@mail.com\",\"name\":\"Ben\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}},\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05},\"price\":123,\"title\":\"Art\",\"description\":\"This is Art\",\"artStatus\":\"Available\",\"date\":\"1969-12-31\",\"xdim\":1.0,\"ydim\":1.0,\"zdim\":1.0}]"));
+		//check that posting is correctly returned
+		assertTrue(result.contains("\"postingID\":124344"));
+		//check  artist association
+		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
 	}
 	
 	@Test
@@ -178,7 +205,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("{\"postingID\":124344,\"artist\":{\"email\":\"ben@mail.com\",\"name\":\"Ben\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}},\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05},\"price\":123,\"title\":\"Art\",\"description\":\"This is Art\",\"artStatus\":\"Available\",\"date\":\"1969-12-31\",\"xdim\":1.0,\"ydim\":1.0,\"zdim\":1.0}"));
+		//check that posting is correctly returned
+		assertTrue(result.contains("\"postingID\":124344"));
+		//check artist association
+		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
 	}
 	
 	@Test
@@ -188,7 +218,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("[{\"postingID\":124344,\"artist\":{\"email\":\"ben@mail.com\",\"name\":\"Ben\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}},\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05},\"price\":123,\"title\":\"Art\",\"description\":\"This is Art\",\"artStatus\":\"Available\",\"date\":\"1969-12-31\",\"xdim\":1.0,\"ydim\":1.0,\"zdim\":1.0}]"));
+		//check that posting is correctly returned
+		assertTrue(result.contains("\"postingID\":124344"));
+		//check artist association
+		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
 	}
 	
 	@Test
@@ -198,7 +231,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("[{\"purchaseID\":21122,\"buyer\":{\"email\":\"aidan@mail.com\",\"name\":\"Aidan\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}},\"totalPrice\":0,\"postings\":[],\"deliveryType\":null,\"time\":null}]"));
+		//check that purchase is returned correctly
+		assertTrue(result.contains("\"purchaseID\":21122"));
+		//check buyer association
+		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
 	}
 	
 	@Test
@@ -208,7 +244,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("{\"purchaseID\":21122,\"buyer\":{\"email\":\"aidan@mail.com\",\"name\":\"Aidan\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}},\"totalPrice\":0,\"postings\":[],\"deliveryType\":null,\"time\":null}"));
+		//check that purchase is returned correctly
+		assertTrue(result.contains("\"purchaseID\":21122"));
+		//check buyer association
+		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
 	}
 	
 	@Test
@@ -218,7 +257,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("[{\"purchaseID\":21122,\"buyer\":{\"email\":\"aidan@mail.com\",\"name\":\"Aidan\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}},\"totalPrice\":0,\"postings\":[],\"deliveryType\":null,\"time\":null}]"));
+		//check that purchase is returned correctly
+		assertTrue(result.contains("\"purchaseID\":21122"));
+		//check buyer association
+		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
 	}
 	
 	@Test
@@ -228,7 +270,10 @@ public class TestGetEndPoints {
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		String result = response.getBody().toString();
-		assertTrue(result.contains("{\"purchaseID\":21122,\"buyer\":{\"email\":\"aidan@mail.com\",\"name\":\"Aidan\",\"password\":\"abc123\",\"gallery\":{\"name\":\"Gallery\",\"city\":\"Montreal\",\"commission\":0.05}},\"totalPrice\":0,\"postings\":[],\"deliveryType\":null,\"time\":null}"));
+		//check that purchase is returned correctly
+		assertTrue(result.contains("\"purchaseID\":21122"));
+		//check buyer association
+		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
 	}
 	
 }
