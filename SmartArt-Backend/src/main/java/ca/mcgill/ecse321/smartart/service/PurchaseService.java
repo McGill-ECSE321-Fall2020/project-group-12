@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.smartart.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -153,6 +154,7 @@ public class PurchaseService {
 	    }
 	    if (posting == null) {
 	        error = error + "addToCart posting cannot be empty. ";
+	        throw new IllegalArgumentException(error);
 	    }
 	    if (posting.getArtStatus() != ArtStatus.Available) {
 	    	error = error + "addToCart posting cannot be On Hold or Purchased. ";
@@ -164,7 +166,7 @@ public class PurchaseService {
 	    
 		Purchase cart = buyer.getCart();
 		if(cart == null) {
-			int id = helper.generatePurchaseID();
+			int id = generatePurchaseID();
 			cart = createPurchase(id, buyer);
 			buyer.setCart(cart);
 		}
@@ -227,6 +229,15 @@ public class PurchaseService {
 			resultList.add(t);
 		}
 		return resultList;
+	}
+	
+	private int generatePurchaseID() {
+		Random r = new Random();
+		int id = r.nextInt();
+		while(purchaseRepository.findPurchaseByPurchaseID(id) != null) {
+			id = r.nextInt();
+		}
+		return id;
 	}
 	
 }

@@ -6,3 +6,4 @@ build/
 .metadata/
 bin/
 SmartArt-Backend/bin/
+.DS_Store
