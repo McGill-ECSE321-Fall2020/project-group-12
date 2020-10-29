@@ -730,82 +730,210 @@ public class TestSmartArtService {
 		Date date = new Date(0);
 		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
 		Purchase purchase = service.addToCart(buyer, posting);
-		//String error = null;
-		//try {
-		//	purchase = service.addToCart(buyer, posting);
-		//} catch (IllegalArgumentException e) {
-		//	error = e.getMessage();
-		//}
 		assertEquals(buyer.getCart().getPurchaseID(), purchase.getPurchaseID() );
 		
 	}
 	
 	
 	
-	private void makeGalleryBuyerPurchasePosting() {
-		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
-		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
-		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
-		Date date = new Date(0);
-		Posting posting = service.createPosting(001, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
-		
-		
-		
-		
-	}
-	
 	@Test
 	public void testAddToCartNullBuyer() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = null;
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		String error = null;
+		Purchase purchase = new Purchase();
+		try {
+			purchase = service.addToCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "addToCart buyer cannot be empty.");
+		
 		
 	}
 	
 	@Test
 	public void testAddToCartNonExistingBuyer() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.getBuyer(NONEXISTING_BUYER);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		String error = null;
+		Purchase purchase = new Purchase();
+		try {
+			purchase = service.addToCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "addToCart buyer cannot be empty.");
+		
+		
 		
 	}
 	
 	@Test
 	public void testAddToCartExistingPosting() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.getPosting(POSTING_KEY);
+		String error = null;
+		Purchase purchase = new Purchase();
+		try {
+			purchase = service.addToCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "addToCart posting cannot be On Hold or Purchased.");
 		
 	}
 	
 	@Test
 	public void testAddToCartNullPosting() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Posting posting = null;
+		String error = null;
+		Purchase purchase = new Purchase();
+		try {
+			purchase = service.addToCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "addToCart posting cannot be empty.");
 		
 	}
 	
 	@Test
 	public void testAddToCartNonExistingPosting() {
+		Gallery gallery = service.getGallery(GALLERY_KEY);
+		Buyer buyer = service.getBuyer(BUYER_KEY);
+		Artist artist = service.getArtist(ARTIST_KEY);
+		Posting posting = service.getPosting(NONEXISTING_POSTING);
+		String error = null;
+		Purchase purchase = new Purchase();
+		try {
+			purchase = service.addToCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "addToCart posting cannot be empty.");
+		
 		
 	}
 	
 	@Test
 	public void testRemoveFromCartExistingBuyer() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		String error = null;
+		
+		Purchase purchase = service.addToCart(buyer, posting);
+		purchase = service.removeFromCart(buyer, posting);
+		assertEquals(purchase.getPostings(), buyer.getCart().getPostings());
+		
 		
 	}
 	
 	@Test
 	public void testRemoveFromCartNullBuyer() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = null;
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		String error = null;
+		Purchase purchase = new Purchase();
+		try {
+			purchase = service.removeFromCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "removeFromCart buyer cannot be empty.");
 		
 	}
 	
 	@Test
 	public void testRemoveFromCartNonExistingBuyer() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.getBuyer(NONEXISTING_BUYER);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		String error = null;
+		Purchase purchase = new Purchase();
+		try {
+			purchase = service.removeFromCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "removeFromCart buyer cannot be empty.");
 		
 	}
 	
 	@Test
 	public void testRemoveFromCartExistingPosting() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		String error = null;
+		Purchase purchase = service.addToCart(buyer, posting);
+		purchase = service.removeFromCart(buyer, posting);
+		assertEquals(posting.getArtStatus(), ArtStatus.Available);
+		assertEquals(purchase.getPostings(), buyer.getCart().getPostings());
+		
 		
 	}
 	
 	@Test
 	public void testRemoveFromCartNullPosting() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = null;
+		Posting postingTwo = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		
+		String error = null;
+		Purchase purchase = service.addToCart(buyer, postingTwo);
+		try {
+			purchase = service.removeFromCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "removeFromCart posting cannot be empty.");
 		
 	}
 	
 	@Test
 	public void testRemoveFromCartNonExistingPosting() {
+		Gallery gallery = service.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = service.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
+		Artist artist = service.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
+		Date date = new Date(0);
+		Posting posting = service.getPosting(NONEXISTING_POSTING);
+		Posting postingTwo = service.createPosting(1, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		
+		String error = null;
+		Purchase purchase = service.addToCart(buyer, postingTwo);
+		try {
+			purchase = service.removeFromCart(buyer, posting);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, "removeFromCart posting cannot be empty.");
+		
 		
 	}
 	

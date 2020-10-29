@@ -427,6 +427,10 @@ public class SmartArtService {
 	    if (posting == null) {
 	        error = error + "addToCart posting cannot be empty. ";
 	    }
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
+	    }
 	    if (posting.getArtStatus() != ArtStatus.Available) {
 	    	error = error + "addToCart posting cannot be On Hold or Purchased. ";
 	    }
@@ -434,6 +438,7 @@ public class SmartArtService {
 	    if (error.length() > 0) {
 	        throw new IllegalArgumentException(error);
 	    }
+	    
 	    
 		Purchase cart = buyer.getCart();
 		if(cart == null) {
@@ -457,15 +462,16 @@ public class SmartArtService {
 	}
 	
 	@Transactional
-	public Purchase removeFromCart(BuyerDto buyerData, int postingID) {
-		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
-		
-		Posting posting = postingRepository.findPostingByPostingID(postingID);
+	public Purchase removeFromCart(Buyer buyer, Posting posting) {
 		
 		// Input validation
 	    String error = "";
 	    if (buyer == null) {
 	        error = error + "removeFromCart buyer cannot be empty. ";
+	    }
+	    error = error.trim();
+	    if (error.length() > 0) {
+	        throw new IllegalArgumentException(error);
 	    }
 	    Purchase cart = buyer.getCart();
 	    if (cart == null) {
@@ -486,6 +492,13 @@ public class SmartArtService {
 		purchaseRepository.save(cart);
 		postingRepository.save(posting);
 		return cart;
+	}
+	
+	@Transactional
+	public Purchase removeFromCart(BuyerDto data, int postingID) {
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
+		Purchase purchase = removeFromCart(convertToModel(data), posting);
+		return purchase;
 	}
 	
 	////////////////////
