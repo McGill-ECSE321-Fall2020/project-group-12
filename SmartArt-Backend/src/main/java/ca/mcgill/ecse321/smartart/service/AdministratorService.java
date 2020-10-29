@@ -38,6 +38,9 @@ public class AdministratorService {
 	    if (gallery == null) {
 	        error = error + "Administrator gallery cannot be empty. ";
 	    }
+	    if (administratorRepository.findAdministratorByEmail(email) != null) {
+	    	error = error + "An Administrator with this email already exists";
+	    }
 	    
 	    error = error.trim();
 	    if (error.length() > 0) {
