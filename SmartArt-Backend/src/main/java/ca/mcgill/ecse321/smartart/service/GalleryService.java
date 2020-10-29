@@ -31,6 +31,9 @@ public class GalleryService {
 	    if (commission < 0) {
 	        error = error + "Gallery commission cannot be less than 0. ";
 	    }
+	    if (galleryRepository.findGalleryByName(name) != null) {
+	    	error = error + "A Gallery by this name already exists";
+	    }
 	    
 	    error = error.trim();
 	    if (error.length() > 0) {
