@@ -82,7 +82,7 @@ public class PostingService {
 	}
 	
 	@Transactional
-	public Posting createPosting(PostingDto data) {
+	public Posting createPosting(PostingDto data) throws IllegalArgumentException {
 		Posting posting = createPosting(generatePostingID(data.getTitle(), data.getDescription()), helper.convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate(), data.getImage());
 		return posting;
 	}
@@ -133,6 +133,7 @@ public class PostingService {
 	}
 	
 	private int generatePostingID(String title, String description) {
+		if(title == null || description == null) return 0;
 		int postingID = title.hashCode() + description.hashCode();
 		Random r = new Random();
 		while(postingRepository.findPostingByPostingID(postingID) != null) {

@@ -609,7 +609,9 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllPostings() {
-		
+		assertNotNull(postingService.getAllPostings());
+		assertNotNull(postingDao.findAll());
+		assertEquals(postingDao.findAll(), postingService.getAllPostings());
 	}
 	
 	////////////////////////////

@@ -56,7 +56,7 @@ public class PostingRestController {
 			return new ResponseEntity<>(postingData, HttpStatus.CREATED);
 
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class PostingRestController {
 			postingService.deletePosting(posting);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 }
