@@ -223,6 +223,7 @@ public class TestSmartArtService {
       String[] cities = {"city1", "city2", "city3"};
       List<Gallery> galleryList = new ArrayList<Gallery>();
       for (int i = 0; i < names.length; i++) {
+          galleryService.createGallery(names[i], cities[i], 0);
           galleryList.add(galleryService.createGallery(names[i], cities[i], 0));
       }
       assertFalse(galleryList.isEmpty());
@@ -328,6 +329,7 @@ public class TestSmartArtService {
       String[] pwds = {"pwd1", "pwd2", "pwd3"};
       List<Artist> artistList = new ArrayList<Artist>();
       for (int i = 0; i < names.length; i++) {
+          artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
           artistList.add(artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
       }
       assertFalse(artistList.isEmpty());
@@ -433,6 +435,7 @@ public class TestSmartArtService {
       String[] pwds = {"pwd1", "pwd2", "pwd3"};
       List<Administrator> administratorList = new ArrayList<Administrator>();
       for (int i = 0; i < names.length; i++) {
+          adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
           administratorList.add(adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
       }
       assertFalse(administratorList.isEmpty());
