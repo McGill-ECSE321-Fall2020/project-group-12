@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -15,8 +14,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dto.GalleryDto;
@@ -24,7 +21,6 @@ import ca.mcgill.ecse321.smartart.model.Gallery;
 import ca.mcgill.ecse321.smartart.service.GalleryService;
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestGalleryRest {
 	
