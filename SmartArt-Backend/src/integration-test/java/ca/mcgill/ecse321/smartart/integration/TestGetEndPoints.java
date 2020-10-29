@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.*;
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.service.AdministratorService;
@@ -25,11 +26,11 @@ import ca.mcgill.ecse321.smartart.service.PostingService;
 import ca.mcgill.ecse321.smartart.service.PurchaseService;
 
 @ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestGetEndPoints {
 	
 	@LocalServerPort
-	private int port;
+	private int port = 8080;
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -76,7 +77,7 @@ public class TestGetEndPoints {
 		Artist artist = artistService.createArtist("ben@mail.com", "Ben", "abc123", gallery);
 		administratorService.createAdministrator("greg@mail.com", "Greg", "abc123", gallery);
 		Buyer buyer = buyerService.createBuyer("aidan@mail.com", "Aidan", "abc123", gallery);
-		postingService.createPosting(124344, artist, 123, 1, 1, 1, "Art", "This is Art", new Date(0), "fakeimage");
+		postingService.createPosting(124344, artist, 123, 1, 1, 1, "Art", "This is Art", new Date(0), "fakeimage");;
 		Purchase purchase = purchaseService.createPurchase(21122, buyer);
 		buyer.setCart(purchase);
 		buyerRepository.save(buyer);

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,13 +31,22 @@ public class GalleryRestController {
 	}
 	
 	@GetMapping(value = { "/galleries/{name}", "/galleries/{name}/" })
-	public GalleryDto getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
-		return controllerHelper.convertToDto(galleryService.getGallery(name));
+	public ResponseEntity<?> getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
+		try {
+			Gallery gallery = galleryService.getGallery(name);
+			return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping(value = { "/gallery/create", "/gallery/create/" })
-	public GalleryDto createGallery(@RequestBody GalleryDto data) {
-		Gallery gallery = galleryService.createGallery(data);
-		return controllerHelper.convertToDto(gallery);
+	public ResponseEntity<?> createGallery(@RequestBody GalleryDto data) {
+		try {
+			Gallery gallery = galleryService.createGallery(data);
+			return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.CREATED);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

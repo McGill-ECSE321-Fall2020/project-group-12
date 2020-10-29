@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.smartart.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,6 @@ public class PostingService {
 	    }
 		
 		Posting posting = new Posting();
-		posting.setPostingID(postingID);
 		posting.setArtStatus(ArtStatus.Available);
 		posting.setPrice(price);
 		posting.setXDim(x);
@@ -70,6 +70,7 @@ public class PostingService {
 		posting.setDescription(description);
 		posting.setDate(date);
 		posting.setImage(image);
+		posting.setPostingID(postingID);
 		
 		artist.addPosting(posting);
 		artist.getGallery().addPosting(posting);
@@ -82,7 +83,7 @@ public class PostingService {
 	
 	@Transactional
 	public Posting createPosting(PostingDto data) {
-		Posting posting = createPosting(data.getPostingID(), helper.convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate(), data.getImage());
+		Posting posting = createPosting(generatePostingID(data.getTitle(), data.getDescription()), helper.convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate(), data.getImage());
 		return posting;
 	}
 	
@@ -129,6 +130,15 @@ public class PostingService {
 	@Transactional
 	public List<Posting> getAllPostings(){
 		return toList(postingRepository.findAll());
+	}
+	
+	private int generatePostingID(String title, String description) {
+		int postingID = title.hashCode() + description.hashCode();
+		Random r = new Random();
+		while(postingRepository.findPostingByPostingID(postingID) != null) {
+			postingID += r.nextInt();
+		}
+		return postingID;
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){

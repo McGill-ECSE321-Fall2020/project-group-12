@@ -59,7 +59,7 @@ public class ServiceHelper {
     }
 	
 	Purchase convertToModel(PurchaseDto data) {
-
+		if(data == null) return null;
 		int purchaseID = data.getPurchaseID();
 		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
 
@@ -85,6 +85,7 @@ public class ServiceHelper {
 	}
 
 	Administrator convertToModel(AdministratorDto data) {
+		if(data == null) return null;
 		String email = data.getEmail();
 		Administrator admin = administratorRepository.findAdministratorByEmail(email);
 
@@ -105,7 +106,7 @@ public class ServiceHelper {
 	}
 
 	Buyer convertToModel(BuyerDto data) {
-
+		if(data == null) return null;
 		String email = data.getEmail();
 		Buyer buyer = buyerRepository.findBuyerByEmail(email);
 
@@ -126,7 +127,7 @@ public class ServiceHelper {
 	}
 	
 	Posting convertToModel(PostingDto data) {
-
+		if(data == null) return null;
 		int postingID = data.getPostingID();
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
 
@@ -162,6 +163,7 @@ public class ServiceHelper {
 
 
 	Artist convertToModel(ArtistDto data) {
+		if(data == null) return null;
 		String email = data.getEmail();
 		Artist artist = artistRepository.findArtistByEmail(email);
 
@@ -182,6 +184,7 @@ public class ServiceHelper {
 	}
 
 	Gallery convertToModel(GalleryDto data) {
+		if(data == null) return null;
 		String name = data.getName();
 		Gallery gallery = galleryRepository.findGalleryByName(name);
 		if (gallery ==  null) {
@@ -202,16 +205,6 @@ public class ServiceHelper {
 			resultList.add(t);
 		}
 		return resultList;
-	}
-
-
-	int generatePostingID() {
-		Random r = new Random();
-		int id = r.nextInt();
-		while(postingRepository.findPostingByPostingID(id) != null) {
-			id = r.nextInt();
-		}
-		return id;
 	}
 
 	int calcFinalPrice(Purchase purchase) {
