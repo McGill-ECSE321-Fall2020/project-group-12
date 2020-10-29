@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,18 +26,27 @@ public class BuyerRestController {
 	private RestControllerHelper controllerHelper;
 	
 	@GetMapping(value = {"/buyers", "/buyers/"})
-	public List<BuyerDto> getAllBuyers(){
-		return buyerService.getAllBuyers().stream().map(b -> controllerHelper.convertToDto(b)).collect(Collectors.toList());
+	public ResponseEntity<?> getAllBuyers(){
+		return new ResponseEntity<>(buyerService.getAllBuyers().stream().map(b -> controllerHelper.convertToDto(b)).collect(Collectors.toList()), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = { "/buyers/{email}", "/buyers/{email}/" })
-	public BuyerDto getBuyerByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return controllerHelper.convertToDto(buyerService.getBuyer(email));
+	public ResponseEntity<?> getBuyerByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		try {
+			Buyer buyer = buyerService.getBuyer(email);
+			return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping(value = { "/buyer/create", "/buyer/create/" })
-	public BuyerDto createBuyer(@RequestBody BuyerDto data) throws IllegalArgumentException {
-		Buyer buyer = buyerService.createBuyer(data);
-		return controllerHelper.convertToDto(buyer);
+	public ResponseEntity<?> createBuyer(@RequestBody BuyerDto data) throws IllegalArgumentException {
+		try {
+			Buyer buyer = buyerService.createBuyer(data);
+			return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

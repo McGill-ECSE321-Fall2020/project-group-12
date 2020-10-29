@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,18 +26,27 @@ public class ArtistRestController {
 	private RestControllerHelper controllerHelper;
 	
 	@GetMapping(value = {"/artists", "/artists/"})
-	public List<ArtistDto> getAllArtists(){
-		return artistService.getAllArtists().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList());
+	public ResponseEntity<?> getAllArtists(){
+		return new ResponseEntity<>(artistService.getAllArtists().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList()), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = { "/artists/{email}", "/artists/{email}/" })
-	public ArtistDto getArtistByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return controllerHelper.convertToDto(artistService.getArtist(email));
+	public ResponseEntity<?> getArtistByEmail(@PathVariable("email") String email) {
+		try {
+			Artist artist = artistService.getArtist(email);
+			return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping(value = { "/artist/create", "/artist/create/" })
-	public ArtistDto createArtist(@RequestBody ArtistDto data) throws IllegalArgumentException {
-		Artist artist = artistService.createArtist(data);
-		return controllerHelper.convertToDto(artist);
+	public ResponseEntity<?> createArtist(@RequestBody ArtistDto data) {
+		try {
+			Artist artist = artistService.createArtist(data);
+			return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

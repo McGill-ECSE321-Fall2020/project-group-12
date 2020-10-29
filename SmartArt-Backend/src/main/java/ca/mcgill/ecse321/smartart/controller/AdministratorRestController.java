@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,17 +26,26 @@ public class AdministratorRestController {
 	private RestControllerHelper controllerHelper;
 	
 	@GetMapping(value = {"/administrators", "/administrators/"})
-	public List<AdministratorDto> getAllAdministrators(){
-		return adminService.getAllAdministrators().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList());
+	public ResponseEntity<?> getAllAdministrators(){
+		return new ResponseEntity<>(adminService.getAllAdministrators().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList()), HttpStatus.OK);
 	}
 	@GetMapping(value = { "/administrators/{email}", "/administrators/{email}/" })
-	public AdministratorDto getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		return controllerHelper.convertToDto(adminService.getAdministrator(email));
+	public ResponseEntity<?> getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
+		try {
+			Administrator administrator = adminService.getAdministrator(email);
+			return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping(value = { "/administrator/create", "/administrator/create/"})
-	public AdministratorDto createAdministrator(@RequestBody AdministratorDto data) throws IllegalArgumentException{
-		Administrator administrator = adminService.createAdministrator(data);
-		return controllerHelper.convertToDto(administrator);
+	public ResponseEntity<?> createAdministrator(@RequestBody AdministratorDto data) throws IllegalArgumentException{
+		try {
+			Administrator administrator = adminService.createAdministrator(data);
+			return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 }

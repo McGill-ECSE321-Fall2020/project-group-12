@@ -31,8 +31,13 @@ public class GalleryRestController {
 	}
 	
 	@GetMapping(value = { "/galleries/{name}", "/galleries/{name}/" })
-	public GalleryDto getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
-		return controllerHelper.convertToDto(galleryService.getGallery(name));
+	public ResponseEntity<?> getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
+		try {
+			Gallery gallery = galleryService.getGallery(name);
+			return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping(value = { "/gallery/create", "/gallery/create/" })
