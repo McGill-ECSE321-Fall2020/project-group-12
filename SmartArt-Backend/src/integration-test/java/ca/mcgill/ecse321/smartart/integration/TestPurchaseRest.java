@@ -22,6 +22,7 @@ import ca.mcgill.ecse321.smartart.dao.PurchaseRepository;
 import ca.mcgill.ecse321.smartart.dto.ArtistDto;
 import ca.mcgill.ecse321.smartart.dto.BuyerDto;
 import ca.mcgill.ecse321.smartart.dto.GalleryDto;
+import ca.mcgill.ecse321.smartart.dto.PostingDto;
 import ca.mcgill.ecse321.smartart.dto.PurchaseDto;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 import ca.mcgill.ecse321.smartart.service.BuyerService;
@@ -29,7 +30,7 @@ import ca.mcgill.ecse321.smartart.service.GalleryService;
 
 @ActiveProfiles("test")
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class TestRestPurchase {
+public class TestPurchaseRest {
 	
 	@LocalServerPort
 	private int port = 8080;
@@ -72,7 +73,8 @@ public class TestRestPurchase {
 		buyerService.createBuyer(buyer);
 		
 		//dto to be passed
-		PurchaseDto purchase = new PurchaseDto(123, buyer);
+		PurchaseDto purchase = new PurchaseDto(buyer);
+		
 	
 		HttpEntity<PurchaseDto> entity = new HttpEntity<PurchaseDto>(purchase, headers);
 		//create response entity
@@ -81,7 +83,7 @@ public class TestRestPurchase {
 	    assertEquals(HttpStatus.CREATED, response.getStatusCode());
 	    String result = response.getBody().toString();
 	    //check that proper purchase was returned
-	    assertTrue(result.contains("\"purchaseID\":123"));
+	    //assertTrue(result.contains("\"purchaseID\":123"));
 	    //check association to buyer
 	    assertTrue(result.contains("\"email\":\"test@mail.com\""));
 	}
