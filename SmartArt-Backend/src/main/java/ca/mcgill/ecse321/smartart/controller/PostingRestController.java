@@ -59,6 +59,18 @@ public class PostingRestController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PostMapping(value = {"/posting/admin/create/{email}/{name}", "/posting/admin/create/{email}/{name}/" })
+	public ResponseEntity<?> adminCreatePosting(@RequestBody PostingDto data, @PathVariable("email") String adminEmail, @PathVariable("name") String artistName) {
+		try {
+			Posting posting = postingService.adminCreatePosting(adminEmail, artistName, data);
+			PostingDto postingData = controllerHelper.convertToDto(posting);
+			return new ResponseEntity<>(postingData, HttpStatus.CREATED);
+
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@DeleteMapping(value = {"/posting/delete", "/posting/delete/"})
 	public ResponseEntity<?> deletePosting(@RequestBody PostingDto posting) {

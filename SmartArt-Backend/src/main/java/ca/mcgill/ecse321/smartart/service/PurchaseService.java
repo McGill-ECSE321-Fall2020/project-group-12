@@ -59,6 +59,7 @@ public class PurchaseService {
 		Purchase purchase = createPurchase(data.getPurchaseID(), helper.convertToModel(data.getBuyer()));
 		return purchase;
 	}
+	
 	@Transactional
 	public Purchase getPurchase(int purchaseID) {
 		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
