@@ -118,7 +118,23 @@ public class PostingService {
 		posting.setArtist(convertToDto(artist));
 		return createPosting(posting);
 	}
+	@Transactional
+	public Posting updatePosting(Posting posting, String description, String image, int price, String title, double xDim, double yDim, double zDim) {
+		posting.setDescription(description);
+		posting.setImage(image);
+		posting.setPrice(price);
+		posting.setXDim(xDim);
+		posting.setYDim(yDim);
+		posting.setZDim(zDim);
+		
+		return posting;
+	}
 	
+	@Transactional
+	public Posting updatePosting(PostingDto data) {
+		Posting posting = updatePosting(helper.convertToModel(data), data.getDescription(), data.getImage(), data.getPrice(), data.getTitle(), data.getXDim(), data.getYDim(), data.getZDim());
+		return posting;
+	}
 	@Transactional
 	public Posting deletePosting(Posting posting) {
 		if(posting == null) throw new NullPointerException("Cannot remove null posting, perhaps it has already been deleted");

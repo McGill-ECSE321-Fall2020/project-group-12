@@ -206,9 +206,4 @@ public class ServiceHelper {
 		}
 		return resultList;
 	}
-
-	int calcFinalPrice(Purchase purchase) {
-		Gallery gallery = purchase.getBuyer().getGallery();
-		return (int)(purchase.getTotalPrice() * (1 + gallery.getCommission()));
-	}
 }

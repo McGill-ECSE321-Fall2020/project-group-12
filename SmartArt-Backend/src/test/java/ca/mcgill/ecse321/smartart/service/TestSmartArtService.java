@@ -21,8 +21,11 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.dao.*;
 
@@ -711,7 +714,23 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testMakePurchaseExistingPurchase() {
+		Purchase cart = new Purchase();
+		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
+		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
+		buyer.setGallery(gallery);
+		buyer.setCart(cart);
+		cart.setPurchaseID(124344);
+		LocalDateTime now = LocalDateTime.now();
+		cart.setTime(now);
+		cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
+		cart.setTotalPrice(100);
+		int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
+		Purchase purchase = purchaseService.makePurchase(cart, DeliveryType.PickUp);
 		
+		assertEquals(DeliveryType.PickUp, purchase.getDeliveryType());
+		assertEquals(purchase.getTotalPrice(), finalPrice);
+		assertNotNull(buyer.getPurchases());
+		assertNull(buyer.getCart());
 	}
 	
 	@Test
