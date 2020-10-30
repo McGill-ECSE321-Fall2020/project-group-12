@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.smartart.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,7 +79,11 @@ public class RestControllerHelper {
 		if (p == null) {
 			throw new IllegalArgumentException("There is no such Purchase.");
 		}
-		PurchaseDto purchaseDto = new PurchaseDto(p.getPurchaseID(), convertToDto(p.getBuyer()));
+		List<PostingDto> postings = null;
+		if(p.getPostings() != null)
+			postings = p.getPostings().stream().map(post -> convertToDto(post)).collect(Collectors.toList());
+		
+		PurchaseDto purchaseDto = new PurchaseDto(p.getPurchaseID(), convertToDto(p.getBuyer()), p.getTotalPrice(), postings, p.getDeliveryType(), p.getTime());
 		return purchaseDto;
 	}
 }

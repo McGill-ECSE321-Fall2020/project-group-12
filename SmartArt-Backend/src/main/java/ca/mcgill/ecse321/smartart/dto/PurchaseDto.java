@@ -17,8 +17,8 @@ public class PurchaseDto {
 	public PurchaseDto() {
 	}
 	
-	public PurchaseDto(int purchaseID, BuyerDto buyer) {
-		this(purchaseID, buyer, 0, Collections.emptyList(), null, null);
+	public PurchaseDto(BuyerDto buyer) {
+		this(0000, buyer, 0, Collections.emptyList(), null, null);
 	}
 	
 	public PurchaseDto(int purchaseID, BuyerDto buyer, int totalPrice, List<PostingDto> postings, DeliveryType deliveryType, LocalDateTime time) {
