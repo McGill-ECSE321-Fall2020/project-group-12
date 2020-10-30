@@ -9,7 +9,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,7 +21,8 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.sql.Date;
-
+import java.util.ArrayList;
+import java.util.List;
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.dao.*;
 
@@ -216,7 +219,14 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllGalleries() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      for (int i = 0; i < names.length; i++) {
+          galleryService.createGallery(names[i], cities[i], 0);
+      } 
+	  assertNotNull(galleryService.getAllGalleries());
+      assertNotNull(galleryDao.findAll());
+      assertEquals(galleryDao.findAll(), galleryService.getAllGalleries());
 	}
 	
 	////////////////////////////
@@ -311,7 +321,16 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllArtists() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
+      String[] pwds = {"pwd1", "pwd2", "pwd3"};
+      for (int i = 0; i < names.length; i++) {
+          artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
+      }
+      assertNotNull(artistService.getAllArtists());
+      assertNotNull(artistDao.findAll());
+      assertEquals(artistDao.findAll(), artistService.getAllArtists());
 	}
 	
 	////////////////////////////
@@ -406,7 +425,16 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllAdministrators() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
+      String[] pwds = {"pwd1", "pwd2", "pwd3"};
+      for (int i = 0; i < names.length; i++) {
+          adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
+      }
+      assertNotNull(artistService.getAllArtists());
+      assertNotNull(artistDao.findAll());
+      assertEquals(artistDao.findAll(), artistService.getAllArtists());
 	}
 	
 	////////////////////////////
@@ -501,7 +529,16 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllBuyers() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
+      String[] pwds = {"pwd1", "pwd2", "pwd3"};
+      for (int i = 0; i < names.length; i++) {
+          buyerService.createBuyer(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
+      }
+      assertNotNull(buyerService.getAllBuyers());
+      assertNotNull(buyerDao.findAll());
+      assertEquals(buyerDao.findAll(), buyerService.getAllBuyers());
 	}
 	////////////////////////////
 	//////Posting tests/////////
@@ -933,125 +970,6 @@ public class TestSmartArtService {
 			error = e.getMessage();
 		}
 		assertEquals(error, "removeFromCart posting cannot be empty.");
-		
-	}
-	
-	////////////////////////////
-	////Private helper tests////
-	////////////////////////////
-	
-	@Test
-	public void testConvertToModelExistingPurchaseDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingPurchaseDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullPurchaseDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingAdministratorDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingAdministratorDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullAdministratorDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingBuyerDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingBuyerDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullBuyerDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingPostingDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingPostingDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullPostingDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingArtistDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingArtistDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullArtistDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingGalleryDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingGalleryDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullGalleryDto() {
-		
-	}
-	
-	@Test
-	public void testGeneratePurchaseIDNoDuplicates() {
-		
-	}
-	
-	@Test
-	public void testGeneratePostingIDNoDuplicates() {
-		
-	}
-	
-	@Test
-	public void testCalculateFinalPriceExistingPurchase() {
-		
-	}
-	
-	@Test
-	public void testCalculateFinalPriceNonExistingPurchase() {
-		
-	}
-	
-	@Test
-	public void testCalculateFinalPriceNullPurchase() {
 		
 	}
 }
