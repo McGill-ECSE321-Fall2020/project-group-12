@@ -58,7 +58,8 @@ public class PurchaseService {
 	
 	@Transactional
 	public Purchase createPurchase(PurchaseDto data) throws IllegalArgumentException {
-		Purchase purchase = createPurchase(data.getPurchaseID(), helper.convertToModel(data.getBuyer()));
+		int purchaseID = generatePurchaseID(helper.convertToModel(data.getBuyer()), helper.convertToModel(data.getPostings().get(0)));
+		Purchase purchase = createPurchase(purchaseID, helper.convertToModel(data.getBuyer()));
 		return purchase;
 	}
 	
@@ -169,7 +170,7 @@ public class PurchaseService {
 	    
 		Purchase cart = buyer.getCart();
 		if(cart == null) {
-			int id = generatePurchaseID();
+			int id = generatePurchaseID(buyer, posting);
 			cart = createPurchase(id, buyer);
 			buyer.setCart(cart);
 		}
@@ -234,13 +235,13 @@ public class PurchaseService {
 		return resultList;
 	}
 	
-	private int generatePurchaseID() {
+	private int generatePurchaseID(Buyer buyer, Posting posting) {
+		int purchaseID = buyer.getEmail().hashCode() + posting.getTitle().hashCode();
 		Random r = new Random();
-		int id = r.nextInt();
-		while(purchaseRepository.findPurchaseByPurchaseID(id) != null) {
-			id = r.nextInt();
+		while(purchaseRepository.findPurchaseByPurchaseID(purchaseID) != null) {
+			purchaseID  += r.nextInt();
 		}
-		return id;
+		return purchaseID;
 	}
 	
 }

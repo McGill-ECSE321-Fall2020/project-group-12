@@ -166,7 +166,7 @@ public class PostingService {
 	
 	private int generatePostingID(String title, String description) {
 		if(title == null || description == null) return 0;
-		int postingID = title.hashCode() + description.hashCode();
+		int postingID = Math.abs(title.hashCode() + description.hashCode());
 		Random r = new Random();
 		while(postingRepository.findPostingByPostingID(postingID) != null) {
 			postingID += r.nextInt();
