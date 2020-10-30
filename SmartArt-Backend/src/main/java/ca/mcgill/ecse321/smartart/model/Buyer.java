@@ -68,8 +68,8 @@ public class Buyer extends User {
 	 */
 	public void setCart(Purchase cart) {
 		this.cart = cart;
-		this.addPurchase(cart);
-		cart.setBuyer(this);
+		if(cart != null)
+			cart.setBuyer(this);
 	}
 	
 	/**
