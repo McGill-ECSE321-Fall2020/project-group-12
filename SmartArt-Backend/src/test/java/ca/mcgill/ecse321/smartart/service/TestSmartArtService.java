@@ -219,16 +219,18 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllGalleries() {
-	  String[] names = {"name1", "name2", "name3"};
+	  /*String[] names = {"name1", "name2", "name3"};
       String[] cities = {"city1", "city2", "city3"};
       List<Gallery> galleryList = new ArrayList<Gallery>();
       for (int i = 0; i < names.length; i++) {
-          galleryService.createGallery(names[i], cities[i], 0);
           galleryList.add(galleryService.createGallery(names[i], cities[i], 0));
       }
       assertFalse(galleryList.isEmpty());
       assertFalse(galleryService.getAllGalleries().isEmpty());
-      assertTrue(galleryList.equals(galleryService.getAllGalleries()));
+      assertTrue(galleryList.equals(galleryService.getAllGalleries())); */
+	  assertNotNull(postingService.getAllPostings());
+      assertNotNull(postingDao.findAll());
+      assertEquals(postingDao.findAll(), postingService.getAllPostings());
 	}
 	
 	////////////////////////////
