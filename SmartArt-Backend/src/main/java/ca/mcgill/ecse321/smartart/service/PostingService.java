@@ -90,7 +90,7 @@ public class PostingService {
 	}
 	
 	@Transactional
-	public Posting createPosting(PostingDto data) {
+	public Posting createPosting(PostingDto data) throws IllegalArgumentException {
 		Posting posting = createPosting(generatePostingID(data.getTitle(), data.getDescription()), helper.convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate(), data.getImage());
 		return posting;
 	}
@@ -118,7 +118,44 @@ public class PostingService {
 		posting.setArtist(convertToDto(artist));
 		return createPosting(posting);
 	}
+	@Transactional
+	public Posting updatePosting(int postingID, String description, String image, int price, String title, double xDim, double yDim, double zDim) {
+		Posting posting = postingRepository.findPostingByPostingID(postingID);
+		String error = "";
+		if(posting == null)
+			error += "No posting to update. ";
+		if(description == null)
+			error += "Posting must have a description. ";
+		if(image == null)
+			error += "Posting must have an image. ";
+		if(price <= 0)
+			error += "Posting must have a non-zero price. ";
+		if(title == null)
+			error += "Posting must have a title. ";
+		if(xDim <= 0 || yDim <= 0 || zDim <= 0)
+			error += "Posting must have positive dimensions. ";
+		
+		error = error.trim();
+	    if (error.length() > 0) 
+	        throw new IllegalArgumentException(error);
+		
+		posting.setTitle(title);
+		posting.setDescription(description);
+		posting.setImage(image);
+		posting.setPrice(price);
+		posting.setXDim(xDim);
+		posting.setYDim(yDim);
+		posting.setZDim(zDim);
+		postingRepository.save(posting);
+		
+		return posting;
+	}
 	
+	@Transactional
+	public Posting updatePosting(PostingDto data) {
+		Posting posting = updatePosting(data.getPostingID(), data.getDescription(), data.getImage(), data.getPrice(), data.getTitle(), data.getXDim(), data.getYDim(), data.getZDim());
+		return posting;
+	}
 	@Transactional
 	public Posting deletePosting(Posting posting) {
 		if(posting == null) throw new NullPointerException("Cannot remove null posting, perhaps it has already been deleted");
@@ -165,7 +202,8 @@ public class PostingService {
 	}
 	
 	private int generatePostingID(String title, String description) {
-		int postingID = title.hashCode() + description.hashCode();
+		if(title == null || description == null) return 0;
+		int postingID = Math.abs(title.hashCode() + description.hashCode());
 		Random r = new Random();
 		while(postingRepository.findPostingByPostingID(postingID) != null) {
 			postingID += r.nextInt();

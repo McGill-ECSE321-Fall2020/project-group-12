@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,7 +57,7 @@ public class PostingRestController {
 			return new ResponseEntity<>(postingData, HttpStatus.CREATED);
 
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -72,13 +73,23 @@ public class PostingRestController {
 		}
 	}
 
+	@PutMapping(value = {"/posting/update", "/posting/update/"})
+	public ResponseEntity<?> updatePosting(@RequestBody PostingDto data) {
+		try {
+			Posting posting = postingService.updatePosting(data);
+			PostingDto postingData = controllerHelper.convertToDto(posting);
+			return new ResponseEntity<>(postingData, HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
+	}
 	@DeleteMapping(value = {"/posting/delete", "/posting/delete/"})
 	public ResponseEntity<?> deletePosting(@RequestBody PostingDto posting) {
 		try {
 			postingService.deletePosting(posting);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 }

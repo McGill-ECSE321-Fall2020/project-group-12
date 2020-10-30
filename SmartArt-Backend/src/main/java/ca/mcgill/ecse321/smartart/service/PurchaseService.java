@@ -17,6 +17,7 @@ import ca.mcgill.ecse321.smartart.dto.PurchaseDto;
 import ca.mcgill.ecse321.smartart.model.ArtStatus;
 import ca.mcgill.ecse321.smartart.model.Buyer;
 import ca.mcgill.ecse321.smartart.model.DeliveryType;
+import ca.mcgill.ecse321.smartart.model.Gallery;
 import ca.mcgill.ecse321.smartart.model.Posting;
 import ca.mcgill.ecse321.smartart.model.Purchase;
 
@@ -59,7 +60,8 @@ public class PurchaseService {
 	
 	@Transactional
 	public Purchase createPurchase(PurchaseDto data) throws IllegalArgumentException {
-		Purchase purchase = createPurchase(data.getPurchaseID(), helper.convertToModel(data.getBuyer()));
+		int purchaseID = generatePurchaseID(helper.convertToModel(data.getBuyer()), helper.convertToModel(data.getPostings().get(0)));
+		Purchase purchase = createPurchase(purchaseID, helper.convertToModel(data.getBuyer()));
 		return purchase;
 	}
 	
@@ -92,28 +94,28 @@ public class PurchaseService {
 	}
 	
 	@Transactional
-	public Purchase makePurchase(Purchase purchase, DeliveryType deliveryType) {
-		if(purchase == null || purchase.getTotalPrice() <= 0) 
+	public Purchase makePurchase(Purchase cart, DeliveryType deliveryType) {
+		if(cart == null || cart.getTotalPrice() <= 0) 
 			throw new IllegalArgumentException("Must have a purchase order to make purchase");
 		
 		if(deliveryType != DeliveryType.PickUp && deliveryType != DeliveryType.Shipped)
 			throw new IllegalArgumentException("Delivery Type not valid");
 			
-		Buyer buyer = purchase.getBuyer();
+		Buyer buyer = cart.getBuyer();
 		
-		for(Posting p: purchase.getPostings()) {
+		for(Posting p: cart.getPostings()) {
 			p.setArtStatus(ArtStatus.Purchased);
 		}
 		
-		purchase.setDeliveryType(deliveryType);
-		purchase.setTotalPrice(helper.calcFinalPrice(purchase));
-		buyer.addPurchase(purchase);
+		cart.setDeliveryType(deliveryType);
+		cart.setTotalPrice(calcFinalPrice(cart));
+		buyer.addPurchase(cart);
 		buyer.setCart(null);
 		
 		buyerRepository.save(buyer);
-		purchaseRepository.save(purchase);
+		purchaseRepository.save(cart);
 		
-		return purchase;
+		return cart;
 	}
 	
 	@Transactional
@@ -171,7 +173,7 @@ public class PurchaseService {
 	    
 		Purchase cart = buyer.getCart();
 		if(cart == null) {
-			int id = generatePurchaseID();
+			int id = generatePurchaseID(buyer, posting);
 			cart = createPurchase(id, buyer);
 			buyer.setCart(cart);
 		}
@@ -242,13 +244,18 @@ public class PurchaseService {
 		return resultList;
 	}
 	
-	private int generatePurchaseID() {
+	private int generatePurchaseID(Buyer buyer, Posting posting) {
+		int purchaseID = buyer.getEmail().hashCode() + posting.getTitle().hashCode();
 		Random r = new Random();
-		int id = r.nextInt();
-		while(purchaseRepository.findPurchaseByPurchaseID(id) != null) {
-			id = r.nextInt();
+		while(purchaseRepository.findPurchaseByPurchaseID(purchaseID) != null) {
+			purchaseID  += r.nextInt();
 		}
-		return id;
+		return purchaseID;
+	}
+	
+	private int calcFinalPrice(Purchase purchase) {
+		Gallery gallery = purchase.getBuyer().getGallery();
+		return (int)(purchase.getTotalPrice() * (1 + gallery.getCommission()));
 	}
 	
 }
