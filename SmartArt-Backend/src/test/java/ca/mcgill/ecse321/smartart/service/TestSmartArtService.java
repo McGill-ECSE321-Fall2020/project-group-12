@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -672,44 +673,78 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testMakePurchaseExistingPurchase() {
-		assertEquals(0, purchaseService.getAllPurchases().size());
 		
-		int purchaseID = 982423;
-		Buyer buyer = new Buyer();
+		Gallery gallery = galleryService.createGallery("bellefeuile", "montreal", 0.4);
+		Buyer buyer = buyerService.createBuyer("minhtheGOD@hotmail.com", "minh", "thequan", gallery);
+		Artist artist = artistService.createArtist("louis.ck@mail.mcgill.ca", "Presley", "Elvis", gallery);
+
+		Date date = new Date(0);
+		Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
+		
+		buyer.setCart(null);
+		
+		int purchaseID = 984532;
 		Purchase purchase = null;
+		purchase = purchaseService.createPurchase(purchaseID, buyer);
+		purchase = purchaseService.addToCart(buyer, posting);
+		String error = null;
+		boolean hasPurchase = false;
+		boolean validArtStatuses = true;
+		
 		
 		try {
-			purchase = makePurchase(purchase, deliveryType);
+			purchase = purchaseService.makePurchase(purchase, DeliveryType.Shipped);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			fail();
+			error = e.getMessage();
 		}
-		assertNotNull(purchase);
-		assertEquals(purchaseID, purchase.getPurchaseID());
+		
+		for(Purchase p : buyer.getPurchases()) {
+			if(p.getPurchaseID() == purchaseID) {
+				hasPurchase = true;
+			}
+		}
+		
+		for(Posting p: purchase.getPostings()) {
+			if(p.getArtStatus() != ArtStatus.Purchased) {
+				validArtStatuses = false;
+			}
+		}
+		
+		assertNull(buyer.getCart());
+		assertTrue(hasPurchase);
+		assertTrue(validArtStatuses);
+		assertEquals(DeliveryType.Shipped, purchase.getDeliveryType());
 		
 	}
 	
 	@Test
 	public void testMakePurchaseNullPurchase() {
-		assertEquals(0, purchaseService.getAllPurchases().size());
-		
-		int purchaseID = 982423;
-		Buyer buyer = new Buyer();
+
 		Purchase purchase = null;
+		String error = null;
 		
 		try {
-			purchase = makePurchase(purchase, deliveryType);
+			purchaseService.makePurchase(purchase, DeliveryType.Shipped);
 		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			fail();
+			error = e.getMessage();
 		}
-		assertNotNull(purchase);
-		assertEquals(purchaseID, purchase.getPurchaseID());
+		
+		assertEquals(error, "Must have a purchase order to make purchase");
 	}
 	
 	@Test
 	public void testMakePurchaseNonExistingPurchase() {
 		
+		Purchase purchase = purchaseService.getPurchase(NONEXISTING_PURCHASE);
+		String error = null;
+		
+		try {
+			purchaseService.makePurchase(purchase, DeliveryType.Shipped);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Must have a purchase order to make purchase");
 	}
 	
 	@Test

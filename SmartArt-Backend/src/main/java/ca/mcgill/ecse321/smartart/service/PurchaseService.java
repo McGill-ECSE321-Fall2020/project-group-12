@@ -43,7 +43,6 @@ public class PurchaseService {
 	        throw new IllegalArgumentException(error);
 	    }
 	    
-	   
 		Purchase purchase = new Purchase();
 		purchase.setPurchaseID(purchaseID);
 		purchase.setBuyer(buyer);
