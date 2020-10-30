@@ -219,18 +219,15 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllGalleries() {
-	  /*String[] names = {"name1", "name2", "name3"};
+	  String[] names = {"name1", "name2", "name3"};
       String[] cities = {"city1", "city2", "city3"};
       List<Gallery> galleryList = new ArrayList<Gallery>();
       for (int i = 0; i < names.length; i++) {
           galleryList.add(galleryService.createGallery(names[i], cities[i], 0));
-      }
-      assertFalse(galleryList.isEmpty());
-      assertFalse(galleryService.getAllGalleries().isEmpty());
-      assertTrue(galleryList.equals(galleryService.getAllGalleries())); */
-	  assertNotNull(postingService.getAllPostings());
-      assertNotNull(postingDao.findAll());
-      assertEquals(postingDao.findAll(), postingService.getAllPostings());
+      } 
+	  assertNotNull(galleryService.getAllGalleries());
+      assertNotNull(galleryDao.findAll());
+      assertEquals(galleryDao.findAll(), galleryService.getAllGalleries());
 	}
 	
 	////////////////////////////
@@ -329,14 +326,14 @@ public class TestSmartArtService {
       String[] cities = {"city1", "city2", "city3"};
       String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
       String[] pwds = {"pwd1", "pwd2", "pwd3"};
-      List<Artist> artistList = new ArrayList<Artist>();
+      //List<Artist> artistList = new ArrayList<Artist>();
       for (int i = 0; i < names.length; i++) {
           artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
-          artistList.add(artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
+          //artistList.add(artistService.createArtist(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
       }
-      assertFalse(artistList.isEmpty());
-      assertFalse(artistService.getAllArtists().isEmpty());
-      assertTrue(artistList.equals(artistService.getAllArtists()));
+      assertNotNull(artistService.getAllArtists());
+      assertNotNull(artistDao.findAll());
+      assertEquals(artistDao.findAll(), artistService.getAllArtists());
 	}
 	
 	////////////////////////////
@@ -435,14 +432,14 @@ public class TestSmartArtService {
       String[] cities = {"city1", "city2", "city3"};
       String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
       String[] pwds = {"pwd1", "pwd2", "pwd3"};
-      List<Administrator> administratorList = new ArrayList<Administrator>();
+      //List<Administrator> administratorList = new ArrayList<Administrator>();
       for (int i = 0; i < names.length; i++) {
           adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
-          administratorList.add(adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
+          //administratorList.add(adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
       }
-      assertFalse(administratorList.isEmpty());
-      assertFalse(adminService.getAllAdministrators().isEmpty());
-      assertTrue(administratorList.equals(adminService.getAllAdministrators()));
+      assertNotNull(artistService.getAllArtists());
+      assertNotNull(artistDao.findAll());
+      assertEquals(artistDao.findAll(), artistService.getAllArtists());
 	}
 	
 	////////////////////////////
@@ -537,7 +534,18 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllBuyers() {
-		
+	  String[] names = {"name1", "name2", "name3"};
+      String[] cities = {"city1", "city2", "city3"};
+      String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
+      String[] pwds = {"pwd1", "pwd2", "pwd3"};
+      //List<Administrator> administratorList = new ArrayList<Administrator>();
+      for (int i = 0; i < names.length; i++) {
+          buyerService.createBuyer(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0));
+          //administratorList.add(adminService.createAdministrator(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
+      }
+      assertNotNull(buyerService.getAllBuyers());
+      assertNotNull(buyerDao.findAll());
+      assertEquals(buyerDao.findAll(), buyerService.getAllBuyers());
 	}
 	////////////////////////////
 	//////Posting tests/////////
@@ -967,125 +975,6 @@ public class TestSmartArtService {
 			error = e.getMessage();
 		}
 		assertEquals(error, "removeFromCart posting cannot be empty.");
-		
-	}
-	
-	////////////////////////////
-	////Private helper tests////
-	////////////////////////////
-	
-	@Test
-	public void testConvertToModelExistingPurchaseDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingPurchaseDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullPurchaseDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingAdministratorDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingAdministratorDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullAdministratorDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingBuyerDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingBuyerDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullBuyerDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingPostingDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingPostingDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullPostingDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingArtistDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingArtistDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullArtistDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelExistingGalleryDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNonExistingGalleryDto() {
-		
-	}
-	
-	@Test
-	public void testConvertToModelNullGalleryDto() {
-		
-	}
-	
-	@Test
-	public void testGeneratePurchaseIDNoDuplicates() {
-		
-	}
-	
-	@Test
-	public void testGeneratePostingIDNoDuplicates() {
-		
-	}
-	
-	@Test
-	public void testCalculateFinalPriceExistingPurchase() {
-		
-	}
-	
-	@Test
-	public void testCalculateFinalPriceNonExistingPurchase() {
-		
-	}
-	
-	@Test
-	public void testCalculateFinalPriceNullPurchase() {
 		
 	}
 }
