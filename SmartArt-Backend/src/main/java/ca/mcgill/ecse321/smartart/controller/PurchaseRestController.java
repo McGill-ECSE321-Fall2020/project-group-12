@@ -49,7 +49,7 @@ public class PurchaseRestController {
 			List<PurchaseDto> purchases = purchaseService.getPurchasesByBuyer(email).stream().map(p -> controllerHelper.convertToDto(p)).collect(Collectors.toList());
 			return new ResponseEntity<>(purchases, HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class PurchaseRestController {
 				return new ResponseEntity<>(controllerHelper.convertToDto(cart), HttpStatus.OK);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -71,7 +71,7 @@ public class PurchaseRestController {
 			Purchase purchase = purchaseService.createPurchase(data);
 			return new ResponseEntity<>(controllerHelper.convertToDto(purchase), HttpStatus.CREATED);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -81,7 +81,7 @@ public class PurchaseRestController {
 			Purchase purchase = purchaseService.makePurchase(data, deliveryType);
 			return new ResponseEntity<>(controllerHelper.convertToDto(purchase), HttpStatus.CREATED);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class PurchaseRestController {
 				return new ResponseEntity<>(HttpStatus.OK);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -103,7 +103,7 @@ public class PurchaseRestController {
 			Purchase cart = purchaseService.addToCart(buyerData, postingID);
 			return new ResponseEntity<>(controllerHelper.convertToDto(cart), HttpStatus.CREATED);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 			}
 	}
 	
@@ -113,7 +113,7 @@ public class PurchaseRestController {
 			Purchase cart = purchaseService.removeFromCart(buyerData, postingID);
 			return new ResponseEntity<>(controllerHelper.convertToDto(cart), HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 }

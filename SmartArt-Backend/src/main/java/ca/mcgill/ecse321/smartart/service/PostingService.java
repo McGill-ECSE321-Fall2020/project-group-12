@@ -9,10 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ca.mcgill.ecse321.smartart.dao.AdministratorRepository;
 import ca.mcgill.ecse321.smartart.dao.ArtistRepository;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dao.PostingRepository;
+import ca.mcgill.ecse321.smartart.dto.ArtistDto;
+import ca.mcgill.ecse321.smartart.dto.GalleryDto;
 import ca.mcgill.ecse321.smartart.dto.PostingDto;
+import ca.mcgill.ecse321.smartart.model.Administrator;
 import ca.mcgill.ecse321.smartart.model.ArtStatus;
 import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.model.Gallery;
@@ -26,6 +30,8 @@ public class PostingService {
 	private GalleryRepository galleryRepository;
 	@Autowired
 	private PostingRepository postingRepository;
+	@Autowired
+	private AdministratorRepository administratorRepository;
 	@Autowired
 	private ServiceHelper helper;
 	
@@ -54,10 +60,12 @@ public class PostingService {
 	    if (z <= 0) {
 	        error = error + "Posting zDim must be above 0. ";
 	    }
-	    
 	    error = error.trim();
 	    if (error.length() > 0) {
 	        throw new IllegalArgumentException(error);
+	    }
+	    if (postingRepository.findPostingByPostingID(postingID) != null) {
+	        throw new IllegalArgumentException("A posting with this ID already exists.");
 	    }
 		
 		Posting posting = new Posting();
@@ -85,6 +93,30 @@ public class PostingService {
 	public Posting createPosting(PostingDto data) throws IllegalArgumentException {
 		Posting posting = createPosting(generatePostingID(data.getTitle(), data.getDescription()), helper.convertToModel(data.getArtist()), data.getPrice(), data.getXDim(), data.getYDim(), data.getZDim(), data.getTitle(), data.getDescription(), data.getDate(), data.getImage());
 		return posting;
+	}
+	
+	@Transactional
+	public Posting adminCreatePosting(String administratorEmail, String artistName, PostingDto posting) {
+		String artistEmail = "admin_";
+		String nameSpaces = artistName.replaceAll("_"," ");
+		String nameNoSpaces = nameSpaces.replaceAll("\\s+","");
+		artistEmail = artistEmail + nameNoSpaces + "@mail.com";
+		Administrator administrator = administratorRepository.findAdministratorByEmail(administratorEmail);
+		if (administrator == null) {
+	        throw new IllegalArgumentException("Invalid administrator credentials.");
+	    }
+		Artist artist = artistRepository.findArtistByEmail(artistEmail);
+		if(artist == null) {
+			artist = new Artist();
+			artist.setEmail(artistEmail);
+			artist.setName(nameSpaces);
+			artist.setPassword(administrator.getPassword());
+			artist.setGallery(administrator.getGallery());
+			artistRepository.save(artist);
+			galleryRepository.save(artist.getGallery());
+		}
+		posting.setArtist(convertToDto(artist));
+		return createPosting(posting);
 	}
 	
 	@Transactional
@@ -148,5 +180,21 @@ public class PostingService {
 			resultList.add(t);
 		}
 		return resultList;
+	}
+	
+	private ArtistDto convertToDto(Artist a) {
+		if (a == null) {
+			throw new IllegalArgumentException("There is no such Artist.");
+		}
+		ArtistDto artistDto = new ArtistDto(a.getEmail(), a.getName(), a.getPassword(), convertToDto(a.getGallery()));
+		return artistDto;
+	}
+	
+	private GalleryDto convertToDto(Gallery g) {
+		if (g == null) {
+			throw new IllegalArgumentException("There is no such Gallery.");
+		}
+		GalleryDto galleryDto = new GalleryDto(g.getName(), g.getCity(), g.getCommission());
+		return galleryDto;
 	}
 }
