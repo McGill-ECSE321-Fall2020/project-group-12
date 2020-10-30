@@ -37,10 +37,12 @@ public class PurchaseService {
 	    if (buyer == null) {
 	        error = error + "Purchase buyer cannot be empty. ";
 	    }
-	    
 	    error = error.trim();
 	    if (error.length() > 0) {
 	        throw new IllegalArgumentException(error);
+	    }
+	    if (purchaseRepository.findPurchaseByPurchaseID(purchaseID) != null) {
+	        throw new IllegalArgumentException("A purchase with this ID already exists.");
 	    }
 	    
 	   

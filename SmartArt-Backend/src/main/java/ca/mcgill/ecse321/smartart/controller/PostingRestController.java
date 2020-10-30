@@ -63,7 +63,7 @@ public class PostingRestController {
 	@PostMapping(value = {"/posting/admin/create/{email}/{name}", "/posting/admin/create/{email}/{name}/" })
 	public ResponseEntity<?> adminCreatePosting(@RequestBody PostingDto data, @PathVariable("email") String adminEmail, @PathVariable("name") String artistName) {
 		try {
-			Posting posting = postingService.adminCreatePosting(adminEmail, artistName, data);
+			Posting posting = postingService.adminCreatePosting(adminEmail, artistName,data);
 			PostingDto postingData = controllerHelper.convertToDto(posting);
 			return new ResponseEntity<>(postingData, HttpStatus.CREATED);
 

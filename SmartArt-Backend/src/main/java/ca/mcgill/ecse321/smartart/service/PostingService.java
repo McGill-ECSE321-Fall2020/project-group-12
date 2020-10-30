@@ -60,10 +60,12 @@ public class PostingService {
 	    if (z <= 0) {
 	        error = error + "Posting zDim must be above 0. ";
 	    }
-	    
 	    error = error.trim();
 	    if (error.length() > 0) {
 	        throw new IllegalArgumentException(error);
+	    }
+	    if (postingRepository.findPostingByPostingID(postingID) != null) {
+	        throw new IllegalArgumentException("A posting with this ID already exists.");
 	    }
 		
 		Posting posting = new Posting();
@@ -96,9 +98,9 @@ public class PostingService {
 	@Transactional
 	public Posting adminCreatePosting(String administratorEmail, String artistName, PostingDto posting) {
 		String artistEmail = "admin_";
-		String name = artistName;
-		artistName.replaceAll("\\s+","");
-		artistEmail = artistEmail + artistName + "@mail.com";
+		String nameSpaces = artistName.replaceAll("_"," ");
+		String nameNoSpaces = nameSpaces.replaceAll("\\s+","");
+		artistEmail = artistEmail + nameNoSpaces + "@mail.com";
 		Administrator administrator = administratorRepository.findAdministratorByEmail(administratorEmail);
 		if (administrator == null) {
 	        throw new IllegalArgumentException("Invalid administrator credentials.");
@@ -107,7 +109,7 @@ public class PostingService {
 		if(artist == null) {
 			artist = new Artist();
 			artist.setEmail(artistEmail);
-			artist.setName(name);
+			artist.setName(nameSpaces);
 			artist.setPassword(administrator.getPassword());
 			artist.setGallery(administrator.getGallery());
 			artistRepository.save(artist);
