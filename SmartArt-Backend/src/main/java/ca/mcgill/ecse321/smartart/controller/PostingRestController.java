@@ -80,7 +80,7 @@ public class PostingRestController {
 			PostingDto postingData = controllerHelper.convertToDto(posting);
 			return new ResponseEntity<>(postingData, HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
 	@DeleteMapping(value = {"/posting/delete", "/posting/delete/"})
