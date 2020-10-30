@@ -30,6 +30,7 @@ public class PurchaseService {
 	private PostingRepository postingRepository;
 	@Autowired
 	private ServiceHelper helper;
+	
 	@Transactional
 	public Purchase createPurchase(int purchaseID, Buyer buyer) {
 		// Input validation
@@ -118,7 +119,8 @@ public class PurchaseService {
 	@Transactional
 	public Purchase makePurchase(PurchaseDto data, DeliveryType deliveryType) throws IllegalArgumentException {
 		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(data.getPurchaseID());
-		
+		if(purchase == null)
+			throw new IllegalArgumentException("Invalid purchase");
 		return makePurchase(purchase, deliveryType);
 	}
 	
@@ -185,6 +187,12 @@ public class PurchaseService {
 	public Purchase addToCart(BuyerDto buyerData, int postingID) throws IllegalArgumentException {
 		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
+		if (buyer == null) {
+	        throw new IllegalArgumentException("Buyer does not exist.");
+	    }
+		if (posting == null) {
+	        throw new IllegalArgumentException("Posting does not exist.");
+	    }
 		
 		return addToCart(buyer, posting);
 	}
