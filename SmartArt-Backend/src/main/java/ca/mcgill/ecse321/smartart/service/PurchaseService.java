@@ -108,7 +108,8 @@ public class PurchaseService {
 		
 		cart.setDeliveryType(deliveryType);
 		cart.setTotalPrice(calcFinalPrice(cart));
-		buyer.addPurchase(cart);
+		LocalDateTime now = LocalDateTime.now();
+		cart.setTime(now);
 		buyer.setCart(null);
 		
 		buyerRepository.save(buyer);
@@ -146,7 +147,9 @@ public class PurchaseService {
 	@Transactional
 	public boolean cancelPurchase(PurchaseDto data) throws IllegalArgumentException {
 		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(data.getPurchaseID());
-		
+		if (purchase == null) {
+	        throw new IllegalArgumentException("Purchase does not exist");
+	    }
 		return cancelPurchase(purchase);
 	}
 	
@@ -187,6 +190,12 @@ public class PurchaseService {
 	public Purchase addToCart(BuyerDto buyerData, int postingID) throws IllegalArgumentException {
 		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
+		if (buyer == null) {
+	        throw new IllegalArgumentException("Buyer does not exist.");
+	    }
+		if (posting == null) {
+	        throw new IllegalArgumentException("Posting does not exist.");
+	    }
 		
 		return addToCart(buyer, posting);
 	}
