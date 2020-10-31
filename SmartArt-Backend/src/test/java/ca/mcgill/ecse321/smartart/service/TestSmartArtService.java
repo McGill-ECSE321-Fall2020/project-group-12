@@ -705,6 +705,17 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testGetAllPurchases() {
+		  int[] purchaseIDs = {123456, 987654, 246800};
+		  String[] names = {"name1", "name2", "name3"};
+	      String[] cities = {"city1", "city2", "city3"};
+	      String[] email = {"a@mail.com", "b@mail.com", "c@mail.com"};
+	      String[] pwds = {"pwd1", "pwd2", "pwd3"};
+	      for (int i = 0; i < names.length; i++) {
+	          purchaseService.createPurchase(purchaseIDs[i], buyerService.createBuyer(email[i], names[i], pwds[i], galleryService.createGallery(names[i], cities[i], 0)));
+	          }
+	      assertNotNull(purchaseService.getAllPurchases());
+	      assertNotNull(purchaseDao.findAll());
+	      assertEquals(purchaseDao.findAll(), purchaseService.getAllPurchases());
 		
 	}
 	
