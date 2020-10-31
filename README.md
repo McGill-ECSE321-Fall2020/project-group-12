@@ -31,7 +31,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | -----------------| ---------------------------------| --------------- |
 | Ben Macnaughton  | Backend co-lead                  |       45        |
 | Aidan Williams   | Backend co-lead                  |       40        |
-| Gregory Walfish  |                                  |                 |
+| Gregory Walfish  | Project manager and testing      |                 |
 | Luke Barber      | Unit testing and organization    |       20        |
 | Minh Quan Hoang  |                                  |                 |
 
