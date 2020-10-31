@@ -233,7 +233,12 @@ public class PurchaseService {
 	public Purchase removeFromCart(BuyerDto buyerData, int postingID) throws IllegalArgumentException {
 		Buyer buyer = buyerRepository.findBuyerByEmail(buyerData.getEmail());
 		Posting posting = postingRepository.findPostingByPostingID(postingID);
-		
+	    if (buyer == null) {
+	        throw new IllegalArgumentException("Invalid buyer");
+	    }	
+	    if (posting == null) {
+	        throw new IllegalArgumentException("Invalid posting");
+	    }	
 		return removeFromCart(buyer, posting);
 	}
 	
