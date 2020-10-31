@@ -3,10 +3,6 @@ package ca.mcgill.ecse321.smartart.model;
 
 import javax.persistence.ManyToOne;
 
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-
-import javax.persistence.Id;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

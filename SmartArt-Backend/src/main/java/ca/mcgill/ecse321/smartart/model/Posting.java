@@ -1,21 +1,12 @@
 package ca.mcgill.ecse321.smartart.model;
 
 
-import javax.persistence.ManyToMany;
-
 import java.sql.Date;
-import java.util.Set;
-
-import ca.mcgill.ecse321.smartart.model.DeliveryType;
-import ca.mcgill.ecse321.smartart.model.ArtStatus;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import ca.mcgill.ecse321.smartart.model.Gallery;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  * 

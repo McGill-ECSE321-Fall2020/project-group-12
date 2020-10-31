@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -18,6 +20,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.ArtistRepository;
@@ -44,6 +48,7 @@ import ca.mcgill.ecse321.smartart.service.PostingService;
 import ca.mcgill.ecse321.smartart.service.PurchaseService;
 
 @ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestPurchaseRest {
 	
@@ -213,7 +218,7 @@ public class TestPurchaseRest {
 		//create gallery for buyer
 		GalleryDto gallery = new GalleryDto("TestGallery");
 		//persist gallery
-		Gallery modelGallery = galleryService.createGallery(gallery);
+		galleryService.createGallery(gallery);
 		
 		//create buyer
 		BuyerDto buyer = new BuyerDto("buyer@mail.com", gallery);
@@ -393,6 +398,7 @@ public class TestPurchaseRest {
 		LocalDateTime now = LocalDateTime.now();
 		cart.setTime(now.minusMinutes(15));
 		modelPurchase.setTime(now.minusMinutes(15));
+		purchaseRepository.save(modelPurchase);
 
 		HttpEntity<PurchaseDto> entity = new HttpEntity<PurchaseDto>(cart, headers);
 		//create response entity
@@ -403,17 +409,136 @@ public class TestPurchaseRest {
 
 	@Test
 	public void removeFromCart() {
+		//create gallery for buyer
+		GalleryDto gallery = new GalleryDto("TestGallery");
+		//persist gallery
+		Gallery modelGallery = galleryService.createGallery(gallery);
 		
+		//create buyer
+		BuyerDto buyer = new BuyerDto("buyer@mail.com", gallery);
+		//persist buyer
+		Buyer modelBuyer = buyerService.createBuyer(buyer);
+		
+		//create artist
+		ArtistDto artist = new ArtistDto("artist@mail.com", gallery);
+		//persist artist
+		Artist modelArtist =  artistService.createArtist(artist);
+		
+		//create and persist posting as model
+		Posting posting = new Posting();
+		posting.setPostingID(123);
+		posting.setGallery(modelGallery);
+		posting.setArtist(modelArtist);
+		posting.setPrice(5);
+		posting.setArtStatus(ArtStatus.Available);
+		postingRepository.save(posting);
+		
+		//add posting to buyer cart
+		purchaseService.addToCart(modelBuyer, posting);
+		
+		PurchaseDto cart = new PurchaseDto();
+		cart.setBuyer(buyer);
+		cart.setPurchaseID(modelBuyer.getCart().getPurchaseID());
+
+		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		//create response entity
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/remove/123", HttpMethod.DELETE, entity, String.class);
+		//check Status
+	    assertEquals(HttpStatus.OK, response.getStatusCode());
+	    String result = response.getBody().toString();
+	    //check that cart is empty
+	    assertTrue(result.contains("\"postings\":[]"));
+	    //check art status
+	    int id = posting.getPostingID();
+	    posting = postingRepository.findPostingByPostingID(id);
+	    assertEquals(posting.getArtStatus(), ArtStatus.Available);
 	}
 	
 	@Test
 	public void removeFromCartInvalidBuyer() {
+		//create gallery for buyer
+		GalleryDto gallery = new GalleryDto("TestGallery");
+		//persist gallery
+		Gallery modelGallery = galleryService.createGallery(gallery);
 		
+		//create buyer
+		BuyerDto buyer = new BuyerDto("buyer@mail.com", gallery);
+		//persist buyer
+		Buyer modelBuyer = buyerService.createBuyer(buyer);
+		
+		//create artist
+		ArtistDto artist = new ArtistDto("artist@mail.com", gallery);
+		//persist artist
+		Artist modelArtist =  artistService.createArtist(artist);
+		
+		//create and persist posting as model
+		Posting posting = new Posting();
+		posting.setPostingID(123);
+		posting.setGallery(modelGallery);
+		posting.setArtist(modelArtist);
+		posting.setPrice(5);
+		posting.setArtStatus(ArtStatus.Available);
+		postingRepository.save(posting);
+		
+		//add posting to buyer cart
+		purchaseService.addToCart(modelBuyer, posting);
+		
+		PurchaseDto cart = new PurchaseDto();
+		cart.setBuyer(buyer);
+		cart.setPurchaseID(modelBuyer.getCart().getPurchaseID());
+		
+		BuyerDto invalidBuyer = new BuyerDto();
+		invalidBuyer.setEmail("notABuyer");
+
+		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(invalidBuyer, headers);
+		//create response entity
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/remove/123", HttpMethod.DELETE, entity, String.class);
+		//check Status
+	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	    String result = response.getBody().toString();
+	    assertTrue(result.contains("Invalid buyer"));
 	}
 	
 	@Test
 	public void removeFromCartInvalidPosting() {
+		//create gallery for buyer
+		GalleryDto gallery = new GalleryDto("TestGallery");
+		//persist gallery
+		Gallery modelGallery = galleryService.createGallery(gallery);
 		
+		//create buyer
+		BuyerDto buyer = new BuyerDto("buyer@mail.com", gallery);
+		//persist buyer
+		Buyer modelBuyer = buyerService.createBuyer(buyer);
+		
+		//create artist
+		ArtistDto artist = new ArtistDto("artist@mail.com", gallery);
+		//persist artist
+		Artist modelArtist =  artistService.createArtist(artist);
+		
+		//create and persist posting as model
+		Posting posting = new Posting();
+		posting.setPostingID(123);
+		posting.setGallery(modelGallery);
+		posting.setArtist(modelArtist);
+		posting.setPrice(5);
+		posting.setArtStatus(ArtStatus.Available);
+		postingRepository.save(posting);
+		
+		//add posting to buyer cart
+		purchaseService.addToCart(modelBuyer, posting);
+		
+		PurchaseDto cart = new PurchaseDto();
+		cart.setBuyer(buyer);
+		cart.setPurchaseID(modelBuyer.getCart().getPurchaseID());
+
+		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		//create response entity
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/remove/124", HttpMethod.DELETE, entity, String.class);
+		//check Status
+	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	    String result = response.getBody().toString();
+	    assertTrue(result.contains("Invalid posting"));
 	}
 	
 }
