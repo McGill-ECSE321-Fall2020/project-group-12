@@ -68,42 +68,10 @@ public class Buyer extends User {
 	 */
 	public void setCart(Purchase cart) {
 		this.cart = cart;
-		if(cart != null)
+		if(cart != null) {
+			this.addPurchase(cart);
 			cart.setBuyer(this);
-	}
-	
-	/**
-	 * Adds a Posting to the cart and updates the total price.
-	 * @param posting: the Posting to be added.
-	 */
-	public void addToCart(Posting posting) {
-		this.cart.addPosting(posting);
-		this.cart.setTotalPrice(this.cart.getTotalPrice() + posting.getPrice());
-	}
-
-	/**
-	 * Removes a Posting from the cart.
-	 * @param posting: the Posting to be removed.
-	 * @return true if successfully removed, false if not.
-	 */
-	public boolean removeFromCart(Posting posting) {
-		if (this.cart.removePosting(posting))
-			return true;
-		return false;
-	}
-	
-	/**
-	 * Makes a Purchase and clear cart.
-	 * @param cart: cart of the Buyer.
-	 * @return true if successful, false if not.
-	 */
-	public boolean makePurchase(Purchase cart) {
-		if (cart != null) {
-			this.purchases.add(cart);
-			this.setCart(null);
-			return true;
 		}
-		return false;
 	}
 	
 	/**

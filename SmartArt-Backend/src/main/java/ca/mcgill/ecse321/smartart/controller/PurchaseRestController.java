@@ -79,7 +79,7 @@ public class PurchaseRestController {
 	public ResponseEntity<?> makePurchase(@RequestBody PurchaseDto data, @PathVariable("deliveryType") DeliveryType deliveryType) {
 		try {
 			Purchase purchase = purchaseService.makePurchase(data, deliveryType);
-			return new ResponseEntity<>(controllerHelper.convertToDto(purchase), HttpStatus.CREATED);
+			return new ResponseEntity<>(controllerHelper.convertToDto(purchase), HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
@@ -101,7 +101,7 @@ public class PurchaseRestController {
 	public ResponseEntity<?> addToCart(@RequestBody BuyerDto buyerData, @PathVariable(name = "postingID") int postingID) {
 		try {
 			Purchase cart = purchaseService.addToCart(buyerData, postingID);
-			return new ResponseEntity<>(controllerHelper.convertToDto(cart), HttpStatus.CREATED);
+			return new ResponseEntity<>(controllerHelper.convertToDto(cart), HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 			}
