@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.smartart.integration;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.ArtistRepository;
@@ -32,6 +34,7 @@ import ca.mcgill.ecse321.smartart.service.GalleryService;
 import ca.mcgill.ecse321.smartart.service.PostingService;
 
 @ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestPostingRest {
 
