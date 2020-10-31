@@ -69,11 +69,7 @@ public class AdministratorService {
 		if (email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Administrator email cannot be empty.");
 		}
-		
 		Administrator administrator = administratorRepository.findAdministratorByEmail(email);
-		if (administrator == null) {
-			throw new IllegalArgumentException("Administrator does not exist.");
-		}
 		return administrator;
 	}
 	
