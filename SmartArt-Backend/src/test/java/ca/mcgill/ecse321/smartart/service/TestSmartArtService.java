@@ -714,63 +714,250 @@ public class TestSmartArtService {
 	
 	@Test
 	public void testMakePurchaseExistingPurchase() {
-		Purchase cart = new Purchase();
+		
+		int purchaseID = PURCHASE_KEY;
+		String error = null;
+		boolean hasPurchase = false;
+		boolean validArtStatuses = true;
+		
+		Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
 		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
 		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
 		buyer.setGallery(gallery);
 		buyer.setCart(cart);
-		cart.setPurchaseID(124344);
 		LocalDateTime now = LocalDateTime.now();
 		cart.setTime(now);
 		cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
 		cart.setTotalPrice(100);
 		int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
-		Purchase purchase = purchaseService.makePurchase(cart, DeliveryType.PickUp);
+		Purchase purchase = new Purchase();
 		
-		assertEquals(DeliveryType.PickUp, purchase.getDeliveryType());
-		assertEquals(purchase.getTotalPrice(), finalPrice);
-		assertNotNull(buyer.getPurchases());
+		try {
+			purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		for(Purchase p : buyer.getPurchases()) {
+			if(p.getPurchaseID() == purchaseID) {
+				hasPurchase = true;
+			}
+		}
+		
+		for(Posting p: purchase.getPostings()) {
+			if(p.getArtStatus() != ArtStatus.Purchased) {
+				validArtStatuses = false;
+			}
+		}
+		
 		assertNull(buyer.getCart());
+		assertTrue(hasPurchase);
+		assertTrue(validArtStatuses);
+		assertEquals(DeliveryType.Shipped, purchase.getDeliveryType());
+		assertEquals(purchase.getTotalPrice(), finalPrice);
 	}
 	
 	@Test
 	public void testMakePurchaseNullPurchase() {
+		Purchase purchase = null;
+		String error = null;
 		
+		Purchase cart = null;
+		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
+		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
+		buyer.setGallery(gallery);
+		buyer.setCart(cart);
+		
+		try {
+			purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Must have a purchase order to make purchase");
 	}
 	
 	@Test
 	public void testMakePurchaseNonExistingPurchase() {
 		
+		Purchase cart = purchaseDao.findPurchaseByPurchaseID(NONEXISTING_PURCHASE);
+		String error = null;
+		
+		int purchaseID = NONEXISTING_PURCHASE;
+		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
+		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
+		buyer.setGallery(gallery);
+		buyer.setCart(cart);
+		if(cart != null) {
+		cart.setPurchaseID(purchaseID);
+		LocalDateTime now = LocalDateTime.now();
+		cart.setTime(now);
+		cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
+		cart.setTotalPrice(100);
+		int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
+		}
+		Purchase purchase = new Purchase();
+		
+		try {
+			purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Must have a purchase order to make purchase");
 	}
 	
 	@Test
 	public void testMakePurchaseValidDeliveryType() {
+		int purchaseID = PURCHASE_KEY;
+		String error = null;
+		boolean hasPurchase = false;
+		boolean validArtStatuses = true;
 		
-	}
-	
-	@Test
-	public void testMakePurchaseInvalidDeliveryTyper() {
+		Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
+		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
+		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
+		buyer.setGallery(gallery);
+		buyer.setCart(cart);
+		LocalDateTime now = LocalDateTime.now();
+		cart.setTime(now);
+		cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
+		cart.setTotalPrice(100);
+		int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
+		Purchase purchase = new Purchase();
 		
+		try {
+			purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		for(Purchase p : buyer.getPurchases()) {
+			if(p.getPurchaseID() == purchaseID) {
+				hasPurchase = true;
+			}
+		}
+		
+		for(Posting p: purchase.getPostings()) {
+			if(p.getArtStatus() != ArtStatus.Purchased) {
+				validArtStatuses = false;
+			}
+		}
+		
+		assertNull(buyer.getCart());
+		assertTrue(hasPurchase);
+		assertTrue(validArtStatuses);
+		assertEquals(DeliveryType.Shipped, purchase.getDeliveryType());
+		assertEquals(purchase.getTotalPrice(), finalPrice);
 	}
 	
 	@Test
 	public void testMakePurchaseNullDeliveryType() {
+		int purchaseID = PURCHASE_KEY;
+		String error = null;
 		
+		Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
+		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
+		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
+		buyer.setGallery(gallery);
+		buyer.setCart(cart);
+		LocalDateTime now = LocalDateTime.now();
+		cart.setTime(now);
+		cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
+		cart.setTotalPrice(100);
+		int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
+		Purchase purchase = new Purchase();
+		
+		try {
+			purchase = purchaseService.makePurchase(cart, null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Delivery Type not valid");
 	}
 	
 	@Test
 	public void testCancelPurchaseExistingPurchase() {
+		int purchaseID = PURCHASE_KEY;
+		String error = null;
+		boolean buyerRemovedPurchase = true;
+		boolean validArtStatuses = true;
+		boolean isCancelled = false;
 		
+		Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
+		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
+		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
+		buyer.setGallery(gallery);
+		buyer.setCart(cart);
+		LocalDateTime now = LocalDateTime.now();
+		cart.setTime(now);
+		cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
+		cart.setTotalPrice(100);
+		buyer.addPurchase(cart);
+		
+		try {
+			isCancelled = purchaseService.cancelPurchase(cart);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		for(Purchase p : buyer.getPurchases()) {
+			if(p.getPurchaseID() == purchaseID) {
+				buyerRemovedPurchase = false;
+			}
+		}
+		
+		for(Posting p: cart.getPostings()) {
+			if(p.getArtStatus() != ArtStatus.Available) {
+				validArtStatuses = false;
+			}
+		}
+		
+		assertTrue(isCancelled);
+		assertTrue(buyerRemovedPurchase);
+		assertTrue(validArtStatuses);
 	}
 	
 	@Test
 	public void testCancelPurchaseNonExistingPurchase() {
+		String error = null;
+		boolean isCancelled = false;
 		
+		Purchase cart = purchaseDao.findPurchaseByPurchaseID(NONEXISTING_PURCHASE);
+		Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
+		Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
+		buyer.setGallery(gallery);
+		buyer.setCart(cart);
+		LocalDateTime now = LocalDateTime.now();
+		if(cart != null) {
+		cart.setTime(now);
+		cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
+		cart.setTotalPrice(100);
+		buyer.addPurchase(cart);
+		}
+		try {
+			isCancelled = purchaseService.cancelPurchase(cart);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Must have a purchase to cancel purchase");
 	}
 	
 	@Test
 	public void testCancelPurchaseNullPurchase() {
+		String error = null;
+		boolean isCancelled = false;
+		Purchase cart = null;
 		
+		try {
+			isCancelled = purchaseService.cancelPurchase(cart);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Must have a purchase to cancel purchase");
 	}
 	
 	////////////////////////////
