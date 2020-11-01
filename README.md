@@ -33,7 +33,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Aidan Williams   | Backend co-lead                  |       40        |
 | Gregory Walfish  | Project manager and testing      |       30        |
 | Luke Barber      | Unit testing and organization    |       25        |
-| Minh Quan Hoang  | Unit testing and organization    |       20        |
+| Minh Quan Hoang  | Unit testing and organization    |       25        |
 
 [Deliverable 2 Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report2)
 
