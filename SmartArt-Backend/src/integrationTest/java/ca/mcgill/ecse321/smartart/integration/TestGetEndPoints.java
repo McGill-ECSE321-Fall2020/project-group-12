@@ -1,12 +1,16 @@
 package ca.mcgill.ecse321.smartart.integration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import java.sql.Date;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -26,9 +30,9 @@ import ca.mcgill.ecse321.smartart.service.BuyerService;
 import ca.mcgill.ecse321.smartart.service.GalleryService;
 import ca.mcgill.ecse321.smartart.service.PostingService;
 import ca.mcgill.ecse321.smartart.service.PurchaseService;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@ActiveProfiles("test")
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestGetEndPoints {
 	
@@ -64,7 +68,7 @@ public class TestGetEndPoints {
 	@Autowired
 	private PurchaseService purchaseService;
 	
-	@AfterEach
+	@After
 	public void clearDatabase() {
 		galleryRepository.deleteAll();
 		administratorRepository.deleteAll();
@@ -74,7 +78,7 @@ public class TestGetEndPoints {
 		purchaseRepository.deleteAll();
 	}
 	
-	@BeforeEach
+	@Before
 	public void setUpTests() {
 		Gallery gallery = galleryService.createGallery("Gallery", "Montreal", 0.05);
 		Artist artist = artistService.createArtist("ben@mail.com", "Ben", "abc123", gallery);
