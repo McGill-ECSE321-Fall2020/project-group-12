@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 
  * @author Group 12
  * Main class that runs our Smart Art application.
  */
@@ -14,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SpringBootApplication
 public class SmartArtApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SmartArtApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SmartArtApplication.class, args);
+    }
 
-  @RequestMapping("/")
-  public String greeting(){
-    return "Hello world!";
-  }
+    @RequestMapping("/")
+    public String greeting() {
+        return "Hello world!";
+    }
 
 }

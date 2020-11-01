@@ -97,7 +97,11 @@ public class Buyer extends User {
 		this.purchases.add(purchase);
 		purchase.setBuyer(this);
 	}
-	
+
+	/**
+	 * Removes a purchase from the Buyer's set of purchases.
+	 * @param purchase: the Purchase to be removed.
+	 */
 	public void removePurchase(Purchase purchase) {
 		this.purchases.remove(purchase);
 	}

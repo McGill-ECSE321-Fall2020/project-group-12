@@ -19,32 +19,33 @@ import ca.mcgill.ecse321.smartart.service.AdministratorService;
 @CrossOrigin(origins = "*")
 @RestController
 public class AdministratorRestController {
-	@Autowired
-	private AdministratorService adminService;
-	@Autowired
-	private RestControllerHelper controllerHelper;
-	
-	@GetMapping(value = {"/administrators", "/administrators/"})
-	public ResponseEntity<?> getAllAdministrators(){
-		return new ResponseEntity<>(adminService.getAllAdministrators().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList()), HttpStatus.OK);
-	}
-	@GetMapping(value = { "/administrators/{email}", "/administrators/{email}/" })
-	public ResponseEntity<?> getAdministratorByEmail(@PathVariable("email") String email)  throws IllegalArgumentException{
-		try {
-			Administrator administrator = adminService.getAdministrator(email);
-			return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.OK);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@PostMapping(value = { "/administrator/create", "/administrator/create/"})
-	public ResponseEntity<?> createAdministrator(@RequestBody AdministratorDto data) throws IllegalArgumentException{
-		try {
-			Administrator administrator = adminService.createAdministrator(data);
-			return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.CREATED);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-		}
-	}
+    @Autowired
+    private AdministratorService adminService;
+    @Autowired
+    private RestControllerHelper controllerHelper;
+
+    @GetMapping(value = {"/administrators", "/administrators/"})
+    public ResponseEntity<?> getAllAdministrators() {
+        return new ResponseEntity<>(adminService.getAllAdministrators().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @GetMapping(value = {"/administrators/{email}", "/administrators/{email}/"})
+    public ResponseEntity<?> getAdministratorByEmail(@PathVariable("email") String email) throws IllegalArgumentException {
+        try {
+            Administrator administrator = adminService.getAdministrator(email);
+            return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = {"/administrator/create", "/administrator/create/"})
+    public ResponseEntity<?> createAdministrator(@RequestBody AdministratorDto data) throws IllegalArgumentException {
+        try {
+            Administrator administrator = adminService.createAdministrator(data);
+            return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

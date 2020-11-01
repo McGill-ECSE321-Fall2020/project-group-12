@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,59 +25,59 @@ import ca.mcgill.ecse321.smartart.dao.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BuyerServiceTest {
-  
+
     @Mock
     private BuyerRepository buyerDao;
     @Mock
     private GalleryRepository galleryDao;
-    
+
     @InjectMocks
     private BuyerService buyerService;
     @InjectMocks
     private GalleryService galleryService;
-    
+
     private static final String BUYER_KEY = "TestBuyer";
     private static final String NONEXISTING_BUYER = "NotABuyer";
     private static final String GALLERY_KEY = "TestGallery";
-    
+
     @BeforeEach
     public void setMockOutput() {
-      lenient().when(buyerDao.findBuyerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(BUYER_KEY)) {
-            Buyer buyer = new Buyer();
-            buyer.setEmail(BUYER_KEY);
-            buyerDao.save(buyer);
-            return buyer;
-        } else {
-            return null;
-        }
-      });
-      lenient().when(buyerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-        List<Buyer> listBuyers= new ArrayList<Buyer>();
-        listBuyers.add(buyerDao.findBuyerByEmail(BUYER_KEY));
-        return listBuyers;
-      });
-      lenient().when(galleryDao.findGalleryByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(GALLERY_KEY)) {
-            Gallery gallery = new Gallery();
-            gallery.setName(GALLERY_KEY);
-            return gallery;
-        } else {
-            return null;
-        }
-      });
-      // Whenever anything is saved, just return the parameter object
-      Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-          return invocation.getArgument(0);
-      };
-      lenient().when(buyerDao.save(any(Buyer.class))).thenAnswer(returnParameterAsAnswer);
-      lenient().when(galleryDao.save(any(Gallery.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(buyerDao.findBuyerByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(BUYER_KEY)) {
+                Buyer buyer = new Buyer();
+                buyer.setEmail(BUYER_KEY);
+                buyerDao.save(buyer);
+                return buyer;
+            } else {
+                return null;
+            }
+        });
+        lenient().when(buyerDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            List<Buyer> listBuyers = new ArrayList<Buyer>();
+            listBuyers.add(buyerDao.findBuyerByEmail(BUYER_KEY));
+            return listBuyers;
+        });
+        lenient().when(galleryDao.findGalleryByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(GALLERY_KEY)) {
+                Gallery gallery = new Gallery();
+                gallery.setName(GALLERY_KEY);
+                return gallery;
+            } else {
+                return null;
+            }
+        });
+        // Whenever anything is saved, just return the parameter object
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+            return invocation.getArgument(0);
+        };
+        lenient().when(buyerDao.save(any(Buyer.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(galleryDao.save(any(Gallery.class))).thenAnswer(returnParameterAsAnswer);
     }
-    
+
     ////////////////////////////
     //////Buyer tests///////////
     ////////////////////////////
-    
+
     @Test
     public void testCreateBuyer() {
         String email = "bob@mail.com";
@@ -93,7 +94,7 @@ public class BuyerServiceTest {
         assertNotNull(buyer);
         assertEquals(name, buyer.getName());
     }
-    
+
     @Test
     public void testCreateBuyerNull() {
         String email = "bob@mail.com";
@@ -112,7 +113,7 @@ public class BuyerServiceTest {
         // check error
         assertEquals("Buyer gallery cannot be empty.", error);
     }
-    
+
     @Test
     public void testCreateBuyerEmpty() {
         String email = "";
@@ -131,7 +132,7 @@ public class BuyerServiceTest {
         // check error
         assertEquals("Buyer email cannot be empty.", error);
     }
-    
+
     @Test
     public void testCreateBuyerSpaces() {
         String email = "  ";
@@ -150,19 +151,19 @@ public class BuyerServiceTest {
         // check error
         assertEquals("Buyer email cannot be empty.", error);
     }
-    
+
     @Test
     public void testGetExistingBuyer() {
         assertEquals(BUYER_KEY, buyerService.getBuyer(BUYER_KEY).getEmail());
     }
-    
+
     @Test
     public void testGetNonExistingBuyer() {
         assertNull(buyerService.getBuyer(NONEXISTING_BUYER));
     }
-    
+
     @Test
     public void testGetAllBuyers() {
-      assertEquals(BUYER_KEY, buyerService.getAllBuyers().get(0).getEmail());
+        assertEquals(BUYER_KEY, buyerService.getAllBuyers().get(0).getEmail());
     }
 }

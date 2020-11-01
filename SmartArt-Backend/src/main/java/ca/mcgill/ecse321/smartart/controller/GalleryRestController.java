@@ -20,33 +20,33 @@ import ca.mcgill.ecse321.smartart.service.GalleryService;
 @CrossOrigin(origins = "*")
 @RestController
 public class GalleryRestController {
-	@Autowired
-	private GalleryService galleryService;
-	@Autowired
-	private RestControllerHelper controllerHelper;
-	
-	@GetMapping(value = {"/galleries", "/galleries/"})
-	public List<GalleryDto> getAllGalleries(){
-		return galleryService.getAllGalleries().stream().map(g -> controllerHelper.convertToDto(g)).collect(Collectors.toList());
-	}
-	
-	@GetMapping(value = { "/galleries/{name}", "/galleries/{name}/" })
-	public ResponseEntity<?> getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
-		try {
-			Gallery gallery = galleryService.getGallery(name);
-			return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.OK);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@PostMapping(value = { "/gallery/create", "/gallery/create/" })
-	public ResponseEntity<?> createGallery(@RequestBody GalleryDto data) {
-		try {
-			Gallery gallery = galleryService.createGallery(data);
-			return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.CREATED);
-		} catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-		}
-	}
+    @Autowired
+    private GalleryService galleryService;
+    @Autowired
+    private RestControllerHelper controllerHelper;
+
+    @GetMapping(value = {"/galleries", "/galleries/"})
+    public List<GalleryDto> getAllGalleries() {
+        return galleryService.getAllGalleries().stream().map(g -> controllerHelper.convertToDto(g)).collect(Collectors.toList());
+    }
+
+    @GetMapping(value = {"/galleries/{name}", "/galleries/{name}/"})
+    public ResponseEntity<?> getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
+        try {
+            Gallery gallery = galleryService.getGallery(name);
+            return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = {"/gallery/create", "/gallery/create/"})
+    public ResponseEntity<?> createGallery(@RequestBody GalleryDto data) {
+        try {
+            Gallery gallery = galleryService.createGallery(data);
+            return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
