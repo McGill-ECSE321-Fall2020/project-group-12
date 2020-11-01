@@ -9,7 +9,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -143,12 +143,10 @@ public class PurchaseMethodAndCartTest {
 
     @Test
     public void testMakePurchaseExistingPurchase() {
-
         int purchaseID = PURCHASE_KEY;
         String error = null;
         boolean hasPurchase = false;
         boolean validArtStatuses = true;
-
         Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
         Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
         Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
@@ -160,25 +158,22 @@ public class PurchaseMethodAndCartTest {
         cart.setTotalPrice(100);
         int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
         Purchase purchase = new Purchase();
-
         try {
             purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-
         for(Purchase p : buyer.getPurchases()) {
             if(p.getPurchaseID() == purchaseID) {
                 hasPurchase = true;
             }
         }
-
         for(Posting p: purchase.getPostings()) {
             if(p.getArtStatus() != ArtStatus.Purchased) {
                 validArtStatuses = false;
             }
         }
-
+        assertNull(error);
         assertNull(buyer.getCart());
         assertTrue(hasPurchase);
         assertTrue(validArtStatuses);
@@ -188,30 +183,24 @@ public class PurchaseMethodAndCartTest {
 
     @Test
     public void testMakePurchaseNullPurchase() {
-        Purchase purchase = null;
         String error = null;
-
         Purchase cart = null;
         Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
         Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
         buyer.setGallery(gallery);
         buyer.setCart(cart);
-
         try {
-            purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
+            purchaseService.makePurchase(cart, DeliveryType.Shipped);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-
         assertEquals(error, "Must have a purchase order to make purchase");
     }
 
     @Test
     public void testMakePurchaseNonExistingPurchase() {
-
         Purchase cart = purchaseDao.findPurchaseByPurchaseID(NONEXISTING_PURCHASE);
         String error = null;
-
         int purchaseID = NONEXISTING_PURCHASE;
         Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
         Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
@@ -223,16 +212,12 @@ public class PurchaseMethodAndCartTest {
             cart.setTime(now);
             cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
             cart.setTotalPrice(100);
-            int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
         }
-        Purchase purchase = new Purchase();
-
         try {
-            purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
+            purchaseService.makePurchase(cart, DeliveryType.Shipped);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-
         assertEquals(error, "Must have a purchase order to make purchase");
     }
 
@@ -242,7 +227,6 @@ public class PurchaseMethodAndCartTest {
         String error = null;
         boolean hasPurchase = false;
         boolean validArtStatuses = true;
-
         Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
         Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
         Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
@@ -254,25 +238,22 @@ public class PurchaseMethodAndCartTest {
         cart.setTotalPrice(100);
         int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
         Purchase purchase = new Purchase();
-
         try {
             purchase = purchaseService.makePurchase(cart, DeliveryType.Shipped);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-
         for(Purchase p : buyer.getPurchases()) {
             if(p.getPurchaseID() == purchaseID) {
                 hasPurchase = true;
             }
         }
-
         for(Posting p: purchase.getPostings()) {
             if(p.getArtStatus() != ArtStatus.Purchased) {
                 validArtStatuses = false;
             }
         }
-
+        assertNull(error);
         assertNull(buyer.getCart());
         assertTrue(hasPurchase);
         assertTrue(validArtStatuses);
@@ -282,7 +263,6 @@ public class PurchaseMethodAndCartTest {
 
     @Test
     public void testMakePurchaseNullDeliveryType() {
-        int purchaseID = PURCHASE_KEY;
         String error = null;
 
         Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
@@ -294,15 +274,11 @@ public class PurchaseMethodAndCartTest {
         cart.setTime(now);
         cart.addPosting(postingDao.findPostingByPostingID(POSTING_KEY));
         cart.setTotalPrice(100);
-        int finalPrice = (int)(cart.getTotalPrice() + (1*gallery.getCommission()));
-        Purchase purchase = new Purchase();
-
         try {
-            purchase = purchaseService.makePurchase(cart, null);
+            purchaseService.makePurchase(cart, null);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-
         assertEquals(error, "Delivery Type not valid");
     }
 
@@ -313,7 +289,6 @@ public class PurchaseMethodAndCartTest {
         boolean buyerRemovedPurchase = true;
         boolean validArtStatuses = true;
         boolean isCancelled = false;
-
         Purchase cart = purchaseDao.findPurchaseByPurchaseID(PURCHASE_KEY);
         Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
         Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
@@ -342,7 +317,7 @@ public class PurchaseMethodAndCartTest {
                 validArtStatuses = false;
             }
         }
-
+        assertNull(error);
         assertTrue(isCancelled);
         assertTrue(buyerRemovedPurchase);
         assertTrue(validArtStatuses);
@@ -351,8 +326,6 @@ public class PurchaseMethodAndCartTest {
     @Test
     public void testCancelPurchaseNonExistingPurchase() {
         String error = null;
-        boolean isCancelled = false;
-
         Purchase cart = purchaseDao.findPurchaseByPurchaseID(NONEXISTING_PURCHASE);
         Buyer buyer = buyerDao.findBuyerByEmail(BUYER_KEY);
         Gallery gallery = galleryDao.findGalleryByName(GALLERY_KEY);
@@ -366,26 +339,22 @@ public class PurchaseMethodAndCartTest {
             buyer.addPurchase(cart);
         }
         try {
-            isCancelled = purchaseService.cancelPurchase(cart);
+            purchaseService.cancelPurchase(cart);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-
         assertEquals(error, "Must have a purchase to cancel purchase");
     }
 
     @Test
     public void testCancelPurchaseNullPurchase() {
         String error = null;
-        boolean isCancelled = false;
         Purchase cart = null;
-
         try {
-            isCancelled = purchaseService.cancelPurchase(cart);
+            purchaseService.cancelPurchase(cart);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
-
         assertEquals(error, "Must have a purchase to cancel purchase");
     }
   
@@ -395,14 +364,21 @@ public class PurchaseMethodAndCartTest {
   
   @Test
   public void testAddToCartExistingBuyer() {
+      String error = null;
       Gallery gallery = galleryService.createGallery("bellefeuile", "montreal", 0.4);
       Buyer buyer = buyerService.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
       Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
       Date date = new Date(0);
       Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
-      Purchase purchase = purchaseService.addToCart(buyer, posting);
+      Purchase purchase = null;
+      try {
+        purchase = purchaseService.addToCart(buyer, posting);
+      } catch (IllegalArgumentException e) {
+        error = e.getMessage();
+      }
+      assertNull(error);
+      assertNotNull(purchase);
       assertEquals(buyer.getCart().getPurchaseID(), purchase.getPurchaseID() );
-  
   }
   
   @Test
@@ -413,14 +389,12 @@ public class PurchaseMethodAndCartTest {
       Date date = new Date(0);
       Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
       String error = null;
-      Purchase purchase = new Purchase();
       try {
-          purchase = purchaseService.addToCart(buyer, posting);
+          purchaseService.addToCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "addToCart buyer cannot be empty.");
-      
   }
   
   @Test
@@ -431,66 +405,54 @@ public class PurchaseMethodAndCartTest {
       Date date = new Date(0);
       Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
       String error = null;
-      Purchase purchase = new Purchase();
       try {
-          purchase = purchaseService.addToCart(buyer, posting);
+          purchaseService.addToCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "addToCart buyer cannot be empty.");
-      
   }
   
   @Test
   public void testAddToCartExistingPosting() {
       Gallery gallery = galleryService.createGallery("bellefeuile", "montreal", 0.4);
       Buyer buyer = buyerService.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
-      Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
-      Date date = new Date(0);
       Posting posting = postingService.getPosting(POSTING_KEY);
       String error = null;
-      Purchase purchase = new Purchase();
       try {
-          purchase = purchaseService.addToCart(buyer, posting);
+          purchaseService.addToCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "addToCart posting cannot be On Hold or Purchased.");
-      
   }
   
   @Test
   public void testAddToCartNullPosting() {
       Gallery gallery = galleryService.createGallery("bellefeuile", "montreal", 0.4);
       Buyer buyer = buyerService.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
-      Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
       Posting posting = null;
       String error = null;
-      Purchase purchase = new Purchase();
       try {
-          purchase = purchaseService.addToCart(buyer, posting);
+          purchaseService.addToCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "addToCart posting cannot be empty. ");
-      
   }
   
   @Test
   public void testAddToCartNonExistingPosting() {
       Gallery gallery = galleryService.createGallery("bellefeuile", "montreal", 0.4);
       Buyer buyer = buyerService.createBuyer("gregory.walfish@mail.mcgill.ca", "Gregory", "youthought", gallery);
-      Artist artist = artistService.createArtist("aidan.williams@mail.mcgill.ca", "Aidan", "gregismyidol", gallery);
       Posting posting = postingService.getPosting(NONEXISTING_POSTING);
       String error = null;
-      Purchase purchase = new Purchase();
       try {
-          purchase = purchaseService.addToCart(buyer, posting);
+          purchaseService.addToCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "addToCart posting cannot be empty. ");
-      
   }
   
   @Test
@@ -501,11 +463,14 @@ public class PurchaseMethodAndCartTest {
       Date date = new Date(0);
       Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
       String error = null;
-      
       Purchase purchase = purchaseService.addToCart(buyer, posting);
-      purchase = purchaseService.removeFromCart(buyer, posting);
+      try {
+        purchase = purchaseService.removeFromCart(buyer, posting);
+      } catch (IllegalArgumentException e) {
+        error = e.getMessage();
+      }
+      assertNull(error);
       assertEquals(purchase.getPostings(), buyer.getCart().getPostings());
-      
   }
   
   @Test
@@ -516,14 +481,12 @@ public class PurchaseMethodAndCartTest {
       Date date = new Date(0);
       Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
       String error = null;
-      Purchase purchase = new Purchase();
       try {
-          purchase = purchaseService.removeFromCart(buyer, posting);
+          purchaseService.removeFromCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "removeFromCart buyer cannot be empty. ");
-      
   }
   
   @Test
@@ -534,14 +497,12 @@ public class PurchaseMethodAndCartTest {
       Date date = new Date(0);
       Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
       String error = null;
-      Purchase purchase = new Purchase();
       try {
-          purchase = purchaseService.removeFromCart(buyer, posting);
+          purchaseService.removeFromCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "removeFromCart buyer cannot be empty. ");
-      
   }
   
   @Test
@@ -553,10 +514,14 @@ public class PurchaseMethodAndCartTest {
       Posting posting = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
       String error = null;
       Purchase purchase = purchaseService.addToCart(buyer, posting);
-      purchase = purchaseService.removeFromCart(buyer, posting);
+      try {
+          purchase = purchaseService.removeFromCart(buyer, posting);
+      } catch (IllegalArgumentException e) {
+        error = e.getMessage();
+      }
+      assertNull(error);
       assertEquals(posting.getArtStatus(), ArtStatus.Available);
       assertEquals(purchase.getPostings(), buyer.getCart().getPostings());
-      
   }
   
   @Test
@@ -568,15 +533,13 @@ public class PurchaseMethodAndCartTest {
       Posting posting = null;
       Posting postingTwo = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
       String error = null;
-      Purchase purchase = purchaseService.addToCart(buyer, postingTwo);
+      purchaseService.addToCart(buyer, postingTwo);
       try {
-          purchase = purchaseService.removeFromCart(buyer, posting);
+          purchaseService.removeFromCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "removeFromCart posting cannot be empty.");
-      
-      
   }
   
   @Test
@@ -587,15 +550,13 @@ public class PurchaseMethodAndCartTest {
       Date date = new Date(0);
       Posting posting = postingService.getPosting(NONEXISTING_POSTING);
       Posting postingTwo = postingService.createPosting(124344, artist, 1000, 1, 1, 1, "Mona Lisa", "copy of it", date, "image");
-      
       String error = null;
-      Purchase purchase = purchaseService.addToCart(buyer, postingTwo);
+      purchaseService.addToCart(buyer, postingTwo);
       try {
-          purchase = purchaseService.removeFromCart(buyer, posting);
+          purchaseService.removeFromCart(buyer, posting);
       } catch (IllegalArgumentException e) {
           error = e.getMessage();
       }
       assertEquals(error, "removeFromCart posting cannot be empty.");
-      
   }
 }
