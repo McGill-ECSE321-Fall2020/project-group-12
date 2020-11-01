@@ -38,7 +38,6 @@ dependencies {
 	testImplementation 'org.mockito:mockito-core:2.+'
 	testImplementation 'org.mockito:mockito-junit-jupiter:2.18.3'
 	testImplementation 'org.junit.platform:junit-platform-launcher:1.4.1'
-	integrationTestImplimentation "junit:junit:4.13"
 
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
