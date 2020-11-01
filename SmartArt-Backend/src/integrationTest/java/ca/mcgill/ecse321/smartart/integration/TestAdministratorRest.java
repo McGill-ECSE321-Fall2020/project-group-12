@@ -163,5 +163,4 @@ public class TestAdministratorRest {
 	    assertTrue(result.contains("Administrator name cannot be empty"));
 	    assertTrue(result.contains("Administrator password cannot be empty"));
 	}
-
 }

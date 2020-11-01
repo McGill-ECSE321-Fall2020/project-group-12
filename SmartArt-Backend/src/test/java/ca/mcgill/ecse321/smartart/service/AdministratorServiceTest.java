@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,49 +29,49 @@ public class AdministratorServiceTest {
     private AdministratorRepository administratorDao;
     @Mock
     private GalleryRepository galleryDao;
-    
+
     @InjectMocks
     private AdministratorService administratorService;
     @InjectMocks
     private GalleryService galleryService;
-    
+
     private static final String ADMINISTRATOR_KEY = "TestAdministrator";
     private static final String NONEXISTING_ADMINISTRATOR = "NotAnAdministrator";
     private static final String GALLERY_KEY = "TestGallery";
-    
+
     @BeforeEach
     public void setMockOutput() {
-      lenient().when(administratorDao.findAdministratorByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(ADMINISTRATOR_KEY)) {
-            Administrator administrator = new Administrator();
-            administrator.setEmail(ADMINISTRATOR_KEY);
-            return administrator;
-        } else {
-            return null;
-        }
-      });
-      lenient().when(administratorDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-        List<Administrator> listAdministrators= new ArrayList<Administrator>();
-        listAdministrators.add(administratorDao.findAdministratorByEmail(ADMINISTRATOR_KEY));
-        return listAdministrators;
-      });
-      lenient().when(galleryDao.findGalleryByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
-        if (invocation.getArgument(0).equals(GALLERY_KEY)) {
-            Gallery gallery = new Gallery();
-            gallery.setName(GALLERY_KEY);
-            return gallery;
-        } else {
-            return null;
-        }
-      });
-   // Whenever anything is saved, just return the parameter object
-      Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-          return invocation.getArgument(0);
-      };
-      lenient().when(administratorDao.save(any(Administrator.class))).thenAnswer(returnParameterAsAnswer);
-      lenient().when(galleryDao.save(any(Gallery.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(administratorDao.findAdministratorByEmail(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(ADMINISTRATOR_KEY)) {
+                Administrator administrator = new Administrator();
+                administrator.setEmail(ADMINISTRATOR_KEY);
+                return administrator;
+            } else {
+                return null;
+            }
+        });
+        lenient().when(administratorDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            List<Administrator> listAdministrators = new ArrayList<Administrator>();
+            listAdministrators.add(administratorDao.findAdministratorByEmail(ADMINISTRATOR_KEY));
+            return listAdministrators;
+        });
+        lenient().when(galleryDao.findGalleryByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(GALLERY_KEY)) {
+                Gallery gallery = new Gallery();
+                gallery.setName(GALLERY_KEY);
+                return gallery;
+            } else {
+                return null;
+            }
+        });
+        // Whenever anything is saved, just return the parameter object
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
+            return invocation.getArgument(0);
+        };
+        lenient().when(administratorDao.save(any(Administrator.class))).thenAnswer(returnParameterAsAnswer);
+        lenient().when(galleryDao.save(any(Gallery.class))).thenAnswer(returnParameterAsAnswer);
     }
-    
+
     @Test
     public void testCreateAdministrator() {
         String email = "bob@mail.com";
@@ -87,7 +88,7 @@ public class AdministratorServiceTest {
         assertNotNull(administrator);
         assertEquals(name, administrator.getName());
     }
-    
+
     @Test
     public void testCreateAdministratortNull() {
         String email = "bob@mail.com";
@@ -106,7 +107,7 @@ public class AdministratorServiceTest {
         // check error
         assertEquals("Administrator gallery cannot be empty.", error);
     }
-    
+
     @Test
     public void testCreateAdministratorEmpty() {
         String email = "";
@@ -125,7 +126,7 @@ public class AdministratorServiceTest {
         // check error
         assertEquals("Administrator email cannot be empty.", error);
     }
-    
+
     @Test
     public void testCreateAdministratorSpaces() {
         String email = "  ";
@@ -144,19 +145,19 @@ public class AdministratorServiceTest {
         // check error
         assertEquals("Administrator email cannot be empty.", error);
     }
-    
+
     @Test
     public void testGetExistingAdministrator() {
         assertEquals(ADMINISTRATOR_KEY, administratorService.getAdministrator(ADMINISTRATOR_KEY).getEmail());
     }
-    
+
     @Test
     public void testGetNonExistingAdministrator() {
         assertNull(administratorService.getAdministrator(NONEXISTING_ADMINISTRATOR));
     }
-    
+
     @Test
     public void testGetAllAdministrators() {
-      assertEquals(ADMINISTRATOR_KEY, administratorService.getAllAdministrators().get(0).getEmail());
+        assertEquals(ADMINISTRATOR_KEY, administratorService.getAllAdministrators().get(0).getEmail());
     }
 }

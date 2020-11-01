@@ -35,7 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestGetEndPoints {
-	
+
 	@LocalServerPort
 	private int port = 8080;
 	
@@ -131,157 +131,13 @@ public class TestGetEndPoints {
 	
 	@Test
 	public void getArtistByEmail() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artists/ben@mail.com", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
-		//check gallery association
-		assertTrue(result.contains("\"name\":\"Gallery\""));
-
-	}
-	
-	@Test
-	public void getAdministrators() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrators", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that administrator is returned correctly
-		assertTrue(result.contains("\"email\":\"greg@mail.com\""));
-		//check gallery association
-		assertTrue(result.contains("\"name\":\"Gallery\""));
-	}
-	
-	@Test
-	public void getAdministratorByEmail() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrators/greg@mail.com", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that administrator is returned correctly
-		assertTrue(result.contains("\"email\":\"greg@mail.com\""));
-		//check gallery association
-		assertTrue(result.contains("\"name\":\"Gallery\""));
-	}
-	@Test
-	public void getBuyers() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/buyers", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that buyer is returned correctly
-		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
-		//check gallery association
-		assertTrue(result.contains("\"name\":\"Gallery\""));
-	}
-	
-	@Test
-	public void getBuyerByEmail() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/buyers/aidan@mail.com", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that buyer is returned correctly
-		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
-		//check gallery association
-		assertTrue(result.contains("\"name\":\"Gallery\""));
-	}
-	
-	@Test
-	public void getPostings() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/postings", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that posting is correctly returned
-		assertTrue(result.contains("\"postingID\":124344"));
-		//check  artist association
-		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
-	}
-	
-	@Test
-	public void getPostingByID() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/postings/124344", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that posting is correctly returned
-		assertTrue(result.contains("\"postingID\":124344"));
-		//check artist association
-		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
-	}
-	
-	@Test
-	public void getPostingsByArtist() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/postings/artist/ben@mail.com", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that posting is correctly returned
-		assertTrue(result.contains("\"postingID\":124344"));
-		//check artist association
-		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
-	}
-	
-	@Test
-	public void getPurchases() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that purchase is returned correctly
-		assertTrue(result.contains("\"purchaseID\":21122"));
-		//check buyer association
-		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
-	}
-	
-	@Test
-	public void getPurchaseByID() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases/21122", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that purchase is returned correctly
-		assertTrue(result.contains("\"purchaseID\":21122"));
-		//check buyer association
-		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
-	}
-	
-	@Test
-	public void getPurchasesByBuyer() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases/buyer/aidan@mail.com", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that purchase is returned correctly
-		assertTrue(result.contains("\"purchaseID\":21122"));
-		//check buyer association
-		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
-	}
-	
-	@Test
-	public void getCart() {
-		//create response entity
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases/cart/aidan@mail.com", HttpMethod.GET, null, String.class);
-		// Check Status
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
-		//check that purchase is returned correctly
-		assertTrue(result.contains("\"purchaseID\":21122"));
-		//check buyer association
-		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
-	}
-	
+        //create response entity
+        ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artists/ben@mail.com", HttpMethod.GET, null, String.class);
+        // Check Status
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        String result = response.getBody().toString();
+        assertTrue(result.contains("\"email\":\"ben@mail.com\""));
+        //check gallery association
+        assertTrue(result.contains("\"name\":\"Gallery\""));
+    }
 }

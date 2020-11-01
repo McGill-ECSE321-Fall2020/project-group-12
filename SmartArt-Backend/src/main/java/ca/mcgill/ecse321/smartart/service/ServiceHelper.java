@@ -33,21 +33,24 @@ import ca.mcgill.ecse321.smartart.model.Purchase;
 
 @Service
 public class ServiceHelper {
-	
-	@Autowired
-	private ArtistRepository artistRepository;
-	@Autowired
-	private AdministratorRepository administratorRepository;
-	@Autowired
-	private BuyerRepository buyerRepository;
-	@Autowired
-	private GalleryRepository galleryRepository;
-	@Autowired
-	private PostingRepository postingRepository;
-	@Autowired
-	private PurchaseRepository purchaseRepository;
-	
-	@Transactional
+
+    @Autowired
+    private ArtistRepository artistRepository;
+    @Autowired
+    private AdministratorRepository administratorRepository;
+    @Autowired
+    private BuyerRepository buyerRepository;
+    @Autowired
+    private GalleryRepository galleryRepository;
+    @Autowired
+    private PostingRepository postingRepository;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
+
+    /**
+     * Clears all repositories of the Smart Art application.
+     */
+    @Transactional
     public void clearDatabase() {
         galleryRepository.deleteAll();
         artistRepository.deleteAll();
@@ -56,153 +59,188 @@ public class ServiceHelper {
         purchaseRepository.deleteAll();
         postingRepository.deleteAll();
     }
-	
-	Purchase convertToModel(PurchaseDto data) {
-		if(data == null) return null;
-		int purchaseID = data.getPurchaseID();
-		Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
 
-		if (purchase == null) {
+    /**
+     * Converts PurchaseDto data to the model.
+     *
+     * @param data: data from PurchaseDto.
+     * @return the Purchase derived from PurchaseDto data.
+     */
+    Purchase convertToModel(PurchaseDto data) {
+        if (data == null) return null;
+        int purchaseID = data.getPurchaseID();
+        Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(purchaseID);
 
-			purchase = new Purchase();
+        if (purchase == null) {
 
-			Buyer buyer = convertToModel(data.getBuyer());
-			DeliveryType delivery = data.getDeliveryType();
-			int totalPrice = data.getTotalPrice();
-			LocalDateTime time = data.getTime();
-			for(PostingDto p : data.getPostings()) {
-				purchase.addPosting(convertToModel(p));
-			}
-			purchase.setBuyer(buyer);
-			purchase.setDeliveryType(delivery);
-			purchase.setPurchaseID(purchaseID);
-			purchase.setTotalPrice(totalPrice);
-			purchase.setTime(time);
-		}
+            purchase = new Purchase();
 
-		return purchase;
-	}
+            Buyer buyer = convertToModel(data.getBuyer());
+            DeliveryType delivery = data.getDeliveryType();
+            int totalPrice = data.getTotalPrice();
+            LocalDateTime time = data.getTime();
+            for (PostingDto p : data.getPostings()) {
+                purchase.addPosting(convertToModel(p));
+            }
+            purchase.setBuyer(buyer);
+            purchase.setDeliveryType(delivery);
+            purchase.setPurchaseID(purchaseID);
+            purchase.setTotalPrice(totalPrice);
+            purchase.setTime(time);
+        }
 
-	Administrator convertToModel(AdministratorDto data) {
-		if(data == null) return null;
-		String email = data.getEmail();
-		Administrator admin = administratorRepository.findAdministratorByEmail(email);
+        return purchase;
+    }
 
-		if (admin == null) {
-			String name = data.getName();
-			String password = data.getPassword();
-			Gallery gallery = convertToModel(data.getGallery());
+    /**
+     * Converts AdministratorDto data to the model.
+     *
+     * @param data: data from AdministratorDto.
+     * @return the Administrator derived from AdministratorDto data.
+     */
+    Administrator convertToModel(AdministratorDto data) {
+        if (data == null) return null;
+        String email = data.getEmail();
+        Administrator admin = administratorRepository.findAdministratorByEmail(email);
 
-			admin = new Administrator();
+        if (admin == null) {
+            String name = data.getName();
+            String password = data.getPassword();
+            Gallery gallery = convertToModel(data.getGallery());
 
-			admin.setEmail(email);
-			admin.setGallery(gallery);
-			admin.setName(name);
-			admin.setPassword(password);
-		}
+            admin = new Administrator();
 
-		return admin;
-	}
+            admin.setEmail(email);
+            admin.setGallery(gallery);
+            admin.setName(name);
+            admin.setPassword(password);
+        }
 
-	Buyer convertToModel(BuyerDto data) {
-		if(data == null) return null;
-		String email = data.getEmail();
-		Buyer buyer = buyerRepository.findBuyerByEmail(email);
+        return admin;
+    }
 
-		if (buyer == null) {
-			String name = data.getName();
-			String password = data.getPassword();
-			Gallery gallery = convertToModel(data.getGallery());
+    /**
+     * Converts BuyerDto data to the model.
+     *
+     * @param data: data from BuyerDto.
+     * @return the Buyer derived from BuyerDto data.
+     */
+    Buyer convertToModel(BuyerDto data) {
+        if (data == null) return null;
+        String email = data.getEmail();
+        Buyer buyer = buyerRepository.findBuyerByEmail(email);
 
-			buyer = new Buyer();
+        if (buyer == null) {
+            String name = data.getName();
+            String password = data.getPassword();
+            Gallery gallery = convertToModel(data.getGallery());
 
-			buyer.setEmail(email);
-			buyer.setGallery(gallery);
-			buyer.setName(name);
-			buyer.setPassword(password);
-		}
+            buyer = new Buyer();
 
-		return buyer;
-	}
-	
-	Posting convertToModel(PostingDto data) {
-		if(data == null) return null;
-		int postingID = data.getPostingID();
-		Posting posting = postingRepository.findPostingByPostingID(postingID);
+            buyer.setEmail(email);
+            buyer.setGallery(gallery);
+            buyer.setName(name);
+            buyer.setPassword(password);
+        }
 
-		if (posting == null) {
+        return buyer;
+    }
 
-			posting = new Posting();
+    /**
+     * Converts PostingDto data to the model.
+     *
+     * @param data: data from PostingDto.
+     * @return the Posting derived from PostingDto data.
+     */
+    Posting convertToModel(PostingDto data) {
+        if (data == null) return null;
+        int postingID = data.getPostingID();
+        Posting posting = postingRepository.findPostingByPostingID(postingID);
 
-			Artist artist = convertToModel(data.getArtist());
-			int price = data.getPrice();
-			String title = data.getTitle();
-			String description = data.getDescription();
-			double xDim = data.getXDim();
-			double yDim = data.getYDim();
-			double zDim = data.getZDim();
-			Date date = data.getDate();
-			Gallery gallery = convertToModel(data.getGallery());
-			ArtStatus status = data.getArtStatus();
-			posting = new Posting();
-			posting.setArtist(artist);
-			posting.setPrice(price);
-			posting.setTitle(title);
-			posting.setDescription(description);
-			posting.setXDim(xDim);
-			posting.setYDim(yDim);
-			posting.setZDim(zDim);
-			posting.setDate(date);
-			posting.setGallery(gallery);
-			posting.setArtStatus(status);
-		}
+        if (posting == null) {
 
-		return posting;
-	}
+            posting = new Posting();
 
+            Artist artist = convertToModel(data.getArtist());
+            int price = data.getPrice();
+            String title = data.getTitle();
+            String description = data.getDescription();
+            double xDim = data.getXDim();
+            double yDim = data.getYDim();
+            double zDim = data.getZDim();
+            Date date = data.getDate();
+            Gallery gallery = convertToModel(data.getGallery());
+            ArtStatus status = data.getArtStatus();
+            posting = new Posting();
+            posting.setArtist(artist);
+            posting.setPrice(price);
+            posting.setTitle(title);
+            posting.setDescription(description);
+            posting.setXDim(xDim);
+            posting.setYDim(yDim);
+            posting.setZDim(zDim);
+            posting.setDate(date);
+            posting.setGallery(gallery);
+            posting.setArtStatus(status);
+        }
 
-	Artist convertToModel(ArtistDto data) {
-		if(data == null) return null;
-		String email = data.getEmail();
-		Artist artist = artistRepository.findArtistByEmail(email);
+        return posting;
+    }
 
-		if (artist == null) {
-			String name = data.getName();
-			String password = data.getPassword();
-			Gallery gallery = convertToModel(data.getGallery());
+    /**
+     * Converts ArtistDto data to the model.
+     *
+     * @param data: data from ArtistDto.
+     * @return the Artist derived from ArtistDto data.
+     */
+    Artist convertToModel(ArtistDto data) {
+        if (data == null) return null;
+        String email = data.getEmail();
+        Artist artist = artistRepository.findArtistByEmail(email);
 
-			artist = new Artist();
-			artist.setEmail(email);
-			artist.setGallery(gallery);
-			artist.setName(name);
-			artist.setPassword(password);
-		}
+        if (artist == null) {
+            String name = data.getName();
+            String password = data.getPassword();
+            Gallery gallery = convertToModel(data.getGallery());
 
-		return artist;
+            artist = new Artist();
+            artist.setEmail(email);
+            artist.setGallery(gallery);
+            artist.setName(name);
+            artist.setPassword(password);
+        }
 
-	}
+        return artist;
 
-	Gallery convertToModel(GalleryDto data) {
-		if(data == null) return null;
-		String name = data.getName();
-		Gallery gallery = galleryRepository.findGalleryByName(name);
-		if (gallery ==  null) {
-			String city = data.getCity();
-			double commission = data.getCommission();
-			gallery = new Gallery();
-			gallery.setName(name);
-			gallery.setCity(city);
-			gallery.setCommission(commission);
-		}
+    }
 
-		return gallery;
-	}
+    /**
+     * Converts GalleryDto data to the model.
+     *
+     * @param data: data from GalleryDto.
+     * @return the Gallery derived from GalleryDto data.
+     */
+    Gallery convertToModel(GalleryDto data) {
+        if (data == null) return null;
+        String name = data.getName();
+        Gallery gallery = galleryRepository.findGalleryByName(name);
+        if (gallery == null) {
+            String city = data.getCity();
+            double commission = data.getCommission();
+            gallery = new Gallery();
+            gallery.setName(name);
+            gallery.setCity(city);
+            gallery.setCommission(commission);
+        }
 
-	<T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+        return gallery;
+    }
+
+    <T> List<T> toList(Iterable<T> iterable) {
+        List<T> resultList = new ArrayList<T>();
+        for (T t : iterable) {
+            resultList.add(t);
+        }
+        return resultList;
+    }
 }

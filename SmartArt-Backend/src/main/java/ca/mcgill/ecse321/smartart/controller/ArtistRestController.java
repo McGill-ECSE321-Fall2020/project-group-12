@@ -19,33 +19,33 @@ import ca.mcgill.ecse321.smartart.service.ArtistService;
 @CrossOrigin(origins = "*")
 @RestController
 public class ArtistRestController {
-	@Autowired
-	private ArtistService artistService;
-	@Autowired
-	private RestControllerHelper controllerHelper;
-	
-	@GetMapping(value = {"/artists", "/artists/"})
-	public ResponseEntity<?> getAllArtists(){
-		return new ResponseEntity<>(artistService.getAllArtists().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList()), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = { "/artists/{email}", "/artists/{email}/" })
-	public ResponseEntity<?> getArtistByEmail(@PathVariable("email") String email) {
-		try {
-			Artist artist = artistService.getArtist(email);
-			return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@PostMapping(value = { "/artist/create", "/artist/create/" })
-	public ResponseEntity<?> createArtist(@RequestBody ArtistDto data) {
-		try {
-			Artist artist = artistService.createArtist(data);
-			return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.CREATED);
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-		}
-	}
+    @Autowired
+    private ArtistService artistService;
+    @Autowired
+    private RestControllerHelper controllerHelper;
+
+    @GetMapping(value = {"/artists", "/artists/"})
+    public ResponseEntity<?> getAllArtists() {
+        return new ResponseEntity<>(artistService.getAllArtists().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @GetMapping(value = {"/artists/{email}", "/artists/{email}/"})
+    public ResponseEntity<?> getArtistByEmail(@PathVariable("email") String email) {
+        try {
+            Artist artist = artistService.getArtist(email);
+            return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = {"/artist/create", "/artist/create/"})
+    public ResponseEntity<?> createArtist(@RequestBody ArtistDto data) {
+        try {
+            Artist artist = artistService.createArtist(data);
+            return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

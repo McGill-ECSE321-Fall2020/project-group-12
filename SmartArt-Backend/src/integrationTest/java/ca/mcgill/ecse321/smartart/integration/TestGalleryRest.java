@@ -99,5 +99,4 @@ public class TestGalleryRest {
 	    assertTrue(result.contains("Gallery name cannot be empty"));
 	    assertTrue(result.contains("Gallery city cannot be empty"));
 	}
-
 }

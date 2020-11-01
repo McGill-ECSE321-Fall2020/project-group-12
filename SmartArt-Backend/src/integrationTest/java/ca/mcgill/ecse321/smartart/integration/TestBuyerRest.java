@@ -1,10 +1,11 @@
 package ca.mcgill.ecse321.smartart.integration;
 
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
-import org.junit.jupiter.api.AfterEach;
+
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -163,5 +164,4 @@ public class TestBuyerRest {
 	    assertTrue(result.contains("Buyer name cannot be empty"));
 	    assertTrue(result.contains("Buyer password cannot be empty"));
 	}
-
 }
