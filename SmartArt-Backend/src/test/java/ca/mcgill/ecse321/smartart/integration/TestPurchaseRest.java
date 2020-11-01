@@ -1,4 +1,3 @@
-
 package ca.mcgill.ecse321.smartart.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
