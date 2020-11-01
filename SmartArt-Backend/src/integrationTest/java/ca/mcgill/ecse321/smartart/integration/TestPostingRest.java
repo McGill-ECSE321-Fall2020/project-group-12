@@ -1,14 +1,16 @@
 package ca.mcgill.ecse321.smartart.integration;
 
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -32,9 +34,9 @@ import ca.mcgill.ecse321.smartart.model.Posting;
 import ca.mcgill.ecse321.smartart.service.ArtistService;
 import ca.mcgill.ecse321.smartart.service.GalleryService;
 import ca.mcgill.ecse321.smartart.service.PostingService;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@ActiveProfiles("test")
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestPostingRest {
 
@@ -59,7 +61,7 @@ public class TestPostingRest {
 	@Autowired
 	private ArtistService artistService;
 	
-	@AfterEach
+	@After
 	public void clearDatabase() {
 		galleryRepository.deleteAll();
 		artistRepository.deleteAll();
