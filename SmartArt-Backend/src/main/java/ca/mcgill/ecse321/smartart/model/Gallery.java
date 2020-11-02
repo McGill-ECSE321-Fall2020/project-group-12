@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.smartart.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,238 +11,241 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 
 /**
- * @author Group 12
- * The Gallery class represents the gallery in which art pieces
- * are displayed in for sale.
+ * @author Group 12 The Gallery class represents the gallery in which art pieces are displayed in
+ *     for sale.
  */
 @Entity
 public class Gallery {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
-    private Set<Buyer> buyers;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
-    private Set<Administrator> administrators;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
-    private Set<Artist> artists;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
-    private Set<Posting> postings;
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
+  private Set<Buyer> buyers;
 
-    @Id
-    @Column(name = "name")
-    private String name;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "commission")
-    private double commission;
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
+  private Set<Administrator> administrators;
 
-    /**
-     * Gets the Buyers from this Gallery.
-     *
-     * @return the Buyers from this Gallery.
-     */
-    public Set<Buyer> getBuyers() {
-        return this.buyers;
-    }
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
+  private Set<Artist> artists;
 
-    /**
-     * Sets new Buyers to this Gallery.
-     *
-     * @param buyers: the Buyers to be set to this Gallery.
-     */
-    public void setBuyers(Set<Buyer> buyers) {
-        this.buyers = buyers;
-    }
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "gallery", cascade = CascadeType.ALL)
+  private Set<Posting> postings;
 
-    /**
-     * Adds a Buyer to the Gallery.
-     *
-     * @param buyer: the Buyer to be added.
-     */
-    public void addBuyer(Buyer buyer) {
-        if (this.buyers == null) this.buyers = new HashSet<Buyer>();
-        this.buyers.add(buyer);
-        buyer.setGallery(this);
-    }
+  @Id
+  @Column(name = "name")
+  private String name;
 
-    /**
-     * Removes a Buyer from the Gallery.
-     *
-     * @param buyer: the Buyer to be removed
-     */
-    public void removeBuyer(Buyer buyer) {
-        this.buyers.remove(buyer);
-        buyer.setGallery(null);
-    }
+  @Column(name = "city")
+  private String city;
 
-    /**
-     * Gets the set of Administrators of this Gallery.
-     *
-     * @return the set of Administrators of this Gallery.
-     */
-    public Set<Administrator> getAdministrators() {
-        return this.administrators;
-    }
+  @Column(name = "commission")
+  private double commission;
 
-    /**
-     * Sets a new set of Administrators of this Gallery.
-     *
-     * @param administrators: the new set of Administrators.
-     */
-    public void setAdministrators(Set<Administrator> administrators) {
-        this.administrators = administrators;
-    }
+  /**
+   * Gets the Buyers from this Gallery.
+   *
+   * @return the Buyers from this Gallery.
+   */
+  public Set<Buyer> getBuyers() {
+    return this.buyers;
+  }
 
-    /**
-     * Adds an Administrator to the set of Administrators of this Gallery.
-     *
-     * @param administrator: Administrator to add.
-     */
-    public void addAdministrator(Administrator administrator) {
-        if (this.administrators == null) this.administrators = new HashSet<Administrator>();
-        this.administrators.add(administrator);
-        administrator.setGallery(this);
-    }
+  /**
+   * Sets new Buyers to this Gallery.
+   *
+   * @param buyers: the Buyers to be set to this Gallery.
+   */
+  public void setBuyers(Set<Buyer> buyers) {
+    this.buyers = buyers;
+  }
 
-    /**
-     * Removes an Administrator from the set of Administrators of this Gallery
-     *
-     * @param administrator: the Administrator to be removed.
-     */
-    public void removeAdministrator(Administrator administrator) {
-        this.administrators.remove(administrator);
-        administrator.setGallery(null);
-    }
+  /**
+   * Adds a Buyer to the Gallery.
+   *
+   * @param buyer: the Buyer to be added.
+   */
+  public void addBuyer(Buyer buyer) {
+    if (this.buyers == null) this.buyers = new HashSet<Buyer>();
+    this.buyers.add(buyer);
+    buyer.setGallery(this);
+  }
 
-    /**
-     * Gets the set of Artists of this Gallery.
-     *
-     * @return the set of Artists of this Gallery.
-     */
-    public Set<Artist> getArtists() {
-        return this.artists;
-    }
+  /**
+   * Removes a Buyer from the Gallery.
+   *
+   * @param buyer: the Buyer to be removed
+   */
+  public void removeBuyer(Buyer buyer) {
+    this.buyers.remove(buyer);
+    buyer.setGallery(null);
+  }
 
-    /**
-     * Replaces the current set of Artists with a new set of Artists.
-     *
-     * @param artists: the new set of Artists.
-     */
-    public void setArtists(Set<Artist> artists) {
-        this.artists = artists;
-    }
+  /**
+   * Gets the set of Administrators of this Gallery.
+   *
+   * @return the set of Administrators of this Gallery.
+   */
+  public Set<Administrator> getAdministrators() {
+    return this.administrators;
+  }
 
-    /**
-     * Adds an Artist to the current set of Artists.
-     *
-     * @param artist: the Artist to add.
-     */
-    public void addArtist(Artist artist) {
-        if (this.artists == null) this.artists = new HashSet<Artist>();
-        this.artists.add(artist);
-        artist.setGallery(this);
-    }
+  /**
+   * Sets a new set of Administrators of this Gallery.
+   *
+   * @param administrators: the new set of Administrators.
+   */
+  public void setAdministrators(Set<Administrator> administrators) {
+    this.administrators = administrators;
+  }
 
-    /**
-     * Removes an Artist from this set of Artists.
-     *
-     * @param artist: the Artist to be removed.
-     */
-    public void removeArtist(Artist artist) {
-        this.artists.remove(artist);
-        artist.setGallery(null);
-    }
+  /**
+   * Adds an Administrator to the set of Administrators of this Gallery.
+   *
+   * @param administrator: Administrator to add.
+   */
+  public void addAdministrator(Administrator administrator) {
+    if (this.administrators == null) this.administrators = new HashSet<Administrator>();
+    this.administrators.add(administrator);
+    administrator.setGallery(this);
+  }
 
-    /**
-     * Gets the set of Postings of this Gallery.
-     *
-     * @return the set of Postings of this Gallery.
-     */
-    public Set<Posting> getPostings() {
-        return this.postings;
-    }
+  /**
+   * Removes an Administrator from the set of Administrators of this Gallery
+   *
+   * @param administrator: the Administrator to be removed.
+   */
+  public void removeAdministrator(Administrator administrator) {
+    this.administrators.remove(administrator);
+    administrator.setGallery(null);
+  }
 
-    /**
-     * Replaces the current set of Postings with a new set.
-     *
-     * @param postings: the new Set of Postings of this Gallery.
-     */
-    public void setPostings(Set<Posting> postings) {
-        this.postings = postings;
-    }
+  /**
+   * Gets the set of Artists of this Gallery.
+   *
+   * @return the set of Artists of this Gallery.
+   */
+  public Set<Artist> getArtists() {
+    return this.artists;
+  }
 
-    /**
-     * Adds a Posting to the set of Postings of this Gallery.
-     *
-     * @param posting: the Posting to be added.
-     */
-    public void addPosting(Posting posting) {
-        if (this.postings == null) this.postings = new HashSet<Posting>();
-        this.postings.add(posting);
-        posting.setGallery(this);
-    }
+  /**
+   * Replaces the current set of Artists with a new set of Artists.
+   *
+   * @param artists: the new set of Artists.
+   */
+  public void setArtists(Set<Artist> artists) {
+    this.artists = artists;
+  }
 
-    /**
-     * Removes a Posting from the set of postings.
-     *
-     * @param posting: the Posting to be removed.
-     */
-    public void removePosting(Posting posting) {
-        this.postings.remove(posting);
-        posting.setGallery(null);
-    }
+  /**
+   * Adds an Artist to the current set of Artists.
+   *
+   * @param artist: the Artist to add.
+   */
+  public void addArtist(Artist artist) {
+    if (this.artists == null) this.artists = new HashSet<Artist>();
+    this.artists.add(artist);
+    artist.setGallery(this);
+  }
 
-    /**
-     * Sets the name of this Gallery
-     *
-     * @param value: the new name of this Gallery.
-     */
-    public void setName(String value) {
-        this.name = value;
-    }
+  /**
+   * Removes an Artist from this set of Artists.
+   *
+   * @param artist: the Artist to be removed.
+   */
+  public void removeArtist(Artist artist) {
+    this.artists.remove(artist);
+    artist.setGallery(null);
+  }
 
-    /**
-     * Gets the name of this Gallery.
-     *
-     * @return the name of this Gallery.
-     */
-    public String getName() {
-        return this.name;
-    }
+  /**
+   * Gets the set of Postings of this Gallery.
+   *
+   * @return the set of Postings of this Gallery.
+   */
+  public Set<Posting> getPostings() {
+    return this.postings;
+  }
 
-    /**
-     * Sets the city of this Gallery.
-     *
-     * @param value: the city of this Gallery.
-     */
-    public void setCity(String value) {
-        this.city = value;
-    }
+  /**
+   * Replaces the current set of Postings with a new set.
+   *
+   * @param postings: the new Set of Postings of this Gallery.
+   */
+  public void setPostings(Set<Posting> postings) {
+    this.postings = postings;
+  }
 
-    /**
-     * Gets the city of this Gallery.
-     *
-     * @return the city of this Gallery.
-     */
-    public String getCity() {
-        return this.city;
-    }
+  /**
+   * Adds a Posting to the set of Postings of this Gallery.
+   *
+   * @param posting: the Posting to be added.
+   */
+  public void addPosting(Posting posting) {
+    if (this.postings == null) this.postings = new HashSet<Posting>();
+    this.postings.add(posting);
+    posting.setGallery(this);
+  }
 
-    /**
-     * Sets the commission of this Gallery.
-     *
-     * @param value: the commission of this Gallery.
-     */
-    public void setCommission(double value) {
-        this.commission = value;
-    }
+  /**
+   * Removes a Posting from the set of postings.
+   *
+   * @param posting: the Posting to be removed.
+   */
+  public void removePosting(Posting posting) {
+    this.postings.remove(posting);
+    posting.setGallery(null);
+  }
 
-    /**
-     * Gets the name of this Gallery.
-     *
-     * @return the name of this Gallery.
-     */
-    public double getCommission() {
-        return this.commission;
-    }
+  /**
+   * Sets the name of this Gallery
+   *
+   * @param value: the new name of this Gallery.
+   */
+  public void setName(String value) {
+    this.name = value;
+  }
 
+  /**
+   * Gets the name of this Gallery.
+   *
+   * @return the name of this Gallery.
+   */
+  public String getName() {
+    return this.name;
+  }
+
+  /**
+   * Sets the city of this Gallery.
+   *
+   * @param value: the city of this Gallery.
+   */
+  public void setCity(String value) {
+    this.city = value;
+  }
+
+  /**
+   * Gets the city of this Gallery.
+   *
+   * @return the city of this Gallery.
+   */
+  public String getCity() {
+    return this.city;
+  }
+
+  /**
+   * Sets the commission of this Gallery.
+   *
+   * @param value: the commission of this Gallery.
+   */
+  public void setCommission(double value) {
+    this.commission = value;
+  }
+
+  /**
+   * Gets the name of this Gallery.
+   *
+   * @return the name of this Gallery.
+   */
+  public double getCommission() {
+    return this.commission;
+  }
 }
