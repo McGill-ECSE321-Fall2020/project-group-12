@@ -365,7 +365,7 @@ public class PurchaseMethodAndCartTest {
     ////////////////////////////
     /////////Cart tests/////////
     ////////////////////////////
-  
+
     @Test
     public void testAddToCartExistingBuyer() {
         String error = null;
