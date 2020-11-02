@@ -2,14 +2,9 @@ package ca.mcgill.ecse321.smartart.integration;
 
 import org.junit.After;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-
 import java.sql.Date;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.ArtistRepository;
@@ -99,13 +92,13 @@ public class TestPostingRest {
 		posting.setZDim(1);
 		posting.setImage("http://picturetest.com");
 		
-		HttpEntity<PostingDto> entity = new HttpEntity<PostingDto>(posting, headers);
+		HttpEntity<PostingDto> entity = new HttpEntity<>(posting, headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/posting/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.CREATED, response.getStatusCode());
 	    
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    assertTrue(result.contains("\"title\":\"Test\""));
 	}
 	
@@ -130,13 +123,13 @@ public class TestPostingRest {
 		posting.setZDim(1);
 		posting.setImage("http://picturetest.com");
 		
-		HttpEntity<PostingDto> entity = new HttpEntity<PostingDto>(posting, headers);
+		HttpEntity<PostingDto> entity = new HttpEntity<>(posting, headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/posting/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	    
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    assertTrue(result.contains("Posting artist cannot be empty."));
 	}
 	
@@ -168,13 +161,13 @@ public class TestPostingRest {
 		posting.setGallery(gallery);
 		posting.setImage("http://picturetest.com");
 		
-		HttpEntity<PostingDto> entity = new HttpEntity<PostingDto>(posting, headers);
+		HttpEntity<PostingDto> entity = new HttpEntity<>(posting, headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/posting/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	    
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    assertTrue(result.contains("Posting title cannot be empty"));
 	}
 	
@@ -217,13 +210,13 @@ public class TestPostingRest {
 		posting.setZDim(70);
 		posting.setPostingID(postingobj.getPostingID());
 		
-		HttpEntity<PostingDto> entity = new HttpEntity<PostingDto>(posting, headers);
+		HttpEntity<PostingDto> entity = new HttpEntity<>(posting, headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/posting/update", HttpMethod.PUT, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
 	    
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 
 	    assertTrue(result.contains("\"title\":\"New Title\""));
 	    assertTrue(result.contains("\"description\":\"New Description\""));
@@ -273,13 +266,13 @@ public class TestPostingRest {
 		posting.setZDim(0);
 		posting.setPostingID(postingobj.getPostingID());
 		
-		HttpEntity<PostingDto> entity = new HttpEntity<PostingDto>(posting, headers);
+		HttpEntity<PostingDto> entity = new HttpEntity<>(posting, headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/posting/update", HttpMethod.PUT, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	    
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    
 	    assertTrue(result.contains("Posting must have a description. Posting must have an image. Posting must have a non-zero price. Posting must have a title. Posting must have positive dimensions."));
 	}
@@ -315,13 +308,13 @@ public class TestPostingRest {
 		
 		posting.setPostingID(010101010);
 		
-		HttpEntity<PostingDto> entity = new HttpEntity<PostingDto>(posting, headers);
+		HttpEntity<PostingDto> entity = new HttpEntity<>(posting, headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/posting/update", HttpMethod.PUT, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	    
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    
 	    assertTrue(result.contains("No posting to update."));
 	}

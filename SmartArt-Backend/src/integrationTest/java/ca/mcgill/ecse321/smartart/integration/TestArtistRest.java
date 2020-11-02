@@ -69,12 +69,12 @@ public class TestArtistRest {
 		artist.setPassword("pass");
 		artist.setGallery(gallery);
 		
-		HttpEntity<ArtistDto> entity = new HttpEntity<ArtistDto>(artist, headers);
+		HttpEntity<ArtistDto> entity = new HttpEntity<>(artist, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artist/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.CREATED, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check that artist was returned
 	    assertTrue(result.contains("\"email\":\"ben@mail.com\""));
 	    //check association
@@ -89,12 +89,12 @@ public class TestArtistRest {
 		artist.setName("Ben");
 		artist.setPassword("pass");
 		
-		HttpEntity<ArtistDto> entity = new HttpEntity<ArtistDto>(artist, headers);
+		HttpEntity<ArtistDto> entity = new HttpEntity<>(artist, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artist/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error message
 	    assertTrue(result.contains("Artist gallery cannot be empty"));
 	}
@@ -124,12 +124,12 @@ public class TestArtistRest {
 		duplicate.setPassword("pass");
 		duplicate.setGallery(gallery);
 		
-		HttpEntity<ArtistDto> entity = new HttpEntity<ArtistDto>(duplicate, headers);
+		HttpEntity<ArtistDto> entity = new HttpEntity<>(duplicate, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artist/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error message
 	    assertTrue(result.contains("An Artist with this email already exists"));
 	}	
@@ -148,12 +148,12 @@ public class TestArtistRest {
 		ArtistDto artist = new ArtistDto();
 		artist.setGallery(gallery);
 		
-		HttpEntity<ArtistDto> entity = new HttpEntity<ArtistDto>(artist, headers);
+		HttpEntity<ArtistDto> entity = new HttpEntity<>(artist, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artist/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error messages
 	    assertTrue(result.contains("Artist email cannot be empty"));
 	    assertTrue(result.contains("Artist name cannot be empty"));

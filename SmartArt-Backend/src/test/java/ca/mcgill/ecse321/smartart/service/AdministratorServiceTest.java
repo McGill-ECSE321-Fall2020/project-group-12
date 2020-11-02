@@ -50,7 +50,7 @@ public class AdministratorServiceTest {
             }
         });
         lenient().when(administratorDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            List<Administrator> listAdministrators = new ArrayList<Administrator>();
+            List<Administrator> listAdministrators = new ArrayList<>();
             listAdministrators.add(administratorDao.findAdministratorByEmail(ADMINISTRATOR_KEY));
             return listAdministrators;
         });
