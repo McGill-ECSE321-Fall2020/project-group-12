@@ -16,36 +16,61 @@ import ca.mcgill.ecse321.smartart.dto.BuyerDto;
 import ca.mcgill.ecse321.smartart.model.Buyer;
 import ca.mcgill.ecse321.smartart.service.BuyerService;
 
+/** Writes Buyer data into the HTTP response as JSON or XML after an HTTP request. */
 @CrossOrigin(origins = "*")
 @RestController
 public class BuyerRestController {
-    @Autowired
-    private BuyerService buyerService;
-    @Autowired
-    private RestControllerHelper controllerHelper;
+  @Autowired private BuyerService buyerService;
+  @Autowired private RestControllerHelper controllerHelper;
 
-    @GetMapping(value = {"/buyers", "/buyers/"})
-    public ResponseEntity<?> getAllBuyers() {
-        return new ResponseEntity<>(buyerService.getAllBuyers().stream().map(b -> controllerHelper.convertToDto(b)).collect(Collectors.toList()), HttpStatus.OK);
-    }
+  /**
+   * Gets a list of all the Buyers after HTTP request and puts into the HTTP response as JSON or
+   * XMl.
+   *
+   * @return the list of all the Buyers as Dto.
+   */
+  @GetMapping(value = {"/buyers", "/buyers/"})
+  public ResponseEntity<?> getAllBuyers() {
+    return new ResponseEntity<>(
+        buyerService.getAllBuyers().stream()
+            .map(b -> controllerHelper.convertToDto(b))
+            .collect(Collectors.toList()),
+        HttpStatus.OK);
+  }
 
-    @GetMapping(value = {"/buyers/{email}", "/buyers/{email}/"})
-    public ResponseEntity<?> getBuyerByEmail(@PathVariable("email") String email) throws IllegalArgumentException {
-        try {
-            Buyer buyer = buyerService.getBuyer(email);
-            return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        }
+  /**
+   * Gets a Buyer by his email after HTTP request and puts into the HTTP response as JSON or XML.
+   *
+   * @param email: the email of the Buyer.
+   * @return the Buyer as Dto.
+   * @throws IllegalArgumentException
+   */
+  @GetMapping(value = {"/buyers/{email}", "/buyers/{email}/"})
+  public ResponseEntity<?> getBuyerByEmail(@PathVariable("email") String email)
+      throws IllegalArgumentException {
+    try {
+      Buyer buyer = buyerService.getBuyer(email);
+      return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
+  }
 
-    @PostMapping(value = {"/buyer/create", "/buyer/create/"})
-    public ResponseEntity<?> createBuyer(@RequestBody BuyerDto data) throws IllegalArgumentException {
-        try {
-            Buyer buyer = buyerService.createBuyer(data);
-            return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        }
+  /**
+   * Creates a Buyer by their Dto data after HTTP request and puts into the HTTP response as JSON or
+   * XMl.
+   *
+   * @param data: data from BuyerDto.
+   * @return the Buyer as Dto.
+   * @throws IllegalArgumentException
+   */
+  @PostMapping(value = {"/buyer/create", "/buyer/create/"})
+  public ResponseEntity<?> createBuyer(@RequestBody BuyerDto data) throws IllegalArgumentException {
+    try {
+      Buyer buyer = buyerService.createBuyer(data);
+      return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.CREATED);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
+  }
 }
