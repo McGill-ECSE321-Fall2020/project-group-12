@@ -7,3 +7,4 @@ build/
 bin/
 SmartArt-Backend/bin/
 .DS_Store
+.idea
