@@ -7,9 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDateTime;
 
 import org.junit.After;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +18,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
@@ -53,12 +49,12 @@ import ca.mcgill.ecse321.smartart.service.PurchaseService;
 public class TestPurchaseRest {
 	
 	@LocalServerPort
-	private int port = 8080;
+	private final int port = 8080;
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
-	private HttpHeaders headers = new HttpHeaders();
+	private final HttpHeaders headers = new HttpHeaders();
 	
 	@Autowired
 	private BuyerRepository buyerRepository;
@@ -108,12 +104,12 @@ public class TestPurchaseRest {
 		PurchaseDto purchase = new PurchaseDto(buyer);
 		
 	
-		HttpEntity<PurchaseDto> entity = new HttpEntity<PurchaseDto>(purchase, headers);
+		HttpEntity<PurchaseDto> entity = new HttpEntity<>(purchase, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/create", HttpMethod.POST, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.CREATED, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check association to buyer
 	    assertTrue(result.contains("\"email\":\"test@mail.com\""));
 	}
@@ -124,12 +120,12 @@ public class TestPurchaseRest {
 		PurchaseDto purchase = new PurchaseDto();
 		purchase.setPurchaseID(123);
 		
-		HttpEntity<PurchaseDto> entity = new HttpEntity<PurchaseDto>(purchase, headers);
+		HttpEntity<PurchaseDto> entity = new HttpEntity<>(purchase, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/create", HttpMethod.POST, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	 	//check error message
 	    assertTrue(result.contains("Purchase buyer cannot be empty"));    
 	}
@@ -160,12 +156,12 @@ public class TestPurchaseRest {
 		posting.setArtStatus(ArtStatus.Available);
 		postingRepository.save(posting);
 
-		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		HttpEntity<BuyerDto> entity = new HttpEntity<>(buyer, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/add/123", HttpMethod.POST, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    int purchaseID = buyerRepository.findBuyerByEmail("buyer@mail.com").getCart().getPurchaseID();
 	    String pID = "";
 	    pID += purchaseID;
@@ -203,12 +199,12 @@ public class TestPurchaseRest {
 		posting.setArtStatus(ArtStatus.Available);
 		postingRepository.save(posting);
 		
-		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		HttpEntity<BuyerDto> entity = new HttpEntity<>(buyer, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/add/123", HttpMethod.POST, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error message
 	    assertTrue(result.contains("Buyer does not exist"));
 	}
@@ -230,12 +226,12 @@ public class TestPurchaseRest {
 		//persist artist
 		artistService.createArtist(artist);
 
-		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		HttpEntity<BuyerDto> entity = new HttpEntity<>(buyer, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/add/123", HttpMethod.POST, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error
 	    assertTrue(result.contains("Posting does not exist"));
 	}
@@ -266,12 +262,12 @@ public class TestPurchaseRest {
 		posting.setArtStatus(ArtStatus.OnHold);
 		postingRepository.save(posting);
 
-		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		HttpEntity<BuyerDto> entity = new HttpEntity<>(buyer, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/add/123", HttpMethod.POST, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error
 	    assertTrue(result.contains("addToCart posting cannot be On Hold or Purchased"));
 	}
@@ -305,12 +301,12 @@ public class TestPurchaseRest {
 		cart.setBuyer(buyer);
 		cart.setPurchaseID(modelBuyer.getCart().getPurchaseID());
 
-		HttpEntity<PurchaseDto> entity = new HttpEntity<PurchaseDto>(cart, headers);
+		HttpEntity<PurchaseDto> entity = new HttpEntity<>(cart, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/make/PickUp", HttpMethod.POST, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check buyer association
 	    assertTrue(result.contains("\"email\":\"buyer@mail.com\""));
 	    //check art status of posting
@@ -353,7 +349,7 @@ public class TestPurchaseRest {
 		//execute purchase
 		purchaseService.makePurchase(cart, DeliveryType.PickUp);
 
-		HttpEntity<PurchaseDto> entity = new HttpEntity<PurchaseDto>(cart, headers);
+		HttpEntity<PurchaseDto> entity = new HttpEntity<>(cart, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cancel", HttpMethod.DELETE, entity, String.class);
 		//check Status
@@ -400,7 +396,7 @@ public class TestPurchaseRest {
 		modelPurchase.setTime(now.minusMinutes(15));
 		purchaseRepository.save(modelPurchase);
 
-		HttpEntity<PurchaseDto> entity = new HttpEntity<PurchaseDto>(cart, headers);
+		HttpEntity<PurchaseDto> entity = new HttpEntity<>(cart, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cancel", HttpMethod.DELETE, entity, String.class);
 		//check Status
@@ -440,12 +436,12 @@ public class TestPurchaseRest {
 		cart.setBuyer(buyer);
 		cart.setPurchaseID(modelBuyer.getCart().getPurchaseID());
 
-		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		HttpEntity<BuyerDto> entity = new HttpEntity<>(buyer, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/remove/123", HttpMethod.DELETE, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check that cart is empty
 	    assertTrue(result.contains("\"postings\":[]"));
 	    //check art status
@@ -490,12 +486,12 @@ public class TestPurchaseRest {
 		BuyerDto invalidBuyer = new BuyerDto();
 		invalidBuyer.setEmail("notABuyer");
 
-		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(invalidBuyer, headers);
+		HttpEntity<BuyerDto> entity = new HttpEntity<>(invalidBuyer, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/remove/123", HttpMethod.DELETE, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    assertTrue(result.contains("Invalid buyer"));
 	}
 	
@@ -532,12 +528,12 @@ public class TestPurchaseRest {
 		cart.setBuyer(buyer);
 		cart.setPurchaseID(modelBuyer.getCart().getPurchaseID());
 
-		HttpEntity<BuyerDto> entity = new HttpEntity<BuyerDto>(buyer, headers);
+		HttpEntity<BuyerDto> entity = new HttpEntity<>(buyer, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchase/cart/remove/124", HttpMethod.DELETE, entity, String.class);
 		//check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    assertTrue(result.contains("Invalid posting"));
 	}
 	

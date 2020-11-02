@@ -19,7 +19,6 @@ import static org.mockito.Mockito.lenient;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import ca.mcgill.ecse321.smartart.model.*;
 import ca.mcgill.ecse321.smartart.dao.*;
 
@@ -51,7 +50,7 @@ public class AdministratorServiceTest {
             }
         });
         lenient().when(administratorDao.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            List<Administrator> listAdministrators = new ArrayList<Administrator>();
+            List<Administrator> listAdministrators = new ArrayList<>();
             listAdministrators.add(administratorDao.findAdministratorByEmail(ADMINISTRATOR_KEY));
             return listAdministrators;
         });

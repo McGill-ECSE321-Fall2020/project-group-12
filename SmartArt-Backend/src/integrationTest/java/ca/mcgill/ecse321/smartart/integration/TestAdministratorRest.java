@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.AdministratorRepository;
@@ -25,12 +24,9 @@ import ca.mcgill.ecse321.smartart.dto.GalleryDto;
 import ca.mcgill.ecse321.smartart.model.Administrator;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 import ca.mcgill.ecse321.smartart.service.GalleryService;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-//@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-//@ContextConfiguration(classes = SmartArtApplication.class)
 @SpringBootTest(classes = SmartArtApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class TestAdministratorRest {
 	
@@ -73,12 +69,12 @@ public class TestAdministratorRest {
 		administrator.setPassword("pass");
 		administrator.setGallery(gallery);
 		
-		HttpEntity<AdministratorDto> entity = new HttpEntity<AdministratorDto>(administrator, headers);
+		HttpEntity<AdministratorDto> entity = new HttpEntity<>(administrator, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrator/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.CREATED, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check that administrator was returned
 	    assertTrue(result.contains("\"email\":\"ben@mail.com\""));
 	    //check association
@@ -93,12 +89,12 @@ public class TestAdministratorRest {
 		administrator.setName("Ben");
 		administrator.setPassword("pass");
 		
-		HttpEntity<AdministratorDto> entity = new HttpEntity<AdministratorDto>(administrator, headers);
+		HttpEntity<AdministratorDto> entity = new HttpEntity<>(administrator, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrator/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error message
 	    assertTrue(result.contains("Administrator gallery cannot be empty"));
 	}
@@ -128,12 +124,12 @@ public class TestAdministratorRest {
 		duplicate.setPassword("pass");
 		duplicate.setGallery(gallery);
 		
-		HttpEntity<AdministratorDto> entity = new HttpEntity<AdministratorDto>(duplicate, headers);
+		HttpEntity<AdministratorDto> entity = new HttpEntity<>(duplicate, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrator/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error message
 	    assertTrue(result.contains("An Administrator with this email already exists"));
 	}	
@@ -152,12 +148,12 @@ public class TestAdministratorRest {
 		AdministratorDto administrator = new AdministratorDto();
 		administrator.setGallery(gallery);
 		
-		HttpEntity<AdministratorDto> entity = new HttpEntity<AdministratorDto>(administrator, headers);
+		HttpEntity<AdministratorDto> entity = new HttpEntity<>(administrator, headers);
 		//create response entity
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrator/create", HttpMethod.POST, entity, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check error messages
 	    assertTrue(result.contains("Administrator email cannot be empty"));
 	    assertTrue(result.contains("Administrator name cannot be empty"));
