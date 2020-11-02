@@ -3,13 +3,9 @@ package ca.mcgill.ecse321.smartart.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import java.sql.Date;
-
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,8 +14,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.smartart.SmartArtApplication;
 import ca.mcgill.ecse321.smartart.dao.*;
@@ -96,7 +90,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/galleries", HttpMethod.GET, null, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check that gallery is correctly returned
 	    assertTrue(result.contains("\"name\":\"Gallery\""));
 	    //check attribute
@@ -109,7 +103,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/galleries/Gallery", HttpMethod.GET, null, String.class);
 		// Check Status
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
-	    String result = response.getBody().toString();
+	    String result = response.getBody();
 	    //check that gallery is correctly returned
 	    assertTrue(result.contains("\"name\":\"Gallery\""));
 	    //check attribute
@@ -122,7 +116,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artists", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that artist is returned correctly
 		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
 		//check gallery association
@@ -135,7 +129,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/artists/ben@mail.com", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		assertTrue(result.contains("\"email\":\"ben@mail.com\""));
 		//check gallery association
 		assertTrue(result.contains("\"name\":\"Gallery\""));
@@ -148,7 +142,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrators", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that administrator is returned correctly
 		assertTrue(result.contains("\"email\":\"greg@mail.com\""));
 		//check gallery association
@@ -161,7 +155,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/administrators/greg@mail.com", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that administrator is returned correctly
 		assertTrue(result.contains("\"email\":\"greg@mail.com\""));
 		//check gallery association
@@ -173,7 +167,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/buyers", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that buyer is returned correctly
 		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
 		//check gallery association
@@ -186,7 +180,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/buyers/aidan@mail.com", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that buyer is returned correctly
 		assertTrue(result.contains("\"email\":\"aidan@mail.com\""));
 		//check gallery association
@@ -199,7 +193,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/postings", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that posting is correctly returned
 		assertTrue(result.contains("\"postingID\":124344"));
 		//check  artist association
@@ -212,7 +206,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/postings/124344", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that posting is correctly returned
 		assertTrue(result.contains("\"postingID\":124344"));
 		//check artist association
@@ -225,7 +219,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/postings/artist/ben@mail.com", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that posting is correctly returned
 		assertTrue(result.contains("\"postingID\":124344"));
 		//check artist association
@@ -238,7 +232,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that purchase is returned correctly
 		assertTrue(result.contains("\"purchaseID\":21122"));
 		//check buyer association
@@ -251,7 +245,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases/21122", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that purchase is returned correctly
 		assertTrue(result.contains("\"purchaseID\":21122"));
 		//check buyer association
@@ -264,7 +258,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases/buyer/aidan@mail.com", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that purchase is returned correctly
 		assertTrue(result.contains("\"purchaseID\":21122"));
 		//check buyer association
@@ -277,7 +271,7 @@ public class TestGetEndPoints {
 		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8080/purchases/cart/aidan@mail.com", HttpMethod.GET, null, String.class);
 		// Check Status
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		String result = response.getBody().toString();
+		String result = response.getBody();
 		//check that purchase is returned correctly
 		assertTrue(result.contains("\"purchaseID\":21122"));
 		//check buyer association
