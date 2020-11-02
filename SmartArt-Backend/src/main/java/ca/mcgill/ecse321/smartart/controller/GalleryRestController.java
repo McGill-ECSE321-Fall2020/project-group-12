@@ -17,6 +17,9 @@ import ca.mcgill.ecse321.smartart.dto.GalleryDto;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 import ca.mcgill.ecse321.smartart.service.GalleryService;
 
+/**
+ * Writes Gallery data into the HTTP response as JSON or XML after an HTTP request.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class GalleryRestController {
@@ -25,11 +28,23 @@ public class GalleryRestController {
     @Autowired
     private RestControllerHelper controllerHelper;
 
+    /**
+     * Gets a list of all the Galleries after HTTP request
+     * and puts into the HTTP response as JSON or XML.
+     * @return the list of all Galleries as Dto.
+     */
     @GetMapping(value = {"/galleries", "/galleries/"})
     public List<GalleryDto> getAllGalleries() {
         return galleryService.getAllGalleries().stream().map(g -> controllerHelper.convertToDto(g)).collect(Collectors.toList());
     }
 
+    /**
+     * Gets a Gallery by its name after an HTTP request
+     * and puts into HTTP response as JSON or XML.
+     * @param name: the name of the Gallery.
+     * @return the created Gallery as Dto.
+     * @throws IllegalArgumentException
+     */
     @GetMapping(value = {"/galleries/{name}", "/galleries/{name}/"})
     public ResponseEntity<?> getGalleryByName(@PathVariable("name") String name) throws IllegalArgumentException {
         try {
@@ -40,6 +55,12 @@ public class GalleryRestController {
         }
     }
 
+    /**
+     * Creates a Gallery using Dto data after an HTTP request
+     * and puts into HTTP response as JSON or XML.
+     * @param data: the GalleryDto data.
+     * @return the created Gallery as Dto.
+     */
     @PostMapping(value = {"/gallery/create", "/gallery/create/"})
     public ResponseEntity<?> createGallery(@RequestBody GalleryDto data) {
         try {

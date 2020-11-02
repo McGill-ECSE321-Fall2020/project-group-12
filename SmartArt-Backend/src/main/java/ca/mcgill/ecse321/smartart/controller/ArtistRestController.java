@@ -16,6 +16,9 @@ import ca.mcgill.ecse321.smartart.dto.ArtistDto;
 import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.service.ArtistService;
 
+/**
+ * Writes Artist data into the HTTP response as JSON or XML after an HTTP request.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class ArtistRestController {
@@ -24,11 +27,22 @@ public class ArtistRestController {
     @Autowired
     private RestControllerHelper controllerHelper;
 
+    /**
+     * Gets a list of all the artists after HTTP request
+     * and puts into the HTTP response as JSON or XML.
+     * @return the list of all the Artists as Dto.
+     */
     @GetMapping(value = {"/artists", "/artists/"})
     public ResponseEntity<?> getAllArtists() {
         return new ResponseEntity<>(artistService.getAllArtists().stream().map(a -> controllerHelper.convertToDto(a)).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    /**
+     * Gets an Artist by their email after HTTP request
+     * and puts into the HTTP response as JSON or XMl.
+     * @param email: the Artist's email.
+     * @return the retrieved Artist as Dto.
+     */
     @GetMapping(value = {"/artists/{email}", "/artists/{email}/"})
     public ResponseEntity<?> getArtistByEmail(@PathVariable("email") String email) {
         try {
@@ -39,6 +53,12 @@ public class ArtistRestController {
         }
     }
 
+    /**
+     * Creates an Artist from Dto data after HTTP request
+     * and puts into the HTTP response as JSON or XML.
+     * @param data: the data from ArtistDto.
+     * @return the created Artist as Dto.
+     */
     @PostMapping(value = {"/artist/create", "/artist/create/"})
     public ResponseEntity<?> createArtist(@RequestBody ArtistDto data) {
         try {

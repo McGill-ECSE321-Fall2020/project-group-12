@@ -22,6 +22,9 @@ import ca.mcgill.ecse321.smartart.model.Posting;
 import ca.mcgill.ecse321.smartart.model.Purchase;
 import ca.mcgill.ecse321.smartart.service.ServiceHelper;
 
+/**
+ * Writes various helper data into the HTTP response as JSON or XML.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class RestControllerHelper {
@@ -29,12 +32,21 @@ public class RestControllerHelper {
     @Autowired
     private ServiceHelper serviceHelper;
 
+    /**
+     * Clears the database after HTTP request
+     * and puts into the HTTP response as JSON or XML.
+     */
     //Clear database
     @PostMapping(value = {"/clearDatabase", "/clearDatabase/"})
     public void clearDatabase() {
         serviceHelper.clearDatabase();
     }
 
+    /**
+     * Converts a Gallery from DAO to DTO.
+     * @param g: the Gallery to be converted.
+     * @return the GalleryDto.
+     */
     GalleryDto convertToDto(Gallery g) {
         if (g == null) {
             throw new IllegalArgumentException("There is no such Gallery.");
@@ -43,6 +55,11 @@ public class RestControllerHelper {
         return galleryDto;
     }
 
+    /**
+     * Converts an Artist from DAO to DTO.
+     * @param a: the Artist to be converted.
+     * @return the ArtistDto.
+     */
     ArtistDto convertToDto(Artist a) {
         if (a == null) {
             throw new IllegalArgumentException("There is no such Artist.");
@@ -51,6 +68,11 @@ public class RestControllerHelper {
         return artistDto;
     }
 
+    /**
+     * Converts an Administrator from DAO to DTO.
+     * @param a: the Administrator to be converted.
+     * @return the AdministratorDto.
+     */
     AdministratorDto convertToDto(Administrator a) {
         if (a == null) {
             throw new IllegalArgumentException("There is no such Administrator.");
@@ -59,6 +81,11 @@ public class RestControllerHelper {
         return administratorDto;
     }
 
+    /**
+     * Converts a Buyer from DAO to DTO.
+     * @param b: the Buyer to be converted.
+     * @return the BuyerDto.
+     */
     BuyerDto convertToDto(Buyer b) {
         if (b == null) {
             throw new IllegalArgumentException("There is no such Buyer.");
@@ -67,6 +94,11 @@ public class RestControllerHelper {
         return buyerDto;
     }
 
+    /**
+     * Converts a Posting from DAO to DTO.
+     * @param p: the Posting to be converted.
+     * @return the PostingDto.
+     */
     PostingDto convertToDto(Posting p) {
         if (p == null) {
             throw new IllegalArgumentException("There is no such Posting.");
@@ -75,6 +107,11 @@ public class RestControllerHelper {
         return postingDto;
     }
 
+    /**
+     * Converts a Purchase from DAO to DTO.
+     * @param p: the Purchase to be converted.
+     * @return the PurchaseDto.
+     */
     PurchaseDto convertToDto(Purchase p) {
         if (p == null) {
             throw new IllegalArgumentException("There is no such Purchase.");

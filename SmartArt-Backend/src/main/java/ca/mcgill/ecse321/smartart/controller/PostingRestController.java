@@ -19,6 +19,9 @@ import ca.mcgill.ecse321.smartart.dto.PostingDto;
 import ca.mcgill.ecse321.smartart.model.Posting;
 import ca.mcgill.ecse321.smartart.service.PostingService;
 
+/**
+ * Writes Posting data into the HTTP response as JSON or XML after an HTTP request.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 public class PostingRestController {
@@ -27,12 +30,23 @@ public class PostingRestController {
     @Autowired
     private RestControllerHelper controllerHelper;
 
+    /**
+     * Gets a list of all Postings after an HTTP request
+     * and puts into HTTP request as JSON or XMl.
+     * @return the list of all Postings as Dto.
+     */
     @GetMapping(value = {"/postings", "/postings/"})
     public ResponseEntity<?> getAllPostings() {
         List<PostingDto> postings = postingService.getAllPostings().stream().map(p -> controllerHelper.convertToDto(p)).collect(Collectors.toList());
         return new ResponseEntity<>(postings, HttpStatus.OK);
     }
 
+    /**
+     * Gets a Posting by its posting ID after an HTTP request
+     * and puts into HTTP request as JSON or XMl.
+     * @param postingID: the ID of the Posting.
+     * @return the retrieved Posting as Dto.
+     */
     @GetMapping(value = {"/postings/{postingID}", "/postings/{postingID}/"})
     public ResponseEntity<?> getPostingByPostingID(@PathVariable("postingID") int postingID) {
         PostingDto posting = controllerHelper.convertToDto(postingService.getPosting(postingID));
@@ -41,6 +55,12 @@ public class PostingRestController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Gets all Postings by their Artist after an HTTP request
+     * and puts into HTTP request as JSON or XMl.
+     * @param email: the email of the Artist.
+     * @return the retrieved list of Postings as Dto.
+     */
     @GetMapping(value = {"/postings/artist/{email}", "/postings/artist/{email}/"})
     public ResponseEntity<?> getPostingsByArtist(@PathVariable("email") String email) {
         List<PostingDto> postings = postingService.getPostingsByArtist(email).stream().map(p -> controllerHelper.convertToDto(p)).collect(Collectors.toList());
@@ -49,6 +69,12 @@ public class PostingRestController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Creates a Posting with Dto data after an HTTP request
+     * and puts into HTTP response as JSON or XMl.
+     * @param data: the data from PostingDto.
+     * @return the Posting as Dto.
+     */
     @PostMapping(value = {"/posting/create", "/posting/create/"})
     public ResponseEntity<?> createPosting(@RequestBody PostingDto data) {
         try {
@@ -61,6 +87,14 @@ public class PostingRestController {
         }
     }
 
+    /**
+     * Creates a Posting by an Administrator's request in HTTP
+     * and puts into the HTTP response as JSON or XMl.
+     * @param data: the data in PostingDto.
+     * @param adminEmail: the Administrator's email.
+     * @param artistName: The name of the Artist of the Posting.
+     * @return the created Posting as Dto.
+     */
     @PostMapping(value = {"/posting/admin/create/{email}/{name}", "/posting/admin/create/{email}/{name}/"})
     public ResponseEntity<?> adminCreatePosting(@RequestBody PostingDto data, @PathVariable("email") String adminEmail, @PathVariable("name") String artistName) {
         try {
@@ -73,6 +107,12 @@ public class PostingRestController {
         }
     }
 
+    /**
+     * Updates the Posting with Dto data after an HTTP request
+     * and puts into the HTTP response as JSON or XML.
+     * @param data: the data from PostingDto.
+     * @return the Posting as Dto.
+     */
     @PutMapping(value = {"/posting/update", "/posting/update/"})
     public ResponseEntity<?> updatePosting(@RequestBody PostingDto data) {
         try {
@@ -84,6 +124,12 @@ public class PostingRestController {
         }
     }
 
+    /**
+     * Deletes a Posting after an HTTP request and
+     * puts into HTTP request in JSON or XML.
+     * @param posting: the Posting in Dto.
+     * @return the status of the deletion.
+     */
     @DeleteMapping(value = {"/posting/delete", "/posting/delete/"})
     public ResponseEntity<?> deletePosting(@RequestBody PostingDto posting) {
         try {
