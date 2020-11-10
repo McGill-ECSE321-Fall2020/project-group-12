@@ -1,116 +1,37 @@
 <!--dynamic template for list of person object-->
 <template>
   <div id="smartart">
-    <h2>Persons</h2>
-      <table>
-        <tr v-for="person in persons" >
-            <td>{{ person.name }}</td>
-            <td>
-              <ul>
-                <li v-for="event in person.events">
-                  {{event.name}}
-                </li>
-              </ul>
-            </td>
-        </tr>
-    <!-- ... -->
+    <h2>Artists</h2>
+    <table>
+      <tr v-for="gallery in galleries" :key="gallery.name">
+        <td>{{ gallery.name }}</td>
+      </tr>
+      <!-- ... -->
     </table>
+    <table>
+      <!-- ... -->
+      <tr>
+        <td>
+          <input type="text" v-model="newGallery" placeholder="Gallery Name" />
+        </td>
+        <td>
+          <button v-bind:enabled="!newGallery" @click="createGallery(newGallery)">
+            Create Gallery
+          </button>
+        </td>
+      </tr>
+    </table>
+    <span v-if="errorGallery" style="color:red">Error: {{errorGallery}} </span>
   </div>
 </template>
 
-<script src="./smartart.js">
+<script src="./purchasing.js">
 </script>
 
 <style>
-  #smartart {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    color: #2c3e50;
-    background: #f2ece8;
-  }
+#smartart {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  background: #f2ece8;
+}
 </style>
-
-<!--links input field content with newPerson variable, and button click for "create person" for method createPerson()-->
-<table>
-  <!-- ... -->
-<tr>
-    <td>
-        <input type="text" v-model="newPerson" placeholder="Person Name">
-    </td>
-    <td>
-        <button v-bind:disabled="!newPerson" @click="createPerson(newPerson)">Create Person</button>
-    </td>
-</tr>
-
-<!-- Add this to the bottom of the table created for displaying events -->
-  <tr>
-      <td>
-        <input type="text" v-model="newEvent.name" placeholder="Event Name">
-      </td>
-      <td>
-        <input type="date" v-model="newEvent.eventDate" placeholder="YYYY-MM-DD">
-      </td>
-      <td>
-        <input type="time" v-model="newEvent.startTime" placeholder="HH:mm">
-      </td>
-      <td>
-        <input type="time" v-model="newEvent.endTime" placeholder="HH:mm">
-      </td>
-      <td>
-        <button
-          <button v-bind:disabled="!newEvent.name" v-on:click="createEvent(newEvent.name, newEvent.eventDate, newEvent.startTime, newEvent.endTime)">Create</button>
-      </td>
-  </tr>
-
-</table>
-
-
-<!--48 - 72 provide dynamic list in component and bind to events-->
-span v-if="errorPerson" style="color:red">Error: {{errorPerson}}</span>
-    <!-- This line above is the last line of the section we added in the previous section -- this is only here to ease the navigation in the code -->
-
-<hr>
-  <h2>Events</h2>
-  <table>
-    <tr>
-      <th>Event Name</th>
-      <th>Date</th>
-      <th>Start</th>
-      <th>End</th>
-      <!--<th>Edit</th>-->
-    </tr>
-    <tr v-for="event in events">
-      <td>{{ event.name }}</td>
-      <td>{{ event.eventDate }}</td>
-      <td>{{ event.startTime }}</td>
-      <td>{{ event.endTime }}</td>
-      <!--<td>
-        <button v-on:click="updateEvent(event.name)">Edit</button>
-      </td>-->
-    </tr>
-  </table>
-      <span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span>
-<hr>
-
-
-<!--register a person to an event; when new event should occur in list of event printed next to a person-->
-
-<hr>
-    <h2>Registrations</h2>
-    <label>Person:
-      <select v-model="selectedPerson">
-        <option disabled value="">Please select one</option>
-        <option v-for="person in persons" >
-          {{ person.name }}
-        </option>
-      </select>
-    </label>
-    <label>Event:
-      <select v-model="selectedEvent">
-        <option disabled value="">Please select one</option>
-        <option v-for="event in events" >
-          {{ event.name }}
-        </option>
-      </select>
-    </label>
-    <button v-bind:disabled="!selectedPerson || !selectedEvent" @click="registerEvent(selectedPerson,selectedEvent)">Register</button>
-    <hr
