@@ -1,33 +1,36 @@
 <template>
   <div id="smartart">
-    <h2>People</h2>
+    <h2>Artists</h2>
     <table>
-      <tr>
-          <td>John</td>
-          <td>Art to buy</td>
+      <tr v-for="gallery in galleries" :key="gallery.name">
+        <td>{{ gallery.name }}</td>
       </tr>
+      <!-- ... -->
+    </table>
+    <table>
+      <!-- ... -->
       <tr>
-          <td>
-              <input type="text" placeholder="Person Name">
-          </td>
-          <td>
-              <button>Create</button>
-          </td>
+        <td>
+          <input type="text" v-model="newGallery" placeholder="Gallery Name" />
+        </td>
+        <td>
+          <button v-bind:enabled="!newGallery" @click="createGallery(newGallery)">
+            Create Gallery
+          </button>
+        </td>
       </tr>
     </table>
-    <p>
-      <span style="color:red">Error: Message text comes here</span>
-    </p>
+    <span v-if="errorGallery" style="color:red">Error: {{errorGallery}} </span>
   </div>
 </template>
 
-<script>
+<script src="./purchasing.js">
 </script>
 
 <style>
-  #smartart {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    color: #2c3e50;
-    background: #f2ece8;
-  }
+#smartart {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  background: #f2ece8;
+}
 </style>
