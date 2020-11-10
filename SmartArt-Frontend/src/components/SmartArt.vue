@@ -1,3 +1,4 @@
+<!--dynamic template for list of person object-->
 <template>
   <div id="smartart">
     <h2>Artists</h2>
