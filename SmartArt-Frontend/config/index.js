@@ -4,10 +4,6 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    host: 'smartart-frontend-000.herokuapp.com',
-    port: 443,
-    backendHost: 'smartart-backend-000.herokuapp.com',
-    backendPort: 443,
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
@@ -23,13 +19,17 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
+    host: 'smartart-frontend-000.herokuapp.com',
+    port: 443,
+    backendHost: 'smartart-backend-000.herokuapp.com',
+    backendPort: 443,
   },
   dev: {
     env: require('./dev.env'),
     host: '127.0.0.1',
     port: 8087,
-    backendHost: '127.0.0.1',
+    backendHost: 'smartart-backend-000.herokuapp.com',
     backendPort: 8080,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
