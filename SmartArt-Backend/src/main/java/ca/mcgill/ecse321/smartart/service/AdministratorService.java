@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.smartart.dao.AdministratorRepository;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dto.AdministratorDto;
+import ca.mcgill.ecse321.smartart.dto.LoginDto;
 import ca.mcgill.ecse321.smartart.model.Administrator;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 
@@ -105,6 +106,16 @@ public class AdministratorService {
   @Transactional
   public List<Administrator> getAllAdministrators() {
     return toList(administratorRepository.findAll());
+  }
+  
+  @Transactional
+  public Administrator login(LoginDto login) {
+	  if(login.getEmail() == null || login.getPassword() == null) throw new IllegalArgumentException("Please fill in all required fields");
+	  Administrator administrator = administratorRepository.findAdministratorByEmail(login.getEmail());
+	  if(administrator == null) throw new IllegalArgumentException("There is no account associated with this email");
+	  if(!login.getPassword().equals(administrator.getPassword())) throw new IllegalArgumentException("Invalid password");
+	  return administrator;
+	  
   }
 
   private <T> List<T> toList(Iterable<T> iterable) {

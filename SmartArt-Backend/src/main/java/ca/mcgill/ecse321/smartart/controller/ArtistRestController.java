@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.smartart.dto.ArtistDto;
+import ca.mcgill.ecse321.smartart.dto.LoginDto;
+import ca.mcgill.ecse321.smartart.model.Administrator;
 import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.service.ArtistService;
 
@@ -48,10 +50,10 @@ public class ArtistRestController {
   @GetMapping(value = {"/artists/{email}", "/artists/{email}/"})
   public ResponseEntity<?> getArtistByEmail(@PathVariable("email") String email) {
     try {
-      Artist artist = artistService.getArtist(email);
-      return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
+    	Artist artist = artistService.getArtist(email);
+    	return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
     } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    	return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -64,11 +66,21 @@ public class ArtistRestController {
    */
   @PostMapping(value = {"/artist/create", "/artist/create/"})
   public ResponseEntity<?> createArtist(@RequestBody ArtistDto data) {
-    try {
-      Artist artist = artistService.createArtist(data);
-      return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.CREATED);
-    } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-    }
+	  try {
+		  Artist artist = artistService.createArtist(data);
+		  return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.CREATED);
+	  } catch (IllegalArgumentException e) {
+		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+	  }
+  }
+
+  @GetMapping(value = {"/artist/login", "/artist/login/"})
+  public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
+	  try {
+		  Artist artist = artistService.login(login);
+		  return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
+	  } catch (IllegalArgumentException e) {
+		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+	  }
   }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.smartart.dto.AdministratorDto;
+import ca.mcgill.ecse321.smartart.dto.LoginDto;
 import ca.mcgill.ecse321.smartart.model.Administrator;
 import ca.mcgill.ecse321.smartart.service.AdministratorService;
 
@@ -20,59 +21,69 @@ import ca.mcgill.ecse321.smartart.service.AdministratorService;
 @CrossOrigin(origins = "*")
 @RestController
 public class AdministratorRestController {
-  @Autowired private AdministratorService adminService;
-  @Autowired private RestControllerHelper controllerHelper;
+	@Autowired private AdministratorService adminService;
+	@Autowired private RestControllerHelper controllerHelper;
 
-  /**
-   * Gets the list of all Administrators after HTTP request and puts into the HTTP response as JSON
-   * or XML.
-   *
-   * @return the list of Administrators as Dto.
-   */
-  @GetMapping(value = {"/administrators", "/administrators/"})
-  public ResponseEntity<?> getAllAdministrators() {
-    return new ResponseEntity<>(
-        adminService.getAllAdministrators().stream()
-            .map(a -> controllerHelper.convertToDto(a))
-            .collect(Collectors.toList()),
-        HttpStatus.OK);
-  }
+	/**
+	 * Gets the list of all Administrators after HTTP request and puts into the HTTP response as JSON
+	 * or XML.
+	 *
+	 * @return the list of Administrators as Dto.
+	 */
+	@GetMapping(value = {"/administrators", "/administrators/"})
+	public ResponseEntity<?> getAllAdministrators() {
+		return new ResponseEntity<>(
+				adminService.getAllAdministrators().stream()
+				.map(a -> controllerHelper.convertToDto(a))
+				.collect(Collectors.toList()),
+				HttpStatus.OK);
+	}
 
-  /**
-   * Gets an Administrator by email after HTTP request and puts into the HTTP response as JSON or
-   * XML.
-   *
-   * @param email: email of the Administrator.
-   * @return the email of the Administrator as Dto.
-   * @throws IllegalArgumentException
-   */
-  @GetMapping(value = {"/administrators/{email}", "/administrators/{email}/"})
-  public ResponseEntity<?> getAdministratorByEmail(@PathVariable("email") String email)
-      throws IllegalArgumentException {
-    try {
-      Administrator administrator = adminService.getAdministrator(email);
-      return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.OK);
-    } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-    }
-  }
+	/**
+	 * Gets an Administrator by email after HTTP request and puts into the HTTP response as JSON or
+	 * XML.
+	 *
+	 * @param email: email of the Administrator.
+	 * @return the email of the Administrator as Dto.
+	 * @throws IllegalArgumentException
+	 */
+	@GetMapping(value = {"/administrators/{email}", "/administrators/{email}/"})
+	public ResponseEntity<?> getAdministratorByEmail(@PathVariable("email") String email)
+			throws IllegalArgumentException {
+		try {
+			Administrator administrator = adminService.getAdministrator(email);
+			return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
+	}
 
-  /**
-   * Creates an Administrator using Dto data after HTTP request and puts into the HTTP response as
-   * JSON or XML.
-   *
-   * @param data: the AdministratorDto data.
-   * @return the created Administrator as Dto.
-   * @throws IllegalArgumentException
-   */
-  @PostMapping(value = {"/administrator/create", "/administrator/create/"})
-  public ResponseEntity<?> createAdministrator(@RequestBody AdministratorDto data)
-      throws IllegalArgumentException {
-    try {
-      Administrator administrator = adminService.createAdministrator(data);
-      return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.CREATED);
-    } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-    }
-  }
+	/**
+	 * Creates an Administrator using Dto data after HTTP request and puts into the HTTP response as
+	 * JSON or XML.
+	 *
+	 * @param data: the AdministratorDto data.
+	 * @return the created Administrator as Dto.
+	 * @throws IllegalArgumentException
+	 */
+	@PostMapping(value = {"/administrator/create", "/administrator/create/"})
+	public ResponseEntity<?> createAdministrator(@RequestBody AdministratorDto data)
+			throws IllegalArgumentException {
+		try {
+			Administrator administrator = adminService.createAdministrator(data);
+			return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping(value = {"/administrator/login", "/administrator/login/"})
+	public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
+		try {
+			Administrator administrator = adminService.login(login);
+			return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		}
+	}
 }

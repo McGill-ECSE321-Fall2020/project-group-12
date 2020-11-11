@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.smartart.dao.ArtistRepository;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dto.ArtistDto;
+import ca.mcgill.ecse321.smartart.dto.LoginDto;
+import ca.mcgill.ecse321.smartart.model.Administrator;
 import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 
@@ -105,6 +107,15 @@ public class ArtistService {
   @Transactional
   public List<Artist> getAllArtists() {
     return toList(artistRepository.findAll());
+  }
+  
+  @Transactional
+  public Artist login(LoginDto login) {
+	  if(login.getEmail() == null || login.getPassword() == null) throw new IllegalArgumentException("Please fill in all required fields");
+	  Artist artist = artistRepository.findArtistByEmail(login.getEmail());
+	  if(artist == null) throw new IllegalArgumentException("There is no account associated with this email");
+	  if(!login.getPassword().equals(artist.getPassword())) throw new IllegalArgumentException("Invalid password");
+	  return artist;
   }
 
   private <T> List<T> toList(Iterable<T> iterable) {
