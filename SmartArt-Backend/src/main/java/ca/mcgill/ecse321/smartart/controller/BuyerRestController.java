@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.smartart.dto.BuyerDto;
+import ca.mcgill.ecse321.smartart.dto.LoginDto;
+import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.model.Buyer;
 import ca.mcgill.ecse321.smartart.service.BuyerService;
 
@@ -72,5 +74,15 @@ public class BuyerRestController {
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
+  }
+  
+  @GetMapping(value = {"/buyer/login", "/buyer/login/"})
+  public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
+	  try {
+		  Buyer buyer = buyerService.login(login);
+		  return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
+	  } catch (IllegalArgumentException e) {
+		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+	  }
   }
 }
