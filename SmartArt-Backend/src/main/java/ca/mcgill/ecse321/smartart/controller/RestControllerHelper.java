@@ -136,16 +136,16 @@ public class RestControllerHelper {
     List<PostingDto> postings = null;
     if (p.getPostings() != null)
       postings =
-          p.getPostings().stream().map(post -> convertToDto(post)).collect(Collectors.toList());
+              p.getPostings().stream().map(post -> convertToDto(post)).collect(Collectors.toList());
 
     PurchaseDto purchaseDto =
-        new PurchaseDto(
-            p.getPurchaseID(),
-            convertToDto(p.getBuyer()),
-            p.getTotalPrice(),
-            postings,
-            p.getDeliveryType(),
-            p.getTime());
+            new PurchaseDto(
+                    p.getPurchaseID(),
+                    convertToDto(p.getBuyer()),
+                    p.getTotalPrice(),
+                    postings,
+                    p.getDeliveryType(),
+                    p.getTime());
     return purchaseDto;
   }
 }
