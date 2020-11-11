@@ -1,35 +1,14 @@
 <template>
   <div id="app">
-    <img src="./assets/SmartArt.png">
-<!--    v-bind will map a variable postingList to our postingList in the data function
-        essentially displays the data the is put into our data function-->
-    <PostingList v-bind:postingList="postingList"/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import PostingList from "./components/PostingList"
+import SmartArt from "./components/SmartArt"
 
 export default {
-  name: 'app',
-  components: {
-    PostingList
-  },
-  data () {
-    return {
-      postingList: [
-        {
-          id: 1,
-          title: "Posting 1"
-        },
-        {
-          id: 2,
-          title: "Posting 2"
-        }
-      ]
-    }
-  }
+  name: 'app'
 }
 </script>
 

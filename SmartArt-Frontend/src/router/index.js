@@ -7,6 +7,10 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/',
+      redirect: '/app'
+    },
+    {
       path: '/app',
       name: 'SmartArt',
       component: SmartArt
