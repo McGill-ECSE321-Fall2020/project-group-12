@@ -98,6 +98,8 @@ export default {
           }
         })
           .then((response) => {
+            this.$store.dispatch('setActiveUser', this.email);
+            this.$store.dispatch('setActiveUserType', this.userType);
             this.email = "";
             this.name = "";
             this.password = "";
