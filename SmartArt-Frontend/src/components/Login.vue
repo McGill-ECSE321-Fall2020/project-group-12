@@ -1,5 +1,6 @@
 <template>
   <div id="loginPage">
+    <img id="Logo" src="../assets/SmartArt.png" />
     <h3>Welcome</h3>
     <div class="input">
       <div class="inputbox">
@@ -40,7 +41,6 @@
 
 <script>
 import axios from "axios";
-import CreateAccountVue from './CreateAccount.vue';
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
