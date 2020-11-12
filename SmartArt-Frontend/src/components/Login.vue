@@ -40,6 +40,7 @@
 
 <script>
 import axios from "axios";
+import CreateAccountVue from './CreateAccount.vue';
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -50,36 +51,48 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
-function LoginDto (email, password){
-  this.e = email
-  this.p = password
+function LoginDto(email, password) {
+  this.email = email;
+  this.password = password;
 }
 export default {
   name: "Login",
   data() {
     return {
-      email: '',
-      password: '',
-      error: '',
-      userType: '',
+      email: "",
+      password: "",
+      error: "",
+      userType: "",
       types: ["email", "password"],
     };
   },
   methods: {
     tryLogin: function () {
-      AXIOS.get("/".concat(this.userType).concat("/").concat("login"), {"email": this.email, "password": this.password})
-      .then(response => {
-        this.email=''
-        this.password=''
-        this.error=''
-      })
-      .catch(e => {
-        var errorMsg = e.message;
-        console.log(errorMsg);
-        this.error = errorMsg;
-      })
+      if ((this.userType == '')) {
+        this.error = "Please select a user type";
+      } else {
+        var data = new LoginDto(this.email, this.password)
+        console.log(JSON.stringify(data))
+        AXIOS.get("/".concat(this.userType).concat("/").concat("login"), {
+          "email" : this.email,
+          "password" : this.password
+        })
+          .then((response) => {
+            this.email = "";
+            this.password = "";
+            this.error = "";
+            this.userType =  "";
+          })
+          .catch((e) => {
+            var errorMsg = e.message;
+            console.log(errorMsg);
+            this.error = errorMsg;
+          });
+      }
     },
-    toCreate: function () {},
+    toCreate: function () {
+      this.$router.push({name: 'CreateAccount'})
+    },
     setBuyer: function () {
       this.userType = "buyer";
     },
