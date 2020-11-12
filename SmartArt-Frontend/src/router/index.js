@@ -14,6 +14,7 @@ export default new Router({
       path: '/app',
       name: 'SmartArt',
       component: SmartArt
-    }
+    },
+
   ]
 })
