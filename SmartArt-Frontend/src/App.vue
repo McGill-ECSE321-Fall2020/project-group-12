@@ -1,15 +1,14 @@
 <template>
   <div id="app">
-    <img src="./assets/SmartArt.png">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import PostingList from "./components/PostingList"
+import SmartArt from "./components/SmartArt"
 
 export default {
-  name: 'app',
+  name: 'app'
 }
 </script>
 
@@ -20,6 +19,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background: #f2ece8;
 }
 </style>

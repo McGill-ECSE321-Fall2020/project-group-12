@@ -3,11 +3,17 @@ import Router from 'vue-router'
 import SmartArt from "../components/SmartArt";
 import Login from "../components/Login";
 import CreateAccount from "../components/CreateAccount"
+import Home from "../components/Home";
+
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/',
+      redirect: '/app'
+    },
     {
       path: '/app',
       name: 'SmartArt',
@@ -22,6 +28,11 @@ export default new Router({
       path: '/createAccount',
       name: 'CreateAccount',
       component: CreateAccount
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home
     }
   ]
 })
