@@ -33,13 +33,14 @@
                   placeholder="Search"
                   aria-label="Search"
                 />
-                <button
-                  class="btn btn-danger"
-                  type="submit"
-                >
-                  Search
-                </button>
+                <button class="btn btn-danger" type="submit">Search</button>
               </form>
+              <li class="nav-item">
+                <a href="#!" class="nav-link navbar-link-2 waves-effect">
+                  <span class="badge badge-pill red">Cart</span>
+                  <i class="fas fa-shopping-cart pl-0"></i>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -84,7 +85,6 @@
         </div>
         <div class="container-fluid">
           <div class="row">
-            
             <div class="col-md">
               <a href="https://smartart-frontend-000.herokuapp.com">
                 <button
