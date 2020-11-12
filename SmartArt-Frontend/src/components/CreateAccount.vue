@@ -55,6 +55,18 @@
 </template>
 
 <script>
+import axios from "axios";
+import CreateAccountVue from './CreateAccount.vue';
+var config = require("../../config");
+
+var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
+var backendUrl =
+  "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl },
+});
 export default {
   name: "CreateAccount",
   data() {
@@ -75,9 +87,19 @@ export default {
       } else if (this.userType == "") {
         this.error = "Please select a user type";
       } else {
-        AXIOS.get("/".concat(this.userType).concat("/").concat("create"))
+        AXIOS({
+          method: 'post',
+          url: "/".concat(this.userType).concat("/").concat("create"),
+          data: {
+              email: this.email,
+              name: this.name,
+              password: this.password,
+              gallery: this.gallery
+          }
+        })
           .then((response) => {
             this.email = "";
+            this.name = "";
             this.password = "";
             this.confirmPassword = "";
             this.userType = "";
@@ -85,7 +107,7 @@ export default {
           })
           .catch((e) => {
             var errorMsg = e.message;
-            console.log(errorMsg);
+            console.log(e);
             this.error = errorMsg;
           });
       }

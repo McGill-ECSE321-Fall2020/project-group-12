@@ -51,10 +51,6 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
-function LoginDto(email, password) {
-  this.email = email;
-  this.password = password;
-}
 export default {
   name: "Login",
   data() {
@@ -71,11 +67,13 @@ export default {
       if ((this.userType == '')) {
         this.error = "Please select a user type";
       } else {
-        var data = new LoginDto(this.email, this.password)
-        console.log(JSON.stringify(data))
-        AXIOS.get("/".concat(this.userType).concat("/").concat("login"), {
-          "email" : this.email,
-          "password" : this.password
+        AXIOS({
+          method: 'get',
+          url: "/".concat(this.userType).concat("/").concat("login"),
+          data: {
+              email: this.email,
+              password: this.password
+          }
         })
           .then((response) => {
             this.email = "";
@@ -85,7 +83,7 @@ export default {
           })
           .catch((e) => {
             var errorMsg = e.message;
-            console.log(errorMsg);
+            console.log(e);
             this.error = errorMsg;
           });
       }
@@ -119,4 +117,3 @@ export default {
   padding: 5px 5px;
 }
 </style>
-
