@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <template>
-  <html lang="en">
-    <body>
+  <html style="color: white">
       <nav class="navbar navbar-light navbar-expand-md">
         <div class="container-fluid">
           <a class="navbar-brand" href="#"
@@ -44,69 +43,15 @@
           </div>
         </div>
       </nav>
-      <div class="carousel-style">
-        <b-carousel
-          id="carousel-1"
-          v-model="slide"
-          :interval="4000"
-          controls
-          indicators
-          background="#ababab"
-          img-width="1080"
-          img-height="720"
-          style="text-shadow: 1px 1px 2px #d21f3c"
-          @sliding-start="onSlideStart"
-          @sliding-end="onSlideEnd"
-        >
-          <!-- Text slides with image -->
-          <b-carousel-slide
-            img-src="https://picsum.photos/1024/480/?image=52"
-          ></b-carousel-slide>
-
-          <!-- Slides with custom text -->
-          <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-          </b-carousel-slide>
-
-          <!-- Slides with image only -->
-          <b-carousel-slide
-            img-src="https://picsum.photos/1024/480/?image=58"
-          ></b-carousel-slide>
-
-          <!-- Slides with img slot -->
-          <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-          <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=55">
-          </b-carousel-slide>
-        </b-carousel>
+      <body style="align-items: center; text-align: center">
+      <div style="height: 100vh">
+        <h1 id=quote>
+          <b>Your Gallery,<br> Reimagined.</b>
+        </h1>
       </div>
       <div style="padding-top: 50px">
         <div id="postingCard">
           <PostingList v-bind:postingList="postingList" />
-        </div>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md">
-              <a href="https://smartart-frontend-000.herokuapp.com">
-                <button
-                  type="button"
-                  style="background-color: #d21f3c; color: white"
-                  class="btn"
-                >
-                  <font size="5"><b>Buy Art</b></font>
-                </button>
-              </a>
-            </div>
-            <div class="col-md">
-              <a href="https://smartart-frontend-000.herokuapp.com">
-                <button
-                  type="button"
-                  style="background-color: #d21f3c; color: white"
-                  class="btn"
-                >
-                  <font size="5"><b>Sell Art</b></font>
-                </button>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </body>
@@ -217,16 +162,11 @@ export default {
   font-style: oblique;
   color: #d21f3c;
 }
-#smartart {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  color: #d21f3c;
-  background: #ffffff;
-}
 
 .carousel-style {
   padding-left: 200px;
   padding-right: 200px;
-  padding-bottom: 0px;
+  padding-bottom: 100px;
   color: #d21f3c;
   background: #ffffff;
 }
@@ -241,6 +181,18 @@ export default {
 #postingCard {
   padding-left: 100px;
   padding-right: 100px;
-  padding-bottom: 0px;
+  padding-bottom: 50px;
+}
+
+#quote {
+  background-image: url("../assets/stairsAcrossCanal.jpg");
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+  padding-top: 15vh;
+  font-family: Palatino;
+  font-variant: small-caps;
+  font-size: 100px
 }
 </style>
