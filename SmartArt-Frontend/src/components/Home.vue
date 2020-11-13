@@ -1,3 +1,4 @@
+Home
 <!DOCTYPE html>
 <template>
   <html style="color: white">
@@ -32,13 +33,14 @@
                   placeholder="Search"
                   aria-label="Search"
                 />
-                <button
-                  class="btn btn-danger"
-                  type="submit"
-                >
-                  Search
-                </button>
+                <button class="btn btn-danger" type="submit">Search</button>
               </form>
+              <li class="nav-item">
+                <a href="#!" class="nav-link navbar-link-2 waves-effect">
+                  <span class="badge badge-pill red">Cart</span>
+                  <i class="fas fa-shopping-cart pl-0"></i>
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -53,6 +55,33 @@
         <div id="postingCard">
           <PostingList v-bind:postingList="postingList" />
         </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md">
+              <a href="https://smartart-frontend-000.herokuapp.com">
+                <button
+                  type="button"
+                  style="background-color: #d21f3c; color: white"
+                  class="btn"
+                >
+                  <font size="5"><b>Buy Art</b></font>
+                </button>
+              </a>
+            </div>
+            <div class="col-md">
+              <a href="https://smartart-frontend-000.herokuapp.com">
+                <button
+                  type="button"
+                  style="background-color: #d21f3c; color: white"
+                  class="btn"
+                >
+                  <font size="5"><b>Sell Art</b></font>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </body>
   </html>
@@ -196,3 +225,4 @@ export default {
   font-size: 100px
 }
 </style>
+
