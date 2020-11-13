@@ -100,6 +100,7 @@ Create account
       <p>{{ error }}</p>
     </div>
   </html>
+
 </template>
 
 <script>
@@ -135,6 +136,7 @@ export default {
         this.error = "Please select a user type";
       } else {
         AXIOS({
+
           method: "post",
           url: "/".concat(this.userType).concat("/").concat("create"),
           data: {
@@ -147,13 +149,16 @@ export default {
           .then((response) => {
             this.$store.dispatch("setActiveUser", this.email);
             this.$store.dispatch("setActiveUserType", this.userType);
+
             this.email = "";
             this.name = "";
             this.password = "";
             this.confirmPassword = "";
             this.userType = "";
             this.error = "";
+
             this.$router.push({ name: "Home" });
+
           })
           .catch((e) => {
             var errorMsg = e.message;
@@ -162,6 +167,7 @@ export default {
           });
       }
     },
+
     toLogin: function () {
       this.$router.push({ name: "Login" });
     },
@@ -198,3 +204,4 @@ export default {
   white-space: nowrap;
 }
 </style>
+

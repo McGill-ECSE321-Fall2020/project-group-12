@@ -8,7 +8,7 @@
 import SmartArt from "./components/SmartArt"
 
 export default {
-  name: 'app'
+  name: 'app',
 }
 </script>
 
@@ -19,6 +19,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: #f2ece8;
+  background: #ffffff;
 }
 </style>

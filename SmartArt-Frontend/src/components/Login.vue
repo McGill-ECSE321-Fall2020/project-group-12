@@ -84,6 +84,7 @@ Login
       <p>{{ error }}</p>
     </div>
   </html>
+
 </template>
 
 <script>
@@ -129,6 +130,7 @@ export default {
             this.error = "";
             this.userType = "";
             this.$router.push({ name: "Home" });
+
           })
           .catch((e) => {
             var errorMsg = e.message;
@@ -172,5 +174,6 @@ export default {
   overflow: auto;
   white-space: nowrap;
 }
+
 </style>
 
