@@ -1,48 +1,7 @@
 <!DOCTYPE html>
 <template>
   <html style="color: white">
-      <nav class="navbar navbar-light navbar-expand-md">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#"
-            ><img id="Logo" src="../assets/SmartArt.png" /></a
-          ><button
-            data-toggle="collapse"
-            class="navbar-toggler"
-            data-target="#navcol-1"
-          >
-            <span class="sr-only">Toggle navigation</span
-            ><span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="nav navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Artists</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Postings</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Sell Art</a>
-              </li>
-              <li class="nav-item" @click="toAcc"><a class="nav-link" href="#">Account</a></li>
-              <form class="form-inline">
-                <input
-                  class="form-control mr-sm-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button
-                  class="btn btn-danger"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </form>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Taskbar/>
       <body style="align-items: center; text-align: center">
       <div style="height: 100vh">
         <h1 id=quote>
@@ -61,7 +20,7 @@
 <script>
 import axios from "axios";
 import PostingList from "./PostingList";
-
+import Taskbar from "./Taskbar";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -94,6 +53,7 @@ export default {
   },
   components: {
     PostingList,
+    Taskbar
   },
   created: function () {
     AXIOS.get("/artists")
@@ -132,10 +92,7 @@ export default {
     onSlideEnd(slide) {
       this.sliding = false;
     },
-    //fix to check if current acc
-    toAcc(){
-      this.$router.push({name: 'Login'})
-    }
+
   },
 };
 </script>
@@ -163,20 +120,6 @@ export default {
   color: #d21f3c;
 }
 
-.carousel-style {
-  padding-left: 200px;
-  padding-right: 200px;
-  padding-bottom: 100px;
-  color: #d21f3c;
-  background: #ffffff;
-}
-.container-fluid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
-  white-space: nowrap;
-}
 
 #postingCard {
   padding-left: 100px;
