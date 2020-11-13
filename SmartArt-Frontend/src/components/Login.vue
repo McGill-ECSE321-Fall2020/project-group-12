@@ -1,49 +1,7 @@
 Login
 <template>
   <html lang="en">
-    <nav class="navbar navbar-light navbar-expand-md">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"
-          ><img id="Logo" src="../assets/SmartArt.png" /></a
-        ><button
-          data-toggle="collapse"
-          class="navbar-toggler"
-          data-target="#navcol-1"
-        >
-          <span class="sr-only">Toggle navigation</span
-          ><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-          <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Artists</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Postings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sell Art</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
-            <form class="form-inline">
-              <input
-                class="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-danger" type="submit">Search</button>
-            </form>
-            <li class="nav-item">
-              <a href="#!" class="nav-link navbar-link-2 waves-effect">
-                <span class="badge badge-pill red">Cart</span>
-                <i class="fas fa-shopping-cart pl-0"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Taskbar/>
     <div id="loginPage">
       <h3>Welcome</h3>
       <div class="container-fluid">
@@ -89,6 +47,7 @@ Login
 
 <script>
 import axios from "axios";
+import Taskbar from './Taskbar'
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -108,6 +67,9 @@ export default {
       error: "",
       userType: "",
     };
+  },
+  components: {
+    Taskbar
   },
   methods: {
     tryLogin: function () {
@@ -156,6 +118,10 @@ export default {
 </script>
 
 <style scoped>
+
+#loginPage {
+  padding-top: 20vh;
+}
 .input {
   top: 20px;
   padding: 30px 30px;
