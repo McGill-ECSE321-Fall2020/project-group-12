@@ -1,9 +1,8 @@
+Home
 <!DOCTYPE html>
 <template>
   <html style="color: white">
-
       <body style="align-items: center; text-align: center">
-
       <div id="splashpage" style="height: 100vh">
         <Taskbar/>
         <h1 id=quote>
@@ -48,7 +47,6 @@
         </div>
         </div>
         <br>
-
     </body>
   </html>
 </template>
@@ -167,7 +165,6 @@ export default {
 }
 
 #quote {
-
   text-align: center;
   padding-top: 8vh;
   font-family: Palatino;

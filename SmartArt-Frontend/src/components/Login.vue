@@ -42,12 +42,11 @@ Login
       <p>{{ error }}</p>
     </div>
   </html>
-
 </template>
 
 <script>
+import Taskbar from "./Taskbar";
 import axios from "axios";
-import Taskbar from './Taskbar'
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -92,7 +91,6 @@ export default {
             this.error = "";
             this.userType = "";
             this.$router.push({ name: "Home" });
-
           })
           .catch((e) => {
             var errorMsg = e.message;
@@ -140,6 +138,5 @@ export default {
   overflow: auto;
   white-space: nowrap;
 }
-
 </style>
 
