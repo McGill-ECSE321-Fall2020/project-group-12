@@ -98,12 +98,15 @@ export default {
           }
         })
           .then((response) => {
+            this.$store.dispatch('setActiveUser', this.email);
+            this.$store.dispatch('setActiveUserType', this.userType);
             this.email = "";
             this.name = "";
             this.password = "";
             this.confirmPassword = "";
             this.userType = "";
             this.error = "";
+            this.$router.push({name: 'Home'})
           })
           .catch((e) => {
             var errorMsg = e.message;
