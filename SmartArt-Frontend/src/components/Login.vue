@@ -1,7 +1,7 @@
 Login
 <template>
   <html lang="en">
-    <Taskbar />
+    <Taskbar/>
     <div id="loginPage">
       <h3>Welcome</h3>
       <div class="container-fluid">
@@ -47,6 +47,7 @@ Login
 <script>
 import Taskbar from "./Taskbar";
 import axios from "axios";
+import Taskbar from './Taskbar'
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -68,7 +69,7 @@ export default {
     };
   },
   components: {
-    Taskbar,
+    Taskbar
   },
   methods: {
     tryLogin: function () {
@@ -116,6 +117,10 @@ export default {
 </script>
 
 <style scoped>
+
+#loginPage {
+  padding-top: 20vh;
+}
 .input {
   top: 20px;
   padding: 30px 30px;

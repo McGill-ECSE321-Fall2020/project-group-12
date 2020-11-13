@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router';
-import SmartArt from "../components/SmartArt";
+import Router from 'vue-router'
 import Login from "../components/Login";
 import CreateAccount from "../components/CreateAccount";
 import Home from "../components/Home";
@@ -14,11 +13,6 @@ export default new Router({
     {
       path: '/',
       redirect: '/home'
-    },
-    {
-      path: '/app',
-      name: 'SmartArt',
-      component: SmartArt
     },
     {
       path: '/login',
