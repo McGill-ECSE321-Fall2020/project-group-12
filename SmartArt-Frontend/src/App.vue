@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import SmartArt from "./components/SmartArt"
 
 export default {
   name: 'app',
