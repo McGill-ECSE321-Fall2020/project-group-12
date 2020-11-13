@@ -1,49 +1,7 @@
 Account
 <template>
   <html lang="en">
-    <nav class="navbar navbar-light navbar-expand-md">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"
-          ><img id="Logo" src="../assets/SmartArt.png" /></a
-        ><button
-          data-toggle="collapse"
-          class="navbar-toggler"
-          data-target="#navcol-1"
-        >
-          <span class="sr-only">Toggle navigation</span
-          ><span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navcol-1">
-          <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Artists</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Postings</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sell Art</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#">Account</a></li>
-            <form class="form-inline">
-              <input
-                class="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-danger" type="submit">Search</button>
-            </form>
-            <li class="nav-item">
-              <a href="#!" class="nav-link navbar-link-2 waves-effect">
-                <span class="badge badge-pill red">Cart</span>
-                <i class="fas fa-shopping-cart pl-0"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <Taskbar />
     <div id="account">
       <h2>My Account</h2>
       <div class="info">
@@ -57,7 +15,7 @@ Account
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import Taskbar from "./Taskbar";
 import axios from "axios";
 var config = require("../../config");
 
@@ -83,6 +41,9 @@ export default {
       userType: "",
     };
   },
+  components: {
+    Taskbar,
+  },
   created: function () {
     this.email = this.$store.getters.getActiveUser;
     this.userType = this.$store.getters.getActiveUserType;
@@ -90,12 +51,12 @@ export default {
       AXIOS.get("/".concat(this.userType).concat("s/").concat(this.email))
         .then((response) => {
           this.name = response.data.name;
-          if(this.userType == 'artist'){
-              this.listType = "My Postings"
-              this.postings = response.data.postings
-          }else if (this.userType == 'buyer'){
-              this.listType = "My Purchases"
-              this.purchases = response.data.purchases
+          if (this.userType == "artist") {
+            this.listType = "My Postings";
+            this.postings = response.data.postings;
+          } else if (this.userType == "buyer") {
+            this.listType = "My Purchases";
+            this.purchases = response.data.purchases;
           }
         })
         .catch((e) => {

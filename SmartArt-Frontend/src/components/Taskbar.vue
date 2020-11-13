@@ -53,7 +53,11 @@ export default {
   methods:
     {
       toAcc() {
-        this.$router.push({name: 'Login'})
+        if(this.$store.getters.getActiveUser == ''){
+          this.$router.push({name: 'Login'})
+        }else{
+          this.$router.push({name: 'Account'})
+        }
       },
       toHome() {
         this.$router.push({name: 'Home'})
