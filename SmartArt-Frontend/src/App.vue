@@ -8,7 +8,7 @@
 import SmartArt from "./components/SmartArt"
 
 export default {
-  name: 'app'
+  name: 'app',
 }
 </script>
 

@@ -24,7 +24,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Sell Art</a>
               </li>
-              <li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+              <li class="nav-item" @click="toAcc"><a class="nav-link" href="#">Account</a></li>
               <form class="form-inline">
                 <input
                   class="form-control mr-sm-2"
@@ -132,6 +132,10 @@ export default {
     onSlideEnd(slide) {
       this.sliding = false;
     },
+    //fix to check if current acc
+    toAcc(){
+      this.$router.push({name: 'Login'})
+    }
   },
 };
 </script>

@@ -59,7 +59,6 @@ export default {
       password: "",
       error: "",
       userType: "",
-      types: ["email", "password"],
     };
   },
   methods: {
@@ -68,7 +67,7 @@ export default {
         this.error = "Please select a user type";
       } else {
         AXIOS({
-          method: 'get',
+          method: 'post',
           url: "/".concat(this.userType).concat("/").concat("login"),
           data: {
               email: this.email,
@@ -76,10 +75,13 @@ export default {
           }
         })
           .then((response) => {
+            this.$store.dispatch('setActiveUser', this.email);
+            this.$store.dispatch('setActiveUserType', this.userType);
             this.email = "";
             this.password = "";
             this.error = "";
             this.userType =  "";
+            this.$router.push({name: 'Home'})
           })
           .catch((e) => {
             var errorMsg = e.message;
