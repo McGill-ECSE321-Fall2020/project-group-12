@@ -81,6 +81,7 @@ export default {
             this.password = "";
             this.error = "";
             this.userType =  "";
+            this.$router.push({name: 'Home'})
           })
           .catch((e) => {
             var errorMsg = e.message;

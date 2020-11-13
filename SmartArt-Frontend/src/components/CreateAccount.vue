@@ -106,6 +106,7 @@ export default {
             this.confirmPassword = "";
             this.userType = "";
             this.error = "";
+            this.$router.push({name: 'Home'})
           })
           .catch((e) => {
             var errorMsg = e.message;

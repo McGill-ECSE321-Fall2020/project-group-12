@@ -25,7 +25,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Sell Art</a>
               </li>
-              <li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+              <li class="nav-item" @click="toAcc"><a class="nav-link" href="#">Account</a></li>
               <form class="form-inline">
                 <input
                   class="form-control mr-sm-2"
@@ -84,7 +84,6 @@
         </div>
         <div class="container-fluid">
           <div class="row">
-            
             <div class="col-md">
               <a href="https://smartart-frontend-000.herokuapp.com">
                 <button
@@ -188,6 +187,10 @@ export default {
     onSlideEnd(slide) {
       this.sliding = false;
     },
+    //fix to check if current acc
+    toAcc(){
+      this.$router.push({name: 'Login'})
+    }
   },
 };
 </script>
