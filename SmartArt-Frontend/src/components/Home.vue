@@ -1,3 +1,4 @@
+Home
 <!DOCTYPE html>
 <template>
   <html lang="en">
@@ -241,3 +242,4 @@ export default {
   padding-bottom: 0px;
 }
 </style>
+
