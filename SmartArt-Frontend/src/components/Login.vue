@@ -1,42 +1,90 @@
+Login
 <template>
-  <div id="loginPage">
-    <img id="Logo" src="../assets/SmartArt.png" />
-    <h3>Welcome</h3>
-    <div class="input">
-      <div class="inputbox">
-        <input
-          type="email"
-          class="form-control input-style"
-          v-model="email"
-          placeholder="Email"
-        />
-      </div>
-      <div class="inputbox">
-        <input
-          type="password"
-          class="form-control input-style"
-          v-model="password"
-          placeholder="Password"
-        />
-      </div>
-    </div>
-    <div>
-      <b-dropdown id="dropdown-1" text="Select your user type" class="m-md-2">
-        <b-dropdown-item-btn @click="setBuyer">Buyer</b-dropdown-item-btn>
-        <b-dropdown-item-btn @click="setArtist">Artist</b-dropdown-item-btn>
-        <b-dropdown-item-btn @click="setAdmin"
-          >Administrator</b-dropdown-item-btn
+  <html lang="en">
+    <nav class="navbar navbar-light navbar-expand-md">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"
+          ><img id="Logo" src="../assets/SmartArt.png" /></a
+        ><button
+          data-toggle="collapse"
+          class="navbar-toggler"
+          data-target="#navcol-1"
         >
-      </b-dropdown>
+          <span class="sr-only">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+          <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Artists</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Postings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sell Art</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+            <form class="form-inline">
+              <input
+                class="form-control mr-sm-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-danger" type="submit">Search</button>
+            </form>
+            <li class="nav-item">
+              <a href="#!" class="nav-link navbar-link-2 waves-effect">
+                <span class="badge badge-pill red">Cart</span>
+                <i class="fas fa-shopping-cart pl-0"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="loginPage">
+      <h3>Welcome</h3>
+      <div class="container-fluid">
+        <div class="input">
+          <div class="inputbox">
+            <input
+              type="email"
+              class="form-control input-style"
+              v-model="email"
+              placeholder="Email"
+            />
+          </div>
+          <div class="inputbox">
+            <input
+              type="password"
+              class="form-control input-style"
+              v-model="password"
+              placeholder="Password"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <b-dropdown id="dropdown-1" text="Select your user type" class="m-md-2">
+          <b-dropdown-item-btn @click="setBuyer">Buyer</b-dropdown-item-btn>
+          <b-dropdown-item-btn @click="setArtist">Artist</b-dropdown-item-btn>
+          <b-dropdown-item-btn @click="setAdmin"
+            >Administrator</b-dropdown-item-btn
+          >
+        </b-dropdown>
+      </div>
+      <b-button @click="tryLogin" pill variant="outline-secondary"
+        >Login</b-button
+      >
+      <b-button @click="toCreate" pill variant="outline-secondary"
+        >Create Account</b-button
+      >
+      <p>{{ error }}</p>
     </div>
-    <b-button @click="tryLogin" pill variant="outline-secondary"
-      >Login</b-button
-    >
-    <b-button @click="toCreate" pill variant="outline-secondary"
-      >Create Account</b-button
-    >
-    <p>{{ error }}</p>
-  </div>
+  </html>
+
 </template>
 
 <script>
@@ -63,25 +111,26 @@ export default {
   },
   methods: {
     tryLogin: function () {
-      if ((this.userType == '')) {
+      if (this.userType == "") {
         this.error = "Please select a user type";
       } else {
         AXIOS({
-          method: 'post',
+          method: "post",
           url: "/".concat(this.userType).concat("/").concat("login"),
           data: {
-              email: this.email,
-              password: this.password
-          }
+            email: this.email,
+            password: this.password,
+          },
         })
           .then((response) => {
-            this.$store.dispatch('setActiveUser', this.email);
-            this.$store.dispatch('setActiveUserType', this.userType);
+            this.$store.dispatch("setActiveUser", this.email);
+            this.$store.dispatch("setActiveUserType", this.userType);
             this.email = "";
             this.password = "";
             this.error = "";
-            this.userType =  "";
-            this.$router.push({name: 'Home'})
+            this.userType = "";
+            this.$router.push({ name: "Home" });
+
           })
           .catch((e) => {
             var errorMsg = e.message;
@@ -91,7 +140,7 @@ export default {
       }
     },
     toCreate: function () {
-      this.$router.push({name: 'CreateAccount'})
+      this.$router.push({ name: "CreateAccount" });
     },
     setBuyer: function () {
       this.userType = "buyer";
@@ -118,4 +167,13 @@ export default {
   align-self: center;
   padding: 5px 5px;
 }
+.container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  white-space: nowrap;
+}
+
 </style>
+
