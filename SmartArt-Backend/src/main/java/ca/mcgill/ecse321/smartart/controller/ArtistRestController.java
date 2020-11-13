@@ -74,8 +74,8 @@ public class ArtistRestController {
 	  }
   }
 
-  @GetMapping(value = {"/artist/login", "/artist/login/"})
-  public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
+  @PostMapping(value = {"/artist/login", "/artist/login/"})
+  public ResponseEntity<?> login(@RequestBody LoginDto login) {
 	  try {
 		  Artist artist = artistService.login(login);
 		  return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
