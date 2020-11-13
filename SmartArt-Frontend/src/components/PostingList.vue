@@ -39,9 +39,10 @@ export default {
 
 <style scoped>
   #postingCardClass {
-    box-shadow: 6px 6px #999999;
+    box-shadow: 2px 6px 6px #999999;
   }
   #postingCardColumn {
     padding-bottom: 20px;
+    align-content: center;
   }
 </style>
