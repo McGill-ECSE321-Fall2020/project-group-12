@@ -5,6 +5,9 @@ import CreateAccount from "../components/CreateAccount";
 import Home from "../components/Home";
 import Cart from "../components/Cart"
 import Account from "../components/Account";
+import ViewPosting from "../components/ViewPosting";
+import OrderConfirmation from "../components/OrderConfirmation";
+import ContactUs from "../components/ContactUs";
 
 Vue.use(Router)
 
@@ -38,6 +41,21 @@ export default new Router({
       path: '/account',
       name: 'Account',
       component: Account
+    },
+    {
+      path: '/viewPosting',
+      name: 'ViewPosting',
+      component: ViewPosting
+    },
+    {
+      path: '/orderConfirmation',
+      name: 'OrderConfirmation',
+      component: OrderConfirmation
+    },
+    {
+      path: '/contactUs',
+      name: 'ContactUs',
+      component: ContactUs
     }
   ]
 })

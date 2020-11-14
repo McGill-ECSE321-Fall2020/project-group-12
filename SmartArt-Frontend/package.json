@@ -13,9 +13,11 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "@typeform/embed": "^0.25.6",
     "aos": "^2.3.4",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "latest",
+    "jquery": "^1.12.4",
     "popper.js": "^1.12.9",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
