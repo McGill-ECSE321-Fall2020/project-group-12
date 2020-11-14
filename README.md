@@ -45,7 +45,9 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Gregory Walfish  |               |                 |
 | Luke Barber     |               |                 |
 | Minh Quan Hoang  |               |                 |
-[Deliverable 3 Report] (https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report3)
+
+[Deliverable 3 Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report3)
+
 ## Deliverable 4 Contributions
 | Team Member      | Member Role   | Hours Commited  |
 | -----------------| ------------- | --------------- |
