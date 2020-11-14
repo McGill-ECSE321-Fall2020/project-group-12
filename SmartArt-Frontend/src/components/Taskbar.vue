@@ -2,7 +2,7 @@
   <div>
   <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"
+      <a class="navbar-brand" href="#/home"
       ><img id="Logo" src="../assets/SmartArt.png" /></a
       ><button
       data-toggle="collapse"
@@ -23,7 +23,7 @@
           <li class="nav-item" @click="toSell">
             <a class="nav-link" href="#">Sell Art</a>
           </li>
-          <li class="nav-item" @click="toAcc"><a class="nav-link" href="#">Account</a></li>
+          <li class="nav-item" @click="toAcc"><a class="nav-link" href="#/login">Account</a></li>
           <form class="form-inline">
             <input
               class="form-control mr-sm-2"

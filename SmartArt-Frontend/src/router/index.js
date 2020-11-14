@@ -4,7 +4,7 @@ import SmartArt from "../components/SmartArt";
 import Login from "../components/Login";
 import CreateAccount from "../components/CreateAccount"
 import Home from "../components/Home";
-
+import Cart from "../components/Cart"
 
 Vue.use(Router)
 
@@ -33,6 +33,11 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
     }
   ]
 })

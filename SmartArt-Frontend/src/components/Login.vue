@@ -35,7 +35,7 @@ Login
               <button class="btn btn-danger" type="submit">Search</button>
             </form>
             <li class="nav-item">
-              <a href="#!" class="nav-link navbar-link-2 waves-effect">
+              <a href="#/cart" class="nav-link navbar-link-2 waves-effect">
                 <span class="badge badge-pill red">Cart</span>
                 <i class="fas fa-shopping-cart pl-0"></i>
               </a>
