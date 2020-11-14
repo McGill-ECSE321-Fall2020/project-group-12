@@ -21,11 +21,11 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Postings</a>
             </li>
-            <li class="nav-item" @click="toSell">
-              <a class="nav-link" href="#">Sell Art</a>
-            </li>
             <li class="nav-item" @click="toAcc">
               <a class="nav-link">Account</a>
+            </li>
+            <li class="nav-item" @click="toPostOrCart">
+              <a class="nav-link" href="#">{{ this.buttonType }}</a>
             </li>
             <form class="form-inline">
               <input
@@ -47,7 +47,23 @@
 <script>
 export default {
   name: "Taskbar",
-  //fix to check if current acc
+  data() {
+    return {
+      email: "",
+      error: "",
+      userType: "",
+      buttonType: "",
+    };
+  },
+  created: function () {
+    this.email = this.$store.getters.getActiveUser;
+    this.userType = this.$store.getters.getActiveUserType;
+    if (this.userType == "artist") {
+      this.buttonType = "Post Art";
+    } else if (this.userType == "buyer") {
+      this.buttonType = "View Cart";
+    }
+  },
   methods: {
     toAcc() {
       console.log(this.$store.getters.getActiveUser);
@@ -60,8 +76,12 @@ export default {
     toHome() {
       this.$router.push({ name: "Home" });
     },
-    toSell() {
-      // this.$router.push({name: 'NewPost'})
+    toPostOrCart() {
+      if(this.userType == 'artist'){
+        this.$router.push({ name: "CreatePosting" });
+      }else if(this.userType == 'buyer'){
+        this.$router.push({ name: "Cart" });
+      }
     },
   },
 };
