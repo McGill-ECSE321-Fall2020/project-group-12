@@ -128,42 +128,65 @@ export default {
   },
   methods: {
     createPost: function () {
-      AXIOS({
-        method: "post",
-        url: "/posting/create",
-        data: {
-          artist: {
+      if (this.title == "") {
+        this.error += "Please enter a title. ";
+      }
+      if (this.description == "") {
+        this.error += "Please enter a description. ";
+      }
+      if (this.price == null) {
+        this.error += "Please enter a price. ";
+      }
+      if (this.xDim == null) {
+        this.error += "Please enter the X dimmension. ";
+      }
+      if (this.yDim == null) {
+        this.error += "Please enter the Y dimmension. ";
+      }
+      if (this.zDim == null) {
+        this.error += "Please enter the Z dimmension. ";
+      }
+      if (this.image == "") {
+        this.error += "Please enter an image URL. ";
+      }
+      if (error == "") {
+        AXIOS({
+          method: "post",
+          url: "/posting/create",
+          data: {
+            artist: {
               email: this.email,
-              gallery: this.gallery
+              gallery: this.gallery,
+            },
+            title: this.title,
+            price: this.price,
+            xdim: this.xDim,
+            ydim: this.yDim,
+            zdim: this.zDim,
+            image: this.image,
+            date: this.date,
+            description: this.description,
           },
-          title: this.title,
-          price: this.price,
-          xdim: this.xDim,
-          ydim: this.yDim,
-          zdim: this.zDim,
-          image: this.image,
-          date: this.date,
-          description: this.description
-        },
-      })
-        .then((response) => {
-          this.email = "";
-          this.title = "";
-          this.description = "";
-          this.xDim = null;
-          this.yDim = null;
-          this.zDim = null;
-          this.date = "";
-          this.image = "";
-          this.error = "";
-
-          this.$router.push({ name: "Account" });
         })
-        .catch((e) => {
-          var errorMsg = e.message;
-          console.log(e);
-          this.error = errorMsg;
-        });
+          .then((response) => {
+            this.email = "";
+            this.title = "";
+            this.description = "";
+            this.xDim = null;
+            this.yDim = null;
+            this.zDim = null;
+            this.date = "";
+            this.image = "";
+            this.error = "";
+
+            this.$router.push({ name: "Account" });
+          })
+          .catch((e) => {
+            var errorMsg = e.message;
+            console.log(e);
+            this.error = errorMsg;
+          });
+      }
     },
   },
 };
