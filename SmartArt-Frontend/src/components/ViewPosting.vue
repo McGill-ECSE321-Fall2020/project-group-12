@@ -12,7 +12,7 @@ ViewPosting
         <p class="header">Price : {{ this.price }}$</p>
         <p class="header">Dimensions : {{ this.xDim }}x{{ this.yDim}}x{{ this.zDim }}</p>
         <p class="header">Description : {{ this.description }}</p>
-        <p class="header">{{ this.artStatus }}</p>
+        <p class="header">Delivery Options : {{ this.artStatus }}</p>
         <p class="header">Date : {{ this.date }}</p>
       </div>
     </div>
@@ -76,7 +76,7 @@ export default {
       this.description = "Man made of gold";
       this.artStatus = "Available";
       this.date = "11/14/2020";
-      this.image = "yes";
+      this.image = "image";
   },
   methods: {
     addToCart: function () {
