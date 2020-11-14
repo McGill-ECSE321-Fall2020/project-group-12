@@ -16,7 +16,7 @@
               </h5>
               <div class="card-content">
                 <p class="card-text">{{ posting.description }}</p>
-                <a href="#" class="btn btn-danger">View Post</a>
+                <a href="#" class="btn btn-danger" @click="toPosting(posting.postingID)">View Post</a>
               </div>
             </div>
           </div>
@@ -32,6 +32,12 @@ export default {
   // props "exports" what's inside so that whatever imports PostingList has access to data inside
   props: ["postingList"],
 
+  methods: {
+    toPosting(id) {
+      this.$store.dispatch("setActivePosting", id);
+      this.$router.push({ name: "ViewPosting" });
+    }
+  }
 }
 </script>
 

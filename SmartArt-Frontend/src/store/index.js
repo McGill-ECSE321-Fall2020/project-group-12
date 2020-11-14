@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         activeUser: '',
-        activeUserType: ''
+        activeUserType: '',
+        activePosting: ''
     },
     mutations: {
         setActiveUser(state, payload) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
         },
         setActiveUserType(state, payload) {
             state.activeUserType = payload
+        },
+        setActivePosting(state, payload) {
+            state.activePosting = payload
         }
     },
     actions: {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
         },
         setActiveUserType({ commit }, payload) {
             commit('setActiveUserType', payload)
+        },
+        setActivePosting({ commit }, payload) {
+            commit('setActivePosting', payload)
         }
     },
     modules: {},
@@ -31,6 +38,9 @@ export default new Vuex.Store({
         },
         getActiveUserType(state) {
             return state.activeUserType
+        },
+        getActivePosting(state) {
+            return state.activePosting
         }
     }
 })
