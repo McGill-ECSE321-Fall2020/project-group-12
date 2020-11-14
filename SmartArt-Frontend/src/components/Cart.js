@@ -12,12 +12,6 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
 
-function BuyerDto (email, name, password, gallery) {
-  this.email = email
-  this.name = name
-  this.password = password
-  this.gallery = gallery
-}
 
 export default {
   name: "Cart",
@@ -26,52 +20,33 @@ export default {
       PostingList,
       Taskbar
   },
-  name: "SmartArt",
-    city: "Montreal",
-    commission: "",
   data() {
     return {
-      slide: 0,
-      sliding: null,
-      artists: [],
-      buyers: [],
-      admins: [],
-      postingList: [],
-      errorArtist: "",
-      errorBuyer: "",
-      errorPosting: "",
-      errorAdmin: "",
+      cart: null,
+      cartPostings: [],
+      cartTitles: [],
+      cartPrices: [],
+      totalPrice: 0.00,
+      currentUser: null,
       response: [],
     };
   },
   created: function () {
-      AXIOS.get("/artists")
+      this.currentUser = this.$store.getter.getActiveUser;
+      console.log("/purchases/cart/".concat(this.currentUser));
+      AXIOS.get("/purchases/cart/".concat(this.currentUser))
         .then((response) => {
-          this.artists = response.data;
-        })
-        .catch((e) => {
-          this.errorArtist = e;
-        });
-      AXIOS.get("/buyers")
-        .then((response) => {
-          this.buyers = response.data;
-        })
-        .catch((e) => {
-          this.errorBuyer = e;
-        });
-      AXIOS.get("/administrators")
-        .then((response) => {
-          this.admins = response.data;
-        })
-        .catch((e) => {
-          this.errorAdmin = e;
-        });
-      AXIOS.get("/postings")
-        .then((response) => {
-          this.postingList = response.data;
+          this.cart = response.data;
         })
         .catch((e) => {
           this.errorPosting = e;
         });
+      this.totalPrice = cart.totalPrice;
+      document.getElementById("totalPrice").innerHTML = totalPrice;
+      this.cartPostings = cart.postings;
+      for (i = 0; i < cartPostings.length; i++) {
+          this.cartTitles[i] = cartPostings[i].title;
+          this.cartPrices[i] = cartPostings[i].price;
+      }
   },
 };

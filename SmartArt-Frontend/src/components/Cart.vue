@@ -16,42 +16,42 @@ Cart
             		<hr>
             </div>
             <div class = "row cartText">
-               <div class="cartText1 columns">
-         					&nbsp;
+               <div class = columns; style = "width: 14%">
             	 </div>
-               <div class="cartText2 columns">
-        					Product
-        		   </div>
-            	 <div class="cartText2 columns">
-            			Details
+            	 <div class = columns; style = "width: 20%">
+                  Image
+                  <table>
+                     <li v-for="posting in cartPostings">
+                        <tr>
+                           {{posting.image}}
+                        </tr>
+                     </li>
+                  </table>
                </div>
-            	 <div class="cartText1 columns">
-          				Size
-          		 </div>
-      		     <div class="small-2 columns">
-            			Quantity
-            	 </div>
-            	 <div class="cartText1 columns">
+               <div class = columns; style = "width: 20%">
+        					Title
+        					<table>
+                     <li v-for="posting in cartPostings">
+                        <tr>
+                           {{posting.title}}
+                        </tr>
+                     </li>
+                  </table>
+        		   </div>
+            	 <div class = columns; style = "width: 20%">
+               </div>
+            	 <div class = columns; style = "width: 12%">
             			Price
+            			<table>
+                     <li v-for="posting in cartPostings">
+                        <tr>
+                           {{posting.price}}
+                        </tr>
+                     </li>
+                  </table>
             	 </div>
-            	 <div class="cartText1 columns">
-            					&nbsp;
-            	 </div>
-            </div>
-            <div class = "cartTable">
-               <table>
-                  <tr v-for="person in persons" >
-                     <td>{{ person.name }}</td>
-                     <td>
-                        <ul>
-                           <li v-for="event in person.events">
-                              {{event.name}}
-                           </li>
-                        </ul>
-                     </td>
-                 </tr>
-                 <!-- ... -->
-               </table>
+            	 <div class = columns; style = "width: 14%">
+               </div>
             </div>
             <div class="bot divider">
                <hr>
@@ -65,7 +65,7 @@ Cart
                <div class = columns; style = "width: 5%">
                </div>
                <div class = columns; style = "width: 5%; text-align: right">
-                    0.00
+                    {{totalPrice}}
                </div>
             </div>
          </section>
