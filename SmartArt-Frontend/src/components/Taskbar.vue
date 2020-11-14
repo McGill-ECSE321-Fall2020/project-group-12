@@ -2,12 +2,13 @@
   <div>
   <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"
+      <a class="navbar-brand" href="#/home"
       ><img id="Logo" src="../assets/SmartArt.png" /></a
       ><button
       data-toggle="collapse"
       class="navbar-toggler"
       data-target="#navcol-1"
+      @click="toHome"
     >
             <span class="sr-only">Toggle navigation</span
             ><span class="navbar-toggler-icon"></span>
@@ -53,7 +54,11 @@ export default {
   methods:
     {
       toAcc() {
-        this.$router.push({name: 'Login'})
+        if(this.$store.getters.getActiveUser == ''){
+          this.$router.push({name: 'Login'})
+        }else{
+          this.$router.push({name: 'Account'})
+        }
       },
       toHome() {
         this.$router.push({name: 'Home'})
