@@ -98,7 +98,6 @@ export default {
         this.error = "Please select a user type";
       } else {
         AXIOS({
-
           method: "post",
           url: "/".concat(this.userType).concat("/").concat("create"),
           data: {
