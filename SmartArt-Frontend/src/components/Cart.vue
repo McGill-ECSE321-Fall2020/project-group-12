@@ -38,7 +38,21 @@ Cart
             					&nbsp;
             	 </div>
             </div>
-            <!-- insert table here -->
+            <div class = "cartTable">
+               <table>
+                  <tr v-for="person in persons" >
+                     <td>{{ person.name }}</td>
+                     <td>
+                        <ul>
+                           <li v-for="event in person.events">
+                              {{event.name}}
+                           </li>
+                        </ul>
+                     </td>
+                 </tr>
+                 <!-- ... -->
+               </table>
+            </div>
             <div class="bot divider">
                <hr>
             </div>
@@ -74,16 +88,7 @@ Cart
     </html>
 </template>
 
-<script>
-import Taskbar from "./Taskbar";
-export default {
-  name: "Cart",
-
-  components: {
-      Taskbar
-  },
-};
-
+<script src="./Cart.js">
 </script>
 
 
@@ -103,8 +108,6 @@ hr {
     text-align: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    margin-left: 6rem;
-    margin-right: 6rem;
 }
 #buttons{
     padding-top: .9375rem;
