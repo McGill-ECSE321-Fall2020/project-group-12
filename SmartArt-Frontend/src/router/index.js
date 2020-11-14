@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import SmartArt from "../components/SmartArt";
 import Login from "../components/Login";
-import CreateAccount from "../components/CreateAccount"
+import CreateAccount from "../components/CreateAccount";
 import Home from "../components/Home";
-
+import Cart from "../components/Cart"
+import Account from "../components/Account";
+import ViewPosting from "../components/ViewPosting";
 
 Vue.use(Router)
 
@@ -13,11 +14,6 @@ export default new Router({
     {
       path: '/',
       redirect: '/home'
-    },
-    {
-      path: '/app',
-      name: 'SmartArt',
-      component: SmartArt
     },
     {
       path: '/login',
@@ -33,6 +29,21 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
+    },
+    {
+      path: '/account',
+      name: 'Account',
+      component: Account
+    },
+    {
+      path: '/viewPosting',
+      name: 'ViewPosting',
+      component: ViewPosting
     }
   ]
 })
