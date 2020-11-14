@@ -7,6 +7,8 @@ import router from './router'
 import store from "./store";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
@@ -17,5 +19,8 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created () {
+    AOS.init()
+  }
 })

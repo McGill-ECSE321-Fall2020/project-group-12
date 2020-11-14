@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <template>
   <html style="color: white">
-
       <body style="align-items: center; text-align: center">
 
       <div id="splashpage" style="height: 100vh">
@@ -9,12 +8,15 @@
         <h1 id=quote>
           <b>Your Gallery,<br> Reimagined.</b>
         </h1>
-      </div>
-      <div style="padding-top: 50px">
-        <div id="postingCard">
-          <PostingList v-bind:postingList="postingList" />
+        <div>
+          <a class="ct-btn-scroll" @click="scrollMeTo('section2')">
+            <img src="https://raw.githubusercontent.com/solodev/scroll-down-anchor/master/images/arrow-down-1.png">
+          </a>
         </div>
       </div>
+
+          <PostingList ref="section2" v-bind:postingList="postingList" />
+
       <hr>
         <div class="container-fluid">
           <div class="row justify-content-center">
@@ -67,7 +69,6 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
-
 export default {
   name: "SmartArt",
   city: "Montreal",
@@ -122,19 +123,30 @@ export default {
       });
   },
   methods: {
-    onSlideStart(slide) {
-      this.sliding = true;
-    },
-    onSlideEnd(slide) {
-      this.sliding = false;
-    },
+    scrollMeTo(refName) {
+      var element = this.$refs[refName];
+      var top = element.offsetTop;
 
-  },
+      window.scrollTo({
+        top: top,
+        left: 0,
+        behavior: 'smooth'
+      });
+    },
+    handleHoverScroll(hovered) {
+      this.isHovered = hovered
+    }
+  }
 };
 </script>
 
 <style>
-
+html {
+  scroll-behavior: smooth;
+}
+body {
+  overflow: scroll;
+}
 .container-fluid {
   display: flex;
   align-items: center;
@@ -163,7 +175,8 @@ export default {
 #postingCard {
   padding-left: 100px;
   padding-right: 100px;
-  padding-bottom: 50px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
 #quote {
@@ -180,6 +193,19 @@ export default {
   height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.ct-btn-scroll {
+  width: 49px;
+  height: 49px;
+  position: absolute;
+  bottom: 15%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding-top: 50px;
+  z-index: 9;
+  border-radius: 50%;
 }
 </style>
 
