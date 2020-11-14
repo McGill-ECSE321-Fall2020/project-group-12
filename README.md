@@ -40,11 +40,11 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 ## Deliverable 3 Contributions
 | Team Member      | Member Role   | Hours Commited  |
 | -----------------| ------------- | --------------- |
-| Ben Macnaughton  |               |                 |
-| Aidan Williams   |               |                 |
-| Gregory Walfish  |               |                 |
-| Luke Barber     |               |                 |
-| Minh Quan Hoang  |               |                 |
+| Ben Macnaughton  | Backend+Frontend Developper|                 |
+| Aidan Williams   | Backend+Frontend Developper              |                 |
+| Gregory Walfish  | Project manager+Frontend Developper              |                 |
+| Luke Barber     | Frontend Developper               |                 |
+| Minh Quan Hoang  | Frontend Developper               |                 |
 
 [Deliverable 3 Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report3)
 
