@@ -28,7 +28,7 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
 export default {
-  name: "Login",
+  name: "Account",
   data() {
     return {
       email: "",
