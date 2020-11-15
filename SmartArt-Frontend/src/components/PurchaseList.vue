@@ -14,7 +14,7 @@
         >
           <div class="card-img-wrapper">
             <div class="card-img-wrapper">
-              <img class="card-img-top" v-bind:src="purchase.postings[0].image" style="max-height: 220px; width: auto">
+              <img class="card-img-top" v-bind:src="purchase.postings[0].image" alt='../assets/noImageAvailable.png' style="max-height: 220px; width: auto">
             </div>
           </div>
           <div class="card-body">
