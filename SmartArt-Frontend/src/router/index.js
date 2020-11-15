@@ -8,6 +8,8 @@ import Account from "../components/Account";
 import ViewPosting from "../components/ViewPosting";
 import OrderConfirmation from "../components/OrderConfirmation";
 import ContactUs from "../components/ContactUs";
+import CreatePosting from "../components/CreatePosting";
+import Footer from "../components/Footer";
 
 Vue.use(Router)
 
@@ -56,6 +58,16 @@ export default new Router({
       path: '/contactUs',
       name: 'ContactUs',
       component: ContactUs
+    },
+    {
+      path: '/createPosting',
+      name: 'CreatePosting',
+      component: CreateArtwork
+    },
+    {
+      path: '/footer',
+      name: 'Footer',
+      component: Footer
     }
   ]
 })
