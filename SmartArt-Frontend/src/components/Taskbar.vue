@@ -1,29 +1,33 @@
+Taskbar
 <template>
   <div>
-  <nav class="navbar navbar-light navbar-expand-md">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#/home"
-      ><img id="Logo" src="../assets/SmartArt.png" /></a
-      ><button
-      data-toggle="collapse"
-      class="navbar-toggler"
-      data-target="#navcol-1"
-      @click="toHome"
-    >
-            <span class="sr-only">Toggle navigation</span
-            ><span class="navbar-toggler-icon"></span>
-    </button>
-      <div class="collapse navbar-collapse" id="navcol-1">
-        <ul class="nav navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Artists</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Postings</a>
-          </li>
-          <li class="nav-item" @click="toAcc"><a class="nav-link" href="#/login">Account</a></li>
-        </ul>
-
+    <nav class="navbar navbar-light navbar-expand-md">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#/home"
+          ><img id="Logo" src="../assets/SmartArt.png" /></a
+        ><button
+          data-toggle="collapse"
+          class="navbar-toggler"
+          data-target="#navcol-1"
+          @click="toHome"
+        >
+          <span class="sr-only">Toggle navigation</span
+          ><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+          <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item" @click="toAcc">
+              <a class="nav-link">Account</a>
+            </li>
+            <li class="nav-item" @click="toContactUs">
+              <a class="nav-link">Contact Us</a>
+            </li>
+            <li class="nav-item" @click="toPostOrCart">
+              <a class="nav-link" href="#">{{ this.buttonType }}</a>
+            </li>
+           
+          </ul>
+        </div>
       </div>
     </nav>
   </div>
@@ -61,6 +65,9 @@ export default {
     },
     toHome() {
       this.$router.push({ name: "Home" });
+    },
+    toContactUs() {
+      this.$router.push({ name: "ContactUs" });
     },
     toPostOrCart() {
       if(this.userType == 'artist'){
