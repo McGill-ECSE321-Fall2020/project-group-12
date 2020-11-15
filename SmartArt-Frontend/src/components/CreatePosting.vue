@@ -78,6 +78,15 @@ Create account
               placeholder="Image URL"
             />
           </div>
+          <div v-if="this.userType === 'administrator'" class="inputbox">
+            <p>Artist Name</p>
+            <input
+              type="text"
+              class="form-control input-style"
+              v-model="name"
+              placeholder="Artist Name"
+            />
+          </div>
         </div>
       </div>
       <b-button @click="createPost" pill variant="outline-secondary"
@@ -113,6 +122,7 @@ export default {
     return {
       email: "",
       title: "",
+      name: "",
       description: "",
       image: "",
       price: null,
@@ -152,7 +162,7 @@ export default {
       if (this.image == "") {
         this.error += "Please enter an image URL. ";
       }
-      if (error == "") {
+      if (this.error == "" && this.userType == 'artist') {
         AXIOS({
           method: "post",
           url: "/posting/create",
@@ -174,6 +184,40 @@ export default {
           .then((response) => {
             this.email = "";
             this.title = "";
+            this.description = "";
+            this.xDim = null;
+            this.yDim = null;
+            this.zDim = null;
+            this.date = "";
+            this.image = "";
+            this.error = "";
+
+            this.$router.push({ name: "Account" });
+          })
+          .catch((e) => {
+            var errorMsg = e.message;
+            console.log(e);
+            this.error = errorMsg;
+          });
+      }else if (this.error == "" && this.userType == 'administrator'){
+        AXIOS({
+          method: "post",
+          url: "/posting/admin/create/".concat(this.email).concat("/").concat(this.name),
+          data: {
+            title: this.title,
+            price: this.price,
+            xdim: this.xDim,
+            ydim: this.yDim,
+            zdim: this.zDim,
+            image: this.image,
+            date: this.date,
+            description: this.description,
+          },
+        })
+          .then((response) => {
+            this.email = "";
+            this.title = "";
+            this.name = "";
             this.description = "";
             this.xDim = null;
             this.yDim = null;
