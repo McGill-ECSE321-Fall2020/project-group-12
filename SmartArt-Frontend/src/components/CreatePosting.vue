@@ -71,12 +71,13 @@ Create account
           </div>
           <div class="inputbox">
             <p>Image URL</p>
-            <input
-              type="url"
-              class="form-control input-style"
-              v-model="image"
-              placeholder="Image URL"
-            />
+            <ImageUploader maxWidth="700" maxHeight="800" @input="convertImage"/>
+<!--            <input-->
+<!--              type="url"-->
+<!--              class="form-control input-style"-->
+<!--              v-model="image"-->
+<!--              placeholder="Image URL"-->
+<!--            />-->
           </div>
           <div v-if="this.userType === 'administrator'" class="inputbox">
             <p>Artist Name</p>
@@ -102,6 +103,8 @@ Create account
 import axios from "axios";
 import Taskbar from "./Taskbar";
 import Footer from "./Footer";
+import ImageUploader from 'vue-image-upload-resize'
+
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -112,11 +115,13 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
+
 export default {
   name: "CreatePosting",
   components: {
     Taskbar,
     Footer,
+    ImageUploader
   },
   data() {
     return {
@@ -163,6 +168,7 @@ export default {
         this.error += "Please enter an image URL. ";
       }
       if (this.error == "" && this.userType == 'artist') {
+
         AXIOS({
           method: "post",
           url: "/posting/create",
@@ -235,6 +241,10 @@ export default {
           });
       }
     },
+    convertImage: function (file) {
+      this.image = file;
+      console.log(this.image);
+    }
   },
 };
 </script>

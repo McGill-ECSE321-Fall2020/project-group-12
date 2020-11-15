@@ -1,11 +1,7 @@
 package ca.mcgill.ecse321.smartart.model;
 
 import java.sql.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author Group 12 This class represents a posting of an art piece that can be put on display in a
