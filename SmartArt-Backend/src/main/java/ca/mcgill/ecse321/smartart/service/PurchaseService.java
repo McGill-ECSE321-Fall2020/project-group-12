@@ -305,7 +305,6 @@ public class PurchaseService {
 
     if (cart.removePosting(posting)) {
       posting.setArtStatus(ArtStatus.Available);
-      cart.setTotalPrice(cart.getTotalPrice() - posting.getPrice());
     }
     purchaseRepository.save(cart);
     postingRepository.save(posting);
