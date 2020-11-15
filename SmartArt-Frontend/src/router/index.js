@@ -9,6 +9,7 @@ import ViewPosting from "../components/ViewPosting";
 import CreatePosting from "../components/CreatePosting"
 import OrderConfirmation from "../components/OrderConfirmation";
 import ContactUs from "../components/ContactUs";
+import ViewPurchase from "../components/ViewPurchase"
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ export default new Router({
       path: '/contactUs',
       name: 'ContactUs',
       component: ContactUs
+    },
+    {
+      path: '/viewPurchase',
+      name: 'ViewPurchase',
+      component: ViewPurchase
     }
   ]
 })
