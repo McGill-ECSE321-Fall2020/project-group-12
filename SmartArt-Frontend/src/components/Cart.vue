@@ -19,9 +19,9 @@ Cart
             	 <div class = columns; style = "width: 20%">
                   Image
                   <table>
-                     <li v-for="posting in cartPostings"  v-bind:key="posting">
+                     <li v-for="posting in cartPostings"  v-bind:key="posting.postingID">
                         <tr>
-                           {{posting.image}}
+                           <img v-bind:src="posting.image" style="max-height: 220px; width: auto">
                         </tr>
                      </li>
                   </table>
@@ -29,7 +29,7 @@ Cart
                <div class = columns; style = "width: 20%">
         					Title
         					<table>
-                     <li v-for="posting in cartPostings" v-bind:key="posting">
+                     <li v-for="posting in cartPostings" v-bind:key="posting.postingID">
                         <tr>
                            {{posting.title}}
                         </tr>
@@ -41,7 +41,7 @@ Cart
             	 <div class = columns; style = "width: 12%">
             			Price
             		<table>
-                     <li v-for="posting in cartPostings" v-bind:key="posting">
+                     <li v-for="posting in cartPostings" v-bind:key="posting.postingID">
                         <tr>
                            {{posting.price}}
                         </tr>
@@ -51,12 +51,13 @@ Cart
                <div class = columns; style = "width: 5%">
                   <hr>
                   <table>
-                     <li v-for="posting in cartPostings" v-bind:key="posting">
+                     <li v-for="posting in cartPostings" v-bind:key="posting.postingID">
                         <tr>
                            <div class="purchaseButton">
                               <a href="http://127.0.0.1:8087/#/cart">
-                                 <button type="button" class="btn btn-danger">
+                                 <button type="button" class="btn btn-danger" @click="removePosting(posting)">
                                     Remove
+
                                  </button>
                               </a>
                            </div>
@@ -74,7 +75,7 @@ Cart
                <div class = columns; style = "width: 70%">
                </div>
                <div class = columns; style = "width: 5%; text-align: left">
-                                   Total
+                  Total
                </div>
                <div class = columns; style = "width: 5%">
                </div>
@@ -85,17 +86,23 @@ Cart
          </section>
          <section id="buttons">
             <div class = row>
-                <div class = columns; style = "width: 70%">
-                </div>
+               <div class = columns; style = "width: 53%">
+               </div>
+               <div class = columns; style = "width: 17%">
+                  <b-dropdown id="dropdown-1" text="Select your delivery type" class="m-md-2">
+                     <b-dropdown-item-btn @click="setPickUp">Pick-Up</b-dropdown-item-btn>
+                     <b-dropdown-item-btn @click="setShipped">Shipped</b-dropdown-item-btn>
+                  </b-dropdown>
+               </div>
                 <div class = columns; style = "width: 17%">
                    <div class="purchaseButton">
-                      <a href="https://smartart-frontend-000.herokuapp.com">
-                         <button type="button" class="btn btn-danger">
+                      <a href="http://127.0.0.1:8087/#/orderconfirmation">
+                        <button type="button" class="btn btn-danger">
                             Confirm Purchase
-                         </button>
-                      </a>
-                   </div>
-                </div>
+                        </button>
+                     </a>
+                  </div>
+               </div>
             </div>
          </section>
       </body>
@@ -128,24 +135,46 @@ export default {
     return {
       cart: null,
       cartPostings: [],
-      totalPrice: 0.00,
-      currentUser: null,
+      totalPrice: null,
+      email: null,
+      deliveryType: null,
       response: [],
     };
   },
   created: function () {
-         this.$store.getters.getActiveUser;
-         AXIOS.get("/purchases/cart/".concat(getActiveUser))
+         
+
+
+         this.email = this.$store.getters.getActiveUser;
+         AXIOS.get("/purchases/cart/".concat(this.email))
           .then((response) => {
             this.cart = response.data;
+            if (cart!= null) {
+               this.cartPostings = response.data.postings;
+               document.getElementById("cartPostings").innerHTML = this.cartPostings;
+               this.totalPrice = response.data.totalPrice;
+               document.getElementById("totalPrice").innerHTML = this.totalPrice;
+            }   
           })
           .catch((e) => {
             this.errorPosting = e;
           });
-        this.totalPrice = cart.totalPrice;
-        this.cartPostings = cart.postings;
-        document.getElementById("totalPrice").innerHTML = totalPrice;
-        document.getElementById("cartPostings").innerHTML = cartPostings;
+          console.log(this.totalPrice);
+    },
+  methods: {
+      removePosting: function (posting) {
+         this.cartPostings.splice(this.cartPostings.indexOf(posting), 1);
+         AXIOS.delete("/purchase/cart/remove/".concat(posting.getPostingID()))
+          .catch((e) => {
+            this.errorPosting = e;
+          });
+      },
+      setPickUp: function (){
+         
+      },
+      setShipped: function (){
+         
+      },
     },
 };
 
