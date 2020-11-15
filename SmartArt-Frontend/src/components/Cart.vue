@@ -92,7 +92,7 @@ Cart
           </div>
           <div class="columns;" style="width: 17%">
             <div class="purchaseButton">
-              <a href="http://127.0.0.1:8087/#/orderconfirmation">
+              <a>
                 <button type="button" class="btn btn-danger" @click="toConf">
                   Confirm Purchase
                 </button>
@@ -102,6 +102,7 @@ Cart
         </div>
       </section>
     </body>
+    <Footer/>
   </html>
 </template>
 
@@ -109,6 +110,7 @@ Cart
 import axios from "axios";
 import PostingList from "./PostingList";
 import Taskbar from "./Taskbar";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -124,6 +126,7 @@ export default {
   components: {
     PostingList,
     Taskbar,
+    Footer,
   },
   data() {
     return {

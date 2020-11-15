@@ -1,3 +1,4 @@
+Home
 <!DOCTYPE html>
 <template>
   <html style="color: white">
@@ -16,8 +17,8 @@
       <div ref="section2" style="margin-top: 50px">
         <PostingList v-bind:postingList="postingList" />
       </div>
-
-
+      
+      
       <hr>
         <div class="container-fluid">
           <div class="row justify-content-center">
@@ -51,6 +52,7 @@
         </div>
         </div>
         <br>
+        <Footer/>
     </body>
   </html>
 </template>
@@ -59,6 +61,7 @@
 import axios from "axios";
 import PostingList from "./PostingList";
 import Taskbar from "./Taskbar";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -90,7 +93,8 @@ export default {
   },
   components: {
     PostingList,
-    Taskbar
+    Taskbar,
+    Footer,
   },
   created: function () {
     AXIOS.get("/artists")
@@ -204,4 +208,5 @@ body {
   border-radius: 50%;
 }
 </style>
+
 

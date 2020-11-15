@@ -13,6 +13,7 @@ View Purchase
     <div ref="section2" style="margin-top: 50px">
       <PostingList v-bind:postingList="postingList" />
     </div>
+    <Footer/>
   </html>
 </template>
 
@@ -20,6 +21,7 @@ View Purchase
 import Taskbar from "./Taskbar";
 import PostingList from "./PostingList";
 import axios from "axios";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -44,6 +46,7 @@ export default {
   components: {
     Taskbar,
     PostingList,
+    Footer,
   },
   created: function () {
     this.purchaseID = this.$store.getters.getActivePurchase;

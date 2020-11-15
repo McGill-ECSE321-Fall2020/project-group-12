@@ -5,7 +5,8 @@ ViewPosting
     <div style="padding-left: 100px; padding-right: 100px; padding-top: 50px; align-items: center; text-align: center">
       <div class="card-deck">
           <div class="card">
-            <img class="card-img-top" v-bind:src="this.image" alt="Card image cap">
+            <img class="card-img-top" v-bind:src="this.image"
+                 onerror="this.onerror=null;this.src='https://i.ibb.co/RYk5c57/no-Image-Available.png';">
           </div>
         <div class="col-lg-6">
           <div class="card-inner">
@@ -29,7 +30,12 @@ ViewPosting
               <p class="card-text">Dimensions: {{ this.xDim }}x{{ this.yDim }}x{{ this.zDim }}cm</p>
               <p class="card-text">Availability: {{ this.artStatus }}</p>
               <p class="card-text"><small class="text-muted">Posted on: {{ this.date }}</small></p>
-              <button class="btn btn-danger" @click="addToCart">Add To Cart</button>
+              <div v-if="this.userType === 'buyer'">
+                <button class="btn btn-danger" @click="addToCart">Add To Cart</button>
+              </div>
+              <div v-if="this.userType === 'artist' || this.userType === 'administrator'">
+                <button class="btn btn-danger" @click="updatePosting">Edit Post</button>
+              </div>
               <p style="padding-top: 10px">{{ this.message }}</p>
             </div>
           </div>
@@ -37,6 +43,7 @@ ViewPosting
         </div>
       </div>
     </div>
+    <Footer/>
   </html>
 </template>
 
@@ -45,6 +52,7 @@ ViewPosting
 import Taskbar from "./Taskbar";
 import axios from "axios";
 import PostingList from "./PostingList";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -80,6 +88,7 @@ export default {
   },
   components: {
     Taskbar,
+    Footer,
   },
   created: function () {
     this.email = this.$store.getters.getActiveUser;
@@ -137,13 +146,22 @@ export default {
         this.message = "You must be logged in as a buyer to add items to your cart";
       }
     },
+    updatePosting: function () {
+      this.$store.dispatch("setActivePosting", this.postingID);
+      console.log("test");
+      this.$router.push({ name: "UpdatePosting" });
+    }
   },
 };
 </script>
 
 
 <style>
-
+.card-img-top {
+  width: auto;
+  max-height: 80vh;
+  object-fit: cover;
+}
 .btn {
   border-radius: 3px !important;
   border: none !important;
@@ -164,8 +182,6 @@ export default {
 }
 
 .card {
-  width: 35rem;
-  height: auto;
   box-shadow: 4px 8px 20px 4px #2e2e2d;
 }
 

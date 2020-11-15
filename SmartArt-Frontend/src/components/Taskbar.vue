@@ -1,3 +1,4 @@
+Taskbar
 <template>
   <div>
     <nav class="navbar navbar-light navbar-expand-md">
@@ -15,14 +16,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Artists</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Postings</a>
-            </li>
-            <li class="nav-item" @click="toAcc">
+          <li class="nav-item" @click="toAcc">
               <a class="nav-link">Account</a>
+            </li>
+            <li class="nav-item" @click="toContactUs">
+              <a class="nav-link">Contact Us</a>
             </li>
             <li class="nav-item" @click="toPostOrCart">
               <a class="nav-link" href="#">{{ this.buttonType }}</a>
@@ -67,6 +65,9 @@ export default {
     },
     toHome() {
       this.$router.push({ name: "Home" });
+    },
+    toContactUs() {
+      this.$router.push({ name: "ContactUs" });
     },
     toPostOrCart() {
       if(this.userType == 'artist'){
