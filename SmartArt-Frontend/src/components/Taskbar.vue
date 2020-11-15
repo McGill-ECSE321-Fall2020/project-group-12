@@ -27,15 +27,7 @@
             <li class="nav-item" @click="toPostOrCart">
               <a class="nav-link" href="#">{{ this.buttonType }}</a>
             </li>
-            <form class="form-inline">
-              <input
-                class="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-danger" type="submit">Search</button>
-            </form>
+           
           </ul>
         </div>
       </div>
