@@ -45,6 +45,8 @@ export default {
   },
   created: function () {
     this.email = this.$store.getters.getActiveUser;
+    this.deliveryType = this.$store.getters.getActiveDeliveryType;
+    console.log("/purchase/make/".concat(this.deliveryType))
     AXIOS.get("/buyers/".concat(this.email))
       .then((response) => {
         this.name = response.data.name;
@@ -59,24 +61,25 @@ export default {
       .catch((e) => {
         this.error = e;
       });
-    AXIOS({
-      method: "post",
-      url: "/purchase/make".concat(this.deliveryType),
-      data: {
-        purchaseID: this.purchaseID,
-        buyer: {
-          email: this.email,
-          gallery: this.gallery
-        }
-      },
-    })
-      .then((response) => {
-      })
-      .catch((e) => {
-        var errorMsg = e.message;
-        console.log(e);
-        this.error = errorMsg;
-      });
+    // AXIOS({
+    //   method: "post",
+    //   url: "/purchase/make/".concat(this.deliveryType),
+    //   data: {
+    //     purchaseID: this.purchaseID,
+    //     buyer: {
+    //       email: this.email,
+    //       gallery: this.gallery
+    //     }
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log(purchased)
+    //   })
+    //   .catch((e) => {
+    //     var errorMsg = e.message;
+    //     console.log(e);
+    //     this.error = errorMsg;
+    //   });
   },
   methods: {
     toHome() {

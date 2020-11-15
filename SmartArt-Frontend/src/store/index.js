@@ -25,7 +25,7 @@ export default new Vuex.Store({
             state.activePurchase = payload
         },
         setActiveDeliveryType(state, payload) {
-            state.activePurchase = payload
+            state.activeDeliveryType = payload
         }
     },
     actions: {

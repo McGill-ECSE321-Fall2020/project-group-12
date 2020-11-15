@@ -117,7 +117,7 @@ Cart
           </div>
           <div class="columns;" style="width: 17%">
             <div class="purchaseButton">
-              <a href="http://127.0.0.1:8087/#/orderconfirmation">
+              <a>
                 <button type="button" class="btn btn-danger" @click="toConf">
                   Confirm Purchase
                 </button>
@@ -175,7 +175,6 @@ export default {
       .catch((e) => {
         this.errorPosting = e;
       });
-    console.log(this.totalPrice);
   },
   methods: {
     removePosting: function (posting) {
@@ -187,6 +186,7 @@ export default {
       });
     },
     setPickUp: function () {
+       console.log("Clicked")
        this.$store.dispatch("setActiveDeliveryType", "PickUp");
     },
     setShipped: function () {
