@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -78,6 +79,16 @@ public class ArtistRestController {
   public ResponseEntity<?> login(@RequestBody LoginDto login) {
 	  try {
 		  Artist artist = artistService.login(login);
+		  return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
+	  } catch (IllegalArgumentException e) {
+		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+	  }
+  }
+  
+  @PutMapping(value = {"/artist/update", "/artist/update/"})
+  public ResponseEntity<?> updatePassword(@RequestBody ArtistDto data) {
+	  try {
+		  Artist artist = artistService.updatePassword(data);
 		  return new ResponseEntity<>(controllerHelper.convertToDto(artist), HttpStatus.OK);
 	  } catch (IllegalArgumentException e) {
 		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);

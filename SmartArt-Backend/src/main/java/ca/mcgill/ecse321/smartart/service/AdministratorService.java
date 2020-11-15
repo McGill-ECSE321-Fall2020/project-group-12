@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.smartart.dao.AdministratorRepository;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dto.AdministratorDto;
+import ca.mcgill.ecse321.smartart.dto.ArtistDto;
 import ca.mcgill.ecse321.smartart.dto.LoginDto;
 import ca.mcgill.ecse321.smartart.model.Administrator;
+import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 
 @Service
@@ -116,6 +118,16 @@ public class AdministratorService {
 	  if(!login.getPassword().equals(administrator.getPassword())) throw new IllegalArgumentException("Invalid password");
 	  return administrator;
 	  
+  }
+  
+  @Transactional
+  public Administrator updatePassword(AdministratorDto data) {
+	  if(data.getEmail() == null || data.getPassword() == null) throw new IllegalArgumentException("Please fill in all required fields");
+	  Administrator administrator = administratorRepository.findAdministratorByEmail(data.getEmail());
+	  if(administrator == null) throw new IllegalArgumentException("There is no account associated with this email");
+	  administrator.setPassword(data.getPassword());
+	  administratorRepository.save(administrator);
+	  return administrator;
   }
 
   private <T> List<T> toList(Iterable<T> iterable) {

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
 import ca.mcgill.ecse321.smartart.dto.GalleryDto;
+import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.model.Gallery;
 
 @Service
@@ -88,6 +89,16 @@ public class GalleryService {
   @Transactional
   public List<Gallery> getAllGalleries() {
     return toList(galleryRepository.findAll());
+  }
+  
+  @Transactional
+  public Gallery updateCommission(GalleryDto data) {
+	  if(data.getName() == null || data.getCommission() == 0) throw new IllegalArgumentException("Please fill in all required fields");
+	  Gallery gallery = galleryRepository.findGalleryByName(data.getName());
+	  if(gallery == null) throw new IllegalArgumentException("There is no gallery with this name");
+	  gallery.setCommission(data.getCommission());
+	  galleryRepository.save(gallery);
+	  return gallery;
   }
 
   private <T> List<T> toList(Iterable<T> iterable) {

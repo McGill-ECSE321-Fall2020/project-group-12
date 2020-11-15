@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.smartart.dto.AdministratorDto;
+import ca.mcgill.ecse321.smartart.dto.ArtistDto;
 import ca.mcgill.ecse321.smartart.dto.LoginDto;
 import ca.mcgill.ecse321.smartart.model.Administrator;
+import ca.mcgill.ecse321.smartart.model.Artist;
 import ca.mcgill.ecse321.smartart.service.AdministratorService;
 
 /** Writes administrator data into the HTTP response as JSON or XML after an HTTP request. */
@@ -86,4 +89,14 @@ public class AdministratorRestController {
 			return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PutMapping(value = {"/administrator/update", "/administrator/update/"})
+	  public ResponseEntity<?> updatePassword(@RequestBody AdministratorDto data) {
+		  try {
+			  Administrator administrator = adminService.updatePassword(data);
+			  return new ResponseEntity<>(controllerHelper.convertToDto(administrator), HttpStatus.OK);
+		  } catch (IllegalArgumentException e) {
+			  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+		  }
+	  }
 }
