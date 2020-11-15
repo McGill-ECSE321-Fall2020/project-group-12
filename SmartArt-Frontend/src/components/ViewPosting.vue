@@ -2,32 +2,40 @@ ViewPosting
 <template>
   <html lang="en">
     <Taskbar />
-    <div>
-      <p class="title">{{ this.title }}</p>
-    </div>
-    <div id="posting">
-      <img v-bind:src="this.image" />
-      <div class="info">
-        <p class="header">Posting ID : {{ this.postingID }}</p>
-        <p class="header">Artist : {{ this.artistName }}</p>
-        <p class="header">Price : ${{ this.price }}</p>
-        <p class="header">
-          Dimensions : {{ this.xDim }}x{{ this.yDim }}x{{ this.zDim }}cm
-        </p>
-        <p class="header">Description : {{ this.description }}</p>
-        <p class="header">Availability : {{ this.artStatus }}</p>
-        <p class="header">Date : {{ this.date }}</p>
+    <div style="padding-left: 100px; padding-right: 100px; padding-top: 50px; align-items: center; text-align: center">
+      <div class="card-deck">
+          <div class="card">
+            <img class="card-img-top" v-bind:src="this.image" alt="Card image cap">
+          </div>
+        <div class="col-lg-6">
+          <div class="card-inner">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title"><b>{{ this.title }}   ${{ this.price }}</b></h1>
+              <h3 class="card-text">By: {{ this.artistName }}</h3>
+            </div>
+          </div>
+          </div>
+          <div class="card-inner">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">Description: {{ this.description }}</p>
+            </div>
+          </div>
+          </div>
+          <div class="card-inner">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">Dimensions: {{ this.xDim }}x{{ this.yDim }}x{{ this.zDim }}cm</p>
+              <p class="card-text">Availability: {{ this.artStatus }}</p>
+              <p class="card-text"><small class="text-muted">Posted on: {{ this.date }}</small></p>
+              <button class="btn btn-danger" @click="addToCart">Add To Cart</button>
+              <p style="padding-top: 10px">{{ this.message }}</p>
+            </div>
+          </div>
+        </div>
+        </div>
       </div>
-    </div>
-    <div>
-      <b-button
-        @click="addToCart"
-        pill
-        variant="outline-secondary"
-        style="margin: 2px 2px 2px 2px"
-        >Add to Cart</b-button
-      >
-      <p>{{ this.message }}</p>
     </div>
   </html>
 </template>
@@ -135,8 +143,34 @@ export default {
 
 
 <style>
+
+.btn {
+  border-radius: 3px !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: scale(1);
+  transition: all 0.5s ease;
+}
+.btn:hover {
+  box-shadow: 2px 4px 20px 4px #2e2e2d !important;
+  transform: scale(1.1) perspective(1px)
+}
+
+.card-inner {
+  margin-bottom: 3rem;
+}
 .btn {
   border-radius: 0;
+}
+
+.card {
+  width: 35rem;
+  height: auto;
+  box-shadow: 4px 8px 20px 4px #2e2e2d;
+}
+
+.card-body {
+  background-color: #F0F0F0;
 }
 .info {
   position: relative;
