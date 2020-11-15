@@ -3,14 +3,15 @@ Order Confirmation
   <html lang="en">
     <Taskbar></Taskbar>
     <div id="orderConfirmation">
-      <h3>Your purchase is complete, {{ this.buyer }}.</h3>
+      <h3>Your purchase is complete, {{ this.name }}.</h3>
       <h3>Order Confirmation: #{{ this.purchaseID }}</h3>
       <h3>Thank you for supporting local artists!</h3>
-      <br>
-        <button type="button" class="btn btn-danger btn-lg" @click="toHome">Browse Other Art</button>
+      <br />
+      <button type="button" class="btn btn-danger btn-lg" @click="toHome">
+        Browse Other Art
+      </button>
       <p>{{ error }}</p>
     </div>
-    
   </html>
 </template>
 
@@ -36,21 +37,54 @@ export default {
     return {
       email: "",
       name: "",
-      password: "",
-      confirmPassword: "",
+      purchaseID: null,
+      purchaseType: "",
       gallery: "SmartArt",
-      userType: "",
       error: "",
     };
   },
   created: function () {
-      this.email = this.$store.getters.getActiveUser;
-      
+    this.email = this.$store.getters.getActiveUser;
+    this.deliveryType = this.$store.getters.getActiveDeliveryType;
+    console.log("/purchase/make/".concat(this.deliveryType))
+    AXIOS.get("/buyers/".concat(this.email))
+      .then((response) => {
+        this.name = response.data.name;
+      })
+      .catch((e) => {
+        this.error = e;
+      });
+    AXIOS.get("/purchases/cart/".concat(this.email))
+      .then((response) => {
+        this.purchaseID = response.data.purchaseID;
+      })
+      .catch((e) => {
+        this.error = e;
+      });
+    // AXIOS({
+    //   method: "post",
+    //   url: "/purchase/make/".concat(this.deliveryType),
+    //   data: {
+    //     purchaseID: this.purchaseID,
+    //     buyer: {
+    //       email: this.email,
+    //       gallery: this.gallery
+    //     }
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log(purchased)
+    //   })
+    //   .catch((e) => {
+    //     var errorMsg = e.message;
+    //     console.log(e);
+    //     this.error = errorMsg;
+    //   });
   },
   methods: {
-      toHome() {
-        this.$router.push({name: 'Home'})
-      },
+    toHome() {
+      this.$router.push({ name: "Home" });
+    },
   },
 };
 </script>

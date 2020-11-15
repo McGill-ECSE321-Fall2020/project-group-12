@@ -10,6 +10,8 @@ import CreatePosting from "../components/CreatePosting"
 import OrderConfirmation from "../components/OrderConfirmation";
 import ContactUs from "../components/ContactUs";
 import Footer from "../components/Footer";
+import ViewPurchase from "../components/ViewPurchase"
+import UpdatePosting from "../components/UpdatePosting";
 
 Vue.use(Router)
 
@@ -55,6 +57,11 @@ export default new Router({
       component: CreatePosting
     },
     {
+      path: '/updatePosting',
+      name: 'UpdatePosting',
+      component: UpdatePosting
+    },
+    {
       path: '/orderConfirmation',
       name: 'OrderConfirmation',
       component: OrderConfirmation
@@ -68,6 +75,11 @@ export default new Router({
       path: '/footer',
       name: 'Footer',
       component: Footer
-    }
+    },
+    {
+      path: '/viewPurchase',
+      name: 'ViewPurchase',
+      component: ViewPurchase
+    },
   ]
 })
