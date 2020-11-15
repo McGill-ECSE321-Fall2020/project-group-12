@@ -80,6 +80,8 @@ export default {
             this.listType = "My Postings";
           } else if (this.userType == "buyer") {
             this.listType = "My Purchases";
+          } else if(this.userType == "administrator"){
+            this.listType = "All Postings"
           }
         })
         .catch((e) => {
@@ -98,6 +100,14 @@ export default {
       AXIOS.get("/purchases/buyer/".concat(this.email))
         .then((response) => {
           this.purchaseList = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    }else if (this.userType == "administrator"){
+      AXIOS.get("/postings")
+        .then((response) => {
+          this.postingList = response.data;
         })
         .catch((e) => {
           this.error = e;

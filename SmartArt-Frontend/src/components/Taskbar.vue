@@ -48,7 +48,7 @@ export default {
   created: function () {
     this.email = this.$store.getters.getActiveUser;
     this.userType = this.$store.getters.getActiveUserType;
-    if (this.userType == "artist") {
+    if (this.userType == "artist" || this.userType == "administrator") {
       this.buttonType = "Post Art";
     } else if (this.userType == "buyer") {
       this.buttonType = "View Cart";
@@ -70,7 +70,7 @@ export default {
       this.$router.push({ name: "ContactUs" });
     },
     toPostOrCart() {
-      if(this.userType == 'artist'){
+      if (this.userType == "artist" || this.userType == "administrator") {
         this.$router.push({ name: "CreatePosting" });
       }else if(this.userType == 'buyer'){
         this.$router.push({ name: "Cart" });
