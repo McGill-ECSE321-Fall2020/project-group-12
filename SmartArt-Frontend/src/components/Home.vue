@@ -1,3 +1,4 @@
+Home
 <!DOCTYPE html>
 <template>
   <html style="color: white">
@@ -16,8 +17,6 @@
       <div ref="section2" style="margin-top: 50px">
         <PostingList v-bind:postingList="postingList" />
       </div>
-
-
       <hr>
         <div class="container-fluid">
           <div class="row justify-content-center">
@@ -204,4 +203,5 @@ body {
   border-radius: 50%;
 }
 </style>
+
 
