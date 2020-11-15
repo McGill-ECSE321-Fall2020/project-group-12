@@ -40,8 +40,9 @@ export default {
     return {
       email: "",
       name: "",
-      purchaseID: null,
+      purchaseID: 0,
       purchaseType: "",
+      postings: [],
       gallery: "SmartArt",
       error: "",
     };
@@ -60,29 +61,31 @@ export default {
     AXIOS.get("/purchases/cart/".concat(this.email))
       .then((response) => {
         this.purchaseID = response.data.purchaseID;
+        this.postings = response.data.postings;
       })
       .catch((e) => {
         this.error = e;
       });
-    // AXIOS({
-    //   method: "post",
-    //   url: "/purchase/make/".concat(this.deliveryType),
-    //   data: {
-    //     purchaseID: this.purchaseID,
-    //     buyer: {
-    //       email: this.email,
-    //       gallery: this.gallery
-    //     }
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log(purchased)
-    //   })
-    //   .catch((e) => {
-    //     var errorMsg = e.message;
-    //     console.log(e);
-    //     this.error = errorMsg;
-    //   });
+    AXIOS({
+      method: "post",
+      url: "/purchase/make/".concat(this.deliveryType),
+      data: {
+        purchaseID: this.purchaseID,
+        buyer: {
+          email: this.email,
+          gallery: this.gallery
+        },
+        postings: this.postings
+      },
+    })
+      .then((response) => {
+        console.log(purchased)
+      })
+      .catch((e) => {
+        var errorMsg = e.message;
+        console.log(e);
+        this.error = errorMsg;
+      });
   },
   methods: {
     toHome() {

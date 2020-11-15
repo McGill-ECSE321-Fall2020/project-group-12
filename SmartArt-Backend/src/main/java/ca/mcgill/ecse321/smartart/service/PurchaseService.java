@@ -133,7 +133,7 @@ public class PurchaseService {
    */
   @Transactional
   public Purchase makePurchase(Purchase cart, DeliveryType deliveryType) {
-    if (cart == null || cart.getTotalPrice() <= 0)
+    if (cart == null)
       throw new IllegalArgumentException("Must have a purchase order to make purchase");
 
     if (deliveryType != DeliveryType.PickUp && deliveryType != DeliveryType.Shipped)
@@ -169,7 +169,7 @@ public class PurchaseService {
   public Purchase makePurchase(PurchaseDto data, DeliveryType deliveryType)
       throws IllegalArgumentException {
     Purchase purchase = purchaseRepository.findPurchaseByPurchaseID(data.getPurchaseID());
-
+    System.out.println("PurchaseID: " + data.getPurchaseID());
     return makePurchase(purchase, deliveryType);
   }
 
