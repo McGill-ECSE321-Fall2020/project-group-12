@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state: {
         activeUser: '',
         activeUserType: '',
-        activePosting: ''
+        activePosting: '',
+        activePurchase: ''
     },
     mutations: {
         setActiveUser(state, payload) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
         },
         setActivePosting(state, payload) {
             state.activePosting = payload
+        },
+        setActivePurchase(state, payload) {
+            state.activePurchase = payload
         }
     },
     actions: {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
         },
         setActivePosting({ commit }, payload) {
             commit('setActivePosting', payload)
+        },
+        setActivePurchase({ commit }, payload) {
+            commit('setActivePurchase', payload)
         }
     },
     modules: {},
@@ -41,6 +48,9 @@ export default new Vuex.Store({
         },
         getActivePosting(state) {
             return state.activePosting
+        },
+        getActivePurchase(state) {
+            return state.activePurchase
         }
     }
 })
