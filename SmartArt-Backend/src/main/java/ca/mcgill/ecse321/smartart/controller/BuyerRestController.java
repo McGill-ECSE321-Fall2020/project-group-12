@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.mcgill.ecse321.smartart.dto.ArtistDto;
 import ca.mcgill.ecse321.smartart.dto.BuyerDto;
 import ca.mcgill.ecse321.smartart.dto.LoginDto;
 import ca.mcgill.ecse321.smartart.model.Artist;
@@ -80,6 +82,16 @@ public class BuyerRestController {
   public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
 	  try {
 		  Buyer buyer = buyerService.login(login);
+		  return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
+	  } catch (IllegalArgumentException e) {
+		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+	  }
+  }
+  
+  @PutMapping(value = {"/buyer/update", "/buyer/update/"})
+  public ResponseEntity<?> updatePassword(@RequestBody BuyerDto data) {
+	  try {
+		  Buyer buyer = buyerService.updatePassword(data);
 		  return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
 	  } catch (IllegalArgumentException e) {
 		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);

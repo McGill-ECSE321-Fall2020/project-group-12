@@ -117,6 +117,16 @@ public class ArtistService {
 	  if(!login.getPassword().equals(artist.getPassword())) throw new IllegalArgumentException("Invalid password");
 	  return artist;
   }
+  
+  @Transactional
+  public Artist updatePassword(ArtistDto data) {
+	  if(data.getEmail() == null || data.getPassword() == null) throw new IllegalArgumentException("Please fill in all required fields");
+	  Artist artist = artistRepository.findArtistByEmail(data.getEmail());
+	  if(artist == null) throw new IllegalArgumentException("There is no account associated with this email");
+	  artist.setPassword(data.getPassword());
+	  artistRepository.save(artist);
+	  return artist;
+  }
 
   private <T> List<T> toList(Iterable<T> iterable) {
     List<T> resultList = new ArrayList<T>();
