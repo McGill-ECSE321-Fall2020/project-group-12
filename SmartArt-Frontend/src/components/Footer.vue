@@ -16,7 +16,7 @@
                         <h1>Quick Navigation</h1>
                         <a href="#/home">Home</a>
                         <a href="#">Browse Artwork</a>
-                        <a href="#/CreateAccount">CreateAccount</a>
+                        <a href="#/CreateAccount">Create Account</a>
                         <button @click="toAcc">Login</button>
                     </div>
 

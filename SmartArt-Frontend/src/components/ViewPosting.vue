@@ -43,6 +43,7 @@ ViewPosting
         </div>
       </div>
     </div>
+    <Footer/>
   </html>
 </template>
 
@@ -51,6 +52,7 @@ ViewPosting
 import Taskbar from "./Taskbar";
 import axios from "axios";
 import PostingList from "./PostingList";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -86,6 +88,7 @@ export default {
   },
   components: {
     Taskbar,
+    Footer,
   },
   created: function () {
     this.email = this.$store.getters.getActiveUser;

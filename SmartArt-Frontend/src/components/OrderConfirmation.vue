@@ -12,12 +12,14 @@ Order Confirmation
       </button>
       <p>{{ error }}</p>
     </div>
+    <Footer/>
   </html>
 </template>
 
 <script>
 import axios from "axios";
 import Taskbar from "./Taskbar";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -32,6 +34,7 @@ export default {
   name: "CreateAccount",
   components: {
     Taskbar,
+    Footer,
   },
   data() {
     return {

@@ -41,12 +41,14 @@ Login
       >
       <p>{{ error }}</p>
     </div>
+    <Footer/>
   </html>
 </template>
 
 <script>
 import Taskbar from "./Taskbar";
 import axios from "axios";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -68,7 +70,8 @@ export default {
     };
   },
   components: {
-    Taskbar
+    Taskbar,
+    Footer,
   },
   methods: {
     tryLogin: function () {
