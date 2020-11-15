@@ -44,7 +44,7 @@ Cart
                     {{ posting.price }}
                 </td>
                 <td>
-                  <div class="purchaseButton">
+                  <div class="removeButton">
                     <a href="http://127.0.0.1:8087/#/cart">
                       <button
                         type="button"
@@ -80,7 +80,7 @@ Cart
             <b-dropdown
               id="dropdown-1"
               text="Select your delivery type"
-              class="m-md-2"
+              class=""
             >
               <b-dropdown-item-btn @click="setPickUp"
                 >Pick-Up</b-dropdown-item-btn
@@ -90,6 +90,15 @@ Cart
               >
             </b-dropdown>
           </div>
+          <!--<div class="columns;" style="width: 17%">
+            <div class="cancelButton">
+              <a href="http://127.0.0.1:8087/#/home">
+                <button type="button" class="btn btn-danger" @click="cancelPurchase">
+                  Cancel Purchase
+                </button>
+              </a>
+            </div>
+          </div>-->
           <div class="columns;" style="width: 17%">
             <div class="purchaseButton">
               <a>
@@ -136,6 +145,7 @@ export default {
       email: null,
       deliveryType: null,
       purchaseID: null,
+      gallery: "SmartArt",
       response: [],
     };
   },
@@ -145,6 +155,7 @@ export default {
       .then((response) => {
         this.cart = response.data;
         if (cart != null) {
+          this.purchaseID = response.data.purchaseID;
           this.totalPrice = response.data.totalPrice;
           this.cartPostings = response.data.postings;
           document.getElementById("cartPostings").innerHTML = this.cartPostings;          
@@ -158,12 +169,44 @@ export default {
   methods: {
     removePosting: function (posting) {
       this.cartPostings.splice(this.cartPostings.indexOf(posting), 1);
-      console.log(posting.postingID);
-      AXIOS.delete("/purchase/cart/remove/".concat(posting.postingID)
-      ).catch((e) => {
-        this.errorPosting = e;
-      });
+      if(this.email != ''){
+              AXIOS({
+        method: "delete",
+        url: "/purchase/cart/remove/".concat(posting.postingID),
+        data: {
+            email: this.email,
+            gallery: this.gallery
+          },
+      })
+        .then((response) => {
+          this.$router.push({ name: "Home" });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      }
     },
+    /**cancelPurchase: function () {
+      if(this.email != ''){
+              AXIOS({
+        method: "delete",
+        url: "/purchase/cancel",
+         data: {
+           purchaseID: this.purchaseID,
+           buyer: {
+             email: this.email,
+             gallery: this.gallery
+           }
+         },
+      })
+        .then((response) => {
+          this.$router.push({ name: "Home" });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      }
+    },*/
     setPickUp: function () {
       this.$store.dispatch("setActiveDeliveryType", "PickUp");
     },
