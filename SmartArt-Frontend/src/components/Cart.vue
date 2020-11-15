@@ -41,7 +41,7 @@ Cart
                 </td>
                 <td style="width: 4%"></td>
                 <td style="width: 36%">
-                    {{ posting.price }}
+                    ${{ posting.price }}
                 </td>
                 <td>
                   <div class="purchaseButton">
@@ -69,7 +69,7 @@ Cart
           <div class="columns;" style="width: 5%; text-align: left">Total</div>
           <div class="columns;" style="width: 5%"></div>
           <div class="columns;" style="width: 5%; text-align: right">
-            {{ this.totalPrice }}
+            ${{ this.totalPrice }}
           </div>
         </div>
       </section>
