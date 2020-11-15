@@ -31,7 +31,7 @@
                         </span>
                     </div>
                 </div>
-                 <div class="row justify-content-center">
+                  <div class="container-fluid">
                  <p class="site-footer__links">Copyright © 2020, <a href="/" title="">Smart Art</a>. <a target="_blank" rel="nofollow" href="https://github.com/McGill-ECSE321-Fall2020/project-group-12"> </a></p>
           </div>
            <br>
