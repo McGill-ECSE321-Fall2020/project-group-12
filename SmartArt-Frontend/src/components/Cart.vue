@@ -94,7 +94,7 @@ Cart
           <div class="columns;" style="width: 5%; text-align: left">Total</div>
           <div class="columns;" style="width: 5%"></div>
           <div class="columns;" style="width: 5%; text-align: right">
-            {{ totalPrice }}
+            {{ this.totalPrice }}
           </div>
         </div>
       </section>
@@ -154,9 +154,10 @@ export default {
     return {
       cart: null,
       cartPostings: [],
-      totalPrice: null,
+      totalPrice: 0.00,
       email: null,
       deliveryType: null,
+      purchaseID: null,
       response: [],
     };
   },
@@ -168,32 +169,36 @@ export default {
         if (cart != null) {
           this.cartPostings = response.data.postings;
           document.getElementById("cartPostings").innerHTML = this.cartPostings;
-          this.totalPrice = response.data.totalPrice;
-          document.getElementById("totalPrice").innerHTML = this.totalPrice;
         }
       })
       .catch((e) => {
         this.errorPosting = e;
       });
-    console.log(this.totalPrice);
+    this.purchaseID = this.$store.getters.getActivePurchase;
+    AXIOS.get("/purchases/".concat(this.purchaseID))
+        .then((response) => {
+          this.totalPrice = response.data.totalPrice;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
   },
   methods: {
     removePosting: function (posting) {
       this.cartPostings.splice(this.cartPostings.indexOf(posting), 1);
-      AXIOS.delete(
-        "/purchase/cart/remove/".concat(posting.getPostingID())
+      AXIOS.delete("/purchase/cart/remove/".concat(posting.postingID)
       ).catch((e) => {
         this.errorPosting = e;
       });
     },
     setPickUp: function () {
-       this.$store.dispatch("setActiveDeliveryType", "PickUp");
+      this.$store.dispatch("setActiveDeliveryType", "PickUp");
     },
     setShipped: function () {
-       this.$store.dispatch("setActiveDeliveryType", "Shipped");
+      this.$store.dispatch("setActiveDeliveryType", "Shipped");
     },
     toConf: function (){
-       this.$router.push({ name: "OrderConfirmation" });
+      this.$router.push({ name: "OrderConfirmation" });
     }
   },
 };
@@ -225,10 +230,7 @@ hr {
   margin-left: 6rem;
   margin-right: 6rem;
 }
-.cartText1 {
-  width: 8.33333%;
-}
-.cartText2 {
-  width: 25%;
+ul.ba {
+    list-style-type: none;
 }
 </style>
