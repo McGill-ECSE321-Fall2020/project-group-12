@@ -13,62 +13,37 @@ Cart
           <hr />
         </div>
         <div class="row cartText">
-          <div class="columns;" style="width: 14%"></div>
-          <div class="columns;" style="width: 20%">
-            Image
-            <table>
-              <li
-                v-for="posting in cartPostings"
-                v-bind:key="posting.postingID"
-              >
-                <tr>
+          <table style = "width: 100%">
+            <tr>
+              <td style = "width:9.5%;"></td>
+              <td style = "width:12%">Image</td>
+              <td style = "width:13%">Title</td>
+              <td style = "width:1%"></td>
+              <td style = "width:24%">Price</td>
+              <td style = "width:12.5%"></td>
+            </tr>
+          </table>
+          <table style = "width: 90%">  
+            <li
+              v-for="posting in cartPostings"
+              v-bind:key="posting.postingID"
+            >
+              <tr style = "height">
+                <td style = "width:15%"></td>
+                <td style = "width:20%">
                   <img
                     v-bind:src="posting.image"
-                    style="max-height: 220px; width: auto"
+                    style="max-height: 100px; width: auto"
                   />
-                </tr>
-              </li>
-            </table>
-          </div>
-          <div class="columns;" style="width: 20%">
-            Title
-            <table>
-              <li
-                v-for="posting in cartPostings"
-                v-bind:key="posting.postingID"
-              >
-                <tr>
-                  {{
-                    posting.title
-                  }}
-                </tr>
-              </li>
-            </table>
-          </div>
-          <div class="columns;" style="width: 15%"></div>
-          <div class="columns;" style="width: 12%">
-            Price
-            <table>
-              <li
-                v-for="posting in cartPostings"
-                v-bind:key="posting.postingID"
-              >
-                <tr>
-                  {{
-                    posting.price
-                  }}
-                </tr>
-              </li>
-            </table>
-          </div>
-          <div class="columns;" style="width: 5%">
-            <hr />
-            <table>
-              <li
-                v-for="posting in cartPostings"
-                v-bind:key="posting.postingID"
-              >
-                <tr>
+                </td>
+                <td style = "width:20%">
+                    {{ posting.title }}
+                </td>
+                <td style="width: 4%"></td>
+                <td style="width: 36%">
+                    {{ posting.price }}
+                </td>
+                <td>
                   <div class="purchaseButton">
                     <a href="http://127.0.0.1:8087/#/cart">
                       <button
@@ -80,11 +55,11 @@ Cart
                       </button>
                     </a>
                   </div>
-                </tr>
-              </li>
-            </table>
-          </div>
-          <div class="columns;" style="width: 14%"></div>
+                </td>
+                <td style="width: 14%"></td>
+              </tr>
+            </li>
+          </table>
         </div>
         <div class="bot divider">
           <hr />
@@ -94,7 +69,7 @@ Cart
           <div class="columns;" style="width: 5%; text-align: left">Total</div>
           <div class="columns;" style="width: 5%"></div>
           <div class="columns;" style="width: 5%; text-align: right">
-            {{ totalPrice }}
+            {{ this.totalPrice }}
           </div>
         </div>
       </section>
@@ -157,9 +132,10 @@ export default {
     return {
       cart: null,
       cartPostings: [],
-      totalPrice: null,
+      totalPrice: 0.00,
       email: null,
       deliveryType: null,
+      purchaseID: null,
       response: [],
     };
   },
@@ -169,9 +145,9 @@ export default {
       .then((response) => {
         this.cart = response.data;
         if (cart != null) {
-          this.cartPostings = response.data.postings;
-          document.getElementById("cartPostings").innerHTML = this.cartPostings;
           this.totalPrice = response.data.totalPrice;
+          this.cartPostings = response.data.postings;
+          document.getElementById("cartPostings").innerHTML = this.cartPostings;          
           document.getElementById("totalPrice").innerHTML = this.totalPrice;
         }
       })
@@ -182,21 +158,20 @@ export default {
   methods: {
     removePosting: function (posting) {
       this.cartPostings.splice(this.cartPostings.indexOf(posting), 1);
-      AXIOS.delete(
-        "/purchase/cart/remove/".concat(posting.getPostingID())
+      console.log(posting.postingID);
+      AXIOS.delete("/purchase/cart/remove/".concat(posting.postingID)
       ).catch((e) => {
         this.errorPosting = e;
       });
     },
     setPickUp: function () {
-       console.log("Clicked")
-       this.$store.dispatch("setActiveDeliveryType", "PickUp");
+      this.$store.dispatch("setActiveDeliveryType", "PickUp");
     },
     setShipped: function () {
-       this.$store.dispatch("setActiveDeliveryType", "Shipped");
+      this.$store.dispatch("setActiveDeliveryType", "Shipped");
     },
     toConf: function (){
-       this.$router.push({ name: "OrderConfirmation" });
+      this.$router.push({ name: "OrderConfirmation" });
     }
   },
 };
@@ -228,10 +203,10 @@ hr {
   margin-left: 6rem;
   margin-right: 6rem;
 }
-.cartText1 {
-  width: 8.33333%;
+li {
+    list-style-type: none;
 }
-.cartText2 {
-  width: 25%;
+tr>td{
+  padding-bottom: 2em;
 }
 </style>
