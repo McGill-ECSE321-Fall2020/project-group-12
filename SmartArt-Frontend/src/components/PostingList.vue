@@ -3,11 +3,13 @@
     <div class="card-columns" style="margin-top: 50px; position: center">
       <div class="card-wrapper"
            v-bind:key="posting.id" v-for="posting in postingList">
-          <div class="card" style="width: 20rem"
+          <div class="card"
                data-aos="fade-up"
                data-aos-duration="2000">
             <div class="card-img-wrapper">
-              <img class="card-img-top" v-bind:src="posting.image" style="max-height: 220px; width: auto">
+              <img class="card-img-top" v-bind:src="posting.image"
+                   onerror="this.onerror=null;this.src='https://i.ibb.co/RYk5c57/no-Image-Available.png';"
+                   style="max-height: 220px; width: auto">
             </div>
             <div class="card-body">
               <h5 class="card-title">
@@ -16,7 +18,7 @@
               </h5>
               <div class="card-content">
                 <p class="card-text">{{ posting.description }}</p>
-                <a href="#" class="btn btn-danger" @click="toPosting(posting.postingID)">View Post</a>
+                <button class="btn btn-danger" @click="toPosting(posting.postingID)">View Post</button>
               </div>
             </div>
           </div>
@@ -42,9 +44,14 @@ export default {
 </script>
 
 <style scoped>
-
+.btn {
+  border-radius: 3px !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: scale(1) !important;
+}
   .card-wrapper {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
   .card-image .card .card-img-wrapper {
     height: 100%;
@@ -87,8 +94,7 @@ export default {
   }
   .card:hover {
     box-shadow: 10px 15px 20px;
-    min-height: 420px;
-    min-width: 20rem;
+    min-height: 405px;
   }
   .card-img-wrapper {
     display: flex;
