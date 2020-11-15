@@ -185,7 +185,7 @@ body {
 }
 
 #splashpage {
-  background-image: url("../assets/stairsAcrossCanal.jpg");
+  background-image: url("https://images.unsplash.com/photo-1518998053901-5348d3961a04?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=3367&amp;q=80");
   height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
