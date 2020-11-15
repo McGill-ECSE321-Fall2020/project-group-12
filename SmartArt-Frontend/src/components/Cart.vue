@@ -23,12 +23,12 @@ Cart
               <td style = "width:12.5%"></td>
             </tr>
           </table>
-          <table style = "width: 90%">  
+          <table style = "width: 90%">
             <li
               v-for="posting in cartPostings"
               v-bind:key="posting.postingID"
             >
-              <tr style = "height">
+              <tr>
                 <td style = "width:15%"></td>
                 <td style = "width:20%">
                   <img
@@ -75,8 +75,8 @@ Cart
       </section>
       <section id="buttons">
         <div class="row">
-          <div class="columns;" style="width: 53%"></div>
-          <div class="columns;" style="width: 17%">
+          <div class="columns" style="width: 62%"></div>
+          <div class="columns" style="width: 17%">
             <b-dropdown
               id="dropdown-1"
               text="Select your delivery type"
@@ -158,7 +158,7 @@ export default {
           this.purchaseID = response.data.purchaseID;
           this.totalPrice = response.data.totalPrice;
           this.cartPostings = response.data.postings;
-          document.getElementById("cartPostings").innerHTML = this.cartPostings;          
+          document.getElementById("cartPostings").innerHTML = this.cartPostings;
           document.getElementById("totalPrice").innerHTML = this.totalPrice;
         }
       })
@@ -252,4 +252,5 @@ li {
 tr>td{
   padding-bottom: 2em;
 }
+
 </style>
