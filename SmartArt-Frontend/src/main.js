@@ -9,8 +9,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import ImageUploader from 'vue-image-upload-resize'
 
 Vue.use(BootstrapVue)
+Vue.use(ImageUploader)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
