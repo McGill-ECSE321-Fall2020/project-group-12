@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.smartart.dao.BuyerRepository;
 import ca.mcgill.ecse321.smartart.dao.GalleryRepository;
+import ca.mcgill.ecse321.smartart.dto.ArtistDto;
 import ca.mcgill.ecse321.smartart.dto.BuyerDto;
 import ca.mcgill.ecse321.smartart.dto.LoginDto;
 import ca.mcgill.ecse321.smartart.model.Artist;
@@ -115,6 +116,16 @@ public class BuyerService {
 	  Buyer buyer = buyerRepository.findBuyerByEmail(login.getEmail());
 	  if(buyer == null) throw new IllegalArgumentException("There is no account associated with this email");
 	  if(!login.getPassword().equals(buyer.getPassword())) throw new IllegalArgumentException("Invalid password");
+	  return buyer;
+  }
+  
+  @Transactional
+  public Buyer updatePassword(BuyerDto data) {
+	  if(data.getEmail() == null || data.getPassword() == null) throw new IllegalArgumentException("Please fill in all required fields");
+	  Buyer buyer = buyerRepository.findBuyerByEmail(data.getEmail());
+	  if(buyer == null) throw new IllegalArgumentException("There is no account associated with this email");
+	  buyer.setPassword(data.getPassword());
+	  buyerRepository.save(buyer);
 	  return buyer;
   }
 

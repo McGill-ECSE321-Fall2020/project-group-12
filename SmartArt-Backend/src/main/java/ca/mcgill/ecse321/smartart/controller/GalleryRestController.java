@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,4 +72,14 @@ public class GalleryRestController {
       return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
   }
+  
+  @PutMapping(value = {"/gallery/update", "/gallery/update/"})
+  public ResponseEntity<?> updateCommission(@RequestBody GalleryDto data) {
+	    try {
+	      Gallery gallery = galleryService.updateCommission(data);
+	      return new ResponseEntity<>(controllerHelper.convertToDto(gallery), HttpStatus.CREATED);
+	    } catch (IllegalArgumentException e) {
+	      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+	    }
+	  }
 }
