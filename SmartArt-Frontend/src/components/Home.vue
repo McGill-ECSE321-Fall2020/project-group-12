@@ -1,4 +1,3 @@
-Home
 <!DOCTYPE html>
 <template>
   <html style="color: white">
@@ -14,8 +13,10 @@ Home
           </a>
         </div>
       </div>
+      <div ref="section2" style="margin-top: 50px">
+        <PostingList v-bind:postingList="postingList" />
+      </div>
 
-          <PostingList ref="section2" v-bind:postingList="postingList" />
 
       <hr>
         <div class="container-fluid">
@@ -132,9 +133,6 @@ export default {
         behavior: 'smooth'
       });
     },
-    handleHoverScroll(hovered) {
-      this.isHovered = hovered
-    }
   }
 };
 </script>
@@ -183,7 +181,7 @@ body {
   padding-top: 8vh;
   font-family: Palatino;
   font-variant: small-caps;
-  font-size: 100px
+  font-size: 10vh
 }
 
 #splashpage {

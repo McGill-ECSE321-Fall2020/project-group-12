@@ -1,13 +1,15 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 import Login from "../components/Login";
 import CreateAccount from "../components/CreateAccount";
 import Home from "../components/Home";
-import Cart from "../components/Cart"
+import Cart from "../components/Cart";
 import Account from "../components/Account";
 import ViewPosting from "../components/ViewPosting";
+import CreatePosting from "../components/CreatePosting"
 import OrderConfirmation from "../components/OrderConfirmation";
 import ContactUs from "../components/ContactUs";
+import ViewPurchase from "../components/ViewPurchase"
 
 Vue.use(Router)
 
@@ -48,6 +50,11 @@ export default new Router({
       component: ViewPosting
     },
     {
+      path: '/createPosting',
+      name: 'CreatePosting',
+      component: CreatePosting
+    },
+    {
       path: '/orderConfirmation',
       name: 'OrderConfirmation',
       component: OrderConfirmation
@@ -56,6 +63,11 @@ export default new Router({
       path: '/contactUs',
       name: 'ContactUs',
       component: ContactUs
+    },
+    {
+      path: '/viewPurchase',
+      name: 'ViewPurchase',
+      component: ViewPurchase
     }
   ]
 })

@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-left: 100px; padding-right: 100px">
+  <div style="padding-left: 100px; padding-right: 100px; padding-top: 50px">
     <div class="card-columns" style="margin-top: 50px; position: center">
       <div class="card-wrapper"
            v-bind:key="posting.id" v-for="posting in postingList">
@@ -7,7 +7,7 @@
                data-aos="fade-up"
                data-aos-duration="2000">
             <div class="card-img-wrapper">
-              <img class="card-img-top" v-bind:src="posting.image">
+              <img class="card-img-top" v-bind:src="posting.image" style="max-height: 220px; width: auto">
             </div>
             <div class="card-body">
               <h5 class="card-title">
@@ -31,6 +31,7 @@ export default {
   name: "PostingList",
   // props "exports" what's inside so that whatever imports PostingList has access to data inside
   props: ["postingList"],
+
   methods: {
     toPosting(id) {
       this.$store.dispatch("setActivePosting", id);

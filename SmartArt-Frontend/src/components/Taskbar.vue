@@ -23,9 +23,9 @@
           </li>
           <li class="nav-item" @click="toAcc"><a class="nav-link" href="#/login">Account</a></li>
         </ul>
+
       </div>
-    </div>
-  </nav>
+    </nav>
   </div>
 </template>
 
@@ -33,24 +33,44 @@
 <script>
 export default {
   name: "Taskbar",
-//fix to check if current acc
-  methods:
-    {
-      toAcc() {
-        if(this.$store.getters.getActiveUser == ''){
-          this.$router.push({name: 'Login'})
-        }else{
-          this.$router.push({name: 'Account'})
-        }
-      },
-      toHome() {
-        this.$router.push({name: 'Home'})
-      },
-      toSell() {
-        this.$router.push({name: 'NewPost'})
-      }
+  data() {
+    return {
+      email: "",
+      error: "",
+      userType: "",
+      buttonType: "",
+    };
+  },
+  created: function () {
+    this.email = this.$store.getters.getActiveUser;
+    this.userType = this.$store.getters.getActiveUserType;
+    if (this.userType == "artist") {
+      this.buttonType = "Post Art";
+    } else if (this.userType == "buyer") {
+      this.buttonType = "View Cart";
     }
-}
+  },
+  methods: {
+    toAcc() {
+      console.log(this.$store.getters.getActiveUser);
+      if (this.$store.getters.getActiveUser == "") {
+        this.$router.push({ name: "Login" });
+      } else {
+        this.$router.push({ name: "Account" });
+      }
+    },
+    toHome() {
+      this.$router.push({ name: "Home" });
+    },
+    toPostOrCart() {
+      if(this.userType == 'artist'){
+        this.$router.push({ name: "CreatePosting" });
+      }else if(this.userType == 'buyer'){
+        this.$router.push({ name: "Cart" });
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -61,5 +81,4 @@ export default {
   overflow: auto;
   white-space: nowrap;
 }
-
 </style>

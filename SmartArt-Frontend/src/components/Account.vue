@@ -11,11 +11,24 @@ Account
       </div>
       <p class="listHeader">{{ this.listType }}</p>
     </div>
+    <div ref="section2" style="margin-top: 50px">
+      <PostingList v-bind:postingList="postingList" />
+    </div>
+    <div ref="section2" style="margin-top: 50px">
+      <PurchaseList v-bind:purchaseList="purchaseList" />
+    </div>
+    <div>
+      <b-button @click="logOut" pill variant="outline-secondary"
+        >Logout</b-button
+      >
+    </div>
   </html>
 </template>
 
 <script>
 import Taskbar from "./Taskbar";
+import PostingList from "./PostingList";
+import PurchaseList from "./PurchaseList";
 import axios from "axios";
 var config = require("../../config");
 
@@ -28,14 +41,14 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
 export default {
-  name: "Login",
+  name: "Account",
   data() {
     return {
       email: "",
       listType: "",
       name: "",
-      purchases: [],
-      postings: [],
+      purchaseList: [],
+      postingList: [],
       password: "",
       error: "",
       userType: "",
@@ -43,6 +56,15 @@ export default {
   },
   components: {
     Taskbar,
+    PostingList,
+    PurchaseList,
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch("setActiveUser", "");
+      this.$store.dispatch("setActiveUserType", "");
+      this.$router.push({ name: "Home" });
+    },
   },
   created: function () {
     this.email = this.$store.getters.getActiveUser;
@@ -53,11 +75,26 @@ export default {
           this.name = response.data.name;
           if (this.userType == "artist") {
             this.listType = "My Postings";
-            this.postings = response.data.postings;
           } else if (this.userType == "buyer") {
             this.listType = "My Purchases";
-            this.purchases = response.data.purchases;
           }
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    }
+    if (this.userType == "artist") {
+      AXIOS.get("/postings/artist/".concat(this.email))
+        .then((response) => {
+          this.postingList = response.data;
+        })
+        .catch((e) => {
+          this.error = e;
+        });
+    } else if (this.userType == "buyer") {
+      AXIOS.get("/purchases/buyer/".concat(this.email))
+        .then((response) => {
+          this.purchaseList = response.data;
         })
         .catch((e) => {
           this.error = e;

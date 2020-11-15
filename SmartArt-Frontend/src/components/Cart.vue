@@ -2,9 +2,7 @@ Cart
 <!DOCTYPE html>
 <template>
    <html style="color: white">
-      <div class="taskbar"
-          <Taskbar/>
-      </div>
+      <Taskbar/>
       <body style="align-items: center; text-align: center">
          <div style="padding-top: 30px">
          </div>
@@ -21,7 +19,7 @@ Cart
             	 <div class = columns; style = "width: 20%">
                   Image
                   <table>
-                     <li v-for="posting in cartPostings">
+                     <li v-for="posting in cartPostings"  v-bind:key="posting">
                         <tr>
                            {{posting.image}}
                         </tr>
@@ -31,25 +29,41 @@ Cart
                <div class = columns; style = "width: 20%">
         					Title
         					<table>
-                     <li v-for="posting in cartPostings">
+                     <li v-for="posting in cartPostings" v-bind:key="posting">
                         <tr>
                            {{posting.title}}
                         </tr>
                      </li>
                   </table>
         		   </div>
-            	 <div class = columns; style = "width: 20%">
+            	 <div class = columns; style = "width: 15%">
                </div>
             	 <div class = columns; style = "width: 12%">
             			Price
-            			<table>
-                     <li v-for="posting in cartPostings">
+            		<table>
+                     <li v-for="posting in cartPostings" v-bind:key="posting">
                         <tr>
                            {{posting.price}}
                         </tr>
                      </li>
                   </table>
-            	 </div>
+            	</div>
+               <div class = columns; style = "width: 5%">
+                  <hr>
+                  <table>
+                     <li v-for="posting in cartPostings" v-bind:key="posting">
+                        <tr>
+                           <div class="purchaseButton">
+                              <a href="http://127.0.0.1:8087/#/cart">
+                                 <button type="button" class="btn btn-danger">
+                                    Remove
+                                 </button>
+                              </a>
+                           </div>
+                        </tr>
+                     </li>
+                  </table>
+               </div>
             	 <div class = columns; style = "width: 14%">
                </div>
             </div>
@@ -88,7 +102,53 @@ Cart
     </html>
 </template>
 
-<script src="./Cart.js">
+<script>
+import axios from "axios";
+import PostingList from "./PostingList";
+import Taskbar from "./Taskbar";
+var config = require("../../config");
+
+var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
+var backendUrl =
+  "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl },
+});
+
+
+export default {
+
+  components: {
+      PostingList,
+      Taskbar
+  },
+  data() {
+    return {
+      cart: null,
+      cartPostings: [],
+      totalPrice: 0.00,
+      currentUser: null,
+      response: [],
+    };
+  },
+  created: function () {
+         this.$store.getters.getActiveUser;
+         AXIOS.get("/purchases/cart/".concat(getActiveUser))
+          .then((response) => {
+            this.cart = response.data;
+          })
+          .catch((e) => {
+            this.errorPosting = e;
+          });
+        this.totalPrice = cart.totalPrice;
+        this.cartPostings = cart.postings;
+        document.getElementById("totalPrice").innerHTML = totalPrice;
+        document.getElementById("cartPostings").innerHTML = cartPostings;
+    },
+};
+
 </script>
 
 

@@ -77,7 +77,7 @@ public class AdministratorRestController {
 		}
 	}
 
-	@GetMapping(value = {"/administrator/login", "/administrator/login/"})
+	@PostMapping(value = {"/administrator/login", "/administrator/login/"})
 	public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
 		try {
 			Administrator administrator = adminService.login(login);

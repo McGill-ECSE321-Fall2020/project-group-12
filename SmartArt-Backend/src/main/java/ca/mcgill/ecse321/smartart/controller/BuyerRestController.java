@@ -76,7 +76,7 @@ public class BuyerRestController {
     }
   }
   
-  @GetMapping(value = {"/buyer/login", "/buyer/login/"})
+  @PostMapping(value = {"/buyer/login", "/buyer/login/"})
   public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
 	  try {
 		  Buyer buyer = buyerService.login(login);
