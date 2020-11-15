@@ -56,6 +56,9 @@ Create account
         >Login</b-button
       >
       <p>{{ error }}</p>
+
+      
+    <Footer></Footer>
     </div>
   </html>
 
@@ -64,6 +67,7 @@ Create account
 <script>
 import axios from "axios";
 import Taskbar from './Taskbar'
+import Footer from './Footer'
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -77,7 +81,8 @@ var AXIOS = axios.create({
 export default {
   name: "CreateAccount",
   components: {
-    Taskbar
+    Taskbar,
+    Footer,
   },
   data() {
     return {

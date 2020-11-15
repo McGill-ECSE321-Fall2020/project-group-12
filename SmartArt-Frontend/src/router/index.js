@@ -9,6 +9,7 @@ import ViewPosting from "../components/ViewPosting";
 import CreatePosting from "../components/CreatePosting"
 import OrderConfirmation from "../components/OrderConfirmation";
 import ContactUs from "../components/ContactUs";
+import Footer from "../components/Footer";
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ export default new Router({
       path: '/contactUs',
       name: 'ContactUs',
       component: ContactUs
+    },
+    {
+      path: '/footer',
+      name: 'Footer',
+      component: Footer
     }
   ]
 })
