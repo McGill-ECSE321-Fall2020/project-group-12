@@ -22,6 +22,7 @@ Account
         >Logout</b-button
       >
     </div>
+    <Footer/>
   </html>
 </template>
 
@@ -30,6 +31,7 @@ import Taskbar from "./Taskbar";
 import PostingList from "./PostingList";
 import PurchaseList from "./PurchaseList";
 import axios from "axios";
+import Footer from "./Footer";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -58,6 +60,7 @@ export default {
     Taskbar,
     PostingList,
     PurchaseList,
+    Footer,
   },
   methods: {
     logOut() {

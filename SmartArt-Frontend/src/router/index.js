@@ -9,6 +9,7 @@ import ViewPosting from "../components/ViewPosting";
 import CreatePosting from "../components/CreatePosting"
 import OrderConfirmation from "../components/OrderConfirmation";
 import ContactUs from "../components/ContactUs";
+import Footer from "../components/Footer";
 import ViewPurchase from "../components/ViewPurchase"
 import UpdatePosting from "../components/UpdatePosting";
 
@@ -71,9 +72,14 @@ export default new Router({
       component: ContactUs
     },
     {
+      path: '/footer',
+      name: 'Footer',
+      component: Footer
+    },
+    {
       path: '/viewPurchase',
       name: 'ViewPurchase',
       component: ViewPurchase
-    }
+    },
   ]
 })
