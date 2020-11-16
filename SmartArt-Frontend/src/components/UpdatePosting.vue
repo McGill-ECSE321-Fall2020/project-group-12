@@ -74,7 +74,7 @@
           <p>Image:</p>
           <div>
             <div style="padding-bottom: 20px">
-              <button class="btn btn-danger"@click="click1">Choose a different Photo</button>
+              <button v-if="!this.imageChosen" class="btn btn-danger"@click="click1">Choose a different Photo</button>
               <input type="file" ref="input1"
                      style="display: none"
                      @change="previewImage" accept="image/*" >
@@ -139,7 +139,8 @@ export default {
       error: "",
       response: [],
       imageData: null,
-      uploadValue: null
+      uploadValue: null,
+      imageChosen: false
     };
   },
   created: function () {
@@ -219,7 +220,7 @@ export default {
             this.date = "";
             this.image = "";
             this.error = "";
-
+            this.imageChosen = false;
             this.$router.push({ name: "Account" });
           })
           .catch((e) => {
@@ -230,6 +231,7 @@ export default {
       }
     },
     cancelUpdate : function () {
+      this.imageChosen = false;
       this.$router.push({ name: "ViewPosting" });
     },
     click1() {
@@ -237,6 +239,7 @@ export default {
     },
 
     previewImage(event) {
+      this.imageChosen = true;
       this.uploadValue=0;
       this.image=null;
       this.imageData = event.target.files[0];
