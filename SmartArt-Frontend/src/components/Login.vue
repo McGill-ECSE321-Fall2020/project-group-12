@@ -33,11 +33,11 @@ Login
           >
         </b-dropdown>
       </div>
-      <b-button @click="tryLogin" pill variant="outline-secondary"
-        >Login</b-button
+      <button class="btn btn-danger" @click="tryLogin"
+        >Login</button
       >
-      <b-button @click="toCreate" pill variant="outline-secondary"
-        >Create Account</b-button
+      <button class="btn btn-danger" @click="toCreate"
+        >Create Account</button
       >
       <p>{{ error }}</p>
     </div>
