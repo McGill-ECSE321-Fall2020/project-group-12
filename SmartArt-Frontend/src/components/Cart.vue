@@ -90,15 +90,6 @@ Cart
               >
             </b-dropdown>
           </div>
-          <!--<div class="columns;" style="width: 17%">
-            <div class="cancelButton">
-              <a href="http://127.0.0.1:8087/#/home">
-                <button type="button" class="btn btn-danger" @click="cancelPurchase">
-                  Cancel Purchase
-                </button>
-              </a>
-            </div>
-          </div>-->
           <div class="columns;" style="width: 17%">
             <div class="purchaseButton">
               <a>
@@ -186,27 +177,6 @@ export default {
         });
       }
     },
-    /**cancelPurchase: function () {
-      if(this.email != ''){
-              AXIOS({
-        method: "delete",
-        url: "/purchase/cancel",
-         data: {
-           purchaseID: this.purchaseID,
-           buyer: {
-             email: this.email,
-             gallery: this.gallery
-           }
-         },
-      })
-        .then((response) => {
-          this.$router.push({ name: "Home" });
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-      }
-    },*/
     setPickUp: function () {
       this.$store.dispatch("setActiveDeliveryType", "PickUp");
     },
