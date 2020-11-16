@@ -110,7 +110,7 @@ button{
     padding:0!important;
     font-family: 'arial';
     font-size: 16px;
-    color:white;
+    color:black;
     display: block;
     text-align: left;
     font-weight: 200;
