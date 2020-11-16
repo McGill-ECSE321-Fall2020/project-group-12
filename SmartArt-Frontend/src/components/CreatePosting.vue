@@ -73,7 +73,7 @@ Create account
             <p>Image:</p>
                 <div>
                   <div style="padding-bottom: 20px">
-                    <button v-if="!this.imageChosen" class="btn btn-danger"@click="click1">Choose a Photo</button>
+                    <button v-if="!this.imageChosen" class="btn btn-danger" @click="click1">Choose a Photo</button>
                     <input type="file" ref="input1"
                            style="display: none"
                            @change="previewImage" accept="image/*" >
@@ -214,7 +214,7 @@ export default {
             this.$router.push({ name: "Account" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter valid information for the posting.";
             console.log(e);
             this.error = errorMsg;
           });
@@ -248,7 +248,7 @@ export default {
             this.$router.push({ name: "Account" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter valid information for the posting.";
             console.log(e);
             this.error = errorMsg;
           });
