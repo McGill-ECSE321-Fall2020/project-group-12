@@ -80,7 +80,7 @@ Create account
                   </div>
 
                   <div v-if="this.imageData != null">
-                    <img class="preview" height="268" width="356" :src="image">
+                    <img class="preview" style="max-height:350px; max-width:350px" :src="image">
                     <br>
                   </div>
                 </div>
