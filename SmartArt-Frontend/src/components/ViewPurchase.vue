@@ -3,18 +3,26 @@ View Purchase
   <html lang="en">
     <Taskbar />
     <div id="account">
-      <h1>Purchase: {{ this.purchaseID }}</h1>
+      <h2>Purchase: {{ this.purchaseID }}</h2>
       <div class="info">
-        <p class="header">Total Price : ${{ this.totalPrice}}</p>
+        <p class="header">Total Price : ${{ this.totalPrice }}</p>
         <p class="header">Purchased at : {{ this.time }}</p>
       </div>
-      <p class="listHeader"><b>Postings</b></p>
     </div>
+    <div v-if="this.cancelWindow <= this.time" class="pad">
+      <b-button
+        @click="cancelPurchase"
+        pill
+        variant="outline-secondary"
+        class="btn btn-danger"
+        >Cancel Purchase</b-button
+      >
+    </div>
+    <p class="listHeader">Postings</p>
     <div ref="section2" style="margin-top: 50px">
       <PostingList v-bind:postingList="postingList" />
     </div>
-    <div style="padding-bottom: 30px"/>
-    <Footer/>
+    <Footer />
   </html>
 </template>
 
@@ -40,8 +48,11 @@ export default {
       purchaseID: null,
       totalPrice: null,
       time: "",
+      email: "",
+      gallery: "SmartArt",
       postingList: [],
       error: "",
+      cancelWindow: null,
     };
   },
   components: {
@@ -49,17 +60,43 @@ export default {
     PostingList,
     Footer,
   },
-  created: function () {
-    this.purchaseID = this.$store.getters.getActivePurchase;
-      AXIOS.get("/purchases/".concat(this.purchaseID))
+  methods: {
+    cancelPurchase() {
+      AXIOS({
+        method: "delete",
+        url: "/purchase/cancel",
+        data: {
+          purchaseID: this.purchaseID,
+          buyer: {
+            email: this.email,
+            gallery: this.gallery,
+          },
+        },
+      })
         .then((response) => {
-          this.totalPrice = response.data.totalPrice;
-          this.postingList = response.data.postings;
-          this.time = response.data.time;
+          this.$router.push({ name: "Account" });
         })
         .catch((e) => {
-          this.error = e;
+          console.log(e);
         });
+    },
+  },
+  created: function () {
+    this.purchaseID = this.$store.getters.getActivePurchase;
+    this.email = this.$store.getters.getActiveUser
+    var today = new Date();
+    this.cancelWindow =
+      today.getHours() + ":" + today.getMinutes()-10 + ":" + today.getSeconds();
+    console.log(this.cancelWindow);
+    AXIOS.get("/purchases/".concat(this.purchaseID))
+      .then((response) => {
+        this.totalPrice = response.data.totalPrice;
+        this.postingList = response.data.postings;
+        this.time = Date(response.data.time);
+      })
+      .catch((e) => {
+        this.error = e;
+      });
   },
 };
 </script>
@@ -67,7 +104,8 @@ export default {
 <style scoped>
 .info {
   position: relative;
-  text-align: center;
+  text-align: left;
+  align-self: left;
   padding: 20px 200px;
 }
 
@@ -75,8 +113,6 @@ export default {
   font-size: 20pt;
 }
 .listHeader {
-  font-size: 32pt;
-  font-family: Palatino;
-  font-variant: small-caps;
+  font-size: 22pt;
 }
 </style>
