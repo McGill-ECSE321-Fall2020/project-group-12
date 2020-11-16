@@ -131,7 +131,7 @@ export default {
 
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter a valid email, name and password";
             console.log(e);
             this.error = errorMsg;
           });

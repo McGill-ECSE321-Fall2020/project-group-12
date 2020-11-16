@@ -102,7 +102,7 @@ export default {
             this.$router.push({ name: "Home" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter a valid email and password"
             console.log(e);
             this.error = errorMsg;
           });
