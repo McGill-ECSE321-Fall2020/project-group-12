@@ -79,7 +79,7 @@ Create account
 <!--              placeholder="Image URL"-->
 <!--            />-->
           </div>
-          <div v-if="this.userType === 'administrator'" class="inputbox">
+          <div v-if="this.userType == 'administrator'" class="inputbox">
             <p>Artist Name</p>
             <input
               type="text"
