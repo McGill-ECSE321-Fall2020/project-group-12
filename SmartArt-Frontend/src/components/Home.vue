@@ -40,7 +40,7 @@ var AXIOS = axios.create({
 export default {
   name: "SmartArt",
   city: "Montreal",
-  commission: "",
+  commission: "0.05",
   data() {
     return {
       slide: 0,
@@ -54,6 +54,9 @@ export default {
       errorPosting: "",
       errorAdmin: "",
       response: [],
+      name: '',
+      city: '',
+      commission: 0,
     };
   },
   components: {
@@ -62,6 +65,25 @@ export default {
     Footer,
   },
   created: function () {
+    AXIOS.get("/galleries/")
+      .then(response => {
+        if (response.data == []) {
+          AXIOS({
+              method: "post",
+              url: '/gallery/create',
+              data: {
+                name: "SmartArt",
+                city: "Montreal",
+                commission: 0.5
+              }
+            })
+            .then((response) => {
+                this.name = response.data.name,
+                this.city = response.data.city,
+                this.commission = response.data.commission
+            })
+        }
+      })
     AXIOS.get("/artists")
       .then((response) => {
         this.artists = response.data;
