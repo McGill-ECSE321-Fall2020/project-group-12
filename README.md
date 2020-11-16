@@ -42,7 +42,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | -----------------| --------------------------         | --------------- |
 | Ben Macnaughton  | Backend+Frontend Developer         |          35       |
 | Aidan Williams   | Backend+Frontend Developper        |          40       |
-| Gregory Walfish  | Project manager+Frontend Developer |                 |
+| Gregory Walfish  | Project manager+Frontend Developer |       28          |
 | Luke Barber     | Frontend Developer                  |                 |
 | Minh Quan Hoang  | Frontend Developer                 |                 |
 
