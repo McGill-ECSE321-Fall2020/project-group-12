@@ -3,16 +3,17 @@ View Purchase
   <html lang="en">
     <Taskbar />
     <div id="account">
-      <h2>Purchase: {{ this.purchaseID }}</h2>
+      <h1>Purchase: {{ this.purchaseID }}</h1>
       <div class="info">
         <p class="header">Total Price : ${{ this.totalPrice}}</p>
         <p class="header">Purchased at : {{ this.time }}</p>
       </div>
-      <p class="listHeader">Postings</p>
+      <p class="listHeader"><b>Postings</b></p>
     </div>
     <div ref="section2" style="margin-top: 50px">
       <PostingList v-bind:postingList="postingList" />
     </div>
+    <div style="padding-bottom: 30px"/>
     <Footer/>
   </html>
 </template>
@@ -66,8 +67,7 @@ export default {
 <style scoped>
 .info {
   position: relative;
-  text-align: left;
-  align-self: left;
+  text-align: center;
   padding: 20px 200px;
 }
 
@@ -75,6 +75,8 @@ export default {
   font-size: 20pt;
 }
 .listHeader {
-  font-size: 22pt;
+  font-size: 32pt;
+  font-family: Palatino;
+  font-variant: small-caps;
 }
 </style>

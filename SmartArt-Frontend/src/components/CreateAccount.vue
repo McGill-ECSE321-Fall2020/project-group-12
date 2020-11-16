@@ -44,20 +44,18 @@ Create account
         <b-dropdown id="dropdown-1" text="Select your user type" class="m-md-2">
           <b-dropdown-item-btn @click="setBuyer">Buyer</b-dropdown-item-btn>
           <b-dropdown-item-btn @click="setArtist">Artist</b-dropdown-item-btn>
-          <b-dropdown-item-btn @click="setAdmin"
-            >Administrator</b-dropdown-item-btn
-          >
+          <b-dropdown-item-btn @click="setAdmin">Administrator</b-dropdown-item-btn>
         </b-dropdown>
       </div>
-      <b-button @click="createAcc" pill variant="outline-secondary"
-        >Create Account</b-button
+      <button class="btn btn-danger" @click="createAcc"
+        >Create Account</button
       >
-      <b-button @click="toLogin" pill variant="outline-secondary"
-        >Login</b-button
+      <button class="btn btn-danger" @click="toLogin"
+        >Login</button
       >
       <p>{{ error }}</p>
 
-      
+
     <Footer></Footer>
     </div>
   </html>
