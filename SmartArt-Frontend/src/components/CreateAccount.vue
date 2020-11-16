@@ -97,7 +97,13 @@ export default {
   },
   methods: {
     createAcc: function () {
-      if (this.password != this.confirmPassword) {
+      if(this.name == ""){
+        this.error = "Please enter your name";
+      }
+      else if(this.email == ""){
+        this.error = "Please enter your email";
+      }
+      else if (this.password != this.confirmPassword) {
         this.error = "Your passwords do not match";
       } else if (this.userType == "") {
         this.error = "Please select a user type";

@@ -75,7 +75,13 @@ export default {
   },
   methods: {
     tryLogin: function () {
-      if (this.userType == "") {
+      if(this.name == ""){
+        this.error = "Please enter your name";
+      }
+      else if(this.email == ""){
+        this.error = "Please enter your email";
+      }
+      else if (this.userType == "") {
         this.error = "Please select a user type";
       } else {
         AXIOS({
