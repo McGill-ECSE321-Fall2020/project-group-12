@@ -98,8 +98,7 @@ export default {
 }
 .card:hover {
   box-shadow: 10px 15px 20px;
-  min-height: 420px;
-  min-width: 20rem;
+
 }
 .card-img-wrapper {
   display: flex;

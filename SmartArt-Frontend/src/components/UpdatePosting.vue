@@ -81,10 +81,9 @@
         </div>
       </div>
     </div>
-    <b-button @click="updatePost" pill variant="outline-secondary"
-    >Update Posting</b-button
-    >
-    <p>{{ error }}</p>
+    <button class="btn btn-danger" @click="updatePost">Update Posting</button>
+    <button class="btn btn-danger" @click="cancelUpdate">Cancel</button>
+    <p style="padding-bottom: 25px">{{ error }}</p>
   </div>
   <Footer/>
   </html>
@@ -214,8 +213,10 @@ export default {
             this.error = errorMsg;
           });
       }
-
     },
+    cancelUpdate : function () {
+      this.$router.push({ name: "ViewPosting" });
+    }
   },
 };
 </script>

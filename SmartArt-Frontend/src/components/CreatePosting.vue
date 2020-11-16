@@ -70,14 +70,8 @@ Create account
             />
           </div>
           <div class="inputbox">
-            <p>Image URL</p>
-            <ImageUploader maxWidth="700" maxHeight="800" @input="convertImage"/>
-<!--            <input-->
-<!--              type="url"-->
-<!--              class="form-control input-style"-->
-<!--              v-model="image"-->
-<!--              placeholder="Image URL"-->
-<!--            />-->
+            <p>Image:</p>
+            <ImageUploader :preview="false" class="btn btn-danger" maxWidth="700" maxHeight="800" @input="convertImage"/>
           </div>
           <div v-if="this.userType == 'administrator'" class="inputbox">
             <p>Artist Name</p>
@@ -90,10 +84,8 @@ Create account
           </div>
         </div>
       </div>
-      <b-button @click="createPost" pill variant="outline-secondary"
-        >Create Posting</b-button
-      >
-      <p>{{ error }}</p>
+      <button class="btn btn-danger" @click="createPost">Create Posting</button>
+      <p style="padding-bottom: 25px">{{ error }}</p>
     </div>
     <Footer/>
   </html>
@@ -167,8 +159,8 @@ export default {
       if (this.image == "") {
         this.error += "Please enter an image URL. ";
       }
-      if (this.error == "" && this.userType == 'artist') {
 
+      if (this.error == "" && this.userType == 'artist') {
         AXIOS({
           method: "post",
           url: "/posting/create",

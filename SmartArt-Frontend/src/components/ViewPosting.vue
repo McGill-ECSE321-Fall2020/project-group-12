@@ -159,7 +159,8 @@ export default {
       this.$router.push({ name: "UpdatePosting" });
     },
     deletePosting: function () {
-      AXIOS({
+      if(confirm("Do you really want to delete?")){
+        AXIOS({
         method: "delete",
         url: "/posting/delete",
         data: {
@@ -187,7 +188,7 @@ export default {
           console.log(e);
           this.message = errorMsg;
         })
-    }
+    }}
   },
 };
 </script>

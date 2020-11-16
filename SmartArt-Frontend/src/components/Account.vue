@@ -2,12 +2,14 @@ Account
 <template>
   <html lang="en">
     <Taskbar />
-    <div id="account">
-      <h2>My Account</h2>
+    <div id="account" style="padding-top: 20px">
+      <h1 style="font-family: Palatino;font-variant: small-caps;"><b>My Account</b></h1>
       <div class="info">
         <p class="header">Name : {{ this.name }}</p>
         <p class="header">Email : {{ this.email }}</p>
-        <p class="header">User Type : {{ this.userType }}</p>
+        <p class="header" style="padding-bottom: 20px;">User Type : {{ this.userType }}</p>
+        <button class="btn btn-danger" @click="logOut"
+        >Logout</button>
       </div>
     </div>
     <div v-if="this.userType == 'administrator'" class="pad">
@@ -38,17 +40,16 @@ Account
       <p>{{ this.error }}</p>
       </div>
     </div>
-    <p class="listHeader">{{ this.listType }}</p>
-    <div ref="section2" style="margin-top: 50px">
-      <PostingList v-bind:postingList="postingList" />
-    </div>
-    <div ref="section2" style="margin-top: 50px">
+    <p class="listHeader"><b>{{ this.listType }}</b></p>
+    
+    <div v-if="this.userType === 'buyer'" ref="section2" style="margin-top: 50px">
       <PurchaseList v-bind:purchaseList="purchaseList" />
     </div>
-    <div>
-      <b-button @click="logOut" pill variant="outline-secondary"
-        >Logout</b-button
-      >
+    <div v-else ref="section2" style="margin-top: 50px">
+      <PostingList v-bind:postingList="postingList" />
+    </div>
+    <div style="padding-bottom: 50px">
+
     </div>
     <Footer />
   </html>
@@ -181,16 +182,23 @@ export default {
 <style scoped>
 .info {
   position: relative;
-  text-align: left;
-  align-self: left;
+  text-align: center;
   padding: 20px 200px;
 }
 
 .header {
   font-size: 20pt;
+
 }
 .listHeader {
-  font-size: 22pt;
+  font-size: 32pt;
+  padding-top: 50px;
+  font-family: Palatino;
+  font-variant: small-caps;
+}
+
+#account {
+
 }
 .pad {
   padding: 20px;

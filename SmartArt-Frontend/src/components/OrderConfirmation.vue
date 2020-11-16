@@ -102,12 +102,6 @@ export default {
 #orderConfirmation {
   padding-top: 20vh;
 }
-.container-fluid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
-  white-space: nowrap;
-}
+
 </style>
 
