@@ -32,7 +32,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Ben Macnaughton  | Backend co-lead                  |       45        |
 | Aidan Williams   | Backend co-lead                  |       40        |
 | Gregory Walfish  | Project manager and testing      |       30        |
-| Luke Barber      | Unit testing and organization    |       25        |
+| Luke Barber      | Unit testing and organization    |       27        |
 | Minh Quan Hoang  | Unit testing and organization    |       27        |
 
 [Deliverable 2 Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report2)
@@ -43,7 +43,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Ben Macnaughton  | Backend+Frontend Developer         |          35       |
 | Aidan Williams   | Backend+Frontend Developper        |          40       |
 | Gregory Walfish  | Project manager+Frontend Developer |       28          |
-| Luke Barber     | Frontend Developer                  |          25       |
+| Luke Barber      | Frontend Developer+Documentation   |          30       |
 | Minh Quan Hoang  | Frontend Developer                 |         27        |
 
 [Deliverable 3 Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report3)
