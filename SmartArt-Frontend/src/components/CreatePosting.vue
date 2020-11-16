@@ -39,7 +39,7 @@ Create account
               type="number"
               class="form-control input-style"
               v-model="xDim"
-              placeholder="X-Dimmension (cm)"
+              placeholder="X-Dimension (cm)"
             />
           </div>
           <div class="inputbox">
@@ -48,7 +48,7 @@ Create account
               type="number"
               class="form-control input-style"
               v-model="yDim"
-              placeholder="Y-Dimmension (cm)"
+              placeholder="Y-Dimension (cm)"
             />
           </div>
           <div class="inputbox">
@@ -57,7 +57,7 @@ Create account
               type="number"
               class="form-control input-style"
               v-model="zDim"
-              placeholder="Z-Dimmension (cm)"
+              placeholder="Z-Dimension (cm)"
             />
           </div>
           <div class="inputbox">
@@ -73,7 +73,7 @@ Create account
             <p>Image:</p>
             <ImageUploader :preview="false" class="btn btn-danger" maxWidth="700" maxHeight="800" @input="convertImage"/>
           </div>
-          <div v-if="this.userType === 'administrator'" class="inputbox">
+          <div v-if="this.userType == 'administrator'" class="inputbox">
             <p>Artist Name</p>
             <input
               type="text"

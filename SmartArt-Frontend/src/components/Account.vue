@@ -11,9 +11,38 @@ Account
         <button class="btn btn-danger" @click="logOut"
         >Logout</button>
       </div>
-      <p class="listHeader"><b>{{ this.listType }}</b></p>
     </div>
-    <div v-if="this.userType === 'buyer'" ref="section2">
+    <div v-if="this.userType == 'administrator'" class="pad">
+      <b-button
+        @click="editCommission"
+        pill
+        variant="outline-secondary"
+        class="pad"
+        >Edit Gallery Commission</b-button
+      >
+    </div>
+    <div v-if="this.editCom">
+      <div class="inputbox">
+        <p>Enter the New Commission [0,1]:</p>
+        <input
+          type="number"
+          class="form-control input-style"
+          v-model="commission"
+          placeholder="Commission [0,1]"
+        />
+        <b-button
+        @click="changeCommission"
+        pill
+        variant="outline-secondary"
+        class="pad"
+        >Confirm Changes</b-button
+      >
+      <p>{{ this.error }}</p>
+      </div>
+    </div>
+    <p class="listHeader"><b>{{ this.listType }}</b></p>
+    
+    <div v-if="this.userType === 'buyer'" ref="section2" style="margin-top: 50px">
       <PurchaseList v-bind:purchaseList="purchaseList" />
     </div>
     <div v-else ref="section2" style="margin-top: 50px">
@@ -22,7 +51,7 @@ Account
     <div style="padding-bottom: 50px">
 
     </div>
-    <Footer/>
+    <Footer />
   </html>
 </template>
 
@@ -54,6 +83,9 @@ export default {
       password: "",
       error: "",
       userType: "",
+      editCom: false,
+      commission: null,
+      gallery: "SmartArt",
     };
   },
   components: {
@@ -68,6 +100,36 @@ export default {
       this.$store.dispatch("setActiveUserType", "");
       this.$router.push({ name: "Home" });
     },
+    editCommission() {
+      this.editCom = !this.editCom;
+    },
+    changeCommission(){
+      if(this.commission == null){
+        this.error += "Please enter a commission. "
+      }
+      if(this.commission < 0 || this.commission > 1){
+        this.error += "Commission must be between 0 and 1. "
+      }
+      if(this.error == ""){
+        AXIOS({
+          method: "put",
+          url: "/gallery/update",
+          data: {
+            name: this.gallery,
+            commission: this.commission,
+          },
+        })
+          .then((response) => {
+            this.error = "Success"
+            this.commission = null
+          })
+          .catch((e) => {
+            var errorMsg = e.message;
+            console.log(e);
+            this.error = errorMsg;
+          });
+      }
+    }
   },
   created: function () {
     this.email = this.$store.getters.getActiveUser;
@@ -80,8 +142,8 @@ export default {
             this.listType = "My Postings";
           } else if (this.userType == "buyer") {
             this.listType = "My Purchases";
-          } else if(this.userType == "administrator"){
-            this.listType = "All Postings"
+          } else if (this.userType == "administrator") {
+            this.listType = "All Postings";
           }
         })
         .catch((e) => {
@@ -104,7 +166,7 @@ export default {
         .catch((e) => {
           this.error = e;
         });
-    }else if (this.userType == "administrator"){
+    } else if (this.userType == "administrator") {
       AXIOS.get("/postings")
         .then((response) => {
           this.postingList = response.data;
@@ -137,5 +199,19 @@ export default {
 
 #account {
 
+}
+.pad {
+  padding: 20px;
+  position: relative;
+  text-align: center;
+  align-self: center;
+}
+.inputbox {
+  position: relative;
+  text-align: center;
+  align-self: center;
+  align-content: center;
+  width: 30%;
+  padding: 5px 5px;
 }
 </style>
