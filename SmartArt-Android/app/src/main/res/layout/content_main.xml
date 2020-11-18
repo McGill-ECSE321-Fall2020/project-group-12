@@ -24,7 +24,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/newartist_name"
+            android:id="@+id/newartist_email"
             android:hint="@string/newartist_hint"/>
 
         <Button

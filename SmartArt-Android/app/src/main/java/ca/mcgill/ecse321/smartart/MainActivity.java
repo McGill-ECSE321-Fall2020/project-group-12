@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void addArtist(View v) {
         error = "";
-        final TextView tv = (TextView) findViewById(R.id.newartist_name);
-        HttpUtils.post("persons/" + tv.getText().toString(), new RequestParams(), new JsonHttpResponseHandler() {
+        final TextView tv = (TextView) findViewById(R.id.newartist_email);
+        HttpUtils.post("artist/" + tv.getText().toString(), new RequestParams(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 refreshErrorMessage();
