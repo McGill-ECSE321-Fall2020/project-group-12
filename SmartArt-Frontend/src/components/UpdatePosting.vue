@@ -71,20 +71,30 @@
           />
         </div>
         <div class="inputbox">
-          <p>Image URL</p>
-          <input
-            type="url"
-            class="form-control input-style"
-            v-model="image"
-            placeholder="Image URL"
-          />
+          <p>Image:</p>
+          <div>
+            <div style="padding-bottom: 20px">
+              <button v-if="!this.imageChosen" class="btn btn-danger"@click="click1">Choose a different Photo</button>
+              <input type="file" ref="input1"
+                     style="display: none"
+                     @change="previewImage" accept="image/*" >
+            </div>
+
+            <div v-if="this.imageData != null">
+              <img class="preview" style="max-height:350px; max-width:350px" :src="image">
+              <br>
+            </div>
+          </div>
+          <div style="padding-top: 20px">
+            <button class="btn btn-danger" @click="onUpload" >Upload new Photo</button>
+          </div>
+
         </div>
       </div>
     </div>
-    <b-button @click="updatePost" pill variant="outline-secondary"
-    >Update Posting</b-button
-    >
-    <p>{{ error }}</p>
+    <button class="btn btn-danger" @click="updatePost">Update Posting</button>
+    <button class="btn btn-danger" @click="cancelUpdate">Cancel</button>
+    <p style="padding-bottom: 25px">{{ error }}</p>
   </div>
   <Footer/>
   </html>
@@ -94,6 +104,7 @@
 import axios from "axios";
 import Taskbar from "./Taskbar";
 import Footer from "./Footer";
+import firebase from "firebase/app";
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -109,6 +120,7 @@ export default {
   components: {
     Taskbar,
     Footer,
+    firebase
   },
   data() {
     return {
@@ -125,7 +137,10 @@ export default {
       gallery: "SmartArt",
       userType: "",
       error: "",
-      response: []
+      response: [],
+      imageData: null,
+      uploadValue: null,
+      imageChosen: false
     };
   },
   created: function () {
@@ -205,7 +220,7 @@ export default {
             this.date = "";
             this.image = "";
             this.error = "";
-
+            this.imageChosen = false;
             this.$router.push({ name: "Account" });
           })
           .catch((e) => {
@@ -214,8 +229,36 @@ export default {
             this.error = errorMsg;
           });
       }
-
     },
+    cancelUpdate : function () {
+      this.imageChosen = false;
+      this.$router.push({ name: "ViewPosting" });
+    },
+    click1() {
+      this.$refs.input1.click()
+    },
+
+    previewImage(event) {
+      this.imageChosen = true;
+      this.uploadValue=0;
+      this.image=null;
+      this.imageData = event.target.files[0];
+      this.onUpload()
+    },
+    onUpload(){
+      this.image=null;
+      const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+      storageRef.on(`state_changed`,snapshot=>{
+          this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+        }, error=>{console.log(error.message)},
+        ()=>{this.uploadValue=100;
+          storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+            this.image =url;
+            console.log(this.image)
+          });
+        }
+      );
+    }
   },
 };
 </script>

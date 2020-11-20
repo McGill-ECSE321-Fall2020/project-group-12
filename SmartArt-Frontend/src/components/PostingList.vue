@@ -51,7 +51,7 @@ export default {
   transform: scale(1) !important;
 }
   .card-wrapper {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
   }
   .card-image .card .card-img-wrapper {
     height: 100%;
@@ -94,7 +94,6 @@ export default {
   }
   .card:hover {
     box-shadow: 10px 15px 20px;
-    min-height: 405px;
   }
   .card-img-wrapper {
     display: flex;

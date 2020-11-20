@@ -39,7 +39,7 @@ Create account
               type="number"
               class="form-control input-style"
               v-model="xDim"
-              placeholder="X-Dimmension (cm)"
+              placeholder="X-Dimension (cm)"
             />
           </div>
           <div class="inputbox">
@@ -48,7 +48,7 @@ Create account
               type="number"
               class="form-control input-style"
               v-model="yDim"
-              placeholder="Y-Dimmension (cm)"
+              placeholder="Y-Dimension (cm)"
             />
           </div>
           <div class="inputbox">
@@ -57,7 +57,7 @@ Create account
               type="number"
               class="form-control input-style"
               v-model="zDim"
-              placeholder="Z-Dimmension (cm)"
+              placeholder="Z-Dimension (cm)"
             />
           </div>
           <div class="inputbox">
@@ -70,20 +70,38 @@ Create account
             />
           </div>
           <div class="inputbox">
-            <p>Image URL</p>
+            <p>Image:</p>
+                <div>
+                  <div style="padding-bottom: 20px">
+                    <button v-if="!this.imageChosen" class="btn btn-danger" @click="click1">Choose a Photo</button>
+                    <input type="file" ref="input1"
+                           style="display: none"
+                           @change="previewImage" accept="image/*" >
+                  </div>
+
+                  <div v-if="this.imageData != null">
+                    <img class="preview" style="max-height:350px; max-width:350px" :src="image">
+                    <br>
+                  </div>
+                </div>
+            <div style="padding-top: 20px">
+              <button class="btn btn-danger" @click="onUpload" >Upload Photo</button>
+            </div>
+
+          </div>
+          <div v-if="this.userType == 'administrator'" class="inputbox">
+            <p>Artist Name</p>
             <input
-              type="url"
+              type="text"
               class="form-control input-style"
-              v-model="image"
-              placeholder="Image URL"
+              v-model="name"
+              placeholder="Artist Name"
             />
           </div>
         </div>
       </div>
-      <b-button @click="createPost" pill variant="outline-secondary"
-        >Create Posting</b-button
-      >
-      <p>{{ error }}</p>
+      <button class="btn btn-danger" @click="createPost">Create Posting</button>
+      <p style="padding-bottom: 25px">{{ error }}</p>
     </div>
     <Footer/>
   </html>
@@ -93,6 +111,9 @@ Create account
 import axios from "axios";
 import Taskbar from "./Taskbar";
 import Footer from "./Footer";
+import ImageUploader from 'vue-image-upload-resize'
+import firebase from "firebase/app"
+
 var config = require("../../config");
 
 var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
@@ -103,16 +124,20 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl },
 });
+
 export default {
   name: "CreatePosting",
   components: {
     Taskbar,
     Footer,
+    ImageUploader,
+    firebase
   },
   data() {
     return {
       email: "",
       title: "",
+      name: "",
       description: "",
       image: "",
       price: null,
@@ -123,6 +148,9 @@ export default {
       gallery: "SmartArt",
       userType: "",
       error: "",
+      imageData: null,
+      uploadValue: null,
+      imageChosen: false
     };
   },
   created: function () {
@@ -152,7 +180,8 @@ export default {
       if (this.image == "") {
         this.error += "Please enter an image URL. ";
       }
-      if (error == "") {
+
+      if (this.error == "" && this.userType == 'artist') {
         AXIOS({
           method: "post",
           url: "/posting/create",
@@ -181,16 +210,76 @@ export default {
             this.date = "";
             this.image = "";
             this.error = "";
+            this.imageChosen = false;
+            this.$router.push({ name: "Account" });
+          })
+          .catch((e) => {
+            var errorMsg = "Please enter valid information for the posting.";
+            console.log(e);
+            this.error = errorMsg;
+          });
+      }else if (this.error == "" && this.userType == 'administrator'){
+        AXIOS({
+          method: "post",
+          url: "/posting/admin/create/".concat(this.email).concat("/").concat(this.name),
+          data: {
+            title: this.title,
+            price: this.price,
+            xdim: this.xDim,
+            ydim: this.yDim,
+            zdim: this.zDim,
+            image: this.image,
+            date: this.date,
+            description: this.description,
+          },
+        })
+          .then((response) => {
+            this.email = "";
+            this.title = "";
+            this.name = "";
+            this.description = "";
+            this.xDim = null;
+            this.yDim = null;
+            this.zDim = null;
+            this.date = "";
+            this.image = "";
+            this.error = "";
 
             this.$router.push({ name: "Account" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter valid information for the posting.";
             console.log(e);
             this.error = errorMsg;
           });
       }
     },
+
+    click1() {
+      this.$refs.input1.click()
+    },
+
+    previewImage(event) {
+      this.uploadValue=0;
+      this.imageChosen = true;
+      this.image=null;
+      this.imageData = event.target.files[0];
+      this.onUpload()
+    },
+    onUpload(){
+      this.image=null;
+      const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+      storageRef.on(`state_changed`,snapshot=>{
+          this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+        }, error=>{console.log(error.message)},
+        ()=>{this.uploadValue=100;
+          storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+            this.image =url;
+            console.log(this.image)
+          });
+        }
+      );
+    }
   },
 };
 </script>

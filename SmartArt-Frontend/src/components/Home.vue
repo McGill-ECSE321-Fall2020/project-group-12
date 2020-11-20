@@ -113,14 +113,6 @@ html {
 body {
   overflow: scroll;
 }
-.container-fluid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
-  white-space: nowrap;
-  list-style: none;
-}
 
 #welcome h2 {
   text-align: center;

@@ -349,10 +349,10 @@ public class PurchaseService {
    */
   private int generatePurchaseID(Buyer buyer) {
     if (buyer == null) throw new IllegalArgumentException("Purchase buyer cannot be empty");
-    int purchaseID = buyer.getEmail().hashCode();
+    int purchaseID = Math.abs(buyer.getEmail().hashCode());
     Random r = new Random();
     while (purchaseRepository.findPurchaseByPurchaseID(purchaseID) != null) {
-      purchaseID += r.nextInt();
+      purchaseID = Math.abs(purchaseID + r.nextInt());
     }
     return purchaseID;
   }

@@ -33,11 +33,11 @@ Login
           >
         </b-dropdown>
       </div>
-      <b-button @click="tryLogin" pill variant="outline-secondary"
-        >Login</b-button
+      <button class="btn btn-danger" @click="tryLogin"
+        >Login</button
       >
-      <b-button @click="toCreate" pill variant="outline-secondary"
-        >Create Account</b-button
+      <button class="btn btn-danger" @click="toCreate"
+        >Create Account</button
       >
       <p>{{ error }}</p>
     </div>
@@ -75,7 +75,13 @@ export default {
   },
   methods: {
     tryLogin: function () {
-      if (this.userType == "") {
+      if(this.name == ""){
+        this.error = "Please enter your name";
+      }
+      else if(this.email == ""){
+        this.error = "Please enter your email";
+      }
+      else if (this.userType == "") {
         this.error = "Please select a user type";
       } else {
         AXIOS({
@@ -96,7 +102,7 @@ export default {
             this.$router.push({ name: "Home" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter a valid email and password"
             console.log(e);
             this.error = errorMsg;
           });

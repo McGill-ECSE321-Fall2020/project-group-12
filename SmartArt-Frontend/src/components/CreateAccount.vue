@@ -44,20 +44,18 @@ Create account
         <b-dropdown id="dropdown-1" text="Select your user type" class="m-md-2">
           <b-dropdown-item-btn @click="setBuyer">Buyer</b-dropdown-item-btn>
           <b-dropdown-item-btn @click="setArtist">Artist</b-dropdown-item-btn>
-          <b-dropdown-item-btn @click="setAdmin"
-            >Administrator</b-dropdown-item-btn
-          >
+          <b-dropdown-item-btn @click="setAdmin">Administrator</b-dropdown-item-btn>
         </b-dropdown>
       </div>
-      <b-button @click="createAcc" pill variant="outline-secondary"
-        >Create Account</b-button
+      <button class="btn btn-danger" @click="createAcc"
+        >Create Account</button
       >
-      <b-button @click="toLogin" pill variant="outline-secondary"
-        >Login</b-button
+      <button class="btn btn-danger" @click="toLogin"
+        >Login</button
       >
       <p>{{ error }}</p>
 
-      
+
     <Footer></Footer>
     </div>
   </html>
@@ -97,7 +95,13 @@ export default {
   },
   methods: {
     createAcc: function () {
-      if (this.password != this.confirmPassword) {
+      if(this.name == ""){
+        this.error = "Please enter your name";
+      }
+      else if(this.email == ""){
+        this.error = "Please enter your email";
+      }
+      else if (this.password != this.confirmPassword) {
         this.error = "Your passwords do not match";
       } else if (this.userType == "") {
         this.error = "Please select a user type";
@@ -127,7 +131,7 @@ export default {
 
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter a valid email, name and password";
             console.log(e);
             this.error = errorMsg;
           });

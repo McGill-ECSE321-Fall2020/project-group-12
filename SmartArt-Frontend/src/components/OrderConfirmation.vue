@@ -12,7 +12,7 @@ Order Confirmation
       </button>
       <p>{{ error }}</p>
     </div>
-    <Footer/>
+    <Footer />
   </html>
 </template>
 
@@ -41,6 +41,7 @@ export default {
       email: "",
       name: "",
       purchaseID: 0,
+      totalPrice: 0,
       purchaseType: "",
       postings: [],
       gallery: "SmartArt",
@@ -50,7 +51,7 @@ export default {
   created: function () {
     this.email = this.$store.getters.getActiveUser;
     this.deliveryType = this.$store.getters.getActiveDeliveryType;
-    console.log("/purchase/make/".concat(this.deliveryType))
+    console.log("/purchase/make/".concat(this.deliveryType));
     AXIOS.get("/buyers/".concat(this.email))
       .then((response) => {
         this.name = response.data.name;
@@ -60,31 +61,33 @@ export default {
       });
     AXIOS.get("/purchases/cart/".concat(this.email))
       .then((response) => {
-        this.purchaseID = response.data.purchaseID;
+        this.purchaseID = Number(response.data.purchaseID);
         this.postings = response.data.postings;
+        this.totalPrice = Number(response.data.totalPrice);
+        AXIOS({
+          method: "post",
+          url: "/purchase/make/".concat(this.deliveryType),
+          data: {
+            purchaseID: this.purchaseID,
+            totalPrice: this.totalPrice,
+            buyer: {
+              email: this.email,
+              gallery: this.gallery,
+            },
+          },
+        })
+          .then((response) => {
+            console.log("purchased");
+          })
+          .catch((e) => {
+            var errorMsg = e.message;
+            console.log(e);
+            console.log(this.purchaseID);
+            this.error = errorMsg;
+          });
       })
       .catch((e) => {
         this.error = e;
-      });
-    AXIOS({
-      method: "post",
-      url: "/purchase/make/".concat(this.deliveryType),
-      data: {
-        purchaseID: this.purchaseID,
-        buyer: {
-          email: this.email,
-          gallery: this.gallery
-        },
-        postings: this.postings
-      },
-    })
-      .then((response) => {
-        console.log(purchased)
-      })
-      .catch((e) => {
-        var errorMsg = e.message;
-        console.log(e);
-        this.error = errorMsg;
       });
   },
   methods: {
@@ -99,12 +102,6 @@ export default {
 #orderConfirmation {
   padding-top: 20vh;
 }
-.container-fluid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
-  white-space: nowrap;
-}
+
 </style>
 
