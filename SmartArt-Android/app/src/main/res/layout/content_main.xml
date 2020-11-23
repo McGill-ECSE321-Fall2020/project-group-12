@@ -24,15 +24,15 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/newartist_email"
-            android:hint="@string/newartist_hint"/>
+            android:id="@+id/posting_id"
+            android:hint="@string/posting_hint"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/newartist_button"
-            android:onClick="addArtist"/>
+            android:text="@string/posting_button"
+            android:onClick="getPostingName"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
