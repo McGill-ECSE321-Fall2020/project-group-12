@@ -91,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
-                        String artistName = jsonobject.getString("artistName");
+                     //   String artistName = jsonobject.getString("artistName");
                      //   String artistEmail = jsonobject.getString("artistEmail");
                        // String artist = jsonobject.getString("artist");
                         String title = jsonobject.getString("title");
                         String description = jsonobject.getString("description");
-                        displayPostings.append(artistName + "   ");
+                    //    displayPostings.append(artistName + "   ");
                         displayPostings.append(title + "   ");
                         displayPostings.append(" Description:   " + description + "\n");
 
@@ -137,13 +137,13 @@ public class MainActivity extends AppCompatActivity {
         String postingID = localpostingID.getText().toString();
      //   final EditText tv = (EditText) findViewById(R.id.posting_id);
         final TextView postingName = (TextView) findViewById(R.id.postID);
-       // String number = "1126284095";
+       // String number = "1126284095"; 1619110225
         RequestParams rp = new RequestParams();
-        rp.add("postingID", postingID);
+    //    rp.add("postingID", postingID);
         HttpUtils.get("postings/"+ postingID,rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                postingName.setText("name is:");
+                postingName.setText("");
                 try {
                     System.out.println(title);
                     title= response.getString("title");
