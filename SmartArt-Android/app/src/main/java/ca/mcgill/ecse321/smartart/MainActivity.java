@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.EditText;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private String error = null;
     private EditText localpostingID;
     private String title = "";
+    String token;
 
 
     @Override
@@ -69,18 +72,83 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void viewPostings(View v) {
+        error = "";
+       // final TextView tv = (TextView) findViewById(R.id.error);
+        final TextView displayPostings = (TextView) findViewById(R.id.textViewPostings);
+       // Intent intent = getIntent();
+      //  token = intent.getStringExtra("token");
+
+        displayPostings.setText("response");
+        HttpUtils.get("postings", new RequestParams(), new JsonHttpResponseHandler() {
+            private JSONArray response;
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+                displayPostings.setText("");
+
+                for (int i = 0; i < response.length(); i++) {
+
+                    try {
+                        JSONObject jsonobject = response.getJSONObject(i);
+                        String artistName = jsonobject.getString("artistName");
+                     //   String artistEmail = jsonobject.getString("artistEmail");
+                       // String artist = jsonobject.getString("artist");
+                        String title = jsonobject.getString("title");
+                        String description = jsonobject.getString("description");
+                        displayPostings.append(artistName + "   ");
+                        displayPostings.append(title + "   ");
+                        displayPostings.append(" Description:   " + description + "\n");
+
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+
+
+
+                }
+
+
+
+            }
+
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+
+        });
+// ...
+
+    }
+
     public void getPostingName(View v) {
         error = "";
         String postingID = localpostingID.getText().toString();
+     //   final EditText tv = (EditText) findViewById(R.id.posting_id);
+        final TextView postingName = (TextView) findViewById(R.id.postID);
        // String number = "1126284095";
         RequestParams rp = new RequestParams();
         rp.add("postingID", postingID);
         HttpUtils.get("postings/"+ postingID,rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                postingName.setText("name is:");
                 try {
-                    title= response.getString("title");
                     System.out.println(title);
+                    title= response.getString("title");
+                    postingName.append(" name is:   "+title);
+             //       System.out.println(title);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

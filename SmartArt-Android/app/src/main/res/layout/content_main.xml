@@ -33,6 +33,24 @@
             android:layout_gravity="end"
             android:text="@string/posting_button"
             android:onClick="getPostingName"/>
+        <TextView
+            android:id="@+id/postID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/viewpostings_button"
+            android:onClick="viewPostings"/>
+
+
+        <TextView
+            android:id="@+id/textViewPostings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
