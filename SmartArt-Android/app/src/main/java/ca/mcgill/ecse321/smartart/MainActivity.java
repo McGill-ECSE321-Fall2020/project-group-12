@@ -15,6 +15,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.EditText;
 
@@ -75,17 +76,17 @@ public class MainActivity extends AppCompatActivity {
     public void viewPostings(View v) {
         error = "";
        // final TextView tv = (TextView) findViewById(R.id.error);
-        final TextView displayPostings = (TextView) findViewById(R.id.textViewPostings);
+        final ListView displayPostings = (ListView) findViewById(R.id.textViewPostings);
        // Intent intent = getIntent();
       //  token = intent.getStringExtra("token");
 
-        displayPostings.setText("response");
+      //  displayPostings.setText("response");
         HttpUtils.get("postings", new RequestParams(), new JsonHttpResponseHandler() {
             private JSONArray response;
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
 
-                displayPostings.setText("");
+                //displayPostings.setText("");
 
                 for (int i = 0; i < response.length(); i++) {
 
@@ -97,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                         String title = jsonobject.getString("title");
                         String description = jsonobject.getString("description");
                     //    displayPostings.append(artistName + "   ");
-                        displayPostings.append(title + "   ");
-                        displayPostings.append(" Description:   " + description + "\n");
+                        displayPostings.add(title + "   ");
+                        displayPostings.addViewInLayout(" Description:   " + description + "\n");
 
 
 
