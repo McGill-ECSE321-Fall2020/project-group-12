@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.smartart;
 
 import android.os.Bundle;
 import android.content.Intent;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -14,8 +12,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ArrayAdapter;
@@ -49,30 +45,10 @@ public class MainActivity extends AppCompatActivity {
         refreshErrorMessage();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    //Method to fetch and display all postings from the backend
     public void viewPostings(View v) {
         error = "";
+        //Set the layout for the postings to be displayed
         final LinearLayout postings = (LinearLayout) findViewById(R.id.postings);
 
         final ListView displayPostings = (ListView) findViewById(R.id.textViewPostings);
@@ -88,26 +64,31 @@ public class MainActivity extends AppCompatActivity {
         // DataBind ListView with items from ArrayAdapter
         displayPostings.setAdapter(arrayAdapter);
 
+        //Backend call to return all postings in the database
         HttpUtils.get("postings", new RequestParams(), new JsonHttpResponseHandler() {
             private JSONArray response;
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 postings.removeAllViews();
+                //Iterate through each posting to add it to the display
                 for (int i = 0; i < response.length(); i++) {
 
                     try {
-
+                        //Declare data object so that its contents can be extracted
                         JSONObject jsonobject = response.getJSONObject(i);
+                        //Extract all necessary attributes as strings
                         String title = jsonobject.getString("title");
                         String urlImage = jsonobject.getString("image");
                         String description = jsonobject.getString("description");
                         String art = title + ": " + description;
+                        //add the art as a string to the display
                         artwork_list.add(art);
                         arrayAdapter.notifyDataSetChanged();
                         int postingID = jsonobject.getInt("postingID");
                         displayPostings.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                //When a posting is selected redirect to that postings page and pass the posting ID
                                 Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
                                 intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
                                 startActivity(intent);
@@ -136,18 +117,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Method to return the title of a posting from its posting ID
     public void getPostingName(View v) {
         error = "";
+        //Bind the text box input to local string to be used in backend call
         String postingID = localpostingID.getText().toString();
         final TextView postingName = (TextView) findViewById(R.id.postID);
-        RequestParams rp = new RequestParams();
-        HttpUtils.get("postings/"+ postingID,rp, new JsonHttpResponseHandler(){
+        //Backend call to return a posting from its posting ID
+        HttpUtils.get("postings/"+ postingID,new RequestParams(), new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //Display the title of the desired posting
                 postingName.setText("");
                 try {
-                    System.out.println(title);
+                    //Extract and store the title of the desired posting to be returned to the display
                     title= response.getString("title");
+                    //Update display to show name
                     postingName.append(" name is:   "+title);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -166,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Method to redirect the app to the Login Activity
     public void toLogin(View v){
         setContentView(R.layout.login);
         Intent intent= new Intent(this, Login.class);
