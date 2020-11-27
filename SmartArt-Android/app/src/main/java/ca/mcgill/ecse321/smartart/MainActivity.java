@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.JsonStreamerEntity;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,12 +16,22 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.EditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpEntity;
@@ -66,47 +77,75 @@ public class MainActivity extends AppCompatActivity {
 
     public void viewPostings(View v) {
         error = "";
-       // final TextView tv = (TextView) findViewById(R.id.error);
-        final TextView displayPostings = (TextView) findViewById(R.id.textViewPostings);
-       // Intent intent = getIntent();
-      //  token = intent.getStringExtra("token");
+        final LinearLayout postings = (LinearLayout) findViewById(R.id.postings);
 
-        displayPostings.setText("response");
+        // final TextView tv = (TextView) findViewById(R.id.error);
+        final ListView displayPostings = (ListView) findViewById(R.id.textViewPostings);
+        final ImageView displayImages = (ImageView) findViewById(R.id.textViews);
+        // Initializing a new String Array
+        String[] artworks = new String[] {
+
+        };
+        // Create a List from String Array elements
+        final List<String> artwork_list = new ArrayList<String>(Arrays.asList(artworks));
+        // Create an ArrayAdapter from List
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_list_item_1, artwork_list);
+
+        // DataBind ListView with items from ArrayAdapter
+        displayPostings.setAdapter(arrayAdapter);
+
         HttpUtils.get("postings", new RequestParams(), new JsonHttpResponseHandler() {
             private JSONArray response;
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
-                displayPostings.setText("");
-
+                postings.removeAllViews();
                 for (int i = 0; i < response.length(); i++) {
 
                     try {
+
                         JSONObject jsonobject = response.getJSONObject(i);
-                     //   String artistName = jsonobject.getString("artistName");
-                     //   String artistEmail = jsonobject.getString("artistEmail");
-                       // String artist = jsonobject.getString("artist");
                         String title = jsonobject.getString("title");
+                        String urlImage = jsonobject.getString("image");
                         String description = jsonobject.getString("description");
-                    //    displayPostings.append(artistName + "   ");
-                        displayPostings.append(title + "   ");
-                        displayPostings.append(" Description:   " + description + "\n");
+                        String art = title + " " + description;
+                        artwork_list.add(art);
+                        arrayAdapter.notifyDataSetChanged();
+                        int postingID = jsonobject.getInt("postingID");
+                        displayPostings.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
+                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
+                                startActivity(intent);
+                            }
+                        });
 
+                       // Picasso.get().load(urlImage).into(displayImages);
 
+                        //TextView textView = new TextView(MainActivity.this);
+                        //textView.setText(title + " " + description);;
+                        //postings.addView(textView);
+
+//                        Button myButton = new Button(MainActivity.this);
+//                        postings.addView(myButton);
+//                        myButton.setText("View Posting");
+//
+//                        myButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
+//                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
+//                                startActivity(intent);
+//                            }
+//                        });
 
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
 
-
-
                 }
-
-
-
             }
-
-
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -127,11 +166,11 @@ public class MainActivity extends AppCompatActivity {
     public void getPostingName(View v) {
         error = "";
         String postingID = localpostingID.getText().toString();
-     //   final EditText tv = (EditText) findViewById(R.id.posting_id);
+        //   final EditText tv = (EditText) findViewById(R.id.posting_id);
         final TextView postingName = (TextView) findViewById(R.id.postID);
-       // String number = "1126284095"; 1619110225
+        // String number = "1126284095"; 1619110225
         RequestParams rp = new RequestParams();
-    //    rp.add("postingID", postingID);
+        //    rp.add("postingID", postingID);
         HttpUtils.get("postings/"+ postingID,rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -140,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println(title);
                     title= response.getString("title");
                     postingName.append(" name is:   "+title);
-             //       System.out.println(title);
+                    //       System.out.println(title);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
