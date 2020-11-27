@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        localpostingID = (EditText) findViewById(R.id.posting_id);          //goood stuff
+        localpostingID = (EditText) findViewById(R.id.posting_id);          //good stuff
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
