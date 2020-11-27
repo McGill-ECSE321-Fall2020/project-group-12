@@ -44,6 +44,7 @@ public class Login extends AppCompatActivity {
                 password.setText("");
                 try {
                     user = response.getString("email");
+                    sendUser();
                     toMain();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -54,6 +55,10 @@ public class Login extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 System.out.println(errorResponse);
+                final TextView displayError = (TextView) findViewById(R.id.login_error);
+                email.setText("");
+                password.setText("");
+                displayError.append("Login Unsuccessful");
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
@@ -71,9 +76,13 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public String getUser(){
-        return user;
+    public void sendUser(){
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        intent.putExtra("USER", user);
+        startActivity(intent);
     }
+    //to get in your class:
+    //String userEmail = getIntent().getStringExtra("USER");
 
 
 }
