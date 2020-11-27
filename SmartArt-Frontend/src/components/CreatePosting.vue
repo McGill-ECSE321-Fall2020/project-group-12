@@ -71,7 +71,23 @@ Create account
           </div>
           <div class="inputbox">
             <p>Image:</p>
-            <ImageUploader :preview="false" class="btn btn-danger" maxWidth="700" maxHeight="800" @input="convertImage"/>
+                <div>
+                  <div style="padding-bottom: 20px">
+                    <button v-if="!this.imageChosen" class="btn btn-danger" @click="click1">Choose a Photo</button>
+                    <input type="file" ref="input1"
+                           style="display: none"
+                           @change="previewImage" accept="image/*" >
+                  </div>
+
+                  <div v-if="this.imageData != null">
+                    <img class="preview" style="max-height:350px; max-width:350px" :src="image">
+                    <br>
+                  </div>
+                </div>
+            <div style="padding-top: 20px">
+              <button class="btn btn-danger" @click="onUpload" >Upload Photo</button>
+            </div>
+
           </div>
           <div v-if="this.userType == 'administrator'" class="inputbox">
             <p>Artist Name</p>
@@ -96,6 +112,7 @@ import axios from "axios";
 import Taskbar from "./Taskbar";
 import Footer from "./Footer";
 import ImageUploader from 'vue-image-upload-resize'
+import firebase from "firebase/app"
 
 var config = require("../../config");
 
@@ -113,7 +130,8 @@ export default {
   components: {
     Taskbar,
     Footer,
-    ImageUploader
+    ImageUploader,
+    firebase
   },
   data() {
     return {
@@ -130,6 +148,9 @@ export default {
       gallery: "SmartArt",
       userType: "",
       error: "",
+      imageData: null,
+      uploadValue: null,
+      imageChosen: false
     };
   },
   created: function () {
@@ -189,11 +210,11 @@ export default {
             this.date = "";
             this.image = "";
             this.error = "";
-
+            this.imageChosen = false;
             this.$router.push({ name: "Account" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter valid information for the posting.";
             console.log(e);
             this.error = errorMsg;
           });
@@ -227,15 +248,37 @@ export default {
             this.$router.push({ name: "Account" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter valid information for the posting.";
             console.log(e);
             this.error = errorMsg;
           });
       }
     },
-    convertImage: function (file) {
-      this.image = file;
-      console.log(this.image);
+
+    click1() {
+      this.$refs.input1.click()
+    },
+
+    previewImage(event) {
+      this.uploadValue=0;
+      this.imageChosen = true;
+      this.image=null;
+      this.imageData = event.target.files[0];
+      this.onUpload()
+    },
+    onUpload(){
+      this.image=null;
+      const storageRef=firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+      storageRef.on(`state_changed`,snapshot=>{
+          this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+        }, error=>{console.log(error.message)},
+        ()=>{this.uploadValue=100;
+          storageRef.snapshot.ref.getDownloadURL().then((url)=>{
+            this.image =url;
+            console.log(this.image)
+          });
+        }
+      );
     }
   },
 };

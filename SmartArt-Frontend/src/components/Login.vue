@@ -33,11 +33,11 @@ Login
           >
         </b-dropdown>
       </div>
-      <b-button @click="tryLogin" pill variant="outline-secondary"
-        >Login</b-button
+      <button class="btn btn-danger" @click="tryLogin"
+        >Login</button
       >
-      <b-button @click="toCreate" pill variant="outline-secondary"
-        >Create Account</b-button
+      <button class="btn btn-danger" @click="toCreate"
+        >Create Account</button
       >
       <p>{{ error }}</p>
     </div>
@@ -102,7 +102,7 @@ export default {
             this.$router.push({ name: "Home" });
           })
           .catch((e) => {
-            var errorMsg = e.message;
+            var errorMsg = "Please enter a valid email and password"
             console.log(e);
             this.error = errorMsg;
           });

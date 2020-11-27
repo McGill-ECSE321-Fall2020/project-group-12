@@ -317,7 +317,7 @@ public class PostingService {
     int postingID = Math.abs(title.hashCode() + description.hashCode());
     Random r = new Random();
     while (postingRepository.findPostingByPostingID(postingID) != null) {
-      postingID += r.nextInt();
+      postingID = Math.abs(postingID + r.nextInt());
     }
     return postingID;
   }

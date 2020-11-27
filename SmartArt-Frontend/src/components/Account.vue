@@ -12,7 +12,7 @@ Account
         >Logout</button>
       </div>
     </div>
-    <div v-if="this.userType == 'administrator'" class="pad">
+    <div v-if="this.userType === 'administrator'" class="pad">
       <b-button
         @click="editCommission"
         pill
@@ -41,7 +41,7 @@ Account
       </div>
     </div>
     <p class="listHeader"><b>{{ this.listType }}</b></p>
-    
+
     <div v-if="this.userType === 'buyer'" ref="section2" style="margin-top: 50px">
       <PurchaseList v-bind:purchaseList="purchaseList" />
     </div>

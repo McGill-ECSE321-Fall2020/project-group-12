@@ -196,7 +196,7 @@ export default {
 
 <style>
 .viewImage {
-  width: auto;
+  max-width: 35vw;
   max-height: 80vh;
   object-fit: cover;
 }
