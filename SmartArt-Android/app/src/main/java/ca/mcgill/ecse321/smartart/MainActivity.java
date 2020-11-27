@@ -15,6 +15,8 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.EditText;
 
@@ -75,30 +77,48 @@ public class MainActivity extends AppCompatActivity {
     public void viewPostings(View v) {
         error = "";
        // final TextView tv = (TextView) findViewById(R.id.error);
-        final TextView displayPostings = (TextView) findViewById(R.id.textViewPostings);
+        // final TextView displayPostings = (TextView) findViewById(R.id.textViewPostings);
+        final LinearLayout postings = (LinearLayout) findViewById(R.id.postings);
        // Intent intent = getIntent();
       //  token = intent.getStringExtra("token");
 
-        displayPostings.setText("response");
+        //displayPostings.setText("response");
         HttpUtils.get("postings", new RequestParams(), new JsonHttpResponseHandler() {
             private JSONArray response;
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
-                displayPostings.setText("");
-
+                postings.removeAllViews();
+                //displayPostings.setText("");
                 for (int i = 0; i < response.length(); i++) {
 
                     try {
+
                         JSONObject jsonobject = response.getJSONObject(i);
                      //   String artistName = jsonobject.getString("artistName");
                      //   String artistEmail = jsonobject.getString("artistEmail");
                        // String artist = jsonobject.getString("artist");
                         String title = jsonobject.getString("title");
                         String description = jsonobject.getString("description");
+                        TextView textView = new TextView(MainActivity.this);
+                        textView.setText(title + " " + description);
                     //    displayPostings.append(artistName + "   ");
-                        displayPostings.append(title + "   ");
-                        displayPostings.append(" Description:   " + description + "\n");
+                        //displayPostings.append(title + "   ");
+                        //displayPostings.append(" Description:   " + description + "\n");
+                        postings.addView(textView);
+
+                        Button myButton = new Button(MainActivity.this);
+                        postings.addView(myButton);
+                        myButton.setText("View Posting");
+                        int postingID = jsonobject.getInt("postingID");
+                        myButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
+                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
+                                startActivity(intent);
+                            }
+                        });
+
 
 
 

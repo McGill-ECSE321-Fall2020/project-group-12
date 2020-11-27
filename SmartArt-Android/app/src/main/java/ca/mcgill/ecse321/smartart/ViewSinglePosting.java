@@ -1,0 +1,106 @@
+package ca.mcgill.ecse321.smartart;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import cz.msebera.android.httpclient.Header;
+
+public class ViewSinglePosting extends AppCompatActivity {
+    public static String POSTINGID = "POSTINGID";
+    private String postingID = "";
+    private String error;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_single_posting);
+        postingID = getIntent().getStringExtra(POSTINGID);
+        TextView title = findViewById(R.id.title2);
+        TextView artist = findViewById(R.id.artist);
+        TextView status = findViewById(R.id.artStatus);
+        TextView price = findViewById(R.id.price);
+        TextView xDim = findViewById(R.id.xDim);
+        TextView yDim = findViewById(R.id.yDim);
+        TextView zDim = findViewById(R.id.zDim);
+        TextView description = findViewById(R.id.description);
+        ImageView postingImage = (ImageView)findViewById(R.id.postingImage);
+        error = "";
+
+        RequestParams rp = new RequestParams();
+        HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONObject artistData = response.getJSONObject("artist");
+                    String artistIN = artistData.getString("name");
+                    String titleIN = response.getString("title");
+                    String descriptionIN = response.getString("description");
+                    String priceIN = response.getString("price");
+                    String artStatusIN = response.getString("artStatus");
+                    String xDimIN = response.getString("xdim");
+                    String yDimIN = response.getString("ydim");
+                    String zDimIN = response.getString("zdim");
+                    String imageURL = response.getString("image");
+
+                    title.append(" " + titleIN);
+                    artist.append(" " + artistIN);
+                    description.append(" " + descriptionIN);
+                    price.append(" " + priceIN);
+                    status.append(" " + artStatusIN);
+                    xDim.append(" " + xDimIN);
+                    yDim.append(" " + yDimIN);
+                    zDim.append(" " + zDimIN);
+                    //image
+                    //URL url = new URL(imageURL);
+                    //Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    //postingImage.setImageBitmap(bmp);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+    }
+
+    private void refreshErrorMessage() {
+        // set the error message
+        TextView tvError = (TextView) findViewById(R.id.error2);
+        tvError.setText(error);
+
+        if (error == null || error.length() == 0) {
+            tvError.setVisibility(View.GONE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }
+    }
+}

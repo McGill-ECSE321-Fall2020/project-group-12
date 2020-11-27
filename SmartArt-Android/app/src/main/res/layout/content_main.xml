@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -15,42 +17,57 @@
 
         <TextView
             android:id="@+id/error"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:visibility="gone"
+            android:layout_height="wrap_content"
             android:text=""
-            android:textColor="#FF0000"/>
+            android:textColor="#FF0000"
+            android:visibility="gone" />
 
         <EditText
+            android:id="@+id/posting_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/posting_id"
-            android:hint="@string/posting_hint"/>
+            android:hint="@string/posting_hint" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/posting_button"
-            android:onClick="getPostingName"/>
+            android:onClick="getPostingName"
+            android:text="@string/posting_button" />
+
         <TextView
             android:id="@+id/postID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/viewpostings_button"
-            android:onClick="viewPostings"/>
+            android:onClick="viewPostings"
+            android:text="@string/viewpostings_button" />
 
 
         <TextView
             android:id="@+id/textViewPostings"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/postings"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
