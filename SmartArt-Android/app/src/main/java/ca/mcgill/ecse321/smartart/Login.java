@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.add("email", email.getText().toString());
         params.add("password", password.getText().toString());
-        HttpUtils.get("buyer/login", params, new JsonHttpResponseHandler(){
+        HttpUtils.get("android/login", params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 email.setText("");
