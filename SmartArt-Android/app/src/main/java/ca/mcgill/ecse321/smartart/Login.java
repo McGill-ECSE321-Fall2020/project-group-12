@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -28,7 +29,7 @@ import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.HttpRequest;
 
-public class Login extends Fragment {
+public class Login extends AppCompatActivity {
 
     private String error = "";
     private EditText email;
@@ -36,42 +37,25 @@ public class Login extends Fragment {
     private String success = "";
     private String user = "";
 
+
+
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.login, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+        email = findViewById(R.id.email_box);
+        password = findViewById(R.id.password_box);
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        email = view.findViewById(R.id.email_box);
-        password = view.findViewById(R.id.password_box);
-        view.findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    login();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void login() throws UnsupportedEncodingException {
-        String requestBody = "";
-        requestBody += "\"email\":";
-        requestBody += email.getText().toString();
-        requestBody += ",\"password\":";
-        requestBody += password.getText().toString();
-        System.out.println(requestBody);
-        HttpEntity loginEntity = new StringEntity(requestBody);
-        HttpUtils.post(null, "buyer/login", loginEntity, null, new JsonHttpResponseHandler() {
+    public void login(View v) {
+        RequestParams params = new RequestParams();
+        params.add("email", email.getText().toString());
+        params.add("password", password.getText().toString());
+        HttpUtils.get("buyer/login", params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                email.setText("");
+                password.setText("");
                 try {
                     user = response.getString("email");
                     toMain();
@@ -81,9 +65,9 @@ public class Login extends Fragment {
 
 
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println(errorResponse);
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
@@ -92,12 +76,13 @@ public class Login extends Fragment {
             }
         });
 
+
     }
 
     public void toMain(){
-        Intent i = new Intent(getActivity(), MainActivity.class);
-        startActivity(i);
-        ((Activity) getActivity()).overridePendingTransition(0, 0);
+        setContentView(R.layout.activity_main);
+        Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     public String getUser(){

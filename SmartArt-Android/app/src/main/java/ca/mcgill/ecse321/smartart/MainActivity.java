@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        localpostingID = (EditText) findViewById(R.id.posting_id);     
+        localpostingID = (EditText) findViewById(R.id.posting_id);
         refreshErrorMessage();
     }
 
@@ -158,6 +158,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void toLogin(View v){
+        setContentView(R.layout.login);
+        Intent intent= new Intent(this, Login.class);
+        startActivity(intent);
+    }
+
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
