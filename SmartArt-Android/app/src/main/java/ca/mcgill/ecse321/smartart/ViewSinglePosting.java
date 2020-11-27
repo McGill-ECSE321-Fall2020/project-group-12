@@ -65,11 +65,11 @@ public class ViewSinglePosting extends AppCompatActivity {
                     title.append(" " + titleIN);
                     artist.append(" " + artistIN);
                     description.append(" " + descriptionIN);
-                    price.append(" " + priceIN);
+                    price.append(" $" + priceIN);
                     status.append(" " + artStatusIN);
-                    xDim.append(" " + xDimIN);
-                    yDim.append(" " + yDimIN);
-                    zDim.append(" " + zDimIN);
+                    xDim.append(" (inches) " + xDimIN);
+                    yDim.append(" (inches) " + yDimIN);
+                    zDim.append(" (inches) " + zDimIN);
 
                     Picasso.get().load(imageURL).resize(300, 300).centerInside().into(postingImage);
 

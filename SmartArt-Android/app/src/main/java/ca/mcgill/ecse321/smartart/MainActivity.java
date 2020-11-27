@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                         String title = jsonobject.getString("title");
                         String urlImage = jsonobject.getString("image");
                         String description = jsonobject.getString("description");
-                        String art = title + " " + description;
+                        String art = title + ": " + description;
                         artwork_list.add(art);
                         arrayAdapter.notifyDataSetChanged();
                         int postingID = jsonobject.getInt("postingID");
