@@ -58,6 +58,7 @@ public class Login extends AppCompatActivity {
                 password.setText("");
                 try {
                     user = response.getString("email");
+                    sendUser();
                     toMain();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -85,8 +86,10 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public String getUser(){
-        return user;
+    public void sendUser(){
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        intent.putExtra("USER", user);
+        startActivity(intent);
     }
 
 
