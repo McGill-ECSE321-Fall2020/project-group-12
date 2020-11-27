@@ -35,7 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="Total Price:  "
-            android:translationX="250" />
+            android:textAlignment="center"
+            android:layout_gravity="center" />
 
         <Spinner
             android:id="@+id/deliveryTypeSpinner"
@@ -49,7 +50,7 @@
             android:backgroundTint="#DD1111"
             android:onClick="makePurchase"
             android:text="Purchase"
-            android:translationX="110" />
+            />
     </LinearLayout>
 
     <resources tools:ignore="MissingConstraints">
