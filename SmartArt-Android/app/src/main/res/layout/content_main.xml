@@ -48,8 +48,13 @@
             android:onClick="viewPostings"
             android:text="@string/viewpostings_button" />
 
+        <ImageView
+            android:id="@+id/textViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
-        <TextView
+        <ListView
             android:id="@+id/textViewPostings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
