@@ -29,18 +29,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+
         <TextView
             android:id="@+id/textViewTotalPrice"
             android:layout_width="162dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="Total Price:  "
-            android:translationX="250" />
-
-        <Spinner
-            android:id="@+id/deliveryTypeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_gravity="center" />
 
         <Button
             android:layout_width="wrap_content"
@@ -48,15 +44,7 @@
             android:layout_gravity="center"
             android:backgroundTint="#DD1111"
             android:onClick="makePurchase"
-            android:text="Purchase"
-            android:translationX="110" />
+            android:text="Purchase" />
     </LinearLayout>
-
-    <resources tools:ignore="MissingConstraints">
-        <string-array android:name="deliveryType">
-            <item>Pick-Up</item>
-            <item>Shipped</item>
-        </string-array>
-    </resources>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

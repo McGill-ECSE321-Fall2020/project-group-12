@@ -36,18 +36,16 @@ public class Cart extends AppCompatActivity{
                         .setAction("Action", null).show();
             }
         });
-        Spinner spinner = (Spinner) findViewById(R.id.deliveryTypeSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.deliveryType, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        getCart();
         refreshErrorMessage();
     }
 
-    public void getCart(View v) {
+    public void getCart() {
         error = "";
-        String userEmail = null; //needs edit
-        final TextView displayCartPostings = (TextView) findViewById(R.id.textViewCartPostings); //needs edit
-        final TextView displayTotalPrice = (TextView) findViewById(R.id.textViewTotalPrice); //needs edit
+
+        String userEmail = null; //login.getUser(); //needs edit
+        final TextView displayCartPostings = (TextView) findViewById(R.id.textViewCartPostings);
+        final TextView displayTotalPrice = (TextView) findViewById(R.id.textViewTotalPrice);
         RequestParams rp = new RequestParams();
         HttpUtils.get("/purchases/cart/"+ userEmail,rp, new JsonHttpResponseHandler(){
             @Override
@@ -84,7 +82,7 @@ public class Cart extends AppCompatActivity{
         });
     }
 
-    public void makePurchase(View v) {
+    /**public void makePurchase(View v) {
         error = "";
         String userEmail = null; //needs edit
         final TextView deliveryType = (TextView) findViewById(R.id.textViewCartPostings);
@@ -113,7 +111,7 @@ public class Cart extends AppCompatActivity{
                 refreshErrorMessage();
             }
         });
-    }
+    } */
 
 
 
