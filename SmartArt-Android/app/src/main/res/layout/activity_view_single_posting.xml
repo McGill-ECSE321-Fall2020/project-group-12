@@ -29,8 +29,10 @@
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
                     tools:context=".ViewSinglePosting">
 
                     <TextView
@@ -69,16 +71,6 @@
                         android:text="xDim:"
                         app:layout_constraintStart_toStartOf="@+id/price"
                         app:layout_constraintTop_toBottomOf="@+id/price" />
-
-                    <TextView
-                        android:id="@+id/title2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="116dp"
-                        android:layout_marginTop="51dp"
-                        android:text="Title:"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/zDim"
@@ -121,9 +113,11 @@
                         android:id="@+id/postingImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_marginTop="43dp"
-                        app:layout_constraintStart_toEndOf="@+id/title2"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginEnd="150dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/artist"
                         app:layout_constraintTop_toBottomOf="@+id/title2"
                         tools:srcCompat="@tools:sample/avatars" />
 
@@ -131,13 +125,21 @@
                         android:id="@+id/error2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="118dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="119dp"
                         android:text="TextView"
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/title2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/title2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="73dp"
+                        android:text="Title:"
+                        app:layout_constraintEnd_toEndOf="@+id/postingImage"
+                        app:layout_constraintStart_toStartOf="@+id/postingImage"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

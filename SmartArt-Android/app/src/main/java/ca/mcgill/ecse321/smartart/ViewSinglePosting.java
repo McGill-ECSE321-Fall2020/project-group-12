@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,10 +70,8 @@ public class ViewSinglePosting extends AppCompatActivity {
                     xDim.append(" " + xDimIN);
                     yDim.append(" " + yDimIN);
                     zDim.append(" " + zDimIN);
-                    //image
-                    //URL url = new URL(imageURL);
-                    //Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    //postingImage.setImageBitmap(bmp);
+
+                    Picasso.get().load(imageURL).resize(300, 300).centerInside().into(postingImage);
 
 
                 } catch (JSONException e) {

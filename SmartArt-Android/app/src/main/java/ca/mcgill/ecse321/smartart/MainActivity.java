@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 postings.removeAllViews();
-                //displayPostings.setText("");
                 for (int i = 0; i < response.length(); i++) {
 
                     try {
@@ -121,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
                         arrayAdapter.notifyDataSetChanged();
                         Picasso.get().load(urlImage).into(displayImages);
 
-                        TextView textView = new TextView(MainActivity.this);
-                        textView.setText(title + " " + description);;
-                        postings.addView(textView);
+                        //TextView textView = new TextView(MainActivity.this);
+                        //textView.setText(title + " " + description);;
+                        //postings.addView(textView);
 
                         Button myButton = new Button(MainActivity.this);
                         postings.addView(myButton);
