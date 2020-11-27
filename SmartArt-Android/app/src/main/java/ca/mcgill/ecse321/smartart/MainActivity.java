@@ -16,6 +16,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ArrayAdapter;
@@ -48,15 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        localpostingID = (EditText) findViewById(R.id.posting_id);          //goood stuff
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        localpostingID = (EditText) findViewById(R.id.posting_id);
         refreshErrorMessage();
     }
 
@@ -118,24 +111,34 @@ public class MainActivity extends AppCompatActivity {
                         String art = title + " " + description;
                         artwork_list.add(art);
                         arrayAdapter.notifyDataSetChanged();
-                        Picasso.get().load(urlImage).into(displayImages);
-
-                        //TextView textView = new TextView(MainActivity.this);
-                        //textView.setText(title + " " + description);;
-                        //postings.addView(textView);
-
-                        Button myButton = new Button(MainActivity.this);
-                        postings.addView(myButton);
-                        myButton.setText("View Posting");
                         int postingID = jsonobject.getInt("postingID");
-                        myButton.setOnClickListener(new View.OnClickListener() {
+                        displayPostings.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
                             @Override
-                            public void onClick(View v) {
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
                                 intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
                                 startActivity(intent);
                             }
                         });
+
+                       // Picasso.get().load(urlImage).into(displayImages);
+
+                        //TextView textView = new TextView(MainActivity.this);
+                        //textView.setText(title + " " + description);;
+                        //postings.addView(textView);
+
+//                        Button myButton = new Button(MainActivity.this);
+//                        postings.addView(myButton);
+//                        myButton.setText("View Posting");
+//
+//                        myButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
+//                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
+//                                startActivity(intent);
+//                            }
+//                        });
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -194,6 +197,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void toLogin(View v){
+        setContentView(R.layout.login);
+        Intent intent= new Intent(this, Login.class);
+        startActivity(intent);
+    }
+
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
