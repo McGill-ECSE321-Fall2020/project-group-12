@@ -52,7 +52,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Team Member      | Member Role   | Hours Commited  |
 | -----------------| ------------- | --------------- |
 | Ben Macnaughton  |               |                 |
-| Aidan Williams   |               |                 |
+| Aidan Williams   |  Documentation+Debugger             |       10          |
 | Gregory Walfish  |               |                 |
 | Luke Barber     |               |                 |
 | Minh Quan Hoang  |               |                 |
