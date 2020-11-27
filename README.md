@@ -50,7 +50,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 
 ## Deliverable 4 Contributions
 | Team Member      | Member Role            | Hours Commited  |
-| -----------------| --------------- -------| --------------- |
+| -----------------| ----------------------| --------------- |
 | Ben Macnaughton  | Backend Integrattion   |      11         |
 | Aidan Williams   |  Documentation+Debugger|       11        |
 | Gregory Walfish  | Android Lead           |       22       |
