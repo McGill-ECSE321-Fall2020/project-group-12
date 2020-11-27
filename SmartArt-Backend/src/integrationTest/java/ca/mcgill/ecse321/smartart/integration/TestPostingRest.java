@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.smartart.integration;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -48,6 +49,7 @@ public class TestPostingRest {
   @Autowired private GalleryService galleryService;
   @Autowired private ArtistService artistService;
 
+  @Before
   @After
   public void clearDatabase() {
     galleryRepository.deleteAll();

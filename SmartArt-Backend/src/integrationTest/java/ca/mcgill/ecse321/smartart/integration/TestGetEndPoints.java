@@ -50,6 +50,7 @@ public class TestGetEndPoints {
   @Autowired private PostingService postingService;
   @Autowired private PurchaseService purchaseService;
 
+  @Before
   @After
   public void clearDatabase() {
     galleryRepository.deleteAll();

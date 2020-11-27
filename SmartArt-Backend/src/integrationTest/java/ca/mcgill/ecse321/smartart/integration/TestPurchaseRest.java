@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDateTime;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,7 @@ public class TestPurchaseRest {
   @Autowired private PostingService postingService;
   @Autowired private PurchaseService purchaseService;
 
+  @Before
   @After
   public void clearDatabase() {
     galleryRepository.deleteAll();
