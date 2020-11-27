@@ -38,13 +38,10 @@
             android:text="Total Price:  "
             android:layout_gravity="center" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#DD1111"
-            android:onClick="makePurchase"
-            android:text="Purchase" />
+        <Spinner
+            android:id="@+id/deliveryTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

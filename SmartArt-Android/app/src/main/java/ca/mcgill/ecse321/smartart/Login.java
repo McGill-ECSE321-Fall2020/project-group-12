@@ -1,33 +1,19 @@
 package ca.mcgill.ecse321.smartart;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.JsonStreamerEntity;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.HttpRequest;
 
 public class Login extends AppCompatActivity {
 
@@ -58,6 +44,7 @@ public class Login extends AppCompatActivity {
                 password.setText("");
                 try {
                     user = response.getString("email");
+                    sendUser();
                     toMain();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -68,6 +55,10 @@ public class Login extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 System.out.println(errorResponse);
+                final TextView displayError = (TextView) findViewById(R.id.login_error);
+                email.setText("");
+                password.setText("");
+                displayError.append("Login Unsuccessful");
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
@@ -85,9 +76,13 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public String getUser(){
-        return user;
+    public void sendUser(){
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        intent.putExtra("USER", user);
+        startActivity(intent);
     }
+    //to get in your class:
+    //String userEmail = getIntent().getStringExtra("USER");
 
 
 }
