@@ -16,6 +16,8 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -82,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void viewPostings(View v) {
         error = "";
+        final LinearLayout postings = (LinearLayout) findViewById(R.id.postings);
+
         // final TextView tv = (TextView) findViewById(R.id.error);
         final ListView displayPostings = (ListView) findViewById(R.id.textViewPostings);
         final ImageView displayImages = (ImageView) findViewById(R.id.textViews);
@@ -102,34 +106,43 @@ public class MainActivity extends AppCompatActivity {
             private JSONArray response;
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
-
+                postings.removeAllViews();
                 for (int i = 0; i < response.length(); i++) {
 
                     try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        String title = jsonObject.getString("title");
-                        String urlImage = jsonObject.getString("image");
-                        String description = jsonObject.getString("description");
-                        String art = title+" "+description;
+
+                        JSONObject jsonobject = response.getJSONObject(i);
+                        String title = jsonobject.getString("title");
+                        String urlImage = jsonobject.getString("image");
+                        String description = jsonobject.getString("description");
+                        String art = title + " " + description;
                         artwork_list.add(art);
                         arrayAdapter.notifyDataSetChanged();
-
                         Picasso.get().load(urlImage).into(displayImages);
 
+                        //TextView textView = new TextView(MainActivity.this);
+                        //textView.setText(title + " " + description);;
+                        //postings.addView(textView);
+
+                        Button myButton = new Button(MainActivity.this);
+                        postings.addView(myButton);
+                        myButton.setText("View Posting");
+                        int postingID = jsonobject.getInt("postingID");
+                        myButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
+                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
+                                startActivity(intent);
+                            }
+                        });
+
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
 
-
-
                 }
-
-
-
             }
-
-
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
