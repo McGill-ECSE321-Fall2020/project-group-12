@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.smartart.dto.ArtistDto;
@@ -78,10 +79,20 @@ public class BuyerRestController {
     }
   }
   
-  @PostMapping(value = {"/buyer/login", "/buyer/login/"})
-  public ResponseEntity<?> login(@RequestBody LoginDto login) throws IllegalArgumentException {
+  @GetMapping(value = {"/android/login", "/android/login/"})
+  public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) throws IllegalArgumentException {
 	  try {
-		  Buyer buyer = buyerService.login(login);
+		  Buyer buyer = buyerService.login(email, password);
+		  return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
+	  } catch (IllegalArgumentException e) {
+		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+	  }
+  }
+  
+  @PostMapping(value = {"/buyer/login", "/buyer/login/"})
+  public ResponseEntity<?> login(@RequestBody LoginDto data) throws IllegalArgumentException {
+	  try {
+		  Buyer buyer = buyerService.login(data);
 		  return new ResponseEntity<>(controllerHelper.convertToDto(buyer), HttpStatus.OK);
 	  } catch (IllegalArgumentException e) {
 		  return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);

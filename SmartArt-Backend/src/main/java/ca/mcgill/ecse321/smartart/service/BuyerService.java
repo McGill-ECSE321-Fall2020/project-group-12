@@ -111,8 +111,15 @@ public class BuyerService {
   }
   
   @Transactional
+  public Buyer login(String email, String password) {
+	  Buyer buyer = buyerRepository.findBuyerByEmail(email);
+	  if(buyer == null) throw new IllegalArgumentException("There is no account associated with this email");
+	  if(!password.equals(buyer.getPassword())) throw new IllegalArgumentException("Invalid password");
+	  return buyer;
+  }
+  
+  @Transactional
   public Buyer login(LoginDto login) {
-	  if(login.getEmail() == null || login.getPassword() == null) throw new IllegalArgumentException("Please fill in all required fields");
 	  Buyer buyer = buyerRepository.findBuyerByEmail(login.getEmail());
 	  if(buyer == null) throw new IllegalArgumentException("There is no account associated with this email");
 	  if(!login.getPassword().equals(buyer.getPassword())) throw new IllegalArgumentException("Invalid password");
