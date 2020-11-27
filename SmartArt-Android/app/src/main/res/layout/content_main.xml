@@ -32,24 +32,31 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
+            android:backgroundTint="#DD1111"
             android:onClick="getPostingName"
             android:text="@string/posting_button" />
-
         <TextView
             android:id="@+id/postID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
+            android:backgroundTint="#DD1111"
             android:onClick="viewPostings"
             android:text="@string/viewpostings_button" />
 
+        <ImageView
+            android:id="@+id/textViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
-        <TextView
+        <ListView
             android:id="@+id/textViewPostings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
