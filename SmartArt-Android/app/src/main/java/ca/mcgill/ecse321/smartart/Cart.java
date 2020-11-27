@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.smartart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,14 +30,6 @@ public class Cart extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getCart();
         refreshErrorMessage();
     }
@@ -84,38 +77,11 @@ public class Cart extends AppCompatActivity {
         });
     }
 
-    /**
-     * public void makePurchase(View v) {
-     * error = "";
-     * String userEmail = null; //needs edit
-     * final TextView deliveryType = (TextView) findViewById(R.id.textViewCartPostings);
-     * Context context = null;
-     * HttpEntity entity = null;
-     * String contentType;
-     * HttpUtils.post(context, "/purchases/make/"+ deliveryType, entity, contentType, new JsonHttpResponseHandler(){
-     *
-     * @Override public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-     * try {
-     * <p>
-     * <p>
-     * } catch (JSONException e) {
-     * e.printStackTrace();
-     * }
-     * <p>
-     * <p>
-     * }
-     * @Override public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-     * try {
-     * error += errorResponse.get("message").toString();
-     * } catch (JSONException e) {
-     * error += e.getMessage();
-     * }
-     * refreshErrorMessage();
-     * }
-     * });
-     * }
-     */
-
+    public void toHome(View v){
+        setContentView(R.layout.activity_main);
+        Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     private void refreshErrorMessage() {
         // set the error message
