@@ -35,7 +35,6 @@ public class Login extends Fragment {
     private EditText password;
     private String success = "";
     private String user = "";
-    private String requestBody;
 
     @Override
     public View onCreateView(
@@ -63,6 +62,12 @@ public class Login extends Fragment {
     }
 
     public void login() throws UnsupportedEncodingException {
+        String requestBody = "";
+        requestBody += "\"email\":";
+        requestBody += email.getText().toString();
+        requestBody += ",\"password\":";
+        requestBody += password.getText().toString();
+        System.out.println(requestBody);
         HttpEntity loginEntity = new StringEntity(requestBody);
         HttpUtils.post(null, "buyer/login", loginEntity, null, new JsonHttpResponseHandler() {
             @Override
@@ -95,7 +100,9 @@ public class Login extends Fragment {
         ((Activity) getActivity()).overridePendingTransition(0, 0);
     }
 
-
+    public String getUser(){
+        return user;
+    }
 
 
 }
