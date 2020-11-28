@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
                         Button myButton = new Button(MainActivity.this);
                         postings.addView(myButton);
                         myButton.setText(title);
-                        myButton.setY(130);
-                        myButton.setX(-80);
                         //Redirects the application to the ViewSinglePosting activity.
                         myButton.setOnClickListener(new View.OnClickListener() {
                             @Override

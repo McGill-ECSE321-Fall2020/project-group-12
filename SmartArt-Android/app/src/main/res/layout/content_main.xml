@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="413dp"
+        android:layout_height="732dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -44,11 +44,11 @@
             android:backgroundTint="#DD1111"
             android:onClick="getPostingName"
             android:text="@string/posting_button" />
+
         <TextView
             android:id="@+id/postID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <Button
             android:layout_width="wrap_content"
@@ -69,25 +69,16 @@
         <ImageView
             android:id="@+id/textViews"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/postings"
+            android:layout_width="match_parent"
+            android:layout_height="460dp"
+            android:layout_marginTop="11dp"
+            android:orientation="vertical"
+            android:visibility="visible"></LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/postings"
-        android:layout_width="433dp"
-        android:layout_height="474dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginBottom="40dp"
-        android:orientation="vertical"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.22"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
