@@ -55,6 +55,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#DD1111"
+            android:onClick="toCart"
+            android:text="View Cart" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#DD1111"
             android:onClick="viewPostings"
             android:text="@string/viewpostings_button" />
 

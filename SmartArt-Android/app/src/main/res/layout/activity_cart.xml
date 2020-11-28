@@ -41,8 +41,9 @@
 
         <TextView
             android:id="@+id/textViewCartPostings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="249dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
 
         <TextView

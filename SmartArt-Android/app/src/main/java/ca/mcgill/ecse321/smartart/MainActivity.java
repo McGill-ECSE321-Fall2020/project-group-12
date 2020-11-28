@@ -148,7 +148,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void toCart(View v){
+        setContentView(R.layout.activity_cart);
+        Intent intent= new Intent(this, Cart.class);
+        startActivity(intent);
+    }
 
     private void refreshErrorMessage() {
         // set the error message
