@@ -20,16 +20,24 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
+/**
+ * Activity that views a single posting and displays all its information.
+ */
 public class ViewSinglePosting extends AppCompatActivity {
-    public static String POSTINGID = "POSTINGID";
+    public static String POSTINGID = "POSTINGID";//gets postingID from main activity
     private String postingID = "";
     private String error = "";
 
+    /**
+     * Loads all the information from the posting ID and displays into the activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_single_posting);
-        postingID = getIntent().getStringExtra(POSTINGID);
+        setContentView(R.layout.activity_view_single_posting); //sets view to activity
+        postingID = getIntent().getStringExtra(POSTINGID); //gets the posting ID from main activity
+        //Loads all the textViews and the ImageView from the xml.
         TextView title = findViewById(R.id.title2);
         TextView artist = findViewById(R.id.artist);
         TextView status = findViewById(R.id.artStatus);
@@ -41,6 +49,7 @@ public class ViewSinglePosting extends AppCompatActivity {
         ImageView postingImage = (ImageView)findViewById(R.id.postingImage);
         error = "";
 
+        //
         RequestParams rp = new RequestParams();
         HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){
             @Override
