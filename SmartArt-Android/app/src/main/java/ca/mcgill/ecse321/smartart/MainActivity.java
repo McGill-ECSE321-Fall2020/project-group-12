@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private String error = null;
     private EditText localpostingID;
     private String title = "";
-    
+
     /**
      * Instantiates the main page and its components on creation
      * @param savedInstanceState: the saved instance state.
@@ -88,14 +88,14 @@ public class MainActivity extends AppCompatActivity {
                         Button myButton = new Button(MainActivity.this);
                         postings.addView(myButton);
                         myButton.setText(title);
-                        myButton.setY(100);
+                        myButton.setY(130);
                         myButton.setX(-80);
                         //Redirects the application to the ViewSinglePosting activity.
                         myButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
-                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
+                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + ""); //passes posting ID to view single posting
                                 startActivity(intent);
                             }
                         });

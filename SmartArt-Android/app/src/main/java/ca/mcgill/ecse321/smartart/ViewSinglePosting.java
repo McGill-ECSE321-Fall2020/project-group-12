@@ -50,13 +50,14 @@ public class ViewSinglePosting extends AppCompatActivity {
         ImageView postingImage = (ImageView)findViewById(R.id.postingImage);
         error = "";
 
-        //
+        //loads information from posting ID passed from main activity and displays it.
         RequestParams rp = new RequestParams();
         HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     JSONObject artistData = response.getJSONObject("artist");
+                    //Loads the information from the postingID
                     String artistIN = artistData.getString("name");
                     String titleIN = response.getString("title");
                     String descriptionIN = response.getString("description");
@@ -67,6 +68,7 @@ public class ViewSinglePosting extends AppCompatActivity {
                     String zDimIN = response.getString("zdim");
                     String imageURL = response.getString("image");
 
+                    //displays the information of the posting
                     title.append(" " + titleIN);
                     artist.append(" " + artistIN);
                     description.append(" " + descriptionIN);
@@ -76,6 +78,7 @@ public class ViewSinglePosting extends AppCompatActivity {
                     yDim.append(" (inches) " + yDimIN);
                     zDim.append(" (inches) " + zDimIN);
 
+                    //displays the image of the posting
                     Picasso.get().load(imageURL).resize(300, 300).centerInside().into(postingImage);
 
 
@@ -84,6 +87,7 @@ public class ViewSinglePosting extends AppCompatActivity {
                 }
             }
 
+            //Changes error message on failure
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
@@ -97,6 +101,11 @@ public class ViewSinglePosting extends AppCompatActivity {
 
     }
 
+    /**
+     * Changes the view from this activity to cart activity.
+     * @param v: view of the user.
+     * @throws UnsupportedEncodingException
+     */
     public void addToCart(View v) throws UnsupportedEncodingException {
 
         error = "";
@@ -121,12 +130,20 @@ public class ViewSinglePosting extends AppCompatActivity {
 
     }
 
+    /**
+     * Redirect the application to the Cart Activity
+     * @param v: the view in which it is displayed.
+     */
     public void toCart(){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
         intent.putExtra("email", email);
         startActivity(intent);
     }
+
+    /**
+     * Updates error messages.
+     */
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error2);
