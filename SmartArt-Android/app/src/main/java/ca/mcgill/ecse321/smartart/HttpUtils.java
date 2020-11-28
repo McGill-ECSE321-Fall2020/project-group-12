@@ -34,7 +34,7 @@ public class HttpUtils {
     }
     public static void post(String url, RequestParams params, ResponseHandlerInterface responseHandler
     ) {
-        client.post( getAbsoluteUrl(url), params, responseHandler);
+        client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
