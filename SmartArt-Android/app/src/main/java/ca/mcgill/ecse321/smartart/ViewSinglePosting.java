@@ -27,6 +27,7 @@ public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";//gets postingID from main activity
     private String postingID = "";
     private String error = "";
+    public String email = "";
 
     /**
      * Loads all the information from the posting ID and displays into the activity.
@@ -123,6 +124,7 @@ public class ViewSinglePosting extends AppCompatActivity {
     public void toCart(){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
     private void refreshErrorMessage() {

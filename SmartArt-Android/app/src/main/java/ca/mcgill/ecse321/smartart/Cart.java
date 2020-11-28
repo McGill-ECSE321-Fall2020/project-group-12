@@ -21,13 +21,14 @@ import cz.msebera.android.httpclient.HttpEntity;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Cart extends AppCompatActivity {
+    public static String email = "mail";
     private String error = null;
-
+    private String userEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        userEmail = getIntent().getStringExtra(email);
         getCart();
 
         refreshErrorMessage();
@@ -36,8 +37,8 @@ public class Cart extends AppCompatActivity {
     public void getCart() {
         error = "";
 
-        String userEmail = "buyer@mail.com";
-        System.out.println("set1");
+        System.out.println("at1");
+        System.out.println(userEmail + "at 2");
         final TextView displayCartPostings = (TextView) findViewById(R.id.textViewCartPostings);
         final TextView displayTotalPrice = (TextView) findViewById(R.id.textViewTotalPrice);
         RequestParams rp = new RequestParams();
@@ -79,6 +80,7 @@ public class Cart extends AppCompatActivity {
     public void toHome(View v){
         setContentView(R.layout.activity_main);
         Intent intent= new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.email, email);
         startActivity(intent);
     }
 

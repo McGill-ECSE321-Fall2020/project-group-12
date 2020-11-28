@@ -34,14 +34,16 @@ import cz.msebera.android.httpclient.Header;
  * Activity for main screen of the android application.
  */
 public class MainActivity extends AppCompatActivity {
+    public static String email = "mail";
     private String error = null;
     private EditText localpostingID;
     private String title = "";
-
+    
     /**
      * Instantiates the main page and its components on creation
      * @param savedInstanceState: the saved instance state.
      */
+    private String uEmail = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         localpostingID = (EditText) findViewById(R.id.posting_id);
+        uEmail = getIntent().getStringExtra(email);
         refreshErrorMessage();
     }
 
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         Button myButton = new Button(MainActivity.this);
                         postings.addView(myButton);
                         myButton.setText(title);
-                        myButton.setY(80);
+                        myButton.setY(100);
                         myButton.setX(-80);
                         //Redirects the application to the ViewSinglePosting activity.
                         myButton.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
     public void toCart(View v){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
+        System.out.println(uEmail+"at3");
+        intent.putExtra(Cart.email, uEmail);
         startActivity(intent);
     }
 

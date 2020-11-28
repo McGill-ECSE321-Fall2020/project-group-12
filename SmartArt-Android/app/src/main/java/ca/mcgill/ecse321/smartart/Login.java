@@ -51,8 +51,6 @@ public class Login extends AppCompatActivity {
                 try {
                     //store user email locally to be passed to other activities
                     user = response.getString("email");
-                    //Pass email to other activities
-                    sendUser();
                     //Redirect to main method
                     toMain();
                 } catch (JSONException e) {
@@ -79,17 +77,8 @@ public class Login extends AppCompatActivity {
     public void toMain(){
         setContentView(R.layout.activity_main);
         Intent intent= new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.email, user);
         startActivity(intent);
     }
-
-    //Method to send the logged in users email to other activities
-    public void sendUser(){
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-        intent.putExtra("USER", user);
-        startActivity(intent);
-    }
-    //to get in your class:
-    //String userEmail = getIntent().getStringExtra("USER");
-
 
 }
