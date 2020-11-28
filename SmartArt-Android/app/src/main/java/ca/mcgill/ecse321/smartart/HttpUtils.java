@@ -7,9 +7,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.HttpEntity;
 
 public class HttpUtils {
     public static final String DEFAULT_BASE_URL = "https://smartart-backend-000.herokuapp.com/";
