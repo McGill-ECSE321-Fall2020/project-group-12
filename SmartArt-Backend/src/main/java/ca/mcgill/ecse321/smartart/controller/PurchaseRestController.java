@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.smartart.dto.BuyerDto;
@@ -162,6 +163,16 @@ public class PurchaseRestController {
       @RequestBody BuyerDto buyerData, @PathVariable(name = "postingID") int postingID) {
     try {
       Purchase cart = purchaseService.addToCart(buyerData, postingID);
+      return new ResponseEntity<>(controllerHelper.convertToDto(cart), HttpStatus.OK);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+  
+  @PostMapping(value = {"/android/addToCart/{postingID}", "/purchase/cart/add/{postingID}/"})
+  public ResponseEntity<?> addToCart(@RequestParam String email, @PathVariable(name = "postingID") int postingID) {
+    try {
+      Purchase cart = purchaseService.addToCart(email, postingID);
       return new ResponseEntity<>(controllerHelper.convertToDto(cart), HttpStatus.OK);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);

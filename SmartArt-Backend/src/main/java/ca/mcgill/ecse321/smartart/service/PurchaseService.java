@@ -274,6 +274,20 @@ public class PurchaseService {
 
     return addToCart(buyer, posting);
   }
+  
+  @Transactional
+  public Purchase addToCart(String email, int postingID) throws IllegalArgumentException {
+    Buyer buyer = buyerRepository.findBuyerByEmail(email);
+    Posting posting = postingRepository.findPostingByPostingID(postingID);
+    if (buyer == null) {
+      throw new IllegalArgumentException("Buyer does not exist.");
+    }
+    if (posting == null) {
+      throw new IllegalArgumentException("Posting does not exist.");
+    }
+
+    return addToCart(buyer, posting);
+  }
 
   /**
    * Removes a Posting from the Buyer's cart.
