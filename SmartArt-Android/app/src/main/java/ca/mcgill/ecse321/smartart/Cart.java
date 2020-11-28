@@ -71,7 +71,7 @@ public class Cart extends AppCompatActivity {
     public void toHome(View v){
         setContentView(R.layout.activity_main);
         Intent intent= new Intent(this, MainActivity.class);
-        intent.putExtra(MainActivity.email, email);
+        intent.putExtra(MainActivity.email, userEmail);
         startActivity(intent);
     }
 
