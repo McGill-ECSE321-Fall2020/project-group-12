@@ -55,7 +55,7 @@ Minh is a U3 Software Engineering student at McGill University. Born in Montreal
 | Aidan Williams   |  Documentation+Debugger|       11        |
 | Gregory Walfish  | Android Lead           |       22       |
 | Luke Barber      |    UI Developper       |       15         |
-| Minh Quan Hoang  |    UI Developer        |      8         |
+| Minh Quan Hoang  |    UI Developer        |      10         |
 
 [Deliverable 4 Report](https://github.com/McGill-ECSE321-Fall2020/project-group-12/wiki/Report4)
 
