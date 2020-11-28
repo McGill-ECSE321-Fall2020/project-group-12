@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.smartart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Cart extends AppCompatActivity {
     private String error = null;
-    private JSONObject cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +29,6 @@ public class Cart extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getCart();
         refreshErrorMessage();
     }
@@ -44,14 +36,13 @@ public class Cart extends AppCompatActivity {
     public void getCart() {
         error = "";
 
-        String userEmail = null; //login.getUser(); //needs edit
+        String userEmail = getIntent().getStringExtra("USER");
         final TextView displayCartPostings = (TextView) findViewById(R.id.textViewCartPostings);
         final TextView displayTotalPrice = (TextView) findViewById(R.id.textViewTotalPrice);
         RequestParams rp = new RequestParams();
         HttpUtils.get("/purchases/cart/" + userEmail, rp, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                cart = response;
                 displayCartPostings.setText("");
                 try {
                     int totalPrice = response.getInt("totalPrice");
@@ -84,38 +75,11 @@ public class Cart extends AppCompatActivity {
         });
     }
 
-    /**
-     * public void makePurchase(View v) {
-     * error = "";
-     * String userEmail = null; //needs edit
-     * final TextView deliveryType = (TextView) findViewById(R.id.textViewCartPostings);
-     * Context context = null;
-     * HttpEntity entity = null;
-     * String contentType;
-     * HttpUtils.post(context, "/purchases/make/"+ deliveryType, entity, contentType, new JsonHttpResponseHandler(){
-     *
-     * @Override public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-     * try {
-     * <p>
-     * <p>
-     * } catch (JSONException e) {
-     * e.printStackTrace();
-     * }
-     * <p>
-     * <p>
-     * }
-     * @Override public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-     * try {
-     * error += errorResponse.get("message").toString();
-     * } catch (JSONException e) {
-     * error += e.getMessage();
-     * }
-     * refreshErrorMessage();
-     * }
-     * });
-     * }
-     */
-
+    public void toHome(View v){
+        setContentView(R.layout.activity_main);
+        Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     private void refreshErrorMessage() {
         // set the error message
