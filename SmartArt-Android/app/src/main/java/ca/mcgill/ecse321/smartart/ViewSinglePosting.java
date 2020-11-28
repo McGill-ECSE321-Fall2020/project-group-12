@@ -24,6 +24,7 @@ public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";
     private String postingID = "";
     private String error = "";
+    public String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +115,7 @@ public class ViewSinglePosting extends AppCompatActivity {
     public void toCart(){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
     private void refreshErrorMessage() {
