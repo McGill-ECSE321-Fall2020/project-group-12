@@ -69,7 +69,6 @@ public class Login extends AppCompatActivity {
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                System.out.println(errorResponse);
                 final TextView displayError = (TextView) findViewById(R.id.login_error);
                 //clear text boxes for next login attempt
                 email.setText("");

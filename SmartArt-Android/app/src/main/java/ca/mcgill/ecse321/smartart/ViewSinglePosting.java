@@ -27,7 +27,7 @@ public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";//gets postingID from main activity
     private String postingID = "";
     private String error = "";
-    public String email = "";
+    public String userEmail = "";
 
     /**
      * Loads all the information from the posting ID and displays into the activity.
@@ -107,15 +107,13 @@ public class ViewSinglePosting extends AppCompatActivity {
      * @throws UnsupportedEncodingException
      */
     public void addToCart(View v) throws UnsupportedEncodingException {
-
         error = "";
-        String userEmail = "buyer@mail.com";
         RequestParams rp = new RequestParams();
-        rp.add("email", userEmail);
-        HttpUtils.post("/android/addToCart/" + postingID, rp, new JsonHttpResponseHandler() {
+        rp.add("email", userEmail); //takes the provided email and adds it to be sent
+        HttpUtils.post("/android/addToCart/" + postingID, rp, new JsonHttpResponseHandler() { //posts the current posting to the cart based on the provided email
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                toCart();
+                toCart(); //redirects to cart on success
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -131,13 +129,12 @@ public class ViewSinglePosting extends AppCompatActivity {
     }
 
     /**
-     * Redirect the application to the Cart Activity
-     * @param v: the view in which it is displayed.
+     * Redirect the application to the Cart Activity.
      */
     public void toCart(){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
-        intent.putExtra("email", email);
+        intent.putExtra(Cart.email, userEmail);
         startActivity(intent);
     }
 
