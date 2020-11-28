@@ -24,7 +24,8 @@ public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";
     private String postingID = "";
     private String error = "";
-    public String userEmail = "";
+    public String userEmail = ""; //the current user's e-mail
+    public static String email = "mail"; //used in passing the mail in between intent
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class ViewSinglePosting extends AppCompatActivity {
         TextView description = findViewById(R.id.description);
         ImageView postingImage = (ImageView)findViewById(R.id.postingImage);
         error = "";
-
+        userEmail = getIntent().getStringExtra(email);
         RequestParams rp = new RequestParams();
         HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){
             @Override
