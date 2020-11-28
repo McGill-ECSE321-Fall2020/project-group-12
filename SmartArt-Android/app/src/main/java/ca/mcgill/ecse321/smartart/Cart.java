@@ -29,6 +29,7 @@ public class Cart extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         Toolbar toolbar = findViewById(R.id.toolbar);
         getCart();
+
         refreshErrorMessage();
     }
 
@@ -36,6 +37,7 @@ public class Cart extends AppCompatActivity {
         error = "";
 
         String userEmail = "buyer@mail.com";
+        System.out.println("set1");
         final TextView displayCartPostings = (TextView) findViewById(R.id.textViewCartPostings);
         final TextView displayTotalPrice = (TextView) findViewById(R.id.textViewTotalPrice);
         RequestParams rp = new RequestParams();
