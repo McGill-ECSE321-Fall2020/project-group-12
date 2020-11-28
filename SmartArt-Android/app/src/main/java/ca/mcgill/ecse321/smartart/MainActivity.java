@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //navigates to the cart when the button is pressed
     public void toCart(View v){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
-        System.out.println(uEmail+"at3");
         intent.putExtra(Cart.email, uEmail);
         startActivity(intent);
     }
@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
         tvError.setText(error);
-
         if (error == null || error.length() == 0) {
             tvError.setVisibility(View.GONE);
         } else {
