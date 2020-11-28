@@ -13,10 +13,18 @@ import cz.msebera.android.httpclient.Header;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Activity that adds a posting to cart and loads the cart's info.
+ */
 public class Cart extends AppCompatActivity {
     public static String email = "mail"; //used in passing the mail in between intents
     private String error = null;
     private String userEmail; //the current user's e-mail
+
+    /**
+     * Changes the view to this activity and initializes the getCart method.
+     * @param savedInstanceState: the saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +34,9 @@ public class Cart extends AppCompatActivity {
         refreshErrorMessage();
     }
 
-
+    /**
+     * Gets the cart from the buyer and displays it on the screen.
+     */
     public void getCart() { //uses the RestAPI to return the contents of the current user's cart
         error = "";
         final TextView displayCartPostings = (TextView) findViewById(R.id.textViewCartPostings);
@@ -67,7 +77,10 @@ public class Cart extends AppCompatActivity {
         });
     }
 
-    //navigates back to the home screen when the button is pressed
+    /**
+     * Redirect the application to the Home Activity.
+     * @param v: the view in which it is displayed.
+     */
     public void toHome(View v){
         setContentView(R.layout.activity_main);
         Intent intent= new Intent(this, MainActivity.class);
@@ -75,6 +88,9 @@ public class Cart extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Updates error messages.
+     */
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);

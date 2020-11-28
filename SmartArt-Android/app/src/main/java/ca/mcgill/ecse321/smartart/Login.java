@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-//Activity class for Login Activity
 
 /**
  * Activity for logging in a user as a buyer.

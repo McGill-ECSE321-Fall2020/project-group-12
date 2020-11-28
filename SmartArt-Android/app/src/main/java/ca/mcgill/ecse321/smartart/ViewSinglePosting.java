@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Activity that views a single posting and displays all its information.
