@@ -27,7 +27,8 @@ public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";//gets postingID from main activity
     private String postingID = "";
     private String error = "";
-    public String userEmail = "";
+    public String userEmail = ""; //the current user's e-mail
+    public static String email = "mail"; //used in passing the mail in between intent
 
     /**
      * Loads all the information from the posting ID and displays into the activity.
@@ -49,10 +50,10 @@ public class ViewSinglePosting extends AppCompatActivity {
         TextView description = findViewById(R.id.description);
         ImageView postingImage = (ImageView)findViewById(R.id.postingImage);
         error = "";
-
-        //loads information from posting ID passed from main activity and displays it.
+        userEmail = getIntent().getStringExtra(email);
+  
         RequestParams rp = new RequestParams();
-        HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){
+        HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){ //loads information from posting ID passed from main activity and displays it.
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {

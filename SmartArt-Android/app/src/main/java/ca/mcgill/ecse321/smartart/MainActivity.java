@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
                                 intent.putExtra(ViewSinglePosting.POSTINGID, postingID + ""); //passes posting ID to view single posting
+                                intent.putExtra(ViewSinglePosting.email, uEmail);
                                 startActivity(intent);
                             }
                         });
