@@ -24,7 +24,6 @@ public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";
     private String postingID = "";
     private String error = "";
-    private JSONObject buyer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,40 +92,14 @@ public class ViewSinglePosting extends AppCompatActivity {
         error = "";
         String userEmail = "buyer@mail.com";
         RequestParams rp = new RequestParams();
-        HttpUtils.get("/buyers/" + userEmail, rp, new JsonHttpResponseHandler() {
+        rp.add("email", userEmail);
+        HttpUtils.post("/android/addToCart/" + postingID, rp, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                StringEntity entity = null;
-                try {
-                    entity = new StringEntity(response.toString());
-                    System.out.println(entity.toString());
-                } catch (UnsupportedEncodingException e) {
-                    System.out.println("small pp");
-                    e.printStackTrace();
-                }
-                HttpUtils.post(getApplicationContext(),"/purchase/cart/add/" + POSTINGID, entity, "application/json", new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-                        toCart();
-                    }
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        try {
-                            error += errorResponse.get("message").toString();
-                        } catch (JSONException e) {
-                            error += e.getMessage();
-                        }
-                        refreshErrorMessage();
-                    }
-                });
-
-                //buyer = response;
+                toCart();
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                System.out.println("failure");
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {

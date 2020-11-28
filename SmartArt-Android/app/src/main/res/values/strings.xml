@@ -14,7 +14,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <string name="posting_hint">Posting?</string>
+    <string name="posting_hint">Enter Posting ID to Get Name</string>
     <string name="posting_button">Get Posting Name</string>
     <string name="viewpostings_button">View Postings</string>
 

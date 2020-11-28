@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -48,22 +49,9 @@ public class MainActivity extends AppCompatActivity {
     //Method to fetch and display all postings from the backend
     public void viewPostings(View v) {
         error = "";
+
         //Set the layout for the postings to be displayed
         final LinearLayout postings = (LinearLayout) findViewById(R.id.postings);
-
-        final ListView displayPostings = (ListView) findViewById(R.id.textViewPostings);
-        String[] artworks = new String[] {
-
-        };
-        // Create a List from String Array elements
-        final List<String> artwork_list = new ArrayList<String>(Arrays.asList(artworks));
-        // Create an ArrayAdapter from List
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1, artwork_list);
-
-        // DataBind ListView with items from ArrayAdapter
-        displayPostings.setAdapter(arrayAdapter);
-
         //Backend call to return all postings in the database
         HttpUtils.get("postings", new RequestParams(), new JsonHttpResponseHandler() {
             private JSONArray response;
@@ -82,13 +70,15 @@ public class MainActivity extends AppCompatActivity {
                         String description = jsonobject.getString("description");
                         String art = title + ": " + description;
                         //add the art as a string to the display
-                        artwork_list.add(art);
-                        arrayAdapter.notifyDataSetChanged();
                         int postingID = jsonobject.getInt("postingID");
-                        displayPostings.setOnItemClickListener(new AdapterView.OnItemClickListener()  {
+                        Button myButton = new Button(MainActivity.this);
+                        postings.addView(myButton);
+                        myButton.setText(title);
+                        myButton.setY(80);
+                        myButton.setX(-80);
+                        myButton.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                //When a posting is selected redirect to that postings page and pass the posting ID
+                            public void onClick(View v) {
                                 Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
                                 intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
                                 startActivity(intent);
@@ -157,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent= new Intent(this, Login.class);
         startActivity(intent);
     }
+
 
 
     private void refreshErrorMessage() {
