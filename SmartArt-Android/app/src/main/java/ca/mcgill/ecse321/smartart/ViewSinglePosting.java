@@ -12,7 +12,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +23,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";
     private String postingID = "";
-    private String error;
+    private String error = "";
     private JSONObject buyer;
 
     @Override
@@ -89,18 +88,45 @@ public class ViewSinglePosting extends AppCompatActivity {
 
     }
 
-    public void addToCart() throws UnsupportedEncodingException {
+    public void addToCart(View v) throws UnsupportedEncodingException {
+
         error = "";
-        String userEmail = getIntent().getStringExtra("USER");
+        String userEmail = "buyer@mail.com";
         RequestParams rp = new RequestParams();
         HttpUtils.get("/buyers/" + userEmail, rp, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                buyer = response;
+                StringEntity entity = null;
+                try {
+                    entity = new StringEntity(response.toString());
+                    System.out.println(entity.toString());
+                } catch (UnsupportedEncodingException e) {
+                    System.out.println("small pp");
+                    e.printStackTrace();
+                }
+                HttpUtils.post(getApplicationContext(),"/purchase/cart/add/" + POSTINGID, entity, "application/json", new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                        toCart();
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        try {
+                            error += errorResponse.get("message").toString();
+                        } catch (JSONException e) {
+                            error += e.getMessage();
+                        }
+                        refreshErrorMessage();
+                    }
+                });
+
+                //buyer = response;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println("failure");
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {
@@ -109,23 +135,14 @@ public class ViewSinglePosting extends AppCompatActivity {
                 refreshErrorMessage();
             }
         });
-        StringEntity entity = new StringEntity(buyer.toString());
-        HttpUtils.post(getApplicationContext(),"/purchase/cart/add/" + POSTINGID, entity, "application/json", new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error += errorResponse.get("message").toString();
-                } catch (JSONException e) {
-                    error += e.getMessage();
-                }
-                refreshErrorMessage();
-            }
-        });
+
+    }
+
+    public void toCart(){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
         startActivity(intent);
     }
-
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error2);
