@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -23,6 +25,7 @@ public class ViewSinglePosting extends AppCompatActivity {
     public static String POSTINGID = "POSTINGID";
     private String postingID = "";
     private String error;
+    private JSONObject buyer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +89,27 @@ public class ViewSinglePosting extends AppCompatActivity {
 
     }
 
-    public void addToCart(){
+    public void addToCart() throws UnsupportedEncodingException {
         error = "";
-        JSONObject jsonParams = new JSONObject();
-        jsonParams.put(buyer); //edit
-        StringEntity entity = new StringEntity(jsonParams.toString());
+        String userEmail = getIntent().getStringExtra("USER");
+        RequestParams rp = new RequestParams();
+        HttpUtils.get("/buyers/" + userEmail, rp, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                buyer = response;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+        StringEntity entity = new StringEntity(buyer.toString());
         HttpUtils.post(getApplicationContext(),"/purchase/cart/add/" + POSTINGID, entity, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {

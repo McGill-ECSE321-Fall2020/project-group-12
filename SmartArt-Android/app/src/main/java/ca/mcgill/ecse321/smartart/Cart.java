@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Cart extends AppCompatActivity {
     private String error = null;
-    private JSONObject cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +36,13 @@ public class Cart extends AppCompatActivity {
     public void getCart() {
         error = "";
 
-        String userEmail = null; //login.getUser(); //needs edit
+        String userEmail = getIntent().getStringExtra("USER");
         final TextView displayCartPostings = (TextView) findViewById(R.id.textViewCartPostings);
         final TextView displayTotalPrice = (TextView) findViewById(R.id.textViewTotalPrice);
         RequestParams rp = new RequestParams();
         HttpUtils.get("/purchases/cart/" + userEmail, rp, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                cart = response;
                 displayCartPostings.setText("");
                 try {
                     int totalPrice = response.getInt("totalPrice");
