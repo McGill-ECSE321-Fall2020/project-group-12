@@ -76,19 +76,18 @@
 
     <LinearLayout
         android:id="@+id/postings"
-        android:layout_width="350dp"
-        android:layout_height="500dp"
+        android:layout_width="433dp"
+        android:layout_height="474dp"
         android:layout_marginStart="45dp"
         android:layout_marginTop="11dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="40dp"
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.392"></LinearLayout>
+        app:layout_constraintVertical_bias="0.22"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
