@@ -20,18 +20,26 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
+/**
+ * Activity that views a single posting and displays all its information.
+ */
 public class ViewSinglePosting extends AppCompatActivity {
-    public static String POSTINGID = "POSTINGID";
+    public static String POSTINGID = "POSTINGID";//gets postingID from main activity
     private String postingID = "";
     private String error = "";
     public String userEmail = ""; //the current user's e-mail
     public static String email = "mail"; //used in passing the mail in between intent
 
+    /**
+     * Loads all the information from the posting ID and displays into the activity.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_single_posting);
-        postingID = getIntent().getStringExtra(POSTINGID);
+        setContentView(R.layout.activity_view_single_posting); //sets view to activity
+        postingID = getIntent().getStringExtra(POSTINGID); //gets the posting ID from main activity
+        //Loads all the textViews and the ImageView from the xml.
         TextView title = findViewById(R.id.title2);
         TextView artist = findViewById(R.id.artist);
         TextView status = findViewById(R.id.artStatus);
@@ -43,12 +51,14 @@ public class ViewSinglePosting extends AppCompatActivity {
         ImageView postingImage = (ImageView)findViewById(R.id.postingImage);
         error = "";
         userEmail = getIntent().getStringExtra(email);
+  
         RequestParams rp = new RequestParams();
-        HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){
+        HttpUtils.get("postings/"+ postingID, rp, new JsonHttpResponseHandler(){ //loads information from posting ID passed from main activity and displays it.
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     JSONObject artistData = response.getJSONObject("artist");
+                    //Loads the information from the postingID
                     String artistIN = artistData.getString("name");
                     String titleIN = response.getString("title");
                     String descriptionIN = response.getString("description");
@@ -59,6 +69,7 @@ public class ViewSinglePosting extends AppCompatActivity {
                     String zDimIN = response.getString("zdim");
                     String imageURL = response.getString("image");
 
+                    //displays the information of the posting
                     title.append(" " + titleIN);
                     artist.append(" " + artistIN);
                     description.append(" " + descriptionIN);
@@ -68,6 +79,7 @@ public class ViewSinglePosting extends AppCompatActivity {
                     yDim.append(" (inches) " + yDimIN);
                     zDim.append(" (inches) " + zDimIN);
 
+                    //displays the image of the posting
                     Picasso.get().load(imageURL).resize(300, 300).centerInside().into(postingImage);
 
 
@@ -76,6 +88,7 @@ public class ViewSinglePosting extends AppCompatActivity {
                 }
             }
 
+            //Changes error message on failure
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
@@ -89,6 +102,11 @@ public class ViewSinglePosting extends AppCompatActivity {
 
     }
 
+    /**
+     * Changes the view from this activity to cart activity.
+     * @param v: view of the user.
+     * @throws UnsupportedEncodingException
+     */
     public void addToCart(View v) throws UnsupportedEncodingException {
         error = "";
         RequestParams rp = new RequestParams();
@@ -111,13 +129,19 @@ public class ViewSinglePosting extends AppCompatActivity {
 
     }
 
-    //navigates to the cart when the button is pressed
+    /**
+     * Redirect the application to the Cart Activity.
+     */
     public void toCart(){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
         intent.putExtra(Cart.email, userEmail);
         startActivity(intent);
     }
+
+    /**
+     * Updates error messages.
+     */
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error2);

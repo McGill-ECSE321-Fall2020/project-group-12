@@ -17,14 +17,19 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 //Activity class for Login Activity
-public class Login extends AppCompatActivity {
 
+/**
+ * Activity for logging in a user as a buyer.
+ */
+public class Login extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private String user = "";
 
-
-
+    /**
+     * Initializes the text and changes the view
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +40,10 @@ public class Login extends AppCompatActivity {
         password = findViewById(R.id.password_box);
     }
 
-    //Method to login using a call to the backend
+    /**
+     * Method to login a user as a buyer using a call to the backend.
+     * @param v
+     */
     public void login(View v) {
         RequestParams params = new RequestParams();
         //Add login parameters
@@ -72,7 +80,10 @@ public class Login extends AppCompatActivity {
 
     }
 
-    //Method to redirect app to the main activity
+    /**
+     * Redirect the application to the Login Activity
+     * @param v: the view in which it is displayed.
+     */
     public void toMain(){
         setContentView(R.layout.activity_main);
         Intent intent= new Intent(this, MainActivity.class);

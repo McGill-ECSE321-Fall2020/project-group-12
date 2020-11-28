@@ -30,13 +30,20 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Activity for main screen of the android application.
+ */
 public class MainActivity extends AppCompatActivity {
     public static String email = "mail";
     private String error = null;
     private EditText localpostingID;
     private String title = "";
-    private String uEmail = "";
 
+    /**
+     * Instantiates the main page and its components on creation
+     * @param savedInstanceState: the saved instance state.
+     */
+    private String uEmail = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
         refreshErrorMessage();
     }
 
-    //Method to fetch and display all postings from the backend
+
+    /**
+     * Method to fetch and display all postings from the backend.
+     * @param v : the View in which to display.
+     */
     public void viewPostings(View v) {
         error = "";
 
@@ -73,16 +84,18 @@ public class MainActivity extends AppCompatActivity {
                         String art = title + ": " + description;
                         //add the art as a string to the display
                         int postingID = jsonobject.getInt("postingID");
+                        //add a button that views a single posting
                         Button myButton = new Button(MainActivity.this);
                         postings.addView(myButton);
                         myButton.setText(title);
-                        myButton.setY(100);
+                        myButton.setY(130);
                         myButton.setX(-80);
+                        //Redirects the application to the ViewSinglePosting activity.
                         myButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(MainActivity.this, ViewSinglePosting.class);
-                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + "");
+                                intent.putExtra(ViewSinglePosting.POSTINGID, postingID + ""); //passes posting ID to view single posting
                                 intent.putExtra(ViewSinglePosting.email, uEmail);
                                 startActivity(intent);
                             }
@@ -110,7 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Method to return the title of a posting from its posting ID
+    /**
+     * Method to return the title of a posting from its posting ID.
+     * @param v
+     */
     public void getPostingName(View v) {
         error = "";
         //Bind the text box input to local string to be used in backend call
@@ -144,14 +160,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Method to redirect the app to the Login Activity
+
+    /**
+     * Redirect the application to the Login Activity
+     * @param v: the view in which it is displayed.
+     */
     public void toLogin(View v){
         setContentView(R.layout.login);
         Intent intent= new Intent(this, Login.class);
         startActivity(intent);
     }
 
-    //navigates to the cart when the button is pressed
+    /**
+     * Redirect the application to the Cart Activity
+     * @param v: the view in which it is displayed.
+     */
     public void toCart(View v){
         setContentView(R.layout.activity_cart);
         Intent intent= new Intent(this, Cart.class);
@@ -159,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Updates error messages.
+     */
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.error);
