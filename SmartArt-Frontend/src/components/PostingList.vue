@@ -90,7 +90,7 @@ export default {
     max-height: 400px;
     height: 100%;
     max-width: 20rem;
-    transition: all .3s cubic-bezier(.38,.41,.27,1)
+    transition: all 1s cubic-bezier(.38,.41,.27,1)
   }
   .card:hover {
     box-shadow: 10px 15px 20px;
