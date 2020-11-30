@@ -6,7 +6,7 @@ module.exports = {
     env: require('./prod.env'),
     port: 8087,
     env: require('./prod.env'),
-    host: 'smartart-frontend-000.herokuapp.com',
+    host: 'smartart-frontend-001.herokuapp.com',
     port: 443,
     backendHost: 'smartart-backend-000.herokuapp.com',
     backendPort: 443,
