@@ -107,9 +107,9 @@ import Footer from "./Footer";
 import firebase from "firebase/app";
 var config = require("../../config");
 
-var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
+var frontendUrl = "https://" + config.build.host + ":" + config.build.port;
 var backendUrl =
-  "http://" + config.build.backendHost + ":" + config.build.backendPort;
+  "https://" + config.build.backendHost + ":" + config.build.backendPort;
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
