@@ -1,6 +1,6 @@
 <template>
             <div class = "footer">
-                <hr> <br>
+                <br>
                     <div class = "inner_footer">
                     <div class = "logo_container">
                         <img src="../assets/SmartArt.png">
