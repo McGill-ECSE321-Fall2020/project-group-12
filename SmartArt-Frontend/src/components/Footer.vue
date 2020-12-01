@@ -36,7 +36,7 @@
           </div>
            <br>
         <div class="container-fluid">
-            
+
           <div class="row justify-content-center">
 
             <li style="padding-right: 3vw">
@@ -137,7 +137,7 @@ button:hover {
     padding: 0px 0;
     box-sizing: border-box;
     background-color: white;
-    
+
 }
 
 .inner_footer{
@@ -217,4 +217,14 @@ button:hover {
         margin-bottom: 30px;
     }
 }
+
+.container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  white-space: nowrap;
+  list-style: none;
+}
+
 </style>
