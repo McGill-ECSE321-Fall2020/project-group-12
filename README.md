@@ -1,6 +1,7 @@
 # Smart Art
 Smart Art is a web and android based application designed for art galleries to promote and sell the works of local artists.
 Our goal is to help the local art industry thrive during these times of difficulty by connecting them to potential clients within their community and beyond.
+Our website can be found at http://smartart-frontend-001.herokuapp.com/#/home
 
 ## Our team
 ### Ben Macnaughton
